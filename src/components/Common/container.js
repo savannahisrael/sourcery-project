@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
 
-const navBar = () => (
+const Container = () => (
   <Card>
     <Image src='/assets/images/avatar/large/matthew.png' />
     <Card.Content>
@@ -26,4 +26,4 @@ const navBar = () => (
   </Card>
 )
 
-export default navBar
+export default Container
