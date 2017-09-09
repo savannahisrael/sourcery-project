@@ -1,0 +1,82 @@
+[
+	{
+		"_id": "user_1000",
+		"github": {
+			"login": "frankandbeans",
+			"name": "Frank Beans",
+			"id": 1000
+		}
+	},
+	{
+		"_id": "user_1001",
+		"github":{
+			"login": "margaret",
+			"name": "Margaret Choi",
+			"id": 1001
+		}
+	},
+	{
+		"_id": "user_1002",
+		"github":{
+			"login": "lina",
+			"name": "Lina Shamoon",
+			"id": 1002
+		} 
+	},
+	{
+		"_id": "user_1003",
+		"github":{
+			"login": "alex",
+			"name": "Alex Melon",
+			"id": 1003
+		}
+	},
+	{
+		"_id": "user_1004",
+		"github": {
+			"login": "fahad",
+			"name": "Fahad Rahman",
+			"id": 1004
+		}
+	},
+	{
+		"_id": "user_1005",
+		"github": {
+			"login": "cindy",
+			"name": "Cindy Chen",
+			"id": 1005
+		}
+	},
+	{
+		"_id": "user_1006",
+		"github": {
+			"login": "bryce",
+			"name": "Bryce Miller",
+			"id": 1006
+		}
+	},
+	{
+		"_id": "user_1007",
+		"github": {
+			"login": "leeland",
+			"name": "Leeland Miller",
+			"id": 1007
+		}
+	},
+	{
+		"_id": "user_1008",
+		"github": {
+			"login": "trey",
+			"name": "Treyvon Goodson",
+			"id": 1008
+		}
+	},
+	{
+		"_id": "user_1009",
+		"github": {
+			"login": "joe",
+			"name": "Joe Huynh",
+			"id": 1009
+		}
+	}
+]
