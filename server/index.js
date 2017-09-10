@@ -16,16 +16,16 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const flash = require('connect-flash');
-// const githubAuth = require('./config/auth.js').github;
+const githubAuth = require('./config/auth.js').github;
 
 //=============== DATABASE PACKAGES & CONFIG ===============//
 const mongoose = require('mongoose');
-// const configDB = require('./config/database.js');
+const configDB = require('./config/database.js');
 // const users = require('./models/Users');
-// mongoose.connect(configDB.url)
+mongoose.connect(configDB.url)
 
 //=============== PASSPORT CONFIGURATION ===============//
-// require('./config/passport')(passport) //pass passport for configuration
+require('./config/passport')(passport) //pass passport for configuration
 
 //=============== AUTHENTICATION SETUP ===============//
 app.use(cookieParser());
@@ -44,16 +44,15 @@ app.use(flash());
 //=============== SERVE STATIC ASSETS ===============//
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
+//=============== ROUTES SETUP ===============//
+require('./app/routes.js')(app, passport) //load our routes and pass in our app and fully configured passport
+
 //=============== API ROUTES ===============//
 app.get("/api/test", (req, res) => res.json({id:1, first:'hello', last:'world'}));
 // Always return the main index.html, so react-router render the route in the client
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
-
-//=============== ROUTES SETUP ===============//
-// require('./app/routes.js')(app, passport) //load our routes and pass in our app and fully configured passport
-
 
 //=============== STARTING THE SERVER ===============//
 const server = app.listen(port, () => console.log("App listening on PORT " + port));

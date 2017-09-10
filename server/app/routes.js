@@ -17,17 +17,21 @@ module.exports = function (app, passport) {
         function (req, res) {
             // Successful authentication, redirect home.
             console.log("logged in");
-            
+
             //provide code
             // console.log('req.query', req.query);
-            
+
             //will return true if logged in
             console.log(req.isAuthenticated())
-            
+
             //provide user profile
             // console.log(req.user)
             res.end();
         });
+
+    //API Routes
+    // =============================================================
+
 };
 
 //route middleware to make sure a user is logged in 
