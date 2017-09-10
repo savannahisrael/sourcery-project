@@ -16,16 +16,16 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const flash = require('connect-flash');
-const githubAuth = require('./config/auth.js').github;
+// const githubAuth = require('./config/auth.js').github;
 
 //=============== DATABASE PACKAGES & CONFIG ===============//
 const mongoose = require('mongoose');
-const configDB = require('./config/database.js');
+// const configDB = require('./config/database.js');
 // const users = require('./models/Users');
-mongoose.connect(configDB.url)
+// mongoose.connect(configDB.url)
 
 //=============== PASSPORT CONFIGURATION ===============//
-require('./config/passport')(passport) //pass passport for configuration
+// require('./config/passport')(passport) //pass passport for configuration
 
 //=============== AUTHENTICATION SETUP ===============//
 app.use(cookieParser());
@@ -56,4 +56,11 @@ app.get('*', (req, res) => {
 
 
 //=============== STARTING THE SERVER ===============//
-app.listen(port, () => console.log("App listening on PORT " + port));
+const server = app.listen(port, () => console.log("App listening on PORT " + port));
+const io = require('socket.io').listen(server);
+
+io.sockets.on('connection', socket => {
+	console.log('A user connected...');
+	socket.on('disconnect', () => console.log('A user disconnected.'));
+
+});
