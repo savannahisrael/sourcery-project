@@ -3,7 +3,7 @@ import { Input, Menu } from 'semantic-ui-react'
 
 export default class MenuExampleSecondary extends Component {
   state = { activeItem: 'home' }
-  
+
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 

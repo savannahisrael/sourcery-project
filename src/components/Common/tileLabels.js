@@ -1,7 +1,7 @@
-import React from 'react'
-import { Grid, Image, Label, Segment } from 'semantic-ui-react'
+import React from 'react';
+import { Grid, Image, Label, Segment } from 'semantic-ui-react';
 
-const LabelExampleAttached = () => (
+const tileLabel = () => (
   <Grid columns={3}>
     <Grid.Row>
       <Grid.Column>
@@ -10,7 +10,8 @@ const LabelExampleAttached = () => (
           <Image src='/assets/images/wireframe/paragraph.png' />
         </Segment>
       </Grid.Column>
+    </Grid.Row>
   </Grid>
 )
 
-export default LabelExampleAttached
+export default tileLabel
