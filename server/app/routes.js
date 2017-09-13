@@ -1,3 +1,10 @@
+//importing controllers for all models
+// =============================================================
+const userController = require('./controllers/usersController'); 
+const projectController = require('./controllers/projectsController');
+const cohortController = require('./controllers/cohortsController');
+const activityController = require('./controllers/activityFeedController');
+
 module.exports = function (app, passport) {
 
     //Authentication through gitHub
@@ -31,7 +38,14 @@ module.exports = function (app, passport) {
 
     //API Routes
     // =============================================================
+    
+    //All user data
+    app.get('/api/users', userController.index);
+    
+    //All project data
+    app.get('/api/projects', projectController.index);
 
+    
 };
 
 //route middleware to make sure a user is logged in 

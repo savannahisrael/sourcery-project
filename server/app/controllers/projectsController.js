@@ -3,8 +3,19 @@ const Project = require('../models/Projects');
 module.exports = {
 
     //Method to return all Projects
-    //**populate from Cohorts Users  
-    
+    //populate from Cohorts Users 
+    index: (req, res) => {
+        Project.find({})
+            .populate('Users')
+            .populate('Cohorts')
+            .exec((err, data) => {
+                if (err) {
+                    res.json(err)
+                };
+                res.json(data)
+            })
+    },
+
     //Method to create new Project
     create: (req, res) => {
         Project.create(req.body)
@@ -15,6 +26,7 @@ module.exports = {
                 res.json(err);
             });
     },
+
     //Method to update a Project 
     update: (req, res) => {
         Project.update({
@@ -26,6 +38,7 @@ module.exports = {
                 res.json(err);
             })
     },
+
     //Method to delete a Project
     destroy: (req, res) => {
         Project.remove({
