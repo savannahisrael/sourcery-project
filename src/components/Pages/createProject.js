@@ -22,7 +22,7 @@ class CreateProjectForm extends Component {
     return (
       <Form>
         <Form.Group widths='equal'>
-          <Form.Input label='First Name' placeholder='First Name' />
+          <Form.Input label='Title' placeholder='Title' />
           <Form.Input label='Last Name' placeholder='Last Name' />
           <Form.Select label='Primary Technology' options={options} placeholder='Primary Technology' />
         </Form.Group>

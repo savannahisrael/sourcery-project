@@ -4,7 +4,7 @@ import { Sticky, Segment } from 'semantic-ui-react';
 const footer = () => (
   <Sticky bottomOffset='0' pushing>
     <Segment textAlign='center' padded='very' size='medium'>
-      © devCircle 2017
+      Made in San Diego © devCircle 2017
     </Segment>
   </Sticky>
 )
