@@ -1,3 +1,4 @@
+
 // import React, { Component } from 'react'
 // import { Dropdown, Sticky, Icon, Button, Input, Menu, Segment } from 'semantic-ui-react'
 // // import logo from '../components/Images/dev.svg';
@@ -123,5 +124,4 @@ export default class HomepageLayout extends Component {
     )
   }
 }
-
 
