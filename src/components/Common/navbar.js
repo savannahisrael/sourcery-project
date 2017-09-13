@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Dropdown, Sticky, Icon, Button, Input, Menu, Segment } from 'semantic-ui-react'
-// import logo from '../components/Images/dev.svg';
+import { Input, Menu } from 'semantic-ui-react'
 
+export default class MenuExampleSecondary extends Component {
+  state = { activeItem: 'home' }
 
-export default class navigationBar extends Component {
-  state = { activeItem: 'dashboard' }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -12,27 +11,16 @@ export default class navigationBar extends Component {
     const { activeItem } = this.state
 
     return (
-      <Sticky >
-        <Menu pointing secondary size='large'>
-          <Menu.Item name='devCircle' active={activeItem === 'devCircle'} onClick={this.handleItemClick} />
+      <Menu secondary>
+        <Menu.Item name='devCircle' active={activeItem === 'devCircle'} onClick={this.handleItemClick} />
+        <Menu.Item name='explore' active={activeItem === 'explore'} onClick={this.handleItemClick} />
+        <Menu.Menu position='right'>
           <Menu.Item>
             <Input icon='search' placeholder='Search...' />
           </Menu.Item>
-          <Menu.Menu position='right'>
-            <Menu.Item name='explore' active={activeItem === 'Explore'} onClick={this.handleItemClick} />
-            <Menu.Item name='dashboard' active={activeItem === 'Dashboard'} onClick={this.handleItemClick} />
-            <Dropdown item icon='user circle' simple>
-              <Dropdown.Menu>
-                <Dropdown.Item>Profile</Dropdown.Item>
-                <Dropdown.Item>Logout</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            <Menu.Item>
-              <Button primary>CREATE PROJECT</Button>
-            </Menu.Item>
-          </Menu.Menu>
-        </Menu>
-      </Sticky>
+          <Menu.Item name='login' active={activeItem === 'login'} onClick={this.handleItemClick} />
+        </Menu.Menu>
+      </Menu>
     )
   }
 }
@@ -62,4 +50,3 @@ export default class navigationBar extends Component {
 //       });
 //     })
 //   ;
-
