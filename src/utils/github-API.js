@@ -9,7 +9,9 @@ const axAuth = axios.create({
 	headers: { "Authorization": "bearer " + key}
 });
 
-const repo = (name, repo) => {
+const repo = url => {
+	const [name, repo] = url.split('/').slice(-2)
+
 	return axAuth.post('/graphql',{
 		'query' :`{
 		  repository(owner: "${name}", name: "${repo}") {
@@ -25,6 +27,11 @@ const repo = (name, repo) => {
 		    }
 		    watchers {
 		      totalCount
+		    }
+		    owner {
+		    	avatarUrl
+		    	login
+		    	url
 		    }
 		    issues(last: 10) {
 		      edges {
@@ -70,6 +77,7 @@ const repo = (name, repo) => {
 				forks: d.forks.totalCount,
 				stargazers: d.stargazers.totalCount,
 				watchers: d.watchers.totalCount,
+				owner: d.owner,
 				issues: d.issues.edges.map(e => {
 					e.node.createdAt = formatDate(e.node.createdAt)
 					return e.node
@@ -80,17 +88,16 @@ const repo = (name, repo) => {
 				})
 			}
 		})
-		.catch(err => console.log('err:', err.message))
+		.catch(err => err instanceof TypeError ? 'Invalid Repo' : err)
 }
 
 const user = name => {
 	return axios.get(`https://api.github.com/users/${name}`)
 	.then(res => res.data)
-	.catch(err => console.log('err:',err.message))
+	.catch(err => err)
 };
 
 module.exports = {
 	user,
 	repo
 };
-
