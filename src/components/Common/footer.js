@@ -1,12 +1,12 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Sticky, Segment } from 'semantic-ui-react';
 
-const SegmentExampleTextAlignment = () => (
-  <div>
-    <Segment textAlign='center' padded='very' size='large'>
-      Footer Content
+const footer = () => (
+  <Sticky bottomOffset='0' pushing>
+    <Segment textAlign='center' padded='very' size='medium'>
+      Made in San Diego © devCircle 2017
     </Segment>
-  </div>
+  </Sticky>
 )
 
-export default SegmentExampleTextAlignment
+export default footer
