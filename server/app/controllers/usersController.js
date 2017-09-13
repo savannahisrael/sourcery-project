@@ -46,6 +46,8 @@ module.exports = {
         }).then(doc => {
             Cohort.update({
                 '_id':req.params.cohortId
+            },{
+                $pull
             })
             res.json(doc);
         }).catch(err => {
