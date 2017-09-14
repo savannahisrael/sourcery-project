@@ -1,4 +1,5 @@
 const Project = require('../models/Projects');
+const activityController = require('../controllers/activityFeedController');
 
 module.exports = {
 
@@ -6,8 +7,10 @@ module.exports = {
     //populate from Cohorts Users 
     index: (req, res) => {
         Project.find({})
-            .populate('Users')
-            .populate('Cohorts')
+            .populate('owner_id')
+            .populate('cohort_id')
+            .populate('pending_members')
+            .populate('members')
             .exec((err, data) => {
                 if (err) {
                     res.json(err)
@@ -20,6 +23,14 @@ module.exports = {
     create: (req, res) => {
         Project.create(req.body)
             .then(doc => {
+
+                req.body.activityData = {
+                    event: "New Project added",
+                    project_id: doc._id
+                };
+
+                activityController.create(req);
+
                 res.json(doc);
             })
             .catch(err => {
@@ -30,8 +41,8 @@ module.exports = {
     //Method to update a Project 
     update: (req, res) => {
         Project.update({
-                _id: req.params.id
-            }, req.body)
+                _id: req.body.projectId
+            }, req.body.update)
             .then(doc => {
                 res.json(doc);
             }).catch(err => {
@@ -40,9 +51,11 @@ module.exports = {
     },
 
     //Method to delete a Project
-    destroy: (req, res) => {
-        Project.remove({
-            _id: req.params.id
+    close: (req, res) => {
+        Project.update({
+            _id: req.body.projectId
+        }, {
+            status: 'closed'
         }).then(doc => {
             res.json(doc);
         }).catch(err => {

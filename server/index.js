@@ -6,6 +6,7 @@ const path = require("path");
 //=============== INITIALIZE EXPRESS APP & SETUP FOR DATA PARSING===============//
 const app = express();
 const port = process.env.PORT || 4000;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());

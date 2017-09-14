@@ -7,6 +7,10 @@ let UserSchema = new Schema({
         login: String,
         name: String,
         id: Number
+    },
+    isActive:{
+        type:Boolean, 
+        default:true
     }
 })
 module.exports = mongoose.model('User', UserSchema);
