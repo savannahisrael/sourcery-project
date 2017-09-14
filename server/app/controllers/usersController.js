@@ -3,8 +3,9 @@ const Cohort = require('../models/Cohorts');
 
 module.exports = {
 
-    //Method to return all Users
+    //Method to return all Users for a specific status
     index: (req, res) => {
+        // console.log("inside user index");
         User.find({})
             .then(doc => {
                 res.json(doc)
@@ -16,42 +17,31 @@ module.exports = {
     //Method to create new User
     //include push to cohorts, Activity feed
     //Should be done through passport config no users should be added manually.
-    // create: (req, res) => {
-    //     User.create(req.body)
-    //         .then(doc => {
-    //             res.json(doc);
-    //         })
-    //         .catch(err => {
-    //             res.json(err);
-    //         });
-    // },
+    //Refer to config/passport.js
 
     //Method to update an User 
     update: (req, res) => {
         User.update({
-                _id: req.params.userId
-            }, req.body)
+                _id: req.body.userId
+            }, req.body.update)
             .then(doc => {
                 res.json(doc);
             }).catch(err => {
                 res.json(err);
             })
     },
-    
-    //Method to delete an User 
-    //** add pull from cohorts
-    destroy: (req, res) => {
-        User.remove({
-            _id: req.params.userId
-        }).then(doc => {
-            Cohort.update({
-                '_id':req.params.cohortId
-            },{
-                $pull
+
+    //Method to deactivate an User 
+    deactivate: (req, res) => {
+        User.update({
+                _id: req.body.userId
+            }, {
+                isActive: false
             })
-            res.json(doc);
-        }).catch(err => {
-            res.json(err)
-        })
+            .then(doc => {
+                res.json(doc);
+            }).catch(err => {
+                res.json(err)
+            })
     }
 }

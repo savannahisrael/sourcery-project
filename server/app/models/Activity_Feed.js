@@ -3,14 +3,18 @@ const Schema = mongoose.Schema;
 
 let ActivityFeedSchema = new Schema({
     event:String,
+    visible:{
+        type:Boolean,
+        default:true
+    },
     user_id:{
         type:Schema.ObjectId,
-        ref:'Users',
+        ref:'User',
         require:true
     },
     project_id:{
         type:Schema.ObjectId,
-        ref:'Projects'
+        ref:'Project'
     }
 });
 module.exports=mongoose.model('Activity_feed', ActivityFeedSchema);
