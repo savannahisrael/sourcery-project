@@ -4,6 +4,16 @@ module.exports = {
 
     //Method to return all Activities
     //**populate data from Users and Projects
+    index: (req, res) => {
+        Activity.find({})
+            .populate('Users')
+            .populate('Cohorts')
+            .then(doc => {
+                res.json(doc);
+            }).catch(err => {
+                res.json(err);
+            })
+    },
 
     //Method to create new Activity
     create: (req, res) => {

@@ -3,7 +3,15 @@ const Cohort = require('../models/Cohorts');
 module.exports = {
 
     //Method to return all Cohorts
-    
+    index: (req, res) => {
+        Cohort.find({})
+            .populate('Users')
+            .then(doc => {
+                res.json(doc)
+            }).catch(err => {
+                res.json(err)
+            })
+    },
     //Method to create new Cohort
     create: (req, res) => {
         Cohort.create(req.body)

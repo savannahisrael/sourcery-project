@@ -24,6 +24,10 @@ let ProjectSchema = new Schema({
         ref: 'Users',
         require: true
     },
+    status:{
+        type:String,
+        default:'Open'
+    },
     cohort_id: {
         type: Schema.ObjectId,
         ref: 'Cohorts',

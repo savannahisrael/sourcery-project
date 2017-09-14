@@ -39,11 +39,28 @@ module.exports = function (app, passport) {
     //API Routes
     // =============================================================
     
-    //All user data
+    //Pull all data routes for all models
+    
+    //All USER data
     app.get('/api/users', userController.index);
     
-    //All project data
+    //All PROJECT data
     app.get('/api/projects', projectController.index);
+
+    //All COHORT data
+    app.get('/api/cohorts', cohortController.index);
+
+    //All ACTIVITY FEED data
+    app.get('api/activityfeed', activityController.index);
+
+
+    //Routes to deactivate instance on a model
+    
+    //Deactivate USER
+    //Will update isActive field to false
+    app.patch('/api/userDeactivate', userController.deactivate);
+
+
 
     
 };
