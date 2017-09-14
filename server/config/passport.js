@@ -5,6 +5,7 @@ const GitHubStrategy = require('passport-github2').Strategy;
 //loading user model
 // =============================================================
 const users = require('../app/models/Users');
+const cohorts = require('../app/models/Cohorts');
 
 //loading activity controller
 // =============================================================
@@ -62,10 +63,17 @@ module.exports = function (passport) {
 
                             activityController.create(req);
 
-                            req.body.update = {$push:{members: results._id}};
-
-                            cohortController.update(req);
-
+                            //Couldn't figure out how to use generic update route in controller file
+                            cohorts.update({
+                                _id:req.body.cohortId
+                            }, {
+                                $push:{
+                                    members:results._id
+                                }
+                            }).catch(err=>{
+                                console.log(err)
+                            })
+                          
                             // console.log("results: ", results);
                             //results:
                             // { __v: 0,

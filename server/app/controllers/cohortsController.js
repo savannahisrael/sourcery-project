@@ -24,10 +24,13 @@ module.exports = {
     },
     //Method to update a Cohort 
     update: (req, res) => {
-        console.log((req.body));
+        console.log(req.body.update);
+        let update = req.body.update;
+        console.log(update);
+
         Cohort.update({
                 _id: req.body.cohortId
-            }, [req.body.update])
+            }, update)
             .then(doc => {
                 res.json(doc);
             }).catch(err => {
@@ -38,8 +41,8 @@ module.exports = {
     deactivate: (req, res) => {
         Cohort.update({
             _id: req.body.cohortId
-        },{
-            isActive:false
+        }, {
+            isActive: false
         }).then(doc => {
             res.json(doc);
         }).catch(err => {

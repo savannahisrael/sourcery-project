@@ -101,11 +101,6 @@ module.exports = function (app, passport) {
     //Hide ACTIVITY
     //will update visible to false
     app.patch('/api/activityHide',activityController.hide);
-
-    
-
-
-
     
 };
 

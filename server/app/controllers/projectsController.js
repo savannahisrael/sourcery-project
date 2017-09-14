@@ -1,4 +1,5 @@
 const Project = require('../models/Projects');
+const activityController = require('../controllers/activityFeedController');
 
 module.exports = {
 
@@ -21,7 +22,15 @@ module.exports = {
     //Method to create new Project
     create: (req, res) => {
         Project.create(req.body)
-            .then(doc => {  
+            .then(doc => {
+
+                req.body.activityData = {
+                    event: "New Project added",
+                    project_id: doc._id
+                };
+
+                activityController.create(req);
+
                 res.json(doc);
             })
             .catch(err => {
@@ -46,7 +55,7 @@ module.exports = {
         Project.update({
             _id: req.body.projectId
         }, {
-            status:'closed'
+            status: 'closed'
         }).then(doc => {
             res.json(doc);
         }).catch(err => {
