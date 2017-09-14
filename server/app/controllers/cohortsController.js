@@ -25,8 +25,8 @@ module.exports = {
     //Method to update a Cohort 
     update: (req, res) => {
         Cohort.update({
-                _id: req.params.id
-            }, req.body)
+                _id: req.body.cohortId
+            }, req.body.update)
             .then(doc => {
                 res.json(doc);
             }).catch(err => {
@@ -34,9 +34,11 @@ module.exports = {
             })
     },
     //Method to delete a Cohort
-    destroy: (req, res) => {
-        Cohort.remove({
-            _id: req.params.id
+    deactivate: (req, res) => {
+        Cohort.update({
+            _id: req.body.cohortId
+        },{
+            isActive:false
         }).then(doc => {
             res.json(doc);
         }).catch(err => {
