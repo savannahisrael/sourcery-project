@@ -9,12 +9,12 @@ let ActivityFeedSchema = new Schema({
     },
     user_id:{
         type:Schema.ObjectId,
-        ref:'Users',
+        ref:'User',
         require:true
     },
     project_id:{
         type:Schema.ObjectId,
-        ref:'Projects'
+        ref:'Project'
     }
 });
 module.exports=mongoose.model('Activity_feed', ActivityFeedSchema);

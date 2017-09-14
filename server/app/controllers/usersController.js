@@ -5,6 +5,7 @@ module.exports = {
 
     //Method to return all Users for a specific status
     index: (req, res) => {
+        // console.log("inside user index");
         User.find({})
             .then(doc => {
                 res.json(doc)

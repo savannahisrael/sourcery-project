@@ -5,7 +5,7 @@ module.exports = {
     //Method to return all Cohorts
     index: (req, res) => {
         Cohort.find({})
-            .populate('Users')
+            .populate('members')
             .then(doc => {
                 res.json(doc)
             }).catch(err => {
@@ -24,9 +24,10 @@ module.exports = {
     },
     //Method to update a Cohort 
     update: (req, res) => {
+        console.log((req.body));
         Cohort.update({
                 _id: req.body.cohortId
-            }, req.body.update)
+            }, [req.body.update])
             .then(doc => {
                 res.json(doc);
             }).catch(err => {

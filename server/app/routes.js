@@ -51,7 +51,7 @@ module.exports = function (app, passport) {
     app.get('/api/cohorts', cohortController.index);
 
     //All ACTIVITY FEED data
-    app.get('api/activityfeed', activityController.index);
+    app.get('/api/activityfeed', activityController.index);
 
     //Routes to create instaces on for all models
     
@@ -61,10 +61,10 @@ module.exports = function (app, passport) {
 
     //Create a new instance of a PROJECT
     //New project ACTIVITY will also be generated 
-    app.post('api/projectNew', projectController.create)
+    app.post('/api/projectNew', projectController.create)
     
     //Create a new instance of a COHORT
-    app.post('api/cohortNew',cohortController.create)
+    app.post('/api/cohortNew',cohortController.create)
     
     //ACTIVITY will be generated as a result of other transactions.
 

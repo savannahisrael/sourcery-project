@@ -19,27 +19,27 @@ let ProjectSchema = new Schema({
     trello_link: String,
     repo_link: String,
     deploy_link: String,
-    owner_id: {
-        type: Schema.ObjectId,
-        ref: 'Users',
-        require: true
-    },
     status:{
         type:String,
-        default:'Open'
+        default:'open'
+    },
+    owner_id: {
+        type: Schema.ObjectId,
+        ref: 'User',
+        require: true
     },
     cohort_id: {
         type: Schema.ObjectId,
-        ref: 'Cohorts',
+        ref: 'Cohort',
         require: true
     },
     pending_members: [{
         type: Schema.ObjectId,
-        ref: 'Users'
+        ref: 'User'
     }],
     members: [{
         type: Schema.ObjectId,
-        ref: 'Users'
+        ref: 'User'
     }]
 });
 module.exports = mongoose.model('Project', ProjectSchema);
