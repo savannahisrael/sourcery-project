@@ -3,7 +3,7 @@ import { Card, Icon, Image } from 'semantic-ui-react';
 
 const Tile = () => (
   <Card>
-    <Image src='/assets/images/avatar/large/matthew.png' />
+    <Image src='https://react.semantic-ui.com/assets/images/avatar/large/matthew.png'/>
     <Card.Content>
       <Card.Header>
         DevCircle
