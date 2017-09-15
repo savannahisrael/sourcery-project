@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactRotatingText from 'react-rotating-text'
 import {
   Button,
   Container,
@@ -12,6 +13,7 @@ import {
   Segment,
   Visibility,
 } from 'semantic-ui-react'
+
 
 export default class landingPage extends Component {
 
@@ -27,13 +29,21 @@ export default class landingPage extends Component {
             <Header
               as='h1'
               content='devCircle'
-              style={{ fontSize: '6em', fontWeight: 'normal', marginBottom: 0, marginTop: '1.5em' }}
+              style={{ fontSize: '6em', fontWeight: 'normal', marginBottom: 0, marginTop: '.5em' }}
             />
             <Header
               as='h2'
-              content='Team projects made simple'
-              style={{ fontSize: '1.5em', fontWeight: 'normal' }}
-            />
+              style={{ fontSize: '2em', fontWeight: 'normal' }}
+            >
+              Create your own team projects to
+              <Header.Subheader>
+                <ReactRotatingText 
+                  style={{ fontSize: '2em', fontWeight: 'normal' }}
+                  items={['learn new technologies', 'facilitate collaboration', 'streamline workflow', 'simplify planning']} 
+                />
+              </Header.Subheader>
+            </Header>
+            <br/>
             <Button primary size='huge'>
               Sign Up
             </Button>
