@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
-import Tile from '../Common/projectTiles';
+import Tile from '../projectTiles';
 
 const TileGrid = () => (
   <Grid columns={3}>

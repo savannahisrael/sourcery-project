@@ -3,8 +3,8 @@ import ReactRotatingText from 'react-rotating-text'
 import {
   Button, Container,Divider, Grid, Header, Icon, Image, List, Menu, Segment, Visibility, Card,
 } from 'semantic-ui-react'
-import Tiles from '../Common/projectTiles';
-
+import Tiles from '../../Common/projectTiles';
+import SignUpInput from '../../Common/signUp';
 
 export default class landingPage extends Component {
 
@@ -28,9 +28,9 @@ export default class landingPage extends Component {
             >
               Create your own team projects
               <Header.Subheader>
-                <ReactRotatingText 
+                <ReactRotatingText
                   style={{ fontSize: '2em', fontWeight: 'normal' }}
-                  items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']} 
+                  items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']}
                 />
               </Header.Subheader>
             </Header>
@@ -39,7 +39,9 @@ export default class landingPage extends Component {
               style={{width: '400px', marginBottom: '0.5em'}}
             >
               Sign Up
-            </Button> <br/>
+            </Button>
+            <SignUpInput />
+            <br/>
             <Button secondary size='huge'
               style={{width: '400px'}}
             >

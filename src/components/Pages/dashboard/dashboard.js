@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Tab } from 'semantic-ui-react';
-import CreateProjectForm from './createProject';
-import TileGrid from '../Common/tileGrid';
+import CreateProjectForm from '../createProject';
+import TileGrid from '../../Common/tileGrid';
 
 const panes = [
   { menuItem: 'Active Projects', render: () =>
