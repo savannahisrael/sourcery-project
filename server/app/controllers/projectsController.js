@@ -44,11 +44,31 @@ module.exports = {
                 _id: req.body.projectId
             }, req.body.update)
             .then(doc => {
-                switch (req.body.update.status){
+                switch (req.body.update.status) {
                     case "in-progress":
-                    
+                        req.body.activityData = {
+                            event: "in-progress",
+                            project_id: doc._id
+                        }
+
+                        activityController.create(req);
+                        return;
                     case "completed":
+                        req.body.activityData = {
+                            event: "completed",
+                            project_id: doc._id
+                        }
+
+                        activityController.create(req);
+                        return;
                     case "member joined project":
+                        req.body.activityData = {
+                            event: "member joined project",
+                            project_id: doc._id
+                        }
+
+                        activityController.create(req);
+                        return;
                 }
                 res.json(doc);
             }).catch(err => {
