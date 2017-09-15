@@ -15,6 +15,7 @@ export default class landingPage extends Component {
           textAlign='center'
           style={{ minHeight: 700, padding: '1em 0em' }}
           vertical
+          basic
         >
           <Container text>
             <Header
@@ -24,24 +25,24 @@ export default class landingPage extends Component {
             />
             <Header
               as='h2'
-              style={{ fontSize: '2em', fontWeight: 'normal' }}
+              style={{ fontSize: '2em', fontWeight: 'normal',}}
             >
               Create your own team projects
               <Header.Subheader>
                 <ReactRotatingText 
-                  style={{ fontSize: '2em', fontWeight: 'normal' }}
+                  style={{ fontSize: '2em', fontWeight: 'normal',}}
                   items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']} 
                 />
               </Header.Subheader>
             </Header>
             <br/>
             <Button primary size='huge'
-              style={{width: '400px', marginBottom: '0.5em'}}
+              style={{width: '450px', marginBottom: '0.75em'}}
             >
               Sign Up
             </Button> <br/>
             <Button secondary size='huge'
-              style={{width: '400px'}}
+              style={{width: '450px'}}
             >
               Log in with Github
             </Button>
@@ -66,9 +67,52 @@ export default class landingPage extends Component {
                 <Tiles/>
               </Grid.Column>
             </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+                <Tiles/>
+              </Grid.Column>
+              <Grid.Column>
+                <Tiles/>
+              </Grid.Column>
+              <Grid.Column>
+                <Tiles/>
+              </Grid.Column>
+              <Grid.Column>
+                <Tiles/>
+              </Grid.Column>
+              <Grid.Column>
+                <Tiles/>
+              </Grid.Column>
+            </Grid.Row>
           </Grid>
         </Container>
-
+        <Container>
+          <Grid columns={3}>
+            <Grid.Row>
+              <Header as='h2' icon>
+                <Icon name='calendar outline' />
+                Simplify Planning
+                <Header.Subheader>
+                  Easily turn ideas into an actionable plan to achieve success.
+                </Header.Subheader>
+              </Header>
+              <Header as='h2' icon>
+                <Icon name='users' />
+                Facilitate Collaboration
+                <Header.Subheader>
+                  Centralize communication with team members.                
+                </Header.Subheader>
+              </Header>
+              <Header as='h2' icon>
+                <Icon name='fighter jet' />
+                Streamline Workflow
+                <Header.Subheader>
+                  View status for all your team projects in one place.
+                </Header.Subheader>
+              </Header>
+            </Grid.Row>
+          </Grid>
+        </Container>
         <Segment style={{ padding: '8em 0em' }} vertical>
           <Grid container stackable verticalAlign='middle'>
             <Grid.Row>
