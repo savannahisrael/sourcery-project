@@ -24,17 +24,15 @@ module.exports = {
     },
     //Method to update a Cohort 
     update: (req, res) => {
-        console.log(req.body.update);
-        let update = req.body.update;
-        console.log(update);
-
         Cohort.update({
                 _id: req.body.cohortId
-            }, update)
+            }, req.body.update)
             .then(doc => {
-                res.json(doc);
+                // res.json(doc);
+                console.log(doc);
             }).catch(err => {
-                res.json(err);
+                // res.json(err);
+                console.log(doc);
             })
     },
     //Method to delete a Cohort

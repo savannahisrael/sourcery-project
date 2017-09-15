@@ -21,7 +21,7 @@ let ProjectSchema = new Schema({
     deploy_link: String,
     status:{
         type:String,
-        default:'open'
+        default:'proposal'
     },
     owner_id: {
         type: Schema.ObjectId,
