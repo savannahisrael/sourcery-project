@@ -29,12 +29,14 @@ module.exports = {
         console.log(update);
 
         Cohort.update({
-                _id: req.body.cohortId
+                _id: "59bb44d670c31824246e7a3f"
             }, update)
             .then(doc => {
-                res.json(doc);
+                // res.json(doc);
+                console.log(doc);
             }).catch(err => {
-                res.json(err);
+                // res.json(err);
+                console.log(doc);
             })
     },
     //Method to delete a Cohort

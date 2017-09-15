@@ -64,15 +64,23 @@ module.exports = function (passport) {
                             activityController.create(req);
 
                             //Couldn't figure out how to use generic update route in controller file
-                            cohorts.update({
-                                _id:req.body.cohortId
-                            }, {
-                                $push:{
-                                    members:results._id
-                                }
-                            }).catch(err=>{
-                                console.log(err)
-                            })
+                            // cohorts.update({
+                            //     _id:req.body.cohortId
+                            // }, {
+                            //     $push:{
+                            //         members:results._id
+                            //     }
+                            // }).catch(err=>{
+                            //     console.log(err)
+                            // })
+                            
+                            req.body.update = {
+                                $push:{members:results._id}
+                            };
+
+                            cohortController.update(req);
+
+
                           
                             // console.log("results: ", results);
                             //results:
