@@ -25,7 +25,7 @@ module.exports = {
             .then(doc => {
 
                 req.body.activityData = {
-                    event: "New Project added",
+                    event: "proposal",
                     project_id: doc._id
                 };
 
@@ -44,6 +44,12 @@ module.exports = {
                 _id: req.body.projectId
             }, req.body.update)
             .then(doc => {
+                switch (req.body.update.status){
+                    case "in-progress":
+                    
+                    case "completed":
+                    case "member joined project":
+                }
                 res.json(doc);
             }).catch(err => {
                 res.json(err);

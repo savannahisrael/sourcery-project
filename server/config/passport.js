@@ -57,7 +57,7 @@ module.exports = function (passport) {
                                 console.log(err)
                             }
                             req.body.activityData = {
-                                event: "User joined",
+                                event: "member joined cohort",
                                 user_id: results._id
                             };
 
