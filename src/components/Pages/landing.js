@@ -1,18 +1,9 @@
 import React, { Component } from 'react'
 import ReactRotatingText from 'react-rotating-text'
 import {
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Icon,
-  Image,
-  List,
-  Menu,
-  Segment,
-  Visibility,
+  Button, Container,Divider, Grid, Header, Icon, Image, List, Menu, Segment, Visibility, Card,
 } from 'semantic-ui-react'
+import Tiles from '../Common/projectTiles';
 
 
 export default class landingPage extends Component {
@@ -35,23 +26,49 @@ export default class landingPage extends Component {
               as='h2'
               style={{ fontSize: '2em', fontWeight: 'normal' }}
             >
-              Create your own team projects to
+              Create your own team projects
               <Header.Subheader>
                 <ReactRotatingText 
                   style={{ fontSize: '2em', fontWeight: 'normal' }}
-                  items={['learn new technologies', 'facilitate collaboration', 'streamline workflow', 'simplify planning']} 
+                  items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']} 
                 />
               </Header.Subheader>
             </Header>
             <br/>
-            <Button primary size='huge'>
+            <Button primary size='huge'
+              style={{width: '400px', marginBottom: '0.5em'}}
+            >
               Sign Up
-            </Button>
-            <Button secondary size='huge'>
+            </Button> <br/>
+            <Button secondary size='huge'
+              style={{width: '400px'}}
+            >
               Log in with Github
             </Button>
           </Container>
         </Segment>
+        <Container>
+          <Grid columns={5}>
+            <Grid.Row>
+              <Grid.Column>
+                <Tiles/>
+              </Grid.Column>
+              <Grid.Column>
+                <Tiles/>
+              </Grid.Column>
+              <Grid.Column>
+                <Tiles/>
+              </Grid.Column>
+              <Grid.Column>
+                <Tiles/>
+              </Grid.Column>
+              <Grid.Column>
+                <Tiles/>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Container>
+
         <Segment style={{ padding: '8em 0em' }} vertical>
           <Grid container stackable verticalAlign='middle'>
             <Grid.Row>
