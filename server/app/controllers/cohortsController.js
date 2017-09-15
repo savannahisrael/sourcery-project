@@ -24,13 +24,9 @@ module.exports = {
     },
     //Method to update a Cohort 
     update: (req, res) => {
-        console.log(req.body.update);
-        let update = req.body.update;
-        console.log(update);
-
         Cohort.update({
-                _id: "59bb44d670c31824246e7a3f"
-            }, update)
+                _id: req.body.cohortId
+            }, req.body.update)
             .then(doc => {
                 // res.json(doc);
                 console.log(doc);
