@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, List } from 'semantic-ui-react';
+import Navbar from "../../Common/navbar";
 
 class Project extends Component {
   render() {
     return (
       <div>
+        <Navbar currentPage='project' />
         <Image src='http://lorempixel.com/output/cats-q-c-480-480-1.jpg' size='medium' shape='circular' centered />
 
         <Header textAlign='center' as='h1'>

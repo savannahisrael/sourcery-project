@@ -7,7 +7,6 @@ import Explore from "./components/Pages/explore";
 import Create from "./components/Pages/createProject";
 import Project from "./components/Pages/project";
 import Profile from "./components/Pages/userProfile";
-import Navbar from "./components/Common/navbar";
 import pageContainer from "./components/Common/pageContainer";
 import Footer from "./components/Common/footer";
 import './App.css';
@@ -20,7 +19,6 @@ socket.on('connect', () => console.log('Socket connected.'));
 const App = () =>
   <Router>
     <div className="Main">
-      <Navbar />
       <pageContainer className="Main-content">
         <Route exact path="/" component={Landing} />
         <Route exact path="/dashboard" component={Dashboard} />

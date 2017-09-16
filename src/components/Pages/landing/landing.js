@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
-import ReactRotatingText from 'react-rotating-text'
-import {
-  Button, Container,Divider, Grid, Header, Icon, Image, List, Menu, Segment, Visibility, Card,
-} from 'semantic-ui-react'
+import React, { Component } from 'react';
+import ReactRotatingText from 'react-rotating-text';
+import { Button, Container,Divider, Grid, Header, Icon, Image, List, Menu, Segment, Visibility, Card } from 'semantic-ui-react';
 import Tiles from '../../Common/projectTiles';
 import SignUpInput from '../../Common/signUp';
+import Navbar from "../../Common/navbar";
 // import BackgroundImg from '../../../assets/images/home.png';
 import './landing.css';
 
@@ -13,11 +12,12 @@ export default class landingPage extends Component {
   render() {
     return (
       <div>
+        <Navbar currentPage='landing' />
         <Segment
           textAlign='center'
           /*style={{ minHeight: 1080, padding: '1em 0em', backgroundImage: `url(${BackgroundImg})`, flex: 1, resizeMode: 'cover'
           }}*/
-      
+
           basic
         >
           <div className='aboveTheFold'>

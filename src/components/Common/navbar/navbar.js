@@ -22,7 +22,10 @@ export default class navBar extends Component {
   state = {
     menuFixed: false,
     overlayFixed: false,
+    activeItem: this.props.currentPage
   }
+
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   handleOverlayRef = (c) => {
     const { overlayRect } = this.state
@@ -38,12 +41,8 @@ export default class navBar extends Component {
 
   unStickTopMenu = () => this.setState({ menuFixed: false })
 
-  state = { activeItem: 'home' }
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
-  render() {
-    const { menuFixed} = this.state
+  render () {
+    const { menuFixed } = this.state
     const { activeItem } = this.state
 
     return (
@@ -86,4 +85,3 @@ export default class navBar extends Component {
     )
   }
 }
-

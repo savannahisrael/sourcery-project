@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form } from 'semantic-ui-react';
+import Navbar from "../../Common/navbar";
 import './createProject.css';
 
 const options = [
@@ -23,22 +24,25 @@ class CreateProjectForm extends Component {
   render() {
     const { value } = this.state
     return (
-      <Form class='form'>
-        <Form.Group widths='equal'>
-          <Form.Input label='Title' placeholder='Title' />
-          <Form.Input label='Last Name' placeholder='Last Name' />
-          <Form.Select label='Primary Technology' options={options} placeholder='Primary Technology' />
-        </Form.Group>
-        <Form.Group inline>
-          <label>Timespan</label>
-          <Form.Radio label='1 Week' value='1' checked={value === '1'} onChange={this.handleChange} />
-          <Form.Radio label='2 Weeks' value='2' checked={value === '2'} onChange={this.handleChange} />
-          <Form.Radio label='3 Weeks' value='3' checked={value === '3'} onChange={this.handleChange} />
-        </Form.Group>
-        <Form.TextArea label='About' placeholder='Describe your project...' />
-        <Form.Checkbox label='I agree to the Terms and Conditions' />
-        <Form.Button>Create</Form.Button>
-      </Form>
+      <div>
+        <Navbar currentPage='createProject' />
+        <Form class='form'>
+          <Form.Group widths='equal'>
+            <Form.Input label='Title' placeholder='Title' />
+            <Form.Input label='Last Name' placeholder='Last Name' />
+            <Form.Select label='Primary Technology' options={options} placeholder='Primary Technology' />
+          </Form.Group>
+          <Form.Group inline>
+            <label>Timespan</label>
+            <Form.Radio label='1 Week' value='1' checked={value === '1'} onChange={this.handleChange} />
+            <Form.Radio label='2 Weeks' value='2' checked={value === '2'} onChange={this.handleChange} />
+            <Form.Radio label='3 Weeks' value='3' checked={value === '3'} onChange={this.handleChange} />
+          </Form.Group>
+          <Form.TextArea label='About' placeholder='Describe your project...' />
+          <Form.Checkbox label='I agree to the Terms and Conditions' />
+          <Form.Button>Create</Form.Button>
+        </Form>
+      </div>
     )
   }
 }
