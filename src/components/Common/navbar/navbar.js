@@ -1,8 +1,6 @@
-import _ from 'lodash'
-import React, { Component } from 'react'
-import {
-  Container, Dropdown, Image,  Menu, Visibility, Button
-, Input} from 'semantic-ui-react'
+import _ from 'lodash';
+import React, { Component } from 'react';
+import { Container, Dropdown, Image,  Menu, Visibility, Button, Input} from 'semantic-ui-react';
 
 const menuStyle = {
   border: 'none',
