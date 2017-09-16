@@ -5,6 +5,8 @@ import {
 } from 'semantic-ui-react'
 import Tiles from '../../Common/projectTiles';
 import SignUpInput from '../../Common/signUp';
+// import BackgroundImg from '../../../assets/images/home.png';
+import './landing.css';
 
 export default class landingPage extends Component {
 
@@ -13,11 +15,13 @@ export default class landingPage extends Component {
       <div>
         <Segment
           textAlign='center'
-          style={{ minHeight: 700, padding: '1em 0em' }}
-          vertical
+          /*style={{ minHeight: 1080, padding: '1em 0em', backgroundImage: `url(${BackgroundImg})`, flex: 1, resizeMode: 'cover'
+          }}*/
+      
           basic
         >
-          <Container text>
+          <div className='aboveTheFold'>
+          <Container text >
             <Header
               as='h1'
               content='devCircle'
@@ -41,7 +45,7 @@ export default class landingPage extends Component {
             >
               Sign Up
             </Button>
-            <SignUpInput />
+            {/*<SignUpInput />*/}
             <br/>
             <Button secondary size='huge'
               style={{width: '450px'}}
@@ -49,6 +53,7 @@ export default class landingPage extends Component {
               Log in with Github
             </Button>
           </Container>
+          </div>
         </Segment>
         <Container>
           <Grid columns={5}>
