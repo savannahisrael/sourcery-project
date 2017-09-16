@@ -1,41 +1,26 @@
 [
 	{
-		"event": "proposal",
-		"user_id": "user_1003",
-		"project_id": "proj_1003"
+		"event": "proposal"
 	},
 	{
-		"event": "in-progress",
-		"user_id": "user_1003",
-		"project_id": "proj_1003"
+		"event": "in-progress"
 	},
 	{
-		"event": "completed",
-		"user_id": "user_1003",
-		"project_id": "proj_1003"
+		"event": "completed"
 	},
 	{
-		"event": "proposal",
-		"user_id": "user_1004",
-		"project_id": "proj_1001"
+		"event": "proposal"
 	},
 	{
-		"event": "member joined project",
-		"user_id": "user_1009",
-		"project_id": "proj_1002"
+		"event": "member joined project"
 	},
 	{
-		"event": "member joined project",
-		"user_id": "user_1008",
-		"project_id": "proj_1002"
+		"event": "member joined project"
 	},
 	{
-		"event": "member joined project",
-		"user_id": "user_1003",
-		"project_id": "proj_1002"
+		"event": "member joined project"
 	},
 	{
-		"event": "member joined cohort",
-		"user_id": "user_1003"
+		"event": "member joined cohort"
 	}
 ]
