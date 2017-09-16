@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { Form } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Form } from 'semantic-ui-react';
+import './createProject.css';
 
 const options = [
   { key: 'js', text: 'JavaScript', value: 'javascript' },
@@ -9,7 +10,9 @@ const options = [
   { key: 'c#', text: 'C#', value: 'c#' },
   { key: 'jv', text: 'Java', value: 'java' },
   { key: 'go', text: 'Go', value: 'go' },
-  { key: 'c+', text: 'C++', value: 'c++' },
+  { key: 'c++', text: 'C++', value: 'c++' },
+  { key: 'sw', text: 'Swift', value: 'swift' },
+  { key: 'hc', text: 'HTML/CSS', value: 'html+css' },
 ]
 
 class CreateProjectForm extends Component {
@@ -20,7 +23,7 @@ class CreateProjectForm extends Component {
   render() {
     const { value } = this.state
     return (
-      <Form>
+      <Form class='form'>
         <Form.Group widths='equal'>
           <Form.Input label='Title' placeholder='Title' />
           <Form.Input label='Last Name' placeholder='Last Name' />
