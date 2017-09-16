@@ -4,7 +4,7 @@ import "./footer.css";
 
 const footer = () => (
   <div>
-    <Segment inverted vertical>
+    <Segment inverted vertical sticky>
       <Container className='footer' textAlign='center'>
         <Image src='/logo.png' centered size='mini' />
         <p>Made in San Diego © devCircle 2017</p>
