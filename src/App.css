@@ -1,0 +1,10 @@
+/* Makes the footer sticky */
+.Main {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.Main-content {
+  flex: 1;
+}

@@ -6,8 +6,8 @@ const menuStyle = {
   border: 'none',
   borderRadius: 0,
   boxShadow: 'none',
-  marginBottom: '1em',
-  marginTop: '3em',
+  marginBottom: '.5em',
+  marginTop: '2em',
   transition: 'box-shadow 0.5s ease, padding 0.5s ease',
 }
 
@@ -38,8 +38,13 @@ export default class navBar extends Component {
 
   unStickTopMenu = () => this.setState({ menuFixed: false })
 
+  state = { activeItem: 'home' }
+
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
   render() {
     const { menuFixed} = this.state
+    const { activeItem } = this.state
 
     return (
       <div>
@@ -49,7 +54,7 @@ export default class navBar extends Component {
           once={false}
         >
           <Menu
-            borderless
+            pointing secondary
             fixed={menuFixed && 'top'}
             style={menuFixed ? fixedMenuStyle : menuStyle}
           >
@@ -58,15 +63,15 @@ export default class navBar extends Component {
                 <Image size='mini' src='/components/assets/images/dev.svg' />
               </Menu.Item>*/}
               <Menu.Item header>devCircle</Menu.Item>
-              <Menu.Item as='a'>Explore</Menu.Item>
-              <Menu.Item as='a'>Dashboard</Menu.Item>
+              <Menu.Item name='explore' href='explore' active={activeItem === 'explore'} onClick={this.handleItemClick} />
+              <Menu.Item name='dashboard' href='dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} />
               <Menu.Item>
                 <Input icon='search' placeholder='Search...' />
               </Menu.Item>
               <Menu.Menu position='right'>
                 <Dropdown icon='user circle' simple pointing className='link item'>
                   <Dropdown.Menu>
-                    <Dropdown.Item>Profile</Dropdown.Item>
+                    <Dropdown.Item href='/profile'>Profile</Dropdown.Item>
                     <Dropdown.Item>Log Out</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -82,41 +87,3 @@ export default class navBar extends Component {
   }
 }
 
-// import React, { Component } from 'react'
-// import { Dropdown, Sticky, Icon, Button, Input, Menu, Segment } from 'semantic-ui-react'
-// // import logo from '../components/Images/dev.svg';
-
-
-// export default class navigationBar extends Component {
-//   state = { activeItem: 'dashboard' }
-
-//   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
-//   render() {
-//     const { activeItem } = this.state
-
-//     return (
-//       <Sticky >
-//         <Menu pointing secondary size='large'>
-//           <Menu.Item name='devCircle' active={activeItem === 'devCircle'} onClick={this.handleItemClick} />
-//           <Menu.Item>
-//             <Input icon='search' placeholder='Search...' />
-//           </Menu.Item>
-//           <Menu.Menu position='right'>
-//             <Menu.Item name='explore' active={activeItem === 'Explore'} onClick={this.handleItemClick} />
-//             <Menu.Item name='dashboard' active={activeItem === 'Dashboard'} onClick={this.handleItemClick} />
-//             <Dropdown item icon='user circle' simple>
-//               <Dropdown.Menu>
-//                 <Dropdown.Item>Profile</Dropdown.Item>
-//                 <Dropdown.Item>Logout</Dropdown.Item>
-//               </Dropdown.Menu>
-//             </Dropdown>
-//             <Menu.Item>
-//               <Button primary>CREATE PROJECT</Button>
-//             </Menu.Item>
-//           </Menu.Menu>
-//         </Menu>
-//       </Sticky>
-//     )
-//   }
-// }
