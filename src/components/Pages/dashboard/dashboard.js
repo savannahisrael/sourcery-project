@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Tab } from 'semantic-ui-react';
 import CreateProjectForm from '../createProject';
 import TileGrid from '../../Common/tileGrid';
+import Navbar from "../../Common/navbar";
 
 const panes = [
   { menuItem: 'Active Projects', render: () =>
@@ -24,7 +25,10 @@ const panes = [
 class Dashboard extends Component {
   render() {
     return (
-      <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+      <div>
+        <Navbar currentPage='dashboard' />
+        <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+      </div>
     );
   }
 }

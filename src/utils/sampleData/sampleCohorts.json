@@ -1,8 +1,6 @@
 [
 	{
-		"_id": "group_1000",
 		"name": "UCSD0417",
-		"members": ["user_1000", "user_1001", "user_1002", "user_1003", "user_1004", "user_1005", "user_1006", "user_1007", "user_1008", "user_1009"],
 		"code": "0417"
 	}
 ]

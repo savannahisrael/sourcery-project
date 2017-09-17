@@ -1,0 +1,26 @@
+[
+	{
+		"event": "proposal"
+	},
+	{
+		"event": "in-progress"
+	},
+	{
+		"event": "completed"
+	},
+	{
+		"event": "proposal"
+	},
+	{
+		"event": "member joined project"
+	},
+	{
+		"event": "member joined project"
+	},
+	{
+		"event": "member joined project"
+	},
+	{
+		"event": "member joined cohort"
+	}
+]

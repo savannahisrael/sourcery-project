@@ -1,0 +1,37 @@
+[
+	{
+		"name": "testProject1",
+		"owner": "frankandbeans",
+		"members": ["frankandbeans", "margaret", "lina", "alex"],
+		"pending": ["fahad"],
+		"cohort": "UCSD0417"
+	},
+	{
+		"name": "testProject2",
+		"owner": "fahad",
+		"members": ["fahad", "cindy"],
+		"pending": ["bryce"],
+		"cohort": "UCSD0417"
+	},
+	{
+		"name": "testProject3",
+		"owner": "leeland",
+		"members": ["leeland", "trey", "joe", "bryce"],
+		"pending": [],
+		"cohort": "UCSD0417"
+	},
+	{
+		"name": "testProject4",
+		"owner": "alex",
+		"members": ["alex", "lina", "margaret", "joe"],
+		"pending": [],
+		"cohort": "UCSD0417"
+	},
+	{
+		"name": "testProject5",
+		"owner": "joe",
+		"members": ["joe", "trey", "bryce"],
+		"pending": ["cindy"],
+		"cohort": "UCSD0417"
+	}
+]
