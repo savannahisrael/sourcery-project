@@ -1,16 +1,16 @@
 import React from 'react';
-import { Card, Icon, Image } from 'semantic-ui-react';
+import { Card, Icon, Image, Feed } from 'semantic-ui-react';
+import icon from '../../../assets/images/projectIcons/python.svg';
 
 const Tile = () => (
-  <Card>
-    <Image src='https://react.semantic-ui.com/assets/images/avatar/large/matthew.png'/>
+  <Card >
     <Card.Content>
       <Card.Header>
-        DevCircle
+        Project Title Goes Here
       </Card.Header>
       <Card.Meta>
         <span className='date'>
-          Started on 9/1/17
+          Starts on 16 September 2017
         </span>
       </Card.Meta>
       <Card.Description>
@@ -18,10 +18,14 @@ const Tile = () => (
       </Card.Description>
     </Card.Content>
     <Card.Content extra>
-      <a>
-        <Icon name='user' />
-        4 Devs
-      </a>
+      <Feed>
+        <Feed.Event>
+          <Feed.Label image='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' />
+          <Feed.Label image='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' />
+          <Feed.Label image='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' />
+          <Feed.Label image='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' />
+        </Feed.Event>
+      </Feed>
     </Card.Content>
   </Card>
 )
