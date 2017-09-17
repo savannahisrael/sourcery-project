@@ -53,6 +53,11 @@ module.exports = function (app, passport) {
     //All ACTIVITY FEED data
     app.get('/api/activityfeed', activityController.index);
 
+    //Routes to pull specific data for all models
+
+    //Specifc COHORT data based on code
+    app.get('/api/cohortVerify', cohortVerified);
+
     //Routes to create instaces on for all models
     
     //USER record will be created through the authentication process
@@ -114,3 +119,10 @@ function isLoggedIn(req, res, next) {
     // if they aren't redirect them to the home page
     res.redirect('/');
 };
+
+function cohortVerified (req, res, next){
+    let result = cohortController.verify(req);
+    res.json(result);
+    console.log("result cohort verified", result);
+    return result;
+}
