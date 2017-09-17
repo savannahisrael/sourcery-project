@@ -121,7 +121,7 @@ function isLoggedIn(req, res, next) {
 };
 
 function cohortVerified (req, res, next){
-    let result = cohortController.verify(req);
+    console.log("result:", cohortController.verify(req, res));
     res.json(result);
     console.log("result cohort verified", result);
     return result;
