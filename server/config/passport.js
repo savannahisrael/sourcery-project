@@ -49,57 +49,39 @@ module.exports = function(passport) {
                         return done(null, user);
                     } else {
 
-                        console.log("authentication inside else");
+                        let newUser = new users();
 
-                        let cohortcode = req.query.cohortCode || req.params.cohortCode;
+                        newUser.github = profile._json;
 
-                        cohorts.findOne({
-                            code: "secret"
-                        }, function(err, cohort) {
+                        newUser.save((err, results) => {
                             if (err) {
-                                console.log("cohort doesn't exist");
-                                return done(err);
+                                console.log(err)
                             }
-                            if (cohort) {
+                            req.body.activityData = {
+                                event: "member joined cohort",
+                                user_id: results._id
+                            };
 
-                                let newUser = new users();
+                            activityController.create(req);
 
-                                newUser.github = profile._json;
+                            req.body.update = {
+                                $push: { members: results._id }
+                            };
 
-                                newUser.save((err, results) => {
-                                    if (err) {
-                                        console.log(err)
-                                    }
-                                    req.body.activityData = {
-                                        event: "member joined cohort",
-                                        user_id: results._id
-                                    };
+                            cohortController.update(req);
 
-                                    activityController.create(req);
+                            console.log(req.user);
 
-                                    req.body.cohortId = cohort._id;
+                            // console.log("results: ", results);
+                            //results:
+                            // { __v: 0,
+                            //     _id: 59b9e3b28316193830f66ff3,
+                            //     isActive: true,
+                            //     github: { login: 'fbrahman', id: 24260131, name: 'Fahad Rahman' } }
 
-                                    req.body.update = {
-                                        $push: { members: results._id }
-                                    };
-
-                                    cohortController.update(req);
-
-                                    console.log(req.user);
-
-                                    // console.log("results: ", results);
-                                    //results:
-                                    // { __v: 0,
-                                    //     _id: 59b9e3b28316193830f66ff3,
-                                    //     isActive: true,
-                                    //     github: { login: 'fbrahman', id: 24260131, name: 'Fahad Rahman' } }
-
-                                    console.log("user added to db")
-                                    return done(err, results);
-                                })
-                            }
+                            console.log("user added to db")
+                            return done(err, results);
                         })
-
                     }
                 })
             })
