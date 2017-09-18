@@ -10,6 +10,7 @@ import Profile from "./components/Pages/userProfile";
 import pageContainer from "./components/Common/pageContainer";
 import Footer from "./components/Common/footer";
 import './App.css';
+// import '../semantic/dist/semantic.min.css';
 
 
 const socket = io();
