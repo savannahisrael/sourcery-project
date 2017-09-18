@@ -75,7 +75,7 @@ export default class navBar extends Component {
                   </Dropdown.Menu>
                 </Dropdown>
                 <Menu.Item>
-                  <Button primary>CREATE PROJECT</Button>
+                  <Button color='teal'>CREATE PROJECT</Button>
                 </Menu.Item>
               </Menu.Menu>
             </Container>

@@ -58,10 +58,4 @@ app.get('*', (req, res) => {
 
 //=============== STARTING THE SERVER ===============//
 const server = app.listen(port, () => console.log("App listening on PORT " + port));
-const io = require('socket.io').listen(server);
-
-io.sockets.on('connection', socket => {
-	console.log('A user connected...');
-	socket.on('disconnect', () => console.log('A user disconnected.'));
-
-});
+require("./sockets")(server)

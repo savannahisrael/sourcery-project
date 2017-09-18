@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Container, Divider, Header } from 'semantic-ui-react';
 import contentContainer from '../../Common/contentContainer';
 import TileGrid from '../../Common/tileGrid';
 import Navbar from "../../Common/navbar";
@@ -9,9 +10,10 @@ class Explore extends Component {
     return (
       <div>
         <Navbar currentPage='explore' />
-        <contentContainer>
-          <TileGrid/>
-        </contentContainer>
+        <Divider/>
+        <Header as='h4'>All Projects</Header>
+        <Divider/>
+        <TileGrid/>
       </div>
     );
   }
