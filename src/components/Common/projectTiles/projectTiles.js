@@ -39,14 +39,19 @@ const Tile = () => (
       </Card.Description>
     </Card.Content>
     <Card.Content extra>
-        <Image src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
-        <Image src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
-        <Image src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
-        <Image src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' /> 
+        <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
+        <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
+        <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
+        <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' /> 
+        <Icon  className='tileMore'name='ellipsis horizontal' size='large' />
+        <br/>
+        <Label className='tileCreator'>
+          Creator
+        </Label>
     </Card.Content>
-        <Button animated='vertical' fluid 
+        <Button animated='vertical' fluid
       attached='bottom'
-      color= 'teal'>
+      className='tileJoin'>
       <Button.Content visible>
         Join the team
       </Button.Content>
