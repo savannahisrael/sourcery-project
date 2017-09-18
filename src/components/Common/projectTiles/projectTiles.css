@@ -1,21 +1,23 @@
 .tileHeader {
-    background-color:#25569B !important;
-    height: 150px;
+  background-color: #25569B !important;
+  height: 150px;
 }
 
 .tileTitle {
-    color: white !important;
+  color: white !important;
 }
 
 .iconStyle {
-    color: white;
-    font-size: 48px;
-    text-align: center;
-    display:block;
-    margin: auto;
-    margin-top: 15px;
-    margin-bottom: 20px;
+  color: white;
+  font-size: 48px;
+  text-align: center;
+  display: block;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 20px;
 }
+
+
 /*.svgicon {
     display:block;
     margin: auto;
@@ -24,40 +26,39 @@
 }*/
 
 .tileState {
-    background-color:#5B6B7F !important;
-    color: white !important;
-    text-align: center !important;
-    padding: 8px 10px !important;
-    margin: -8px auto 0px auto !important;
-    width: 250px;
-    /*border-radius: 3px;*/
+  background-color: #5B6B7F !important;
+  color: white !important;
+  text-align: center !important;
+  padding: 8px 10px !important;
+  margin: -8px auto 0px auto !important;
+  width: 90% !important;
+  /*border-radius: 3px;*/
 }
 
 .tileContent {
-    margin-top: 25px !important;
-    border: none !important;
+  margin-top: 25px !important;
+  border: none !important;
 }
 
 .tileTags {
-    margin: 5px 5px !important;
-    background-color: #98A8BC !important;
-    border-radius: 20px !important;
-
+  margin: 5px 5px !important;
+  background-color: #98A8BC !important;
+  border-radius: 20px !important;
 }
 
 .tileCreator {
-    background-color:white !important;
+  background-color: white !important;
 }
 
 .tileTeam {
-    margin: 5px 10px;
+  margin: 5px 10px;
 }
 
 .tileMore {
-    margin-top: 20px !important;
+  margin-top: 20px !important;
 }
 
 .tileJoin {
-    background-color: #25569B !important;
-    color: white !important;
+  background-color: #25569B !important;
+  color: white !important;
 }

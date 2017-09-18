@@ -1,33 +1,43 @@
 import React, { Component } from "react";
-import { Tab } from 'semantic-ui-react';
+import { Grid, Divider, Header } from 'semantic-ui-react';
 import CreateProjectForm from '../createProject';
-import TileGrid from '../../Common/tileGrid';
+import Tile from '../../Common/projectTiles';
 import Navbar from "../../Common/navbar";
-
-const panes = [
-  { menuItem: 'Active Projects', render: () =>
-    <Tab.Pane attached={false} basic>
-      <TileGrid/>
-    </Tab.Pane>
-  },
-  { menuItem: 'Past Projects', render: () =>
-    <Tab.Pane attached={false} basic>
-      <TileGrid/>
-    </Tab.Pane>
-  },
-  { menuItem: 'Create Project', render: () =>
-    <Tab.Pane attached={false} basic>
-      <CreateProjectForm/>
-    </Tab.Pane>
-  },
-]
 
 class Dashboard extends Component {
   render() {
     return (
       <div>
         <Navbar currentPage='dashboard' />
-        <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+        <Divider/>
+        <Header as='h4'>Active Projects</Header>
+        <Divider/>
+        <Grid stackable centered container columns={3}>
+          <Grid.Column>
+            <Tile/>
+          </Grid.Column>
+          <Grid.Column>
+            <Tile/>
+          </Grid.Column>
+        </Grid>
+        <Divider/>
+        <Header as='h4'>Past Projects</Header>
+        <Divider/>
+        <Grid stackable centered container columns={3}>
+          <Grid.Column>
+            <Tile/>
+          </Grid.Column>
+          <Grid.Column>
+            <Tile/>
+          </Grid.Column>
+          <Grid.Column>
+            <Tile/>
+          </Grid.Column>
+        </Grid>
+        <Divider/>
+        <Header as='h4'>Create Project</Header>
+        <Divider/>
+        <CreateProjectForm/>
       </div>
     );
   }

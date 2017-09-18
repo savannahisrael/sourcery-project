@@ -42,7 +42,7 @@ const Tile = () => (
         <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
         <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
         <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
-        <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' /> 
+        <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
         <Icon  className='tileMore'name='ellipsis horizontal' size='large' />
         <br/>
         <Label className='tileCreator'>
