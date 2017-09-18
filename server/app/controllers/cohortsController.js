@@ -51,7 +51,7 @@ module.exports = {
     verify: (req, res)=>{
         let cohortId = req.query.cohortCode || req.params.cohortId; 
         return Cohort.findOne({
-            code: 'cohortId'
+            code: cohortId
         }).then(doc=>{
             return doc
         }).catch(err=>{
