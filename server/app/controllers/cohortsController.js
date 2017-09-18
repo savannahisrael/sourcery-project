@@ -46,5 +46,17 @@ module.exports = {
         }).catch(err => {
             res.json(err)
         })
+    },
+
+    verify: (req, res)=>{
+        let cohortId = req.query.cohortCode || req.params.cohortId; 
+        return Cohort.findOne({
+            code: cohortId
+        }).then(doc=>{
+            return doc
+        }).catch(err=>{
+            console.log("error:", err)
+            res.json(err)
+        })
     }
 }

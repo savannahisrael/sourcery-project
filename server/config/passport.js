@@ -15,18 +15,18 @@ const cohortController = require('../app/controllers/cohortsController.js');
 //loading auth variables
 const configAuth = require('./auth');
 
-module.exports = function (passport) {
+module.exports = function(passport) {
 
     //passport session set up
     // =============================================================
 
     // used to serialize the user for the session
-    passport.serializeUser(function (user, done) {
+    passport.serializeUser(function(user, done) {
         done(null, user);
     });
 
     // used to deserialize the user
-    passport.deserializeUser(function (obj, done) {
+    passport.deserializeUser(function(obj, done) {
         done(null, obj);
     });
 
@@ -38,16 +38,18 @@ module.exports = function (passport) {
             callbackURL: configAuth.github.callbackURL,
             passReqToCallback: true
         },
-        function (req, accessToken, refreshToken, profile, done) {
-            process.nextTick(function () {
+        function(req, accessToken, refreshToken, profile, done) {
+            console.log("before auth starts:", req.session)
+            process.nextTick(function() {
                 users.findOne({
                     'github.id': parseInt(profile.id)
-                }, function (err, user) {
+                }, function(err, user) {
                     if (err)
                         return done(err);
                     if (user) {
                         return done(null, user);
                     } else {
+
                         let newUser = new users();
 
                         newUser.github = profile._json;
@@ -62,13 +64,19 @@ module.exports = function (passport) {
                             };
 
                             activityController.create(req);
-                           
+
+                            req.body.cohortId = req.session.cohortId;
+
                             req.body.update = {
-                                $push:{members:results._id}
+                                $push: { members: results._id }
                             };
 
+                            console.log("req.body inside passport:", req.body);
+
                             cohortController.update(req);
-                          
+
+                            console.log(req.user);
+
                             // console.log("results: ", results);
                             //results:
                             // { __v: 0,
