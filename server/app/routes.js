@@ -56,8 +56,9 @@ module.exports = function(app, passport) {
     //Routes to pull specific data for all models
 
     //Specifc COHORT data based on code
-    app.get('/api/cohortVerify', cohortVerified, function (req, res){
+    app.get('/api/cohortVerify', cohortVerified, function(req, res) {
         console.log("cohort exists");
+        console.log(req.body);
         res.end();
     });
 
@@ -125,9 +126,11 @@ function isLoggedIn(req, res, next) {
 
 function cohortVerified(req, res, next) {
     cohortController.verify(req, res).then(result => {
-        // console.log("result cohort verified", result);
-        if (result)
+        if (result) {
+            req.session.cohortId = result._id;
+            console.log("req.body inside middleware: ", req.session);
             return next();
+        }
         res.redirect('/');
     })
 };

@@ -49,19 +49,14 @@ module.exports = {
     },
 
     verify: (req, res)=>{
-        console.log("req.query: ",req.query);
-        // console.log("res:", res);
         let cohortId = req.query.cohortCode || req.params.cohortId; 
         return Cohort.findOne({
-            code: "0"
+            code: cohortId
         }).then(doc=>{
-            console.log("doc:", doc)
-            req.body.cohortId = doc._id;
-            console.log("req.body", req.body);
             return doc
         }).catch(err=>{
             console.log("error:", err)
-            res.json(doc)
+            res.json(err)
         })
     }
 }

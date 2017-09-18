@@ -39,6 +39,7 @@ module.exports = function(passport) {
             passReqToCallback: true
         },
         function(req, accessToken, refreshToken, profile, done) {
+            console.log("before auth starts:", req.session)
             process.nextTick(function() {
                 users.findOne({
                     'github.id': parseInt(profile.id)
@@ -64,9 +65,13 @@ module.exports = function(passport) {
 
                             activityController.create(req);
 
+                            req.body.cohortId = req.session.cohortId;
+
                             req.body.update = {
                                 $push: { members: results._id }
                             };
+
+                            console.log("req.body inside passport:", req.body);
 
                             cohortController.update(req);
 
