@@ -1,0 +1,43 @@
+.tileHeader {
+    background-color: teal !important;
+    height: 150px;
+}
+
+.tileTitle {
+    color: white !important;
+}
+
+.iconStyle {
+    color: white;
+    font-size: 48px;
+    text-align: center;
+    display:block;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+/*.svgicon {
+    display:block;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}*/
+
+.tileState {
+    background-color: grey !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 12px 10px !important;
+    margin: -10px auto 0px auto !important;
+    width: 250px;
+    border-radius: 3px;
+}
+
+.tileContent {
+    margin-top: 25px !important;
+    border: none !important;
+}
+
+.tileTags {
+    margin: 5px 5px !important;
+}

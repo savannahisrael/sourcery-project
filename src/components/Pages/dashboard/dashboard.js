@@ -6,17 +6,17 @@ import Navbar from "../../Common/navbar";
 
 const panes = [
   { menuItem: 'Active Projects', render: () =>
-    <Tab.Pane attached={false}>
+    <Tab.Pane attached={false} basic>
       <TileGrid/>
     </Tab.Pane>
   },
   { menuItem: 'Past Projects', render: () =>
-    <Tab.Pane attached={false}>
+    <Tab.Pane attached={false} basic>
       <TileGrid/>
     </Tab.Pane>
   },
   { menuItem: 'Create Project', render: () =>
-    <Tab.Pane attached={false}>
+    <Tab.Pane attached={false} basic>
       <CreateProjectForm/>
     </Tab.Pane>
   },
