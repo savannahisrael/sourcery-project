@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Label, Icon } from 'semantic-ui-react';
+import { Form, Label, Icon, Container } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import './createProject.css';
 
@@ -24,22 +24,26 @@ class CreateProjectForm extends Component {
   render() {
     const { value } = this.state
     return (
-        <Form size='large' class='form'>
-          <Form.Group>
-            <Form.Input label='Project Title' placeholder='Title' />
-            <Form.Input label='Start Date' placeholder='Date' />
-          </Form.Group>
-          <Form.Input label='Duration' placeholder='Duration' />
-          <Form.Group inline>
-            <Form.Radio label='Days' value='days' checked={value === 'days'} onChange={this.handleChange} />
-            <Form.Radio label='Weeks' value='weeks' checked={value === 'weeks'} onChange={this.handleChange} />
-          </Form.Group>
-          <Form.TextArea label='Project Summary' placeholder='Summarize your project...' />
-          <Form.Select label='Primary Technology' options={options} placeholder='Primary Technology' />
-          <Form.TextArea label='Secondary Technologies' placeholder='Secondary Technologies' />
-          <Form.TextArea label='Project Details' placeholder='Describe your project...' />
-          <Form.Button>Create</Form.Button>
-        </Form>
+      <div>
+        <Navbar currentPage='create' /> 
+        <Container>     
+          <Form size='large' class='form'>
+              <Form.Input label='Project Title' placeholder='Title' />
+              <Form.Input label='Start Date' placeholder='Date' />
+              
+            <Form.Input label='Duration' placeholder='Duration' />
+            <Form.Group inline>
+              <Form.Radio label='Days' value='days' checked={value === 'days'} onChange={this.handleChange} />
+              <Form.Radio label='Weeks' value='weeks' checked={value === 'weeks'} onChange={this.handleChange} />
+            </Form.Group>
+            <Form.TextArea label='Project Summary' placeholder='Summarize your project...' />
+            <Form.Select label='Primary Technology' options={options} placeholder='Primary Technology' />
+            <Form.TextArea label='Secondary Technologies' placeholder='Secondary Technologies' />
+            <Form.TextArea label='Project Details' placeholder='Describe your project...' />
+            <Form.Button>Create</Form.Button>
+          </Form>
+        </Container>
+      </div>
     )
   }
 }
