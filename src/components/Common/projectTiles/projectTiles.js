@@ -14,25 +14,7 @@ const Tile = (props) => (
       </Card.Meta>
     </Card.Content>
     <Card.Content className='tileContent'>
-        {props.renderTechTags}
-        {/* <Label className='tileTags'>
-          HTML/CSS
-        </Label>
-        <Label className='tileTags'>
-          JavaScript
-        </Label>
-        <Label className='tileTags'>
-          React
-        </Label> <br/>
-        <Label className='tileTags'>
-          MySql
-        </Label>
-        <Label className='tileTags'>
-          Responsive
-        </Label>
-        <Label className='tileTags'>
-          Frontend
-        </Label> */}
+        {props.renderTechTags(props.tech_tags)}
       <Card.Description>
         {props.summary}
       </Card.Description>

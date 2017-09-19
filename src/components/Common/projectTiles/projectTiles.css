@@ -1,10 +1,11 @@
 .tileHeader {
   background-color: #25569B !important;
-  height: 150px;
+  min-height: 180px !important;
 }
 
 .tileTitle {
   color: white !important;
+  /*overflow: hidden !important;*/
 }
 
 .iconStyle {
@@ -30,7 +31,9 @@
   color: white !important;
   text-align: center !important;
   padding: 8px 10px !important;
-  margin: -8px auto 0px auto !important;
+  /*margin: -8px auto 0px auto !important;*/
+  position: absolute !important;
+  top: 162px !important;
   width: 90% !important;
   /*border-radius: 3px;*/
 }

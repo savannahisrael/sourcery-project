@@ -23,7 +23,7 @@ class Explore extends Component {
         title={project.name}
         summary={project.summary}
         description={project.description}
-        tech={project.tech_tags}
+        tech_tags={project.tech_tags}
         start_date={project.start_date}
         duration={project.duration}
         members_wanted={project.members_wanted}
@@ -31,14 +31,16 @@ class Explore extends Component {
         trello_link={project.trello_link}
         repo_link={project.repo_link}
         deploy_link={project.deploy_link}
+        pending_members={project.pending_members}
+        members={project.members}
         renderTechTags={this.renderTechTags}
         handleJoinButton={this.handleJoinButton}
       />
     ));
   }
 
-  renderTechTags = () => {
-    return this.state.projects.tech_tags.map(tech_tag => (
+  renderTechTags = (tech_tags) => {
+    return tech_tags.map(tech_tag => (
       <Label className='tileTags'>
         {tech_tag}
       </Label>
