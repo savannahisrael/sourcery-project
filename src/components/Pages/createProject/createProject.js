@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import { Form } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Form, Label, Icon } from 'semantic-ui-react';
+import Navbar from "../../Common/navbar";
+import './createProject.css';
 
 const options = [
   { key: 'js', text: 'JavaScript', value: 'javascript' },
@@ -9,7 +11,9 @@ const options = [
   { key: 'c#', text: 'C#', value: 'c#' },
   { key: 'jv', text: 'Java', value: 'java' },
   { key: 'go', text: 'Go', value: 'go' },
-  { key: 'c+', text: 'C++', value: 'c++' },
+  { key: 'c++', text: 'C++', value: 'c++' },
+  { key: 'sw', text: 'Swift', value: 'swift' },
+  { key: 'hc', text: 'HTML/CSS', value: 'html+css' },
 ]
 
 class CreateProjectForm extends Component {
@@ -20,22 +24,22 @@ class CreateProjectForm extends Component {
   render() {
     const { value } = this.state
     return (
-      <Form>
-        <Form.Group widths='equal'>
-          <Form.Input label='Title' placeholder='Title' />
-          <Form.Input label='Last Name' placeholder='Last Name' />
+        <Form size='large' class='form'>
+          <Form.Group>
+            <Form.Input label='Project Title' placeholder='Title' />
+            <Form.Input label='Start Date' placeholder='Date' />
+          </Form.Group>
+          <Form.Input label='Duration' placeholder='Duration' />
+          <Form.Group inline>
+            <Form.Radio label='Days' value='days' checked={value === 'days'} onChange={this.handleChange} />
+            <Form.Radio label='Weeks' value='weeks' checked={value === 'weeks'} onChange={this.handleChange} />
+          </Form.Group>
+          <Form.TextArea label='Project Summary' placeholder='Summarize your project...' />
           <Form.Select label='Primary Technology' options={options} placeholder='Primary Technology' />
-        </Form.Group>
-        <Form.Group inline>
-          <label>Timespan</label>
-          <Form.Radio label='1 Week' value='1' checked={value === '1'} onChange={this.handleChange} />
-          <Form.Radio label='2 Weeks' value='2' checked={value === '2'} onChange={this.handleChange} />
-          <Form.Radio label='3 Weeks' value='3' checked={value === '3'} onChange={this.handleChange} />
-        </Form.Group>
-        <Form.TextArea label='About' placeholder='Describe your project...' />
-        <Form.Checkbox label='I agree to the Terms and Conditions' />
-        <Form.Button>Create</Form.Button>
-      </Form>
+          <Form.TextArea label='Secondary Technologies' placeholder='Secondary Technologies' />
+          <Form.TextArea label='Project Details' placeholder='Describe your project...' />
+          <Form.Button>Create</Form.Button>
+        </Form>
     )
   }
 }

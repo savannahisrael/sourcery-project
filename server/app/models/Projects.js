@@ -8,6 +8,10 @@ let ProjectSchema = new Schema({
     },
     summary: String,
     description: String,
+    primary_language:{
+        type:String,
+        require: true
+    },
     tech_tags: [],
     start_date: Date,
     duration: Number,
@@ -19,6 +23,20 @@ let ProjectSchema = new Schema({
     trello_link: String,
     repo_link: String,
     deploy_link: String,
+    chat:[{
+        body:String,
+        date:{
+            type:Date,
+            default: Date.now
+        },
+        author:{
+            type:Schema.ObjectId,
+            ref:'User'
+        },
+        //public vs. private chats
+        type: String
+    }],
+    //4 statuses: proposal, in-progress, completed, deleted
     status:{
         type:String,
         default:'proposal'

@@ -47,6 +47,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 //=============== ROUTES SETUP ===============//
 require('./app/routes.js')(app, passport) //load our routes and pass in our app and fully configured passport
+require('./app/testRoutes.js')(app) //load our routes and pass in our app and fully configured passport
 
 //=============== API ROUTES ===============//
 app.get("/api/test", (req, res) => res.json({id:1, first:'hello', last:'world'}));
@@ -57,10 +58,4 @@ app.get('*', (req, res) => {
 
 //=============== STARTING THE SERVER ===============//
 const server = app.listen(port, () => console.log("App listening on PORT " + port));
-const io = require('socket.io').listen(server);
-
-io.sockets.on('connection', socket => {
-	console.log('A user connected...');
-	socket.on('disconnect', () => console.log('A user disconnected.'));
-
-});
+require("./sockets")(server)

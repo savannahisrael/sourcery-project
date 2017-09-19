@@ -39,6 +39,7 @@ module.exports = function(passport) {
             passReqToCallback: true
         },
         function(req, accessToken, refreshToken, profile, done) {
+            console.log("before auth starts:", req.session)
             process.nextTick(function() {
                 users.findOne({
                     'github.id': parseInt(profile.id)
@@ -49,57 +50,43 @@ module.exports = function(passport) {
                         return done(null, user);
                     } else {
 
-                        console.log("authentication inside else");
+                        let newUser = new users();
 
-                        let cohortcode = req.query.cohortCode || req.params.cohortCode;
+                        newUser.github = profile._json;
 
-                        cohorts.findOne({
-                            code: "secret"
-                        }, function(err, cohort) {
+                        newUser.save((err, results) => {
                             if (err) {
-                                console.log("cohort doesn't exist");
-                                return done(err);
+                                console.log(err)
                             }
-                            if (cohort) {
+                            req.body.activityData = {
+                                event: "member joined cohort",
+                                user_id: results._id
+                            };
 
-                                let newUser = new users();
+                            activityController.create(req);
 
-                                newUser.github = profile._json;
+                            req.body.cohortId = req.session.cohortId;
 
-                                newUser.save((err, results) => {
-                                    if (err) {
-                                        console.log(err)
-                                    }
-                                    req.body.activityData = {
-                                        event: "member joined cohort",
-                                        user_id: results._id
-                                    };
+                            req.body.update = {
+                                $push: { members: results._id }
+                            };
 
-                                    activityController.create(req);
+                            console.log("req.body inside passport:", req.body);
 
-                                    req.body.cohortId = cohort._id;
+                            cohortController.update(req);
 
-                                    req.body.update = {
-                                        $push: { members: results._id }
-                                    };
+                            console.log(req.user);
 
-                                    cohortController.update(req);
+                            // console.log("results: ", results);
+                            //results:
+                            // { __v: 0,
+                            //     _id: 59b9e3b28316193830f66ff3,
+                            //     isActive: true,
+                            //     github: { login: 'fbrahman', id: 24260131, name: 'Fahad Rahman' } }
 
-                                    console.log(req.user);
-
-                                    // console.log("results: ", results);
-                                    //results:
-                                    // { __v: 0,
-                                    //     _id: 59b9e3b28316193830f66ff3,
-                                    //     isActive: true,
-                                    //     github: { login: 'fbrahman', id: 24260131, name: 'Fahad Rahman' } }
-
-                                    console.log("user added to db")
-                                    return done(err, results);
-                                })
-                            }
+                            console.log("user added to db")
+                            return done(err, results);
                         })
-
                     }
                 })
             })
