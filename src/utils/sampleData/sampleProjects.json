@@ -1,7 +1,7 @@
 [
 	{
 		"name": "Project Title Goes Here and Second Line If Needed blahblahblah",
-		"summary": "An app for the continuing education of coding boot camp graduates",
+		"summary": "An app for the continuing education of coding boot camp graduates blahblahblahblahblahblah",
 		"description": "Lorem Ipsum Dolet 1",
 		"primary_language": "Python",
 		"tech_tags": ["node", "express", "mongodb", "react"],
@@ -100,6 +100,30 @@
 		"summary": "Lorem Ipsum 5",
 		"description": "Lorem Ipsum Dolet 5",
 		"primary_language": "Python",
+		"tech_tags": ["node", "express", "mongodb", "react"],
+		"start_date": "09/11/2017",
+		"duration": 7,
+		"members_wanted": 2,
+		"google_drive_link": "https://google.com",
+		"trello_link": "https://trello.com",
+		"repo_link": "https://github.com",
+		"deploy_link": "https://heroku.com",
+		"chat": [
+			{
+				"body": "Hello",
+				"date": "09/16/2017",
+				"author": "Bryce"
+			}
+		],
+		"status": "active",
+		"pending_members": ["Fahad", "Aaron"],
+		"members": ["Bryce", "Cindy"]
+	},
+	{
+		"name": "testProject6",
+		"summary": "Lorem Ipsum 6",
+		"description": "Lorem Ipsum Dolet 6",
+		"primary_language": "Go",
 		"tech_tags": ["node", "express", "mongodb", "react"],
 		"start_date": "09/11/2017",
 		"duration": 7,

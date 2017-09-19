@@ -12,10 +12,13 @@
   color: white;
   font-size: 48px;
   text-align: center;
-  display: block;
-  margin: auto;
+  /*display: block;*/
+  position: absolute;
+  top: 80px;
+  left: 120px;
+  /*margin: auto;
   margin-top: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 20px;*/
 }
 
 
@@ -41,6 +44,7 @@
 .tileContent {
   margin-top: 25px !important;
   border: none !important;
+  min-height: 175px !important;
 }
 
 .tileTags {
