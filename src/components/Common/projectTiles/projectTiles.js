@@ -3,9 +3,9 @@ import { Card, Icon, Image, Button, Label } from 'semantic-ui-react';
 import './projectTiles.css';
 
 const Tile = (props) => (
-  <Card raised>
+  <Card raised className='tileCard'>
     <Card.Content className='tileHeader'>
-      <Card.Header className='tileTitle' >
+      <Card.Header className='tileTitle'>
         {props.title}
       </Card.Header>
       <i className="devicon-python-plain iconStyle"></i>
@@ -15,11 +15,11 @@ const Tile = (props) => (
     </Card.Content>
     <Card.Content className='tileContent'>
         {props.renderTechTags(props.tech_tags)}
-      <Card.Description>
+      <Card.Description className='tileSummary'>
         {props.summary}
       </Card.Description>
     </Card.Content>
-    <Card.Content extra>
+    <Card.Content extra >
         <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
         <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
         <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />

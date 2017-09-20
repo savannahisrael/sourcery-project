@@ -1,0 +1,23 @@
+.exploreBanner {
+    min-height: 350px !important;
+    padding: 50px 0px !important;
+}
+
+.exploreTitle {
+    font-size: 4em !important;
+    font-weight: 300 !important;
+    margin-top: 25px !important;
+    margin-bottom: -20px !important;
+    
+}
+
+.exploreSubtitle {
+    font-size: 1.5em !important;
+    font-weight: 300 !important;
+}
+
+.exploreSearch {
+    width: 400px !important;
+    margin-top: 5px !important;    
+    /* font-weight: 200 !important; */
+}

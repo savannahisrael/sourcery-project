@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Divider, Header, Label, Grid } from 'semantic-ui-react';
+import { Container, Divider, Header, Label, Grid, Menu, Button, Icon, Segment , Input} from 'semantic-ui-react';
 import contentContainer from '../../Common/contentContainer';
 import TileGrid from '../../Common/tileGrid';
 import Tile from '../../Common/projectTiles';
 import Navbar from '../../Common/navbar';
 import './explore.css';
 import projectData from '../../../utils/sampleData/sampleProjects.json';
+import search from '../../Common/navbar';
 
 class Explore extends Component {
 
@@ -60,7 +61,22 @@ class Explore extends Component {
     return (
       <div>
         <Navbar currentPage='explore' />
-        <Divider/>
+        {/* <Divider/> */}
+        <Segment inverted textAlign='center' vertical className='exploreBanner'>
+            <Container text>
+              <Header inverted as='h1' className='exploreTitle'>
+                Explore Projects  
+              </Header>
+              <Header as='h2' inverted className='exploreSubtitle'>
+               Solve interesting problems.
+              </Header>
+              <Menu.Item>
+                <Input icon='search' placeholder='Search...' className='exploreSearch' />
+              </Menu.Item>            
+              </Container>
+          </Segment>
+
+
         <Header as='h4'>All Projects</Header>
         <Divider/>
         <Grid stackable centered container columns={3}>
