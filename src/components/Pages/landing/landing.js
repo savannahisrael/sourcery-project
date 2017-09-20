@@ -59,36 +59,36 @@ export default class landingPage extends Component {
           <Grid columns={5}>
             <Grid.Row>
               <Grid.Column>
-                <Tiles/>
+                {/* <Tiles/> */}
               </Grid.Column>
               <Grid.Column>
-                <Tiles/>
+                {/* <Tiles/> */}
               </Grid.Column>
               <Grid.Column>
-                <Tiles/>
+                {/* <Tiles/> */}
               </Grid.Column>
               <Grid.Column>
-                <Tiles/>
+                {/* <Tiles/> */}
               </Grid.Column>
               <Grid.Column>
-                <Tiles/>
+                {/* <Tiles/> */}
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-                <Tiles/>
+                {/* <Tiles/> */}
               </Grid.Column>
               <Grid.Column>
-                <Tiles/>
+                {/* <Tiles/> */}
               </Grid.Column>
               <Grid.Column>
-                <Tiles/>
+                {/* <Tiles/> */}
               </Grid.Column>
               <Grid.Column>
-                <Tiles/>
+                {/* <Tiles/> */}
               </Grid.Column>
               <Grid.Column>
-                <Tiles/>
+                {/* <Tiles/> */}
               </Grid.Column>
             </Grid.Row>
           </Grid>

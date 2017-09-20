@@ -19,7 +19,7 @@
 				"author": "Bryce"
 			}
 		],
-		"status": "active",
+		"status": "proposal",
 		"pending_members": ["Fahad", "Aaron"],
 		"members": ["Bryce", "Cindy"]
 	},
@@ -43,7 +43,7 @@
 				"author": "Bryce"
 			}
 		],
-		"status": "active",
+		"status": "in-progress",
 		"pending_members": ["Fahad", "Aaron"],
 		"members": ["Bryce", "Cindy"]
 	},
@@ -67,7 +67,7 @@
 				"author": "Bryce"
 			}
 		],
-		"status": "active",
+		"status": "proposal",
 		"pending_members": ["Fahad", "Aaron"],
 		"members": ["Bryce", "Cindy"]
 	},
@@ -91,7 +91,7 @@
 				"author": "Bryce"
 			}
 		],
-		"status": "active",
+		"status": "completed",
 		"pending_members": ["Fahad", "Aaron"],
 		"members": ["Bryce", "Cindy"]
 	},
@@ -115,7 +115,7 @@
 				"author": "Bryce"
 			}
 		],
-		"status": "active",
+		"status": "deleted",
 		"pending_members": ["Fahad", "Aaron"],
 		"members": ["Bryce", "Cindy"]
 	},
@@ -139,7 +139,7 @@
 				"author": "Bryce"
 			}
 		],
-		"status": "active",
+		"status": "completed",
 		"pending_members": ["Fahad", "Aaron"],
 		"members": ["Bryce", "Cindy"]
 	}
