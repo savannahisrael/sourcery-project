@@ -1,0 +1,10 @@
+.navIcon {
+    font-size: 28px;
+    color: #000;
+    position: absolute;
+    top: 12px;
+}
+
+.navItem {
+    font-size: 14px !important;
+}
