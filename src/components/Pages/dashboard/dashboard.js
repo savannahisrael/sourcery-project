@@ -82,11 +82,13 @@ class Dashboard extends Component {
     ));
   }
 
-  render() {
+  render(props) {
     return (
       <div>
         <Navbar currentPage='dashboard' />
         <Divider/>
+        <p>Cohort: {this.props.match.params.cohort}</p>
+        <p>Username: {this.props.match.params.username}</p>
         <Header as='h4'>Active Projects</Header>
         <Divider/>
         <Grid stackable centered container columns={3}>

@@ -22,11 +22,11 @@ const App = () =>
     <div className="Main">
       <pageContainer className="Main-content">
         <Route exact path="/" component={Landing} />
-        <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/explore" component={Explore} />
         <Route exact path="/create" component={Create} />
-        <Route exact path="/project" component={Project} />
-        <Route exact path="/profile" component={Profile} />
+        <Route path="/:cohort/:username/profile" component={Profile} />
+        <Route path="/:cohort/:username/dashboard" component={Dashboard} />
+        <Route path="/:cohort/:username/app/:project" component={Project} />
       </pageContainer>
       <Footer />
     </div>

@@ -37,7 +37,7 @@ class Project extends Component {
     ));
   }
 
-  render() {
+  render(props) {
     return (
       <div>
         <Navbar currentPage='project' />
@@ -45,6 +45,9 @@ class Project extends Component {
 
         <Header textAlign='center' as='h1'>
           {this.state.project.name}
+          <p>Cohort: {this.props.match.params.cohort}</p>
+          <p>Username: {this.props.match.params.username}</p>
+          <p>Project: {this.props.match.params.project}</p>
         </Header>
         <Segment>
         <Container text textAlign='center'>
