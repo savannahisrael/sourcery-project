@@ -1,8 +1,42 @@
 import React, { Component } from "react";
 import { Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, List } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
+import projectData from '../../../utils/sampleData/sampleProjects.json';
 
 class Project extends Component {
+
+  state = {
+    project: projectData[0]
+  };
+
+  renderTeamMembers = () => {
+    return this.state.project.members.map(member => (
+      <Table.Row>
+        <Table.Cell>
+          <Header as='h4' image>
+            <Image src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini' />
+            <Header.Content>
+                {member}
+              {/* <Header.Subheader>Project Captain</Header.Subheader> */}
+            </Header.Content>
+          </Header>
+        </Table.Cell>
+      </Table.Row>
+    ));
+  }
+
+  renderPendingMembers = () => {
+    return this.state.project.pending_members.map(pending_member => (
+      <List.Item>
+        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
+        <List.Content float='right'>
+          <List.Header as='a'>{pending_member}</List.Header>
+          {/* <List.Description>Coding Ninja</List.Description> */}
+        </List.Content>
+      </List.Item>
+    ));
+  }
+
   render() {
     return (
       <div>
@@ -10,11 +44,11 @@ class Project extends Component {
         <Image src='http://lorempixel.com/output/cats-q-c-480-480-1.jpg' size='medium' shape='circular' centered />
 
         <Header textAlign='center' as='h1'>
-          DevCircle
+          {this.state.project.name}
         </Header>
         <Segment>
         <Container text textAlign='center'>
-          <p>Summary goes here lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede link mollis pretium.</p>
+          <p>{this.state.project.summary}</p>
         </Container>
         </Segment>
         <Grid centered columns={3}>
@@ -24,20 +58,19 @@ class Project extends Component {
               <Header as='h3'>Project Details</Header>
               <Divider />
               <Header as='h4'>Description</Header>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede link mollis pretium.</p>
-              <p>Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.</p>
+              <p>{this.state.project.description}</p>
               <Divider />
               <Header as='h4'>Start Date</Header>
-              <p>9/13/17</p>
+              <p>{this.state.project.start_date}</p>
               <Divider />
               <Header as='h4'>Duration</Header>
-              <p>21 days</p>
+              <p>{this.state.project.duration} days</p>
               <Divider />
               <Header as='h4'>Devs Wanted</Header>
-              <p>3</p>
+              <p>{this.state.project.members_wanted}</p>
               <Divider />
               <Header as='h4'>Technology</Header>
-              <p>Express, React, MongoDB, Mongoose, Node, Passport</p>
+              <p>{this.state.project.tech_tags.join(', ')}</p>
 
               <Rail position='left'>
                 <Segment>
@@ -56,9 +89,6 @@ class Project extends Component {
                               </Header.Content>
                             </Header>
                           </Table.Cell>
-                          {/* <Table.Cell>
-                              22
-                          </Table.Cell> */}
                         </Table.Row>
                         <Table.Row>
                           <Table.Cell>
@@ -70,9 +100,6 @@ class Project extends Component {
                               </Header.Content>
                             </Header>
                           </Table.Cell>
-                          {/* <Table.Cell>
-                              15
-                          </Table.Cell> */}
                         </Table.Row>
                         <Table.Row>
                           <Table.Cell>
@@ -84,9 +111,7 @@ class Project extends Component {
                               </Header.Content>
                             </Header>
                           </Table.Cell>
-                          {/* <Table.Cell>
-                              12
-                          </Table.Cell> */}
+
                         </Table.Row>
                         <Table.Row>
                           <Table.Cell>
@@ -98,9 +123,6 @@ class Project extends Component {
                               </Header.Content>
                             </Header>
                           </Table.Cell>
-                          {/* <Table.Cell>
-                              11
-                          </Table.Cell> */}
                         </Table.Row>
                       </Table.Body>
                     </Table>
@@ -235,33 +257,33 @@ class Project extends Component {
           <Container text>
             <Header as='h3'>Resources</Header>
             <Divider />
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.</p>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</p>
             <List divided relaxed>
       `       <List.Item>
                 <List.Icon name='github' size='large' verticalAlign='middle' />
                 <List.Content>
-                  <List.Header as='a'>Github Link</List.Header>
+                  <List.Header as='a' href={this.state.project.repo_link} target='_blank'>Github Link</List.Header>
                   {/* <List.Description as='a'>Updated 10 mins ago</List.Description> */}
                 </List.Content>
               </List.Item>
               <List.Item>
                 <List.Icon name='google' size='large' verticalAlign='middle' />
                 <List.Content>
-                  <List.Header as='a'>Google Drive Link</List.Header>
+                  <List.Header as='a' href={this.state.project.google_drive_link} target='_blank'>Google Drive Link</List.Header>
                   {/* <List.Description as='a'>Updated 22 mins ago</List.Description> */}
                 </List.Content>
               </List.Item>
               <List.Item>
                 <List.Icon name='trello' size='large' verticalAlign='middle' />
                 <List.Content>
-                  <List.Header as='a'>Trello Link</List.Header>
+                  <List.Header as='a' href={this.state.project.trello_link} target='_blank'>Trello Link</List.Header>
                   {/* <List.Description as='a'>Updated 34 mins ago</List.Description> */}
                 </List.Content>
               </List.Item>
               <List.Item>
                 <List.Icon name='external' size='large' verticalAlign='middle' />
                 <List.Content>
-                  <List.Header as='a'>Deployment Link</List.Header>
+                  <List.Header as='a' href={this.state.project.deploy_link} target='_blank'>Deployment Link</List.Header>
                   {/* <List.Description as='a'>Updated 34 mins ago</List.Description> */}
                 </List.Content>
               </List.Item>
