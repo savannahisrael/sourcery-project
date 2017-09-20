@@ -11,6 +11,10 @@ let UserSchema = new Schema({
     isActive:{
         type:Boolean, 
         default:true
-    }
+    }, 
+    projects:[{
+    	type: Schema.ObjectId, 
+    	ref:'Project'
+    }]
 })
 module.exports = mongoose.model('User', UserSchema);

@@ -62,6 +62,17 @@ module.exports = function(app, passport) {
         res.end();
     });
 
+    //Specific COHORT data based on code 
+    // app.get('/:cohortCode', (req, res)=>{
+    //     let cohortCode = req.params.cohortCode;
+    //     res.redirect(`/${cohortCode}/explore`);
+    // });
+
+    app.get(`/:cohortCode/explore`, (req, res)=>{
+        console.log(req.params);
+        cohortController.oneCohort(req, res);
+    })
+
     //Routes to create instaces on for all models
 
     //USER record will be created through the authentication process

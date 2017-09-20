@@ -29,10 +29,10 @@ let ProjectSchema = new Schema({
             type:Date,
             default: Date.now
         },
-        author:{
+        author_id:{
             type:Schema.ObjectId,
             ref:'User'
-        },
+        }
         //public vs. private chats
         type: String
     }],

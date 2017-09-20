@@ -12,6 +12,21 @@ module.exports = {
                 res.json(err)
             })
     },
+    //Method to get one Cohort
+    oneCohort:(req, res)=>{
+        console.log("inside ORM: ", req.params);
+        Cohort.find({
+            code:req.params.cohortCode
+        })
+        .populate('members')
+        .populate('projects')
+        .then(doc =>{
+            res.json(doc);
+        })
+        .catch(err =>{
+            res.json(err);
+        })
+    },
     //Method to create new Cohort
     create: (req, res) => {
         Cohort.create(req.body)
@@ -47,7 +62,7 @@ module.exports = {
             res.json(err)
         })
     },
-
+    //Method to verify Cohort
     verify: (req, res)=>{
         let cohortId = req.query.cohortCode || req.params.cohortId; 
         return Cohort.findOne({
