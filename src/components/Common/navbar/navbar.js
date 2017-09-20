@@ -61,7 +61,7 @@ export default class navBar extends Component {
               {/*<Menu.Item>
                 <Image size='mini' src='/components/assets/images/dev.svg' />
               </Menu.Item>*/}
-              <Menu.Item header>devCircle</Menu.Item>
+              <Menu.Item name='devCircle' href='/' onClick={this.handleItemClick}/>
               <Menu.Item name='explore' href='explore' active={activeItem === 'explore'} onClick={this.handleItemClick} />
               <Menu.Item name='dashboard' href='dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} />
               <Menu.Item>
@@ -75,7 +75,7 @@ export default class navBar extends Component {
                   </Dropdown.Menu>
                 </Dropdown>
                 <Menu.Item>
-                  <Button color='teal'>CREATE PROJECT</Button>
+                  <Button color='teal' href='/create' >CREATE PROJECT</Button>
                 </Menu.Item>
               </Menu.Menu>
             </Container>

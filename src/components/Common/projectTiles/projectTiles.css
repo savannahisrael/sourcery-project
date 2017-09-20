@@ -1,20 +1,24 @@
 .tileHeader {
   background-color: #25569B !important;
-  height: 150px;
+  min-height: 180px !important;
 }
 
 .tileTitle {
   color: white !important;
+  /*overflow: hidden !important;*/
 }
 
 .iconStyle {
   color: white;
   font-size: 48px;
   text-align: center;
-  display: block;
-  margin: auto;
+  /*display: block;*/
+  position: absolute;
+  top: 80px;
+  left: 120px;
+  /*margin: auto;
   margin-top: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 20px;*/
 }
 
 
@@ -30,7 +34,9 @@
   color: white !important;
   text-align: center !important;
   padding: 8px 10px !important;
-  margin: -8px auto 0px auto !important;
+  /*margin: -8px auto 0px auto !important;*/
+  position: absolute !important;
+  top: 162px !important;
   width: 90% !important;
   /*border-radius: 3px;*/
 }
@@ -38,6 +44,7 @@
 .tileContent {
   margin-top: 25px !important;
   border: none !important;
+  min-height: 175px !important;
 }
 
 .tileTags {
