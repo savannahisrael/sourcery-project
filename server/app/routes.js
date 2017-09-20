@@ -111,6 +111,11 @@ module.exports = function(app, passport) {
     //will update visible to false
     app.patch('/api/activityHide', activityController.hide);
 
+    //TEST ROUTES
+    app.get('/test/reqUser', (req, res)=>{
+        console.log(req.user);
+    })
+
 };
 
 //route middleware to make sure a user is logged in 
