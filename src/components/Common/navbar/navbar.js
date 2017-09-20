@@ -64,9 +64,6 @@ export default class navBar extends Component {
               <Menu.Item name='devCircle' href='/' onClick={this.handleItemClick}/>
               <Menu.Item name='explore' href='explore' active={activeItem === 'explore'} onClick={this.handleItemClick} />
               <Menu.Item name='dashboard' href='dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} />
-              <Menu.Item>
-                <Input icon='search' placeholder='Search...' />
-              </Menu.Item>
               <Menu.Menu position='right'>
                 <Dropdown icon='user circle' simple pointing className='link item'>
                   <Dropdown.Menu>
