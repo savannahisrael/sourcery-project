@@ -15,13 +15,14 @@ class Explore extends Component {
   };
 
   // A helper method for rendering one Tile for each 1/3 project
-  renderFirstThirdTiles = () => {
-    let newArray1 = [];
-    this.state.projects.map((project, index) => {
-      index % 3 === 0 ? newArray1.push(project) : console.log("Do Nothing")
+  renderTiles = (remainder) => {
+    let colArr = this.state.projects.filter((project) => {
+      return project.status !== 'deleted';
+    }).filter((project, index) => {
+      return index % 3 === remainder;
     });
-    console.log('newArray1', newArray1);
-    return newArray1.map(project => (
+    console.log('colArr', colArr);
+    return colArr.map(project => (
       <Tile
         title={project.name}
         summary={project.summary}
@@ -34,62 +35,7 @@ class Explore extends Component {
         trello_link={project.trello_link}
         repo_link={project.repo_link}
         deploy_link={project.deploy_link}
-        pending_members={project.pending_members}
-        members={project.members}
-        renderTechTags={this.renderTechTags}
-        handleJoinButton={this.handleJoinButton}
-      />
-    ));
-  }
-
-  // A helper method for rendering one Tile for each 2/3 project
-  renderSecondThirdTiles = () => {
-    let newArray2 = [];
-    this.state.projects.map((project, index) => {
-      index % 3 === 1 ? newArray2.push(project) : console.log("Do Nothing")
-    });
-    console.log('newArray2', newArray2);
-    return newArray2.map(project => (
-      <Tile
-        title={project.name}
-        summary={project.summary}
-        description={project.description}
-        tech_tags={project.tech_tags}
-        start_date={project.start_date}
-        duration={project.duration}
-        members_wanted={project.members_wanted}
-        google_drive_link={project.google_drive_link}
-        trello_link={project.trello_link}
-        repo_link={project.repo_link}
-        deploy_link={project.deploy_link}
-        pending_members={project.pending_members}
-        members={project.members}
-        renderTechTags={this.renderTechTags}
-        handleJoinButton={this.handleJoinButton}
-      />
-    ));
-  }
-
-  // A helper method for rendering one Tile for each 3/3 project
-  renderThirdThirdTiles = () => {
-    let newArray3 = [];
-    this.state.projects.map((project, index) => {
-      index % 3 === 2 ? newArray3.push(project) : console.log("Do Nothing")
-    });
-    console.log('newArray3', newArray3);
-    return newArray3.map(project => (
-      <Tile
-        title={project.name}
-        summary={project.summary}
-        description={project.description}
-        tech_tags={project.tech_tags}
-        start_date={project.start_date}
-        duration={project.duration}
-        members_wanted={project.members_wanted}
-        google_drive_link={project.google_drive_link}
-        trello_link={project.trello_link}
-        repo_link={project.repo_link}
-        deploy_link={project.deploy_link}
+        status={project.status}
         pending_members={project.pending_members}
         members={project.members}
         renderTechTags={this.renderTechTags}
@@ -120,13 +66,13 @@ class Explore extends Component {
         <Grid stackable centered container columns={3}>
           <Grid.Row>
             <Grid.Column>
-              {this.renderFirstThirdTiles()}
+              {this.renderTiles(0)}
             </Grid.Column>
             <Grid.Column>
-              {this.renderSecondThirdTiles()}
+              {this.renderTiles(1)}
             </Grid.Column>
             <Grid.Column>
-              {this.renderThirdThirdTiles()}
+              {this.renderTiles(2)}
             </Grid.Column>
           </Grid.Row>
         </Grid>
