@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { Container, Dropdown, Image,  Menu, Visibility, Button, Input} from 'semantic-ui-react';
+import './navbar.css';
 
 const menuStyle = {
   border: 'none',
@@ -57,7 +58,7 @@ export default class navBar extends Component {
             fixed={menuFixed && 'top'}
             style={menuFixed ? fixedMenuStyle : menuStyle}
           >
-            <Container text>
+            <Container>
               {/*<Menu.Item>
                 <Image size='mini' src='/components/assets/images/dev.svg' />
               </Menu.Item>*/}
@@ -65,15 +66,15 @@ export default class navBar extends Component {
               <Menu.Item name='explore' href='explore' active={activeItem === 'explore'} onClick={this.handleItemClick} />
               <Menu.Item name='dashboard' href='dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} />
               <Menu.Menu position='right'>
-                <Dropdown icon='user circle' simple pointing className='link item'>
-                  <Dropdown.Menu>
+                <Menu.Item>
+                  <Button color='teal' href='/create' >CREATE PROJECT</Button>
+                </Menu.Item>
+                <Dropdown icon='user circle' simple className='navIcon'>
+                  <Dropdown.Menu className='navItem'>
                     <Dropdown.Item href='/profile'>Profile</Dropdown.Item>
                     <Dropdown.Item>Log Out</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-                <Menu.Item>
-                  <Button color='teal' href='/create' >CREATE PROJECT</Button>
-                </Menu.Item>
               </Menu.Menu>
             </Container>
           </Menu>

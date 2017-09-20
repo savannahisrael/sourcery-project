@@ -16,8 +16,13 @@
     font-weight: 300 !important;
 }
 
-.exploreSearch {
+/* .exploreSearch {
     width: 400px !important;
     margin-top: 5px !important;    
-    /* font-weight: 200 !important; */
-}
+    /* font-weight: 200 !important;
+} */
+
+/* .exploreDropdown {
+    opacity: 0.1;
+    color: #fff;
+} */
