@@ -65,17 +65,17 @@ module.exports = function(passport) {
 
                             activityController.create(req);
 
-                            req.body.cohortId = req.session.cohortId;
+                            // req.body.cohortId = req.session.cohortId;
 
-                            req.body.update = {
-                                $push: { members: results._id }
-                            };
+                            // req.body.update = {
+                            //     $push: { members: results._id }
+                            // };
 
-                            console.log("req.body inside passport:", req.body);
+                            // console.log("req.body inside passport:", req.body);
 
-                            cohortController.update(req);
+                            // cohortController.update(req);
 
-                            console.log(req.user);
+                            // console.log(req.user);
 
                             // console.log("results: ", results);
                             //results:

@@ -125,6 +125,7 @@ module.exports = function(app, passport) {
     //TEST ROUTES
     app.get('/test/reqUser', (req, res)=>{
         console.log(req.user);
+        res.json(req.user);
     })
 
 };
@@ -142,8 +143,8 @@ function isLoggedIn(req, res, next) {
 function cohortVerified(req, res, next) {
     cohortController.verify(req, res).then(result => {
         if (result) {
-            req.session.cohortId = result._id;
-            console.log("req.body inside middleware: ", req.session);
+            // req.session.cohortId = result._id;
+            // console.log("req.body inside middleware: ", req.session);
             return next();
         }
         res.redirect('/');
