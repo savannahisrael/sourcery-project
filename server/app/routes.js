@@ -11,7 +11,7 @@ module.exports = function(app, passport) {
     // =============================================================
 
     //route for github authentication and login
-    app.get('/auth/github', cohortVerified, passport.authenticate('github', {
+    app.get('/auth/github', passport.authenticate('github', {
         scope: ['user:email']
     }));
 
