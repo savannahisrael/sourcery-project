@@ -1,9 +1,17 @@
 import React, { Component } from "react";
-import { Grid, Divider, Header, Label } from 'semantic-ui-react';
+import { Grid, Divider, Header, Label, Container, Image, Segment, Tab } from 'semantic-ui-react';
 import CreateProjectForm from '../createProject';
 import Tile from '../../Common/projectTiles';
 import Navbar from "../../Common/navbar";
 import projectData from '../../../utils/sampleData/sampleProjects.json';
+import './dashboard.css';
+
+const panes = [
+  { menuItem: 'Active Projects', render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane> },
+  { menuItem: 'Projects in Progress', render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane> },
+  { menuItem: 'Complete Projects', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
+]
+
 
 class Dashboard extends Component {
 
@@ -81,14 +89,24 @@ class Dashboard extends Component {
       </Label>
     ));
   }
-
+  
   render(props) {
     return (
       <div>
         <Navbar currentPage='dashboard' />
-        <Divider/>
-        <p>Cohort: {this.props.match.params.cohort}</p>
-        <p>Username: {this.props.match.params.username}</p>
+        {/* <p>Cohort: {this.props.match.params.cohort}</p>
+        <p>Username: {this.props.match.params.username}</p> */}
+        <Segment textAlign='center' vertical className='dashboardBanner'>
+          <Container text>
+          <Image src='http://lorempixel.com/output/cats-q-c-480-480-1.jpg' size='tiny' shape='circular' centered />
+          <Header as='h1' className='dashboardTitle'>
+            Dashboard  
+          </Header><br/><br/><br/>
+          </Container>
+        </Segment>
+        <Container text className='dashboardTab'>
+            <Tab menu={{ secondary: true, pointing: true }} panes={panes}/>
+        </Container>
         <Header as='h4'>Active Projects</Header>
         <Divider/>
         <Grid stackable centered container columns={3}>

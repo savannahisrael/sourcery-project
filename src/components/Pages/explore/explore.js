@@ -13,16 +13,16 @@ const techSelection = [ { key: 'Py', value: 'Py', text: 'Python' }, { key: 'CS',
 
 const projectProgress = [
   {
-    text: 'proposed',
-    value: 'proposed',
+    text: 'Proposed',
+    value: 'Proposed',
   },
   {
-    text: 'in progress',
-    value: 'in progress',
+    text: 'in Progress',
+    value: 'in Progress',
   },
   {
-    text: 'completed',
-    value: 'completed',
+    text: 'Completed',
+    value: 'Completed',
   },
 
 ]
@@ -81,17 +81,17 @@ class Explore extends Component {
       <div>
         <Navbar currentPage='explore' />
         {/* <Divider/> */}
-        <Segment inverted textAlign='center' vertical className='exploreBanner'>
+        <Segment textAlign='center' vertical className='exploreBanner'>
           <Container text>
-            <Header inverted as='h1' className='exploreTitle'>
+            <Header as='h1' className='exploreTitle'>
               Explore Projects  
             </Header><br/>
-            <Dropdown placeholder='Proposed' fluid selection options={projectProgress} className='exploreDropdown' />
-            <Header inverted>
+            <Dropdown text='Proposed' selection options={projectProgress} className='exploreDropdown' />
+            <Header className='exploreSubheader'>
               Search by
             </Header>
-            <Dropdown placeholder='Technologies' fluid multiple search selection options={techSelection} />  
-            <Header as='h2' inverted className='exploreSubtitle'>
+            <Dropdown placeholder='Technologies' multiple search selection options={techSelection} className='exploreDropdown2'/>  
+            <Header as='h2' className='exploreSubtitle'>
               Solve interesting problems.
             </Header>          
           </Container>

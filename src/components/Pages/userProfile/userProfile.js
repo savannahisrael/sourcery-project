@@ -12,10 +12,10 @@ class Project extends Component {
       <Container text textAlign='center'>
         <Header textAlign='center' as='h1'>
           Cindy Chen
-          <p>Cohort: {this.props.match.params.cohort}</p>
-          <p>Username: {this.props.match.params.username}</p>
           <Header.Subheader>
-            www.cindygchen.com
+            <p>www.cindygchen.com</p>
+            <p>My Group: {this.props.match.params.cohort}</p>
+            <p>My Username: {this.props.match.params.username}</p>
           </Header.Subheader>
         </Header>
         <p>Cindy is a UX designer based in San Diego.</p>

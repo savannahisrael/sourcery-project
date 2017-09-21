@@ -28,19 +28,15 @@ class CreateProjectForm extends Component {
         <Navbar currentPage='create' /> 
         <Container>     
           <Form size='large' class='form'>
-              <Form.Input label='Project Title' placeholder='Title' />
-              <Form.Input label='Start Date' placeholder='Date' />
+              <Form.Input label='Project Name' placeholder='devCircle' />
+              <Form.Input label='Start Date' placeholder='Oct 1, 2017' />
               
-            <Form.Input label='Duration' placeholder='Duration' />
-            <Form.Group inline>
-              <Form.Radio label='Days' value='days' checked={value === 'days'} onChange={this.handleChange} />
-              <Form.Radio label='Weeks' value='weeks' checked={value === 'weeks'} onChange={this.handleChange} />
-            </Form.Group>
+          <Form.Input label='Project Length' placeholder='in weeks' />
             <Form.TextArea label='Project Summary' placeholder='Summarize your project...' />
-            <Form.Select label='Primary Technology' options={options} placeholder='Primary Technology' />
-            <Form.TextArea label='Secondary Technologies' placeholder='Secondary Technologies' />
+            <Form.Select label='Main Technology' options={options} placeholder='e.g. JavaScript' />
+            <Form.TextArea label='Other Technologies' placeholder='MySql, HTML5, CSS3' />
             <Form.TextArea label='Project Details' placeholder='Describe your project...' />
-            <Form.Button>Create</Form.Button>
+            <Form.Button>Create Project</Form.Button>
           </Form>
         </Container>
       </div>
