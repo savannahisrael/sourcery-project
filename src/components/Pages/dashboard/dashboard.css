@@ -1,0 +1,18 @@
+.dashboardBanner {
+    min-height: 350px !important;
+    padding: 50px 0px !important;
+    background-color: #DEE1E5 !important;
+    border-bottom: none !important;
+}
+
+.dashboardTab {
+    background-color: #DEE1E5 !important;
+}
+
+.dashboardTitle {
+    font-size: 4em !important;
+    font-weight: 300 !important;
+    margin-top: 25px !important;
+    margin-bottom: -20px !important;
+    color: #001738 !important;   
+}
