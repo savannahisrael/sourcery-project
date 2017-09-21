@@ -71,7 +71,9 @@ module.exports = function(app, passport) {
     app.get(`/:cohortCode/explore`, (req, res)=>{
         console.log(req.params);
         cohortController.oneCohort(req, res);
-    })
+    });
+
+    app.get('/api/memberCohort', cohortController.verifyMember);
 
     //Routes to create instaces on for all models
 

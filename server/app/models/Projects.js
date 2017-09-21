@@ -32,7 +32,7 @@ let ProjectSchema = new Schema({
         author_id:{
             type:Schema.ObjectId,
             ref:'User'
-        }
+        },
         //public vs. private chats
         type: String
     }],

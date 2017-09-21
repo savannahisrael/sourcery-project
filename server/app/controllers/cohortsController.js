@@ -14,7 +14,7 @@ module.exports = {
     },
     //Method to get one Cohort
     oneCohort:(req, res)=>{
-        console.log("inside ORM: ", req.params);
+        // console.log("inside ORM: ", req.params);
         Cohort.find({
             code:req.params.cohortCode
         })
@@ -66,11 +66,24 @@ module.exports = {
     verify: (req, res)=>{
         let cohortId = req.query.cohortCode || req.params.cohortId; 
         return Cohort.findOne({
-            code: "0417"
+            code: cohortId
         }).then(doc=>{
             return doc
         }).catch(err=>{
             console.log("error:", err)
+            res.json(err)
+        })
+    },
+    //Method to verify if user exists in cohort member list
+    verifyMember: (req, res)=>{
+        Cohort.findOne({
+            members: req.user._id
+        })
+        .populate('members')
+        .populate('projects')
+        .then(doc=>{
+            res.json(doc);
+        }).catch(err => {
             res.json(err)
         })
     }
