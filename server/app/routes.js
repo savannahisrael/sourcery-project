@@ -73,6 +73,7 @@ module.exports = function(app, passport) {
         cohortController.oneCohort(req, res);
     });
 
+    //Check to see if member is a part of a cohort
     app.get('/api/memberCohort', cohortController.verifyMember);
 
     //Routes to create instaces on for all models
