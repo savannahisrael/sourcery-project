@@ -82,18 +82,26 @@ class Explore extends Component {
         <Navbar currentPage='explore' />
         {/* <Divider/> */}
         <Segment textAlign='center' vertical className='exploreBanner'>
-          <Container text>
-            <Header as='h1' className='exploreTitle'>
-              Explore Projects  
-            </Header><br/>
-            <Dropdown text='Proposed' selection options={projectProgress} className='exploreDropdown' />
-            <Header className='exploreSubheader'>
+          <Container>
+            {/* <Header as='h1' className='exploreTitle'>
+              Explore Projects
+            </Header><br/> */}
+            {/* <Dropdown text='Proposed' inline selection options={projectProgress} className='exploreDropdown' /> */}
+            <Header className='exploreHeader'>
+              <span className='exploreProjectsSpan'>Explore Projects</span> {' '}
+              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' />
+            </Header>
+            {/* <Header className='exploreSubheader'>
               Search by
             </Header>
-            <Dropdown placeholder='Technologies' multiple search selection options={techSelection} className='exploreDropdown2'/>  
-            <Header as='h2' className='exploreSubtitle'>
+            <Dropdown placeholder='Technologies' multiple search selection options={techSelection} className='exploreDropdown2'/> */}
+            <h1 className='searchHeader'>
+              <span className='searchBySpan'>Search by</span> {' '}
+              <Dropdown inline multiple search selection options={techSelection} placeholder='Technologies' className='searchDropdown' />
+            </h1>
+            {/* <Header as='h2' className='exploreSubtitle'>
               Solve interesting problems.
-            </Header>          
+            </Header> */}
           </Container>
         </Segment>
         <Grid stackable centered container columns={3}>

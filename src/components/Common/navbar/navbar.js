@@ -64,9 +64,9 @@ export default class navBar extends Component {
               </Menu.Item>*/}
               <Menu.Item name='devCircle' href='/' onClick={this.handleItemClick} className='navFont'/>
               <Menu.Menu position='right' className='navFont'>
-                <Menu.Item name='CREATE A PROJECT' href='create' active={activeItem === 'create'} onClick={this.handleItemClick} className='navCreate'/>
-                <Menu.Item name='Explore' href='explore' active={activeItem === 'explore'} onClick={this.handleItemClick} className='navFont' />
-                <Menu.Item name='Dashboard' href='dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} className='navFont'/>
+                <Menu.Item name='CREATE A PROJECT' href='/create' active={activeItem === 'create'} onClick={this.handleItemClick} className='navCreate'/>
+                <Menu.Item name='Explore' href='/explore' active={activeItem === 'explore'} onClick={this.handleItemClick} className='navFont' />
+                <Menu.Item name='Dashboard' href='/dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} className='navFont'/>
                 {/* <Menu.Item>
                   <Button color='teal' href='/create' >CREATE PROJECT</Button>
                 </Menu.Item> */}
@@ -83,4 +83,4 @@ export default class navBar extends Component {
       </div>
     )
   }
-}  
+}
