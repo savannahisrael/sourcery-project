@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, List } from 'semantic-ui-react';
+import { Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, List, Menu } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import projectData from '../../../utils/sampleData/sampleProjects.json';
+import './project.css';
+
 
 class Project extends Component {
 
@@ -41,146 +43,30 @@ class Project extends Component {
     return (
       <div>
         <Navbar currentPage='project' />
-        <Image src='http://lorempixel.com/output/cats-q-c-480-480-1.jpg' size='medium' shape='circular' centered />
-
-        <Header textAlign='center' as='h1'>
-          {this.state.project.name}
-          <p>Cohort: {this.props.match.params.cohort}</p>
-          <p>Username: {this.props.match.params.username}</p>
-          <p>Project: {this.props.match.params.project}</p>
-        </Header>
-        <Segment>
-        <Container text textAlign='center'>
-          <p>{this.state.project.summary}</p>
-        </Container>
+        <Segment textAlign='center' vertical className='projectBanner'>
+          <Container text>
+            <i className="devicon-angularjs-plain colored devIcon"></i>
+            <Header textAlign='center' as='h1' className='projectTitle'>
+            {this.state.project.name}
+            {/* <p>Cohort: {this.props.match.params.cohort}</p>
+            <p>Username: {this.props.match.params.username}</p>
+            <p>Project: {this.props.match.params.project}</p> */}
+            </Header>
+            <br/><br/><br/>
+            <p className='projectSummary'>{this.state.project.summary}</p>
+          </Container>
         </Segment>
-        <Grid centered columns={3}>
+        <Grid centered columns={3} className='projectBackground'>
           <Grid.Column>
-
-            <Segment>
-              <Header as='h3'>Project Details</Header>
-              <Divider />
-              <Header as='h4'>Description</Header>
-              <p>{this.state.project.description}</p>
-              <Divider />
-              <Header as='h4'>Start Date</Header>
-              <p>{this.state.project.start_date}</p>
-              <Divider />
-              <Header as='h4'>Duration</Header>
-              <p>{this.state.project.duration} days</p>
-              <Divider />
-              <Header as='h4'>Devs Wanted</Header>
-              <p>{this.state.project.members_wanted}</p>
-              <Divider />
-              <Header as='h4'>Technology</Header>
-              <p>{this.state.project.tech_tags.join(', ')}</p>
-
-              <Rail position='left'>
-                <Segment>
-                  <Header as='h3'>Team Members</Header>
-                  <Divider />
-                  <Container>
-                    <Table basic='very' size='large' celled collapsing>
-                      <Table.Body>
-                        <Table.Row>
-                          <Table.Cell>
-                            <Header as='h4' image>
-                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini' />
-                              <Header.Content>
-                                  Aaron Gaither
-                                <Header.Subheader>Project Captain</Header.Subheader>
-                              </Header.Content>
-                            </Header>
-                          </Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                          <Table.Cell>
-                            <Header as='h4' image>
-                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-7.jpg' shape='rounded' size='mini' />
-                              <Header.Content>
-                                  Fahad Rahman
-                                <Header.Subheader>First Mate</Header.Subheader>
-                              </Header.Content>
-                            </Header>
-                          </Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                          <Table.Cell>
-                            <Header as='h4' image>
-                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-8.jpg' shape='rounded' size='mini' />
-                              <Header.Content>
-                                  Bryce Miller
-                                <Header.Subheader>Deckhand</Header.Subheader>
-                              </Header.Content>
-                            </Header>
-                          </Table.Cell>
-
-                        </Table.Row>
-                        <Table.Row>
-                          <Table.Cell>
-                            <Header as='h4' image>
-                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini' />
-                              <Header.Content>
-                                  Cindy Chen
-                                <Header.Subheader>UX Wench</Header.Subheader>
-                              </Header.Content>
-                            </Header>
-                          </Table.Cell>
-                        </Table.Row>
-                      </Table.Body>
-                    </Table>
-                  </Container>
-                </Segment>
-
-                <Segment>
-                  <Header as='h3'>Pending Members</Header>
-                  <Divider />
-                  <Container>
-                    <List>
-                      <List.Item>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-                        <List.Content float='right'>
-                          <List.Header as='a'>Rachel</List.Header>
-                          <List.Description>Coding Ninja</List.Description>
-                        </List.Content>
-                      </List.Item>
-                      <List.Item>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-                        <List.Content>
-                          <List.Header as='a'>Lindsay</List.Header>
-                          <List.Description>Prefers Tabs over Spaces</List.Description>
-                        </List.Content>
-                      </List.Item>
-                      <List.Item>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-                        <List.Content>
-                          <List.Header as='a'>Matthew</List.Header>
-                          <List.Description>That guy who types really hard.</List.Description>
-                        </List.Content>
-                      </List.Item>
-                      <List.Item>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-                        <List.Content>
-                          <List.Header as='a'>Jenny Hess</List.Header>
-                          <List.Description>"She doesn't even go here!"</List.Description>
-                        </List.Content>
-                      </List.Item>
-                      <List.Item>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-                        <List.Content>
-                          <List.Header as='a'>Veronika Ossi</List.Header>
-                          <List.Description>Is literally just a cat...</List.Description>
-                        </List.Content>
-                      </List.Item>
-                    </List>
-                  </Container>
-                </Segment>
-              </Rail>
-
-              <Rail position='right'>
-                <Segment>
-                  <Header as='h3'>Chat</Header>
-                  <Divider />
+          
+            <Segment className='projectSegment'>
+              <Menu pointing secondary>
+                <Menu.Item name='Team Chat' />
+                <Menu.Item name='messages' />
+                {/* <Menu.Item name='Team Chat' active={activeItem === 'Team Chat'} onClick={this.handleItemClick} />
+                <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} /> */}
+              </Menu>
+                 {/* <Header textAlign='center' as='h3'>Chat</Header> */}
                   <Comment.Group>
                     <Comment>
                       <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
@@ -247,9 +133,126 @@ class Project extends Component {
                       <Button content='Add Comment' labelPosition='left' icon='edit' primary />
                     </Form>
                   </Comment.Group>
+
+              <Rail position='right'>
+                <Segment className='projectSegment'>
+                  <Header as='h3'>Team Members</Header>
+                  <Divider />
+                  <Container>
+                    <Table basic='very' size='large' celled collapsing>
+                      <Table.Body>
+                        <Table.Row>
+                          <Table.Cell>
+                            <Header as='h4' image>
+                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini' />
+                              <Header.Content>
+                                  Aaron Gaither
+                                <Header.Subheader>Project Captain</Header.Subheader>
+                              </Header.Content>
+                            </Header>
+                          </Table.Cell>
+                        </Table.Row>
+                        <Table.Row>
+                          <Table.Cell>
+                            <Header as='h4' image>
+                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-7.jpg' shape='rounded' size='mini' />
+                              <Header.Content>
+                                  Fahad Rahman
+                                <Header.Subheader>First Mate</Header.Subheader>
+                              </Header.Content>
+                            </Header>
+                          </Table.Cell>
+                        </Table.Row>
+                        <Table.Row>
+                          <Table.Cell>
+                            <Header as='h4' image>
+                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-8.jpg' shape='rounded' size='mini' />
+                              <Header.Content>
+                                  Bryce Miller
+                                <Header.Subheader>Deckhand</Header.Subheader>
+                              </Header.Content>
+                            </Header>
+                          </Table.Cell>
+
+                        </Table.Row>
+                        <Table.Row>
+                          <Table.Cell>
+                            <Header as='h4' image>
+                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini' />
+                              <Header.Content>
+                                  Cindy Chen
+                                <Header.Subheader>UX Wench</Header.Subheader>
+                              </Header.Content>
+                            </Header>
+                          </Table.Cell>
+                        </Table.Row>
+                      </Table.Body>
+                    </Table>
+                  </Container>
+                  <Header as='h3'>Pending Members</Header>
+                  <Divider />
+                  <Container>
+                    <List>
+                      <List.Item>
+                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
+                        <List.Content float='right'>
+                          <List.Header as='a'>Rachel</List.Header>
+                          <List.Description>Coding Ninja</List.Description>
+                        </List.Content>
+                      </List.Item>
+                      <List.Item>
+                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
+                        <List.Content>
+                          <List.Header as='a'>Lindsay</List.Header>
+                          <List.Description>Prefers Tabs over Spaces</List.Description>
+                        </List.Content>
+                      </List.Item>
+                      <List.Item>
+                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
+                        <List.Content>
+                          <List.Header as='a'>Matthew</List.Header>
+                          <List.Description>That guy who types really hard.</List.Description>
+                        </List.Content>
+                      </List.Item>
+                      <List.Item>
+                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
+                        <List.Content>
+                          <List.Header as='a'>Jenny Hess</List.Header>
+                          <List.Description>"She doesn't even go here!"</List.Description>
+                        </List.Content>
+                      </List.Item>
+                      <List.Item>
+                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
+                        <List.Content>
+                          <List.Header as='a'>Veronika Ossi</List.Header>
+                          <List.Description>Is literally just a cat...</List.Description>
+                        </List.Content>
+                      </List.Item>
+                    </List>
+                  </Container>
                 </Segment>
               </Rail>
 
+              <Rail position='left'>
+              <Segment className='projectSegment'>
+              <Header as='h3'>Project Details</Header>
+              <Divider />
+              <Header as='h4'>Description</Header>
+              <p>{this.state.project.description}</p>
+              <Divider />
+              <Header as='h4'>Start Date</Header>
+              <p>{this.state.project.start_date}</p>
+              <Divider />
+              <Header as='h4'>Duration</Header>
+              <p>{this.state.project.duration} days</p>
+              <Divider />
+              <Header as='h4'>Devs Wanted</Header>
+              <p>{this.state.project.members_wanted}</p>
+              <Divider />
+              <Header as='h4'>Technology</Header>
+              <p>{this.state.project.tech_tags.join(', ')}</p>
+              </Segment>
+              </Rail>
             </Segment>
           </Grid.Column>
         </Grid>
