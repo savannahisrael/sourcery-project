@@ -1,0 +1,34 @@
+ .devIcon {
+    font-size: 64px !important;
+} 
+
+  .projectBanner {
+    min-height: 350px !important;
+    padding: 75px 125px 0 0 !important;
+    /* margin-bottom: 50px !important; */
+    background-color: #F9F9F9 !important;
+    /* border-bottom: none !important; */
+}
+
+.projectTitle {
+    font-size: 4em !important;
+    font-weight: 300 !important;
+    margin: 10px 0 0 0 !important;
+    color: #001738 !important;   
+}
+
+.projectSummary {
+    margin: -75px !important;
+    font-size: 1.25em !important;
+}
+
+.projectBackground {
+    background-color: #F9F9F9 !important;    
+    padding-top: 100px !important;
+}
+
+.projectSegment {
+    border: none !important;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important;
+    border-radius: 1px !important;
+}
