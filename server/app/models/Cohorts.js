@@ -15,6 +15,10 @@ let CohortSchema = new Schema({
     members: [{
         type: Schema.ObjectId,
         ref: 'User'
+    }], 
+    projects:[{
+        type:Schema.ObjectId, 
+        ref:'Project'
     }]
 });
 module.exports = mongoose.model('Cohort', CohortSchema);

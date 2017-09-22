@@ -11,7 +11,7 @@ module.exports = function(app, passport) {
     // =============================================================
 
     //route for github authentication and login
-    app.get('/auth/github', cohortVerified, passport.authenticate('github', {
+    app.get('/auth/github', passport.authenticate('github', {
         scope: ['user:email']
     }));
 
@@ -35,6 +35,12 @@ module.exports = function(app, passport) {
             // console.log(req.user)
             res.end();
         });
+
+    //Authentication check 
+    app.get('/checkLoggedIn', isLoggedIn, (req, res)=>{
+        return true;
+    });
+
 
     //API Routes
     // =============================================================
@@ -61,6 +67,20 @@ module.exports = function(app, passport) {
         console.log(req.body);
         res.end();
     });
+
+    //Specific COHORT data based on code 
+    // app.get('/:cohortCode', (req, res)=>{
+    //     let cohortCode = req.params.cohortCode;
+    //     res.redirect(`/${cohortCode}/explore`);
+    // });
+
+    app.get(`/:cohortCode/explore`, (req, res)=>{
+        console.log(req.params);
+        cohortController.oneCohort(req, res);
+    });
+
+    //Check to see if member is a part of a cohort
+    app.get('/api/memberCohort', cohortController.verifyMember);
 
     //Routes to create instaces on for all models
 
@@ -111,6 +131,12 @@ module.exports = function(app, passport) {
     //will update visible to false
     app.patch('/api/activityHide', activityController.hide);
 
+    //TEST ROUTES
+    app.get('/test/reqUser', (req, res)=>{
+        console.log(req.user);
+        res.json(req.user);
+    })
+
 };
 
 //route middleware to make sure a user is logged in 
@@ -120,14 +146,15 @@ function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) return next();
 
     // if they aren't redirect them to the home page
-    res.redirect('/');
+    // res.redirect('/');
+    return false;
 };
 
 function cohortVerified(req, res, next) {
     cohortController.verify(req, res).then(result => {
         if (result) {
-            req.session.cohortId = result._id;
-            console.log("req.body inside middleware: ", req.session);
+            // req.session.cohortId = result._id;
+            // console.log("req.body inside middleware: ", req.session);
             return next();
         }
         res.redirect('/');
