@@ -36,6 +36,12 @@ module.exports = function(app, passport) {
             res.end();
         });
 
+    //Authentication check 
+    app.get('/checkLoggedIn', isLoggedIn, (req, res)=>{
+        return true;
+    });
+
+
     //API Routes
     // =============================================================
 
@@ -140,7 +146,8 @@ function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) return next();
 
     // if they aren't redirect them to the home page
-    res.redirect('/');
+    // res.redirect('/');
+    return false;
 };
 
 function cohortVerified(req, res, next) {
