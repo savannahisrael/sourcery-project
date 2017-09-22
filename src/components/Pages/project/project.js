@@ -62,7 +62,7 @@ class Project extends Component {
             <Segment className='projectSegment'>
               <Menu pointing secondary>
                 <Menu.Item name='Team Chat' />
-                <Menu.Item name='messages' />
+                <Menu.Item name='Public Forum' />
                 {/* <Menu.Item name='Team Chat' active={activeItem === 'Team Chat'} onClick={this.handleItemClick} />
                 <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} /> */}
               </Menu>
@@ -147,7 +147,6 @@ class Project extends Component {
                               <Image src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini' />
                               <Header.Content>
                                   Aaron Gaither
-                                <Header.Subheader>Project Captain</Header.Subheader>
                               </Header.Content>
                             </Header>
                           </Table.Cell>
@@ -158,7 +157,6 @@ class Project extends Component {
                               <Image src='http://lorempixel.com/output/cats-q-c-100-100-7.jpg' shape='rounded' size='mini' />
                               <Header.Content>
                                   Fahad Rahman
-                                <Header.Subheader>First Mate</Header.Subheader>
                               </Header.Content>
                             </Header>
                           </Table.Cell>
@@ -169,7 +167,6 @@ class Project extends Component {
                               <Image src='http://lorempixel.com/output/cats-q-c-100-100-8.jpg' shape='rounded' size='mini' />
                               <Header.Content>
                                   Bryce Miller
-                                <Header.Subheader>Deckhand</Header.Subheader>
                               </Header.Content>
                             </Header>
                           </Table.Cell>
@@ -181,7 +178,6 @@ class Project extends Component {
                               <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini' />
                               <Header.Content>
                                   Cindy Chen
-                                <Header.Subheader>UX Wench</Header.Subheader>
                               </Header.Content>
                             </Header>
                           </Table.Cell>
