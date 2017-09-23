@@ -23,10 +23,8 @@ module.exports = {
 
     //Method to get projects for specific cohort and user
     dashboardCohort: (req, res) => {
-
-        req.params.cohort = '0417';
-        req.params.username = "fahad";
-
+        // req.params.cohort = '0417';
+        // req.params.username = "cindy";
         let query1 = Cohort.findOne({
             code: req.params.cohort
         }, [{
@@ -45,8 +43,7 @@ module.exports = {
                 if (cohortId && userId) {                   
                     Project.find({
                         cohort_id: cohortId,
-                        // members: userId
-                        pending_members:userId
+                        $or:[{members: userId}, {pending_members:userId}]
                     })
                     .populate('owner_id')
                     .populate('cohort_id')
@@ -59,7 +56,6 @@ module.exports = {
                     console.log("invalid cohort or user")
                 }
             })
-
     },
 
     //Method to create new Project
