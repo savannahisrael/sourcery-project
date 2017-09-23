@@ -85,8 +85,11 @@ module.exports = function(app, passport) {
         cohortController.oneCohort(req, res);
     });
 
-    //All projects for specific user in a specific cohort
-    app.get('/api/projectsDashboard', projectController.dashboardCohort)
+    //All PROJECTS for specific user in a specific cohort
+    app.get('/api/projectsDashboard', projectController.dashboard);
+
+    //All PROJECTS for specifc user in a specific cohort aggregated
+    app.get('/api/projectsUserProfile', projectController.profile);
 
 
 
