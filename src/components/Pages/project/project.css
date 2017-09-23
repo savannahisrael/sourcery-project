@@ -1,4 +1,4 @@
- .devIcon {
+.devIcon {
     font-size: 64px !important;
 } 
 
@@ -6,7 +6,7 @@
     min-height: 350px !important;
     padding: 75px 125px 0 0 !important;
     /* margin-bottom: 50px !important; */
-    background-color: #F9F9F9 !important;
+    background-color: #F4f7f9 !important;
     /* border-bottom: none !important; */
 }
 
@@ -23,7 +23,7 @@
 }
 
 .projectBackground {
-    background-color: #F9F9F9 !important;    
+    background-color: #f4f7f9 !important;    
     padding-top: 100px !important;
 }
 
@@ -31,4 +31,22 @@
     border: none !important;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important;
     border-radius: 1px !important;
+}
+
+
+.projectJoin {
+    background-color: #5FA8F9 !important;
+    color: #fff !important;
+}
+
+.projectCheck {
+    color: #3ACFB1 !important;
+    background-color: #fff !important;
+    border: none !important;  
+}
+
+.projectClose {
+    color: #FD6A55 !important;
+    background-color: #fff !important;
+    border-style: none !important;    
 }
