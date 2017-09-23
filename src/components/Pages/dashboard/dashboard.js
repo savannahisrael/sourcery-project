@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Divider, Header, Label, Container, Image, Segment, Tab } from 'semantic-ui-react';
+import { Grid, Divider, Header, Label, Container, Image, Segment, Tab, Card, Feed } from 'semantic-ui-react';
 import CreateProjectForm from '../createProject';
 import Tile from '../../Common/projectTiles';
 import Navbar from "../../Common/navbar";
@@ -98,7 +98,7 @@ class Dashboard extends Component {
         <p>Username: {this.props.match.params.username}</p> */}
         <Segment textAlign='center' vertical className='dashboardBanner'>
           <Container text>
-          <Image src='http://lorempixel.com/output/cats-q-c-480-480-1.jpg' size='tiny' shape='circular' centered />
+          <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' size='tiny' shape='circular' centered />
           <Header as='h1' className='dashboardTitle'>
             Dashboard  
           </Header><br/><br/><br/>
@@ -107,6 +107,46 @@ class Dashboard extends Component {
         <Container text className='dashboardTab'>
             <Tab menu={{ secondary: true, pointing: true }} panes={panes}/>
         </Container>
+        <Card>
+    <Card.Content>
+      <Card.Header>
+        Recent Activity
+      </Card.Header>
+    </Card.Content>
+    <Card.Content>
+      <Feed>
+        <Feed.Event>
+          <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
+          <Feed.Content>
+            <Feed.Date content='1 day ago' />
+            <Feed.Summary>
+              You added <a>Jenny Hess</a> to your <a>coworker</a> group.
+            </Feed.Summary>
+          </Feed.Content>
+        </Feed.Event>
+
+        <Feed.Event>
+          <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
+          <Feed.Content>
+            <Feed.Date content='3 days ago' />
+            <Feed.Summary>
+              You added <a>Molly Malone</a> as a friend.
+            </Feed.Summary>
+          </Feed.Content>
+        </Feed.Event>
+
+        <Feed.Event>
+          <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
+          <Feed.Content>
+            <Feed.Date content='4 days ago' />
+            <Feed.Summary>
+              You added <a>Elliot Baker</a> to your <a>musicians</a> group.
+            </Feed.Summary>
+          </Feed.Content>
+        </Feed.Event>
+      </Feed>
+    </Card.Content>
+  </Card>
         <Header as='h4'>Active Projects</Header>
         <Divider/>
         <Grid stackable centered container columns={3}>
