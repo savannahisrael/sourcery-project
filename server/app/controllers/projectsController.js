@@ -1,5 +1,7 @@
 const Project = require('../models/Projects');
 const activityController = require('../controllers/activityFeedController');
+const Cohort = require('../models/Cohorts');
+const User = require('../models/Users');
 
 module.exports = {
 
@@ -16,6 +18,96 @@ module.exports = {
                     res.json(err)
                 };
                 res.json(data)
+            })
+    },
+
+    //Method to get projects for specific cohort and user
+    dashboard: (req, res) => {
+        // req.params.cohort = '0417';
+        // req.params.username = "cindy";
+        let query1 = Cohort.findOne({
+            code: req.params.cohort
+        }, [{
+            "_id": 'cohortId'
+        }]);
+
+        let query2 = User.findOne({
+            "github.login": req.params.username
+        }, "_id");
+
+        Promise.all([query1, query2]).then(
+            results => {
+                let cohortId = results[0]._id;
+                let userId = results[1]._id;
+
+                if (cohortId && userId) {
+                    Project.find({
+                            cohort_id: cohortId,
+                            $or: [{
+                                members: userId
+                            }, {
+                                pending_members: userId
+                            }]
+                        })
+                        .populate('owner_id')
+                        .populate('cohort_id')
+                        .populate('pending_members')
+                        .populate('members')
+                        .exec((err, data) => {
+                            res.json(data);
+                        })
+                } else {
+                    console.log("invalid cohort or user")
+                }
+            })
+    },
+
+    profile: (req, res) => {
+        // req.params.cohort = '0417';
+        // req.params.username = "joe";
+
+        let query1 = Cohort.findOne({
+            code: req.params.cohort
+        }, [{
+            "_id": 'cohortId'
+        }]);
+
+        let query2 = User.findOne({
+            "github.login": req.params.username
+        }, "_id");
+
+        Promise.all([query1, query2]).then(
+            results => {
+                let cohortId = results[0]._id;
+                let userId = results[1]._id;
+
+                if (cohortId && userId) {
+                    let query3 = Project.find({
+                            cohort_id: cohortId,
+                            owner_id: userId
+                        })
+                        .count()
+
+                    let query4 = Project.find({
+                            cohort_id: cohortId,
+                            members: userId,
+                            owner_id: {
+                                $ne: userId
+                            }
+                        })
+                        .count()
+
+                    Promise.all([query3, query4]).then(
+                        counts => {
+
+                            let response = {created:counts[0], contributed:counts[1]}
+                            res.json(response);
+                        }
+                    )
+
+                } else {
+                    console.log("invalid cohort or user")
+                }
             })
     },
 

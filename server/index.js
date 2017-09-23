@@ -23,6 +23,7 @@ const githubAuth = require('./config/auth.js').github;
 const mongoose = require('mongoose');
 const configDB = require('./config/database.js');
 // const users = require('./models/Users');
+mongoose.Promise = Promise;
 mongoose.connect(configDB.url)
 
 //=============== PASSPORT CONFIGURATION ===============//
