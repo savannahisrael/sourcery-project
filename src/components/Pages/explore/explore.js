@@ -7,7 +7,7 @@ import Navbar from '../../Common/navbar';
 import './explore.css';
 import projectData from '../../../utils/sampleData/sampleProjects.json';
 import search from '../../Common/navbar';
-
+import axios from 'axios';
 
 const techSelection = [ { key: 'Py', value: 'Py', text: 'Python' }, { key: 'CS', value: 'CS', text: 'CSS' }, { key: 'HT', value: 'HT', text: 'HTML5' }, { key: 'Ja', value: 'Ja', text: 'JavaScript' }, { key: 'C+', value: 'C+', text: 'C++' }, { key: 'Ru', value: 'Ru', text: 'Ruby' }  ]
 
@@ -31,8 +31,22 @@ class Explore extends Component {
 
   state = {
     filters: [],
-    projects: projectData,
+    projects: []
   };
+
+  componentDidMount() {
+    let response;
+    axios.get('../api/projects').then((res) => {
+      this.setState({ projects: res });
+      console.log(res); // does not appear in logs
+      response = res;
+    }).catch((error) => {
+      console.log('Catching Error: ');
+      console.log(error); // logs 404 error
+    });
+    console.log("response: ", response); // logs undefined
+    console.log("this.state.projects: ", this.state.projects); // logs empty array
+  }
 
   // A helper method for rendering one Tile for each 1/3 project
   renderTiles = (remainder) => {
@@ -41,7 +55,6 @@ class Explore extends Component {
     }).filter((project, index) => {
       return index % 3 === remainder;
     });
-    console.log('colArr', colArr);
     return colArr.map(project => (
       <Tile
         title={project.name}
