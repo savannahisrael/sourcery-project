@@ -38,7 +38,11 @@ module.exports = function(app, passport) {
 
     //Authentication check 
     app.get('/auth/checkLoggedIn', isLoggedIn, (req, res)=>{
-        res.send(true);
+        let userLog = {
+            login: true,
+            user: req.user
+        }
+        res.send(userLog);
     });
 
     //Check to see if member is a part of a cohort
@@ -162,7 +166,12 @@ function isLoggedIn(req, res, next) {
 
     // if they aren't redirect them to the home page
     // res.redirect('/');
-    res.send(false);
+
+    let userLog = {
+        login: false,
+        user: req.user
+    }
+    res.send(userLog);
 };
 
 function cohortVerified(req, res, next) {
