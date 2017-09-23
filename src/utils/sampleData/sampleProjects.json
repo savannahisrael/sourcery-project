@@ -1,7 +1,7 @@
 [
 	{
 		"name": "Dev Circle",
-		"summary": "An app for the continuing education of coding boot camp graduates",
+		"summary": "An app for the continuing education of coding boot camp graduates using different technologies",
 		"description": "Lorem Ipsum Dolet 1",
 		"primary_language": "Python",
 		"tech_tags": ["node", "express", "mongodb", "react"],
