@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, List, Menu } from 'semantic-ui-react';
+import { Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import projectData from '../../../utils/sampleData/sampleProjects.json';
 import './project.css';
@@ -39,6 +39,14 @@ class Project extends Component {
     ));
   }
 
+  renderTechTags = (tech_tags) => {
+    return tech_tags.map(tech_tag => (
+      <Label className='tileTags'>
+        {tech_tag}
+      </Label>
+    ));
+  }
+
   render(props) {
     return (
       <div>
@@ -58,7 +66,6 @@ class Project extends Component {
         </Segment>
         <Grid centered columns={3} className='projectBackground'>
           <Grid.Column>
-          
             <Segment className='projectSegment'>
               <Menu pointing secondary>
                 <Menu.Item name='Team Chat' />
@@ -67,233 +74,218 @@ class Project extends Component {
                 <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} /> */}
               </Menu>
                  {/* <Header textAlign='center' as='h3'>Chat</Header> */}
-                  <Comment.Group>
-                    <Comment>
-                      <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                      <Comment.Content>
-                        <Comment.Author as='a'>Matt</Comment.Author>
-                        <Comment.Metadata>
-                          <div>Today at 5:42PM</div>
-                        </Comment.Metadata>
-                        <Comment.Text>How artistic!</Comment.Text>
-                        <Comment.Actions>
-                          <Comment.Action>Reply</Comment.Action>
-                        </Comment.Actions>
-                      </Comment.Content>
-                    </Comment>
-                    <Comment>
-                      <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                      <Comment.Content>
-                        <Comment.Author as='a'>Elliot Fu</Comment.Author>
-                        <Comment.Metadata>
-                          <div>Yesterday at 12:30AM</div>
-                        </Comment.Metadata>
-                        <Comment.Text>
-                          <p>This has been very useful for my research. Thanks as well!</p>
-                        </Comment.Text>
-                        <Comment.Actions>
-                          <Comment.Action>Reply</Comment.Action>
-                        </Comment.Actions>
-                      </Comment.Content>
-                      <Comment.Group>
-                        <Comment>
-                          <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                          <Comment.Content>
-                            <Comment.Author as='a'>Jenny Hess</Comment.Author>
-                            <Comment.Metadata>
-                              <div>Just now</div>
-                            </Comment.Metadata>
-                            <Comment.Text>
-                              Elliot you are always so right :)
-                            </Comment.Text>
-                            <Comment.Actions>
-                              <Comment.Action>Reply</Comment.Action>
-                            </Comment.Actions>
-                          </Comment.Content>
-                        </Comment>
-                      </Comment.Group>
-                    </Comment>
-                    <Comment>
-                      <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                      <Comment.Content>
-                        <Comment.Author as='a'>Joe Henderson</Comment.Author>
-                        <Comment.Metadata>
-                          <div>5 days ago</div>
-                        </Comment.Metadata>
-                        <Comment.Text>
-                          Dude, this is awesome. Thanks so much
-                        </Comment.Text>
-                        <Comment.Actions>
-                          <Comment.Action>Reply</Comment.Action>
-                        </Comment.Actions>
-                      </Comment.Content>
-                    </Comment>
-                    <Form reply>
-                      <Form.TextArea />
-                      <Button content='Add Comment' labelPosition='left' icon='edit' primary />
-                    </Form>
-                  </Comment.Group>
-
-              <Rail position='right'>
-                <Segment className='projectSegment'>
-                  <Header as='h3'>Team Members</Header>
-                  <Divider />
-                  <Container>
-                    <Table basic='very' size='large' celled collapsing>
-                      <Table.Body>
-                        <Table.Row>
-                          <Table.Cell>
-                            <Header as='h4' image>
-                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini' />
-                              <Header.Content>
-                                  Aaron Gaither
-                              </Header.Content>
-                            </Header>
-                          </Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                          <Table.Cell>
-                            <Header as='h4' image>
-                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-7.jpg' shape='rounded' size='mini' />
-                              <Header.Content>
-                                  Fahad Rahman
-                              </Header.Content>
-                            </Header>
-                          </Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                          <Table.Cell>
-                            <Header as='h4' image>
-                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-8.jpg' shape='rounded' size='mini' />
-                              <Header.Content>
-                                  Bryce Miller
-                              </Header.Content>
-                            </Header>
-                          </Table.Cell>
-
-                        </Table.Row>
-                        <Table.Row>
-                          <Table.Cell>
-                            <Header as='h4' image>
-                              <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini' />
-                              <Header.Content>
-                                  Cindy Chen
-                              </Header.Content>
-                            </Header>
-                          </Table.Cell>
-                        </Table.Row>
-                      </Table.Body>
-                    </Table>
-                  </Container>
-                  <Header as='h3'>Pending Members</Header>
-                  <Divider />
-                  <Container>
-                    <List>
-                      <List.Item>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-                        <List.Content float='right'>
-                          <List.Header as='a'>Rachel</List.Header>
-                          <List.Description>Coding Ninja</List.Description>
-                        </List.Content>
-                      </List.Item>
-                      <List.Item>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-                        <List.Content>
-                          <List.Header as='a'>Lindsay</List.Header>
-                          <List.Description>Prefers Tabs over Spaces</List.Description>
-                        </List.Content>
-                      </List.Item>
-                      <List.Item>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-                        <List.Content>
-                          <List.Header as='a'>Matthew</List.Header>
-                          <List.Description>That guy who types really hard.</List.Description>
-                        </List.Content>
-                      </List.Item>
-                      <List.Item>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-                        <List.Content>
-                          <List.Header as='a'>Jenny Hess</List.Header>
-                          <List.Description>"She doesn't even go here!"</List.Description>
-                        </List.Content>
-                      </List.Item>
-                      <List.Item>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-                        <List.Content>
-                          <List.Header as='a'>Veronika Ossi</List.Header>
-                          <List.Description>Is literally just a cat...</List.Description>
-                        </List.Content>
-                      </List.Item>
-                    </List>
-                  </Container>
-                </Segment>
-              </Rail>
+                <Comment.Group>
+                  <Comment>
+                    <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
+                    <Comment.Content>
+                      <Comment.Author as='a'>Matt</Comment.Author>
+                      <Comment.Metadata>
+                        <div>Today at 5:42PM</div>
+                      </Comment.Metadata>
+                      <Comment.Text>How artistic!</Comment.Text>
+                      <Comment.Actions>
+                        <Comment.Action>Reply</Comment.Action>
+                      </Comment.Actions>
+                    </Comment.Content>
+                  </Comment>
+                  <Comment>
+                    <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
+                    <Comment.Content>
+                      <Comment.Author as='a'>Elliot Fu</Comment.Author>
+                      <Comment.Metadata>
+                        <div>Yesterday at 12:30AM</div>
+                      </Comment.Metadata>
+                      <Comment.Text>
+                        <p>This has been very useful for my research. Thanks as well!</p>
+                      </Comment.Text>
+                      <Comment.Actions>
+                        <Comment.Action>Reply</Comment.Action>
+                      </Comment.Actions>
+                    </Comment.Content>
+                    <Comment.Group>
+                      <Comment>
+                        <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
+                        <Comment.Content>
+                          <Comment.Author as='a'>Jenny Hess</Comment.Author>
+                          <Comment.Metadata>
+                            <div>Just now</div>
+                          </Comment.Metadata>
+                          <Comment.Text>
+                            Elliot you are always so right :)
+                          </Comment.Text>
+                          <Comment.Actions>
+                            <Comment.Action>Reply</Comment.Action>
+                          </Comment.Actions>
+                        </Comment.Content>
+                      </Comment>
+                    </Comment.Group>
+                  </Comment>
+                  <Comment>
+                    <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
+                    <Comment.Content>
+                      <Comment.Author as='a'>Joe Henderson</Comment.Author>
+                      <Comment.Metadata>
+                        <div>5 days ago</div>
+                      </Comment.Metadata>
+                      <Comment.Text>
+                        Dude, this is awesome. Thanks so much
+                      </Comment.Text>
+                      <Comment.Actions>
+                        <Comment.Action>Reply</Comment.Action>
+                      </Comment.Actions>
+                    </Comment.Content>
+                  </Comment>
+                  <Form reply>
+                    <Form.TextArea />
+                    <Divider/>
+                    <Button fluid className='projectCheck' >New Comment</Button>
+                  </Form>
+                </Comment.Group>
 
               <Rail position='left'>
-              <Segment className='projectSegment'>
-              <Header as='h3'>Project Details</Header>
-              <Divider />
-              <Header as='h4'>Description</Header>
-              <p>{this.state.project.description}</p>
-              <Divider />
-              <Header as='h4'>Start Date</Header>
-              <p>{this.state.project.start_date}</p>
-              <Divider />
-              <Header as='h4'>Duration</Header>
-              <p>{this.state.project.duration} days</p>
-              <Divider />
-              <Header as='h4'>Devs Wanted</Header>
-              <p>{this.state.project.members_wanted}</p>
-              <Divider />
-              <Header as='h4'>Technology</Header>
-              <p>{this.state.project.tech_tags.join(', ')}</p>
-              </Segment>
+              <Card.Group>
+                  <Card className='projectSegment'>
+                    <Card.Content>
+                      <Header as='h3'>Project Details</Header>
+                      <Statistic.Group widths='two'>
+                        <Statistic>
+                          <Statistic.Value>{this.state.project.members_wanted}</Statistic.Value>
+                          <Statistic.Label>Members</Statistic.Label>
+                        </Statistic>
+
+                        <Statistic>
+                          <Statistic.Value>{this.state.project.duration}</Statistic.Value>
+                          <Statistic.Label>Weeks</Statistic.Label>
+                        </Statistic>
+                      </Statistic.Group> <br/>
+
+                      <Header as='h4'>Start Date {this.state.project.start_date}</Header>
+
+                        {this.state.project.description}
+                        <div floated='right'>
+                          <Icon floated='right' link name='github' size='large' link={this.state.project.repo_link} />
+                          <Icon floated='right' link name='google' size='large' link={this.state.project.google_drive_link} />
+                          <Icon floated='right' link name='trello' size='large' link={this.state.project.trello_link}  /> 
+                        </div>
+                      <Divider />
+                      {/* <Divider />
+                      <Card.Description>
+                        {this.state.project.duration} days
+                      </Card.Description>
+                      <Header as='h4'>Duration</Header>
+                      <Divider />
+                      <Card.Description>
+                        {this.state.project.members_wanted}
+                      </Card.Description>
+                      <Header as='h4'>Team Size</Header> */}
+                      <Divider />
+                      <Header as='h4'>Technologies Involved</Header>
+                      {this.renderTechTags(this.state.project.tech_tags)}
+                    </Card.Content>
+                    <Card.Content extra>
+                        <Button fluid className='projectCheck' > View Live Demo </Button>
+                    </Card.Content>
+                  </Card>
+                </Card.Group>
               </Rail>
+
+              <Rail position='right'>
+              <Segment className='projectSegment'>
+                  <Button fluid className='projectJoin' link={this.state.project.deploy_link}>Request to Join!</Button>
+              </Segment>
+              <Card.Group>
+                  <Card className='projectSegment'>
+                    <Card.Content>
+                      <Header as='h4' image>
+                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
+                        <Header.Content>
+                              Cindy Chen
+                        </Header.Content>
+                        {/* <Button.Group floated='right'>
+                          <Button positive className='projectCheck' icon='check' />
+                          <Button negative className='projectClose' icon='close' />
+                        </Button.Group> */}
+                      </Header>
+                      <Card.Description>
+                        Cindy wants to join your project.
+                      </Card.Description>
+                    </Card.Content>
+                    <Card.Content extra>
+                      <div className='ui two buttons'>
+                        <Button fluid className='projectCheck' >Approve</Button>
+                        <Button fluid className='projectClose' >Decline</Button>
+                      </div>
+                    </Card.Content>
+                  </Card>
+                </Card.Group>
+
+                <Segment className='projectSegment'>
+                  <Header as='h3'>Team Members</Header>
+                  <Divider/>
+                  <Container>
+                    <Header as='h4' image>
+                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
+                    <Header.Content>
+                          Aaron Gaither
+                    </Header.Content>
+                    </Header>
+                    <Header as='h4' image>
+                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
+                    <Header.Content>
+                          Fahad Rahman
+                    </Header.Content>
+                    </Header><br/>
+                    <Header as='h4' image>
+                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
+                    <Header.Content>
+                          Bryce Miller
+                    </Header.Content>
+                    </Header><br/>
+                    <Header as='h4' image>
+                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
+                    <Header.Content>
+                          Cindy Chen
+                    </Header.Content>
+                    </Header><br/>
+                  </Container>
+                </Segment>
+                {/* <Segment className='projectSegment'>
+                  <Header as='h3'>Pending Members</Header>
+                  <Divider/>
+                  <Container>
+                    <Header as='h4' image>
+                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
+                    <Header.Content>
+                          Aaron Gaither
+                    </Header.Content>
+                    </Header>
+                    <Header as='h4' image>
+                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
+                    <Header.Content>
+                          Fahad Rahman
+                    </Header.Content>
+                    </Header><br/>
+                    <Header as='h4' image>
+                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
+                    <Header.Content>
+                          Bryce Miller
+                    </Header.Content>
+                    </Header><br/>
+                    <Header as='h4' image>
+                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
+                    <Header.Content>
+                          Cindy Chen
+                    </Header.Content>
+                    </Header><br/>
+                  </Container>
+                </Segment> */}
+              </Rail>
+
             </Segment>
           </Grid.Column>
         </Grid>
 
-        <br/><br/>
-
-        <Segment>
-          <Container text>
-            <Header as='h3'>Resources</Header>
-            <Divider />
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</p>
-            <List divided relaxed>
-      `       <List.Item>
-                <List.Icon name='github' size='large' verticalAlign='middle' />
-                <List.Content>
-                  <List.Header as='a' href={this.state.project.repo_link} target='_blank'>Github Link</List.Header>
-                  {/* <List.Description as='a'>Updated 10 mins ago</List.Description> */}
-                </List.Content>
-              </List.Item>
-              <List.Item>
-                <List.Icon name='google' size='large' verticalAlign='middle' />
-                <List.Content>
-                  <List.Header as='a' href={this.state.project.google_drive_link} target='_blank'>Google Drive Link</List.Header>
-                  {/* <List.Description as='a'>Updated 22 mins ago</List.Description> */}
-                </List.Content>
-              </List.Item>
-              <List.Item>
-                <List.Icon name='trello' size='large' verticalAlign='middle' />
-                <List.Content>
-                  <List.Header as='a' href={this.state.project.trello_link} target='_blank'>Trello Link</List.Header>
-                  {/* <List.Description as='a'>Updated 34 mins ago</List.Description> */}
-                </List.Content>
-              </List.Item>
-              <List.Item>
-                <List.Icon name='external' size='large' verticalAlign='middle' />
-                <List.Content>
-                  <List.Header as='a' href={this.state.project.deploy_link} target='_blank'>Deployment Link</List.Header>
-                  {/* <List.Description as='a'>Updated 34 mins ago</List.Description> */}
-                </List.Content>
-              </List.Item>
-            </List>`
-          </Container>
-        </Segment>
-
-      </div>
+       </div>
     );
   }
 }
