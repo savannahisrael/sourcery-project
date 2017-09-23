@@ -1,0 +1,72 @@
+[
+	{
+		"github": {
+			"login": "frankandbeans",
+			"name": "Frank Beans",
+			"id": 1000
+		}
+	},
+	{
+		"github":{
+			"login": "margaret",
+			"name": "Margaret Choi",
+			"id": 1001
+		}
+	},
+	{
+		"github":{
+			"login": "lina",
+			"name": "Lina Shamoon",
+			"id": 1002
+		} 
+	},
+	{
+		"github":{
+			"login": "alex",
+			"name": "Alex Melon",
+			"id": 1003
+		}
+	},
+	{
+		"github": {
+			"login": "fahad",
+			"name": "Fahad Rahman",
+			"id": 1004
+		}
+	},
+	{
+		"github": {
+			"login": "cindy",
+			"name": "Cindy Chen",
+			"id": 1005
+		}
+	},
+	{
+		"github": {
+			"login": "bryce",
+			"name": "Bryce Miller",
+			"id": 1006
+		}
+	},
+	{
+		"github": {
+			"login": "leeland",
+			"name": "Leeland Miller",
+			"id": 1007
+		}
+	},
+	{
+		"github": {
+			"login": "trey",
+			"name": "Treyvon Goodson",
+			"id": 1008
+		}
+	},
+	{
+		"github": {
+			"login": "joe",
+			"name": "Joe Huynh",
+			"id": 1009
+		}
+	}
+]

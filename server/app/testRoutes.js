@@ -2,11 +2,11 @@ const User = require('./models/Users.js');
 const Project = require('./models/Projects.js');
 const Cohorts = require('./models/Cohorts.js');
 const Activities = require('./models/Activity_Feed.js');
-const sampleProjects = require('../../src/utils/sampleData/sampleProjects.json');
-const sampleUsers = require('../../src/utils/sampleData/sampleUsers.json');
-const sampleCohorts = require('../../src/utils/sampleData/sampleCohorts.json');
-const sampleActivities = require('../../src/utils/sampleData/sampleActivity.json');
-const joins = require('../../src/utils/sampleData/joins.json')
+const insertProjects = require('./insertData/insertProjects.json');
+const insertUsers = require('./insertData/insertUsers.json');
+const insertCohorts = require('./insertData/insertCohorts.json');
+const insertActivity = require('./insertData/insertActivity.json');
+const joins = require('./insertData/joins.json')
 
 const _dropCollections = () => {
     Cohorts.collection.drop();
@@ -22,18 +22,18 @@ module.exports = function (app) {
 
         const newData = {"status" : "new data below"}
 
-        Cohorts.create(sampleCohorts)
+        Cohorts.create(insertCohorts)
         .then(cohorts => {
             console.log('Cohorts created:', cohorts.length)
             Object.assign(newData, {cohorts})
 
-            return User.create(sampleUsers)
+            return User.create(insertUsers)
         })
         .then(users => {
             console.log('Users created:',users.length)
             Object.assign(newData, {users})
 
-            return Project.create(sampleProjects.map(project => {
+            return Project.create(insertProjects.map(project => {
                 projectJoin = joins.find(j => j.name === project.name)
                 project.cohort_id = newData.cohorts.find(c => c.name === projectJoin.cohort)._id;
                 project.owner_id = users.find(u => u.github.login === projectJoin.owner)._id
@@ -46,7 +46,7 @@ module.exports = function (app) {
             console.log('Projects created: ',projects.length)
             Object.assign(newData, {projects})
 
-            return Activities.create(sampleActivities.map(activity => {
+            return Activities.create(insertActivity.map(activity => {
                 activity.user_id = newData.users[Math.floor(Math.random()*newData.users.length)]._id
                 activity.project_id = newData.projects[Math.floor(Math.random()*newData.projects.length)]._id
                 return activity
