@@ -6,8 +6,13 @@ import SignUpInput from '../../Common/signUp';
 import Navbar from "../../Common/navbar";
 // import BackgroundImg from '../../../assets/images/home.png';
 import './landing.css';
+// import API from '../../../../server/app/routes.js';
 
 export default class landingPage extends Component {
+
+  // componentDidMount() {
+  //   API.
+  // }
 
   render() {
     return (
