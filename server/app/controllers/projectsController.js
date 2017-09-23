@@ -1,5 +1,7 @@
 const Project = require('../models/Projects');
 const activityController = require('../controllers/activityFeedController');
+const Cohort = require('../models/Cohorts');
+const User = require('../models/Users');
 
 module.exports = {
 
@@ -17,6 +19,47 @@ module.exports = {
                 };
                 res.json(data)
             })
+    },
+
+    //Method to get projects for specific cohort and user
+    dashboardCohort: (req, res) => {
+
+        req.params.cohort = '0417';
+        req.params.username = "fahad";
+
+        let query1 = Cohort.findOne({
+            code: req.params.cohort
+        }, [{
+            "_id": 'cohortId'
+        }]);
+
+        let query2 = User.findOne({
+            "github.login": req.params.username
+        }, "_id");
+
+        Promise.all([query1, query2]).then(
+            results => {
+                let cohortId = results[0]._id;
+                let userId = results[1]._id;
+
+                if (cohortId && userId) {                   
+                    Project.find({
+                        cohort_id: cohortId,
+                        // members: userId
+                        pending_members:userId
+                    })
+                    .populate('owner_id')
+                    .populate('cohort_id')
+                    .populate('pending_members')
+                    .populate('members')
+                    .exec((err, data)=>{
+                        res.json(data);
+                    })
+                } else {
+                    console.log("invalid cohort or user")
+                }
+            })
+
     },
 
     //Method to create new Project
