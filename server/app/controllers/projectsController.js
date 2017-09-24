@@ -100,7 +100,10 @@ module.exports = {
                     Promise.all([query3, query4]).then(
                         counts => {
 
-                            let response = {created:counts[0], contributed:counts[1]}
+                            let response = {
+                                created: counts[0],
+                                contributed: counts[1]
+                            }
                             res.json(response);
                         }
                     )
@@ -111,6 +114,81 @@ module.exports = {
             })
     },
 
+    //Method to get chat information for a specific Project
+    chat: (req, res) => {
+        // req.params.cohort = '0417';
+        // req.params.username = "fahad";
+        // req.params.project = 'testProject4';
+        let query1 = Cohort.findOne({
+            code: req.params.cohort
+        }, [{
+            "_id": 'cohortId'
+        }]);
+
+        let query2 = User.findOne({
+            "github.login": req.params.username
+        }, "_id");
+
+        Promise.all([query1, query2]).then(
+            results => {
+                let cohortId = results[0]._id;
+                let userId = results[1]._id;
+
+                if (cohortId && userId) {
+                    Project.find({
+                            cohort_id: cohortId,
+                            owner_id: userId,
+                            name:req.params.project
+                        },
+                        "chat"
+                    )
+                        .exec((err, data) => {
+                            res.json(data);
+                        })
+                } else {
+                    console.log("invalid cohort or user")
+                }
+            })
+    },
+
+    //Method to get a specific Project
+    oneProject: (req, res) => {
+        // req.params.cohort = '0417';
+        // req.params.username = "fahad";
+        // req.params.project = 'testProject4';
+        let query1 = Cohort.findOne({
+            code: req.params.cohort
+        }, [{
+            "_id": 'cohortId'
+        }]);
+
+        let query2 = User.findOne({
+            "github.login": req.params.username
+        }, "_id");
+
+        Promise.all([query1, query2]).then(
+            results => {
+                let cohortId = results[0]._id;
+                let userId = results[1]._id;
+
+                if (cohortId && userId) {
+                    Project.find({
+                            cohort_id: cohortId,
+                            owner_id: userId,
+                            name:req.params.project
+                        })
+                        .populate('owner_id')
+                        .populate('cohort_id')
+                        .populate('pending_members')
+                        .populate('members')
+                        .exec((err, data) => {
+                            res.json(data);
+                        })
+                } else {
+                    console.log("invalid cohort or user")
+                }
+            })
+    },
     //Method to create new Project
     create: (req, res) => {
         Project.create(req.body)

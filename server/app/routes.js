@@ -38,11 +38,22 @@ module.exports = function(app, passport) {
 
     //Authentication check 
     app.get('/auth/checkLoggedIn', isLoggedIn, (req, res)=>{
-        res.send(true);
+        let userLog = {
+            login: true,
+            user: req.user
+        }
+        res.send(userLog);
     });
 
     //Check to see if member is a part of a cohort
     app.get('/auth/memberCohort', cohortController.verifyMember);
+
+    //Logout route
+    app.get('/auth/logout',(req, res)=>{
+        req.logout();
+        req.session.destroy();
+        res.redirect('/');
+    });
 
 
     //API Routes
@@ -91,6 +102,12 @@ module.exports = function(app, passport) {
     //All PROJECTS for specifc user in a specific cohort aggregated
     app.get('/api/projectsUserProfile', projectController.profile);
 
+    //All data for a specific PROJECT
+    app.get('/api/projectData', projectController.oneProject);
+   
+    //All chat data for a specific PROJECT
+    app.get('/api/projectChat', projectController.chat);
+
 
 
     //Routes to create instaces on for all models
@@ -102,10 +119,10 @@ module.exports = function(app, passport) {
 
     //Create a new instance of a PROJECT
     //New project ACTIVITY will also be generated 
-    app.post('/api/projectNew', projectController.create)
+    app.post('/api/projectNew', projectController.create);
 
     //Create a new instance of a COHORT
-    app.post('/api/cohortNew', cohortController.create)
+    app.post('/api/cohortNew', cohortController.create);
 
     //ACTIVITY will be generated as a result of other transactions.
 
@@ -162,7 +179,12 @@ function isLoggedIn(req, res, next) {
 
     // if they aren't redirect them to the home page
     // res.redirect('/');
-    res.send(false);
+
+    let userLog = {
+        login: false,
+        user: req.user
+    }
+    res.send(userLog);
 };
 
 function cohortVerified(req, res, next) {
