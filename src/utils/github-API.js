@@ -91,6 +91,23 @@ const repo = url => {
 		.catch(err => err instanceof TypeError ? 'Invalid Repo' : err)
 }
 
+const repoStats = url => {
+	const [name, repo] = url.split('/').slice(-2)
+	return axios.get(`https://api.github.com/repos/${name}/${repo}/stats/contributors`)
+	.then(res => res.data.map(e => {
+			return {
+				name: e.author.login,
+				avatarUrl: e.author.avatar_url,
+				url: e.author.html_url,
+				commits: e.total,
+				additions: e.weeks.reduce((sum, obj) => sum += obj.a, 0),
+				deletions: e.weeks.reduce((sum, obj) => sum += obj.d, 0)
+			}
+		})
+	)
+	.catch(err => err)
+}
+
 const user = name => {
 	return axios.get(`https://api.github.com/users/${name}`)
 	.then(res => res.data)
@@ -99,5 +116,6 @@ const user = name => {
 
 module.exports = {
 	user,
-	repo
+	repo,
+	repoStats
 };
