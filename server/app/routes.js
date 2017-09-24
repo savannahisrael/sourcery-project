@@ -48,6 +48,11 @@ module.exports = function(app, passport) {
     //Check to see if member is a part of a cohort
     app.get('/auth/memberCohort', cohortController.verifyMember);
 
+    //Logout route
+    app.get('/auth/logout'(req, res)=>{
+
+    })
+
 
     //API Routes
     // =============================================================
@@ -94,6 +99,12 @@ module.exports = function(app, passport) {
 
     //All PROJECTS for specifc user in a specific cohort aggregated
     app.get('/api/projectsUserProfile', projectController.profile);
+
+    //All data for a specific PROJECT
+    app.get('/api/projectData', projectController.oneProject);
+   
+    //All chat data for a specific PROJECT
+    app.get('/api/projectChat', projectController.chat);
 
 
 

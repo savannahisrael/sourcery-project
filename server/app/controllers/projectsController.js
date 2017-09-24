@@ -111,6 +111,15 @@ module.exports = {
             })
     },
 
+    //Method to get chat information for a specific Project
+    chat:(req, res)=>{
+
+    },
+
+    //Method to get a specific Project
+    oneProject:(req, res)=>{
+
+    },
     //Method to create new Project
     create: (req, res) => {
         Project.create(req.body)
