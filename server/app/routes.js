@@ -49,7 +49,7 @@ module.exports = function(app, passport) {
     app.get('/auth/memberCohort', cohortController.verifyMember);
 
     //Logout route
-    app.get('/auth/logout'(req, res)=>{
+    app.get('/auth/logout',(req, res)=>{
 
     })
 
