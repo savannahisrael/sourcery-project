@@ -50,8 +50,10 @@ module.exports = function(app, passport) {
 
     //Logout route
     app.get('/auth/logout',(req, res)=>{
-
-    })
+        req.logout();
+        req.session.destroy();
+        res.redirect('/');
+    });
 
 
     //API Routes
@@ -117,10 +119,10 @@ module.exports = function(app, passport) {
 
     //Create a new instance of a PROJECT
     //New project ACTIVITY will also be generated 
-    app.post('/api/projectNew', projectController.create)
+    app.post('/api/projectNew', projectController.create);
 
     //Create a new instance of a COHORT
-    app.post('/api/cohortNew', cohortController.create)
+    app.post('/api/cohortNew', cohortController.create);
 
     //ACTIVITY will be generated as a result of other transactions.
 
