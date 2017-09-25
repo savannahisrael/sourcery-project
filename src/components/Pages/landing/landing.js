@@ -7,12 +7,28 @@ import Navbar from "../../Common/navbar";
 // import BackgroundImg from '../../../assets/images/home.png';
 import './landing.css';
 // import API from '../../../../server/app/routes.js';
+import axios from 'axios';
 
 export default class landingPage extends Component {
 
-  // componentDidMount() {
-  //   API.
-  // }
+  state = {
+    projects: []
+  }
+
+  // On page load, get all projects and send to this.state.projects
+  componentDidMount() {
+    axios.get('../api/projects').then((res) => {
+      this.setState({ projects: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ');
+      console.log(error);
+    });
+  }
+
+  renderFeaturedProjects = () => {
+
+  }
 
   render() {
     return (

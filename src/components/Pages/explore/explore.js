@@ -30,22 +30,37 @@ const projectProgress = [
 class Explore extends Component {
 
   state = {
-    filters: [],
+    userID: {},
+    statusFilter: "",
+    techFilters: [],
     projects: []
   };
 
+  // On page load, get all projects and send to this.state.projects
+  // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    let response;
     axios.get('../api/projects').then((res) => {
-      this.setState({ projects: res });
-      console.log(res); // does not appear in logs
-      response = res;
+      this.setState({ projects: res.data });
+      console.log(res.data);
     }).catch((error) => {
-      console.log('Catching Error: ');
-      console.log(error); // logs 404 error
+      console.log('Catching Error: ', error);
     });
-    console.log("response: ", response); // logs undefined
-    console.log("this.state.projects: ", this.state.projects); // logs empty array
+    axios.get('../auth/checkLoggedIn').then((res) => {
+      this.setState({ userID: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ', error);
+    });
+  }
+
+  handleStatusFilter = (event) => {
+    // this.setState({ statusFilter: event.target.value });
+    // console.log(this.state.statusFilter);
+  }
+
+  handleTechFilter = (event) => {
+    // this.setState({ techFilters: event.target.value });
+    // console.log(this.state.techFilters);
   }
 
   // A helper method for rendering one Tile for each 1/3 project
@@ -102,7 +117,7 @@ class Explore extends Component {
             {/* <Dropdown text='Proposed' inline selection options={projectProgress} className='exploreDropdown' /> */}
             <Header className='exploreHeader'>
               <span className='exploreProjectsSpan'>Explore Projects</span> {' '}
-              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' />
+              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilter()}/>
             </Header>
             {/* <Header className='exploreSubheader'>
               Search by
@@ -110,7 +125,7 @@ class Explore extends Component {
             <Dropdown placeholder='Technologies' multiple search selection options={techSelection} className='exploreDropdown2'/> */}
             <h1 className='searchHeader'>
               <span className='searchBySpan'>Search by</span> {' '}
-              <Dropdown inline multiple search selection options={techSelection} placeholder='Technologies' className='searchDropdown' />
+              <Dropdown inline multiple search selection options={techSelection} placeholder='Technologies' className='searchDropdown' onChange={this.handleTechFilter()}/>
             </h1>
             {/* <Header as='h2' className='exploreSubtitle'>
               Solve interesting problems.

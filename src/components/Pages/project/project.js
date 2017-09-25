@@ -1,16 +1,40 @@
 import React, { Component } from "react";
-import { Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, Item, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
+import { Tab, Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, Item, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import Chat from "../../Common/chat";
 import projectData from '../../../utils/sampleData/sampleProjects.json';
 import './project.css';
+import axios from 'axios';
 
+const panes = [
+  { menuItem: 'Team Chat', render: () =>
+    <Tab.Pane attached={false}>
+      <Chat/>
+    </Tab.Pane> },
+  { menuItem: 'Public Forum', render: () =>
+    <Tab.Pane attached={false}>
+      <Chat/>
+    </Tab.Pane> }
+]
 
 class Project extends Component {
 
   state = {
-    project: projectData[0]
+    userID: {},
+    project: {},
+    activeItem: 'public'
   };
+
+  componentDidMount() {
+    axios.get('../api/projectData').then((res) => {
+      this.setState({ project: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ', error);
+    });
+  }
+
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   renderTeamMembers = () => {
     return this.state.project.members.map(member => (
@@ -40,17 +64,20 @@ class Project extends Component {
     ));
   }
 
-  renderTechTags = (tech_tags) => {
-    return tech_tags.map(tech_tag => (
-      <Label className='tileTags'>
-        {tech_tag}
-      </Label>
-    ));
-  }
+  // renderTechTags = (tech_tags) => {
+  //   return tech_tags.map(tech_tag => (
+  //     <Label className='tileTags'>
+  //       {tech_tag}
+  //     </Label>
+  //   ));
+  // }
 
   render(props) {
+
+    const { activeItem } = this.state.activeItem
+
     return (
-      <div>
+      <div className='projectBackground'>
         <Navbar currentPage='project' />
         <Segment textAlign='center' vertical className='projectBanner'>
           <Container text>
@@ -65,87 +92,60 @@ class Project extends Component {
             <p className='projectSummary'>{this.state.project.summary}</p>
           </Container>
         </Segment>
-      
-        <Grid centered columns={3} className='projectBackground'>
+
+        <Grid centered columns={3} className='projectGrid'>
           <Grid.Column>
+
+
+
             <Segment className='projectSegment'>
-              <Menu pointing secondary>
-                <Menu.Item name='Team Chat' />
-                <Menu.Item name='Public Forum' />
-                {/* <Menu.Item name='Team Chat' active={activeItem === 'Team Chat'} onClick={this.handleItemClick} />
-                <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} /> */}
-              </Menu>
-                 {/* <Header textAlign='center' as='h3'>Chat</Header> */}
-                {/* <Comment.Group>
-                  <Comment>
-                    <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                    <Comment.Content>
-                      <Comment.Author as='a'>Matt</Comment.Author>
-                      <Comment.Metadata>
-                        <div>Today at 5:42PM</div>
-                      </Comment.Metadata>
-                      <Comment.Text>How artistic!</Comment.Text>
-                      <Comment.Actions>
-                        <Comment.Action>Reply</Comment.Action>
-                      </Comment.Actions>
-                    </Comment.Content>
-                  </Comment>
-                  <Comment>
-                    <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                    <Comment.Content>
-                      <Comment.Author as='a'>Elliot Fu</Comment.Author>
-                      <Comment.Metadata>
-                        <div>Yesterday at 12:30AM</div>
-                      </Comment.Metadata>
-                      <Comment.Text>
-                        <p>This has been very useful for my research. Thanks as well!</p>
-                      </Comment.Text>
-                      <Comment.Actions>
-                        <Comment.Action>Reply</Comment.Action>
-                      </Comment.Actions>
-                    </Comment.Content>
-                    <Comment.Group>
-                      <Comment>
-                        <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                        <Comment.Content>
-                          <Comment.Author as='a'>Jenny Hess</Comment.Author>
-                          <Comment.Metadata>
-                            <div>Just now</div>
-                          </Comment.Metadata>
-                          <Comment.Text>
-                            Elliot you are always so right :)
-                          </Comment.Text>
-                          <Comment.Actions>
-                            <Comment.Action>Reply</Comment.Action>
-                          </Comment.Actions>
-                        </Comment.Content>
-                      </Comment>
-                    </Comment.Group>
-                  </Comment>
-                  <Comment>
-                    <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                    <Comment.Content>
-                      <Comment.Author as='a'>Joe Henderson</Comment.Author>
-                      <Comment.Metadata>
-                        <div>5 days ago</div>
-                      </Comment.Metadata>
-                      <Comment.Text>
-                        Dude, this is awesome. Thanks so much
-                      </Comment.Text>
-                      <Comment.Actions>
-                        <Comment.Action>Reply</Comment.Action>
-                      </Comment.Actions>
-                    </Comment.Content>
-                  </Comment>
-                  <Form reply>
-                    <Form.TextArea />
-                    <Divider/>
-                    <Button fluid className='projectCheck' >New Comment</Button>
-                  </Form>
-                </Comment.Group> */}
-              <Chat/>
+              <Label attached='top'>in-progress</Label>
+
+              <Segment basic>
+                <Header as='h3'>Project Details</Header>
+                {/* {this.renderTechTags(this.state.project.tech_tags)}<br/><br/> */}
+                <p>{this.state.project.description}</p>
+                <div floated='right'>
+                  <Icon link name='github' size='large' link={this.state.project.repo_link} />
+                  <Icon link name='google' size='large' link={this.state.project.google_drive_link} />
+                  <Icon link name='trello' size='large' link={this.state.project.trello_link}  />
+                </div>
+                <Segment>
+                  <Header>{this.state.project.start_date}</Header>
+                  <p>Projected Start Date</p>
+                </Segment>
+                <Segment>
+                  <Header>{this.state.project.duration} weeks </Header>
+                  <p>Project Length</p>
+                </Segment>
+                <Segment>
+                  <Header>{this.state.project.members_wanted} members</Header>
+                  <p>Team Size</p>
+                </Segment>
+              </Segment>
+
+              <Segment basic className='projectChat'>
+                <Tab menu={{ secondary: true, pointing: true }} panes={panes}/>
+              </Segment>
+
               <Rail position='left'>
-              <Card.Group>
+
+                <Segment className='pullRequest'>
+                  <Header as='h3'>Pull Requests</Header>
+                  <Divider/>
+                  <Item.Group link>
+                    <Item>
+                      <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+                      <Item.Content>
+                        <Item.Header>Cindy Chen</Item.Header>
+                        <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
+                      </Item.Content>
+                    </Item>
+                    <Divider/>
+                  </Item.Group>
+                </Segment>
+
+                <Card.Group>
                   <Card className='projectSegment'>
                     <Card.Content>
                       <Header as='h3'>Project Details</Header>
@@ -153,7 +153,7 @@ class Project extends Component {
                       <div floated='right'>
                         <Icon link name='github' size='large' link={this.state.project.repo_link} />
                         <Icon link name='google' size='large' link={this.state.project.google_drive_link} />
-                        <Icon link name='trello' size='large' link={this.state.project.trello_link}  /> 
+                        <Icon link name='trello' size='large' link={this.state.project.trello_link}  />
                       </div>
                       <Card>
                         <Card.Content>
@@ -174,7 +174,7 @@ class Project extends Component {
                         </Card.Content>
                       </Card>
                       <Header as='h4'>Technologies Involved</Header>
-                      {this.renderTechTags(this.state.project.tech_tags)}
+                      {/* {this.renderTechTags(this.state.project.tech_tags)} */}
                     </Card.Content>
                     <Card.Content extra>
                         <Button fluid className='projectCheck' > View Live Demo </Button>
@@ -184,7 +184,7 @@ class Project extends Component {
               </Rail>
 
               <Rail position='right'>
-              <Segment className='projectSegment'>
+              <Segment className='joinRequest'>
                   <Button fluid className='projectJoin' link={this.state.project.deploy_link}>Request to Join!</Button>
               </Segment>
               <Card.Group>
@@ -204,33 +204,6 @@ class Project extends Component {
                 <Segment className='projectSegment'>
                   <Header as='h3'>Team Members</Header>
                   <Divider/>
-                  {/* <Container>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                      Aaron Gaither
-                    </Header.Content>
-                    </Header>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                      Fahad Rahman
-                    </Header.Content>
-                    </Header><br/>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                      Bryce Miller
-                    </Header.Content>
-                    </Header><br/>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                      Cindy Chen
-                    </Header.Content>
-                    </Header><br/>
-                  </Container> */}
-
                   <Item.Group link>
                     <Item>
                       <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />

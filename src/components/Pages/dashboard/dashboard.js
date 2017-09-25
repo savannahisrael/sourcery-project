@@ -5,6 +5,7 @@ import Tile from '../../Common/projectTiles';
 import Navbar from "../../Common/navbar";
 import projectData from '../../../utils/sampleData/sampleProjects.json';
 import './dashboard.css';
+import axios from 'axios';
 
 const panes = [
   { menuItem: 'Active Projects', render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane> },
@@ -16,9 +17,20 @@ const panes = [
 class Dashboard extends Component {
 
   state = {
-    filters: [],
-    projects: projectData,
+    userID: {},
+    projects: []
   };
+
+  // On page load, get all projects and send to this.state.projects
+  componentDidMount() {
+    axios.get('../api/projects').then((res) => {
+      this.setState({ projects: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ');
+      console.log(error);
+    });
+  }
 
   // A helper method for rendering Tiles for projects that have a status of 'proposal' or 'in-progress'.
   // Designed for generating 3 columns in semantic-ui grid format. Pass remainder value of 0, 1, and 2.
@@ -89,7 +101,7 @@ class Dashboard extends Component {
       </Label>
     ));
   }
-  
+
   render(props) {
     return (
       <div>
@@ -100,7 +112,7 @@ class Dashboard extends Component {
           <Container text>
           <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' size='tiny' shape='circular' centered />
           <Header as='h1' className='dashboardTitle'>
-            Dashboard  
+            Dashboard
           </Header><br/><br/><br/>
           </Container>
         </Segment>
