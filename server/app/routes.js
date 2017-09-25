@@ -15,7 +15,7 @@ module.exports = function(app, passport) {
         scope: ['user:email']
     }));
 
-    //handle the call back after github has authenticated the user
+    //Handle the call back after github has authenticated the user
     app.get('/auth/github/callback',
         passport.authenticate('github', {
             failureRedirect: '/login',
@@ -32,7 +32,6 @@ module.exports = function(app, passport) {
             console.log(req.isAuthenticated())
 
             //provide user profile
-            // console.log(req.user)
             res.end();
         });
 
@@ -83,17 +82,6 @@ module.exports = function(app, passport) {
         console.log("cohort exists");
         console.log(req.body);
         res.end();
-    });
-
-    //Specific COHORT data based on code 
-    // app.get('/:cohortCode', (req, res)=>{
-    //     let cohortCode = req.params.cohortCode;
-    //     res.redirect(`/${cohortCode}/explore`);
-    // });
-
-    app.get(`/:cohortCode/explore`, (req, res)=>{
-        console.log(req.params);
-        cohortController.oneCohort(req, res);
     });
 
     //All PROJECTS for specific user in a specific cohort
@@ -162,7 +150,11 @@ module.exports = function(app, passport) {
     //will update visible to false
     app.patch('/api/activityHide', activityController.hide);
 
+    
     //TEST ROUTES
+    // =============================================================    
+
+    //check to see if req.User is populated
     app.get('/test/reqUser', (req, res)=>{
         console.log(req.user);
         res.json(req.user);
