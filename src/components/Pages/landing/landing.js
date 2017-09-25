@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactRotatingText from 'react-rotating-text';
-import { Button, Container,Divider, Grid, Header, Icon, Image, List, Menu, Segment, Visibility, Card } from 'semantic-ui-react';
+import { Button, Container,Divider, Grid, Header, Form, Icon, Image, List, Menu, Segment, Visibility, Card } from 'semantic-ui-react';
 import Tiles from '../../Common/projectTiles';
 import SignUpInput from '../../Common/signUp';
 import Navbar from "../../Common/navbar";
@@ -12,13 +12,22 @@ import axios from 'axios';
 export default class landingPage extends Component {
 
   state = {
+    userID: {},
     projects: []
   }
 
   // On page load, get all projects and send to this.state.projects
+  // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     axios.get('../api/projects').then((res) => {
       this.setState({ projects: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ');
+      console.log(error);
+    });
+    axios.get('../auth/checkLoggedIn').then((res) => {
+      this.setState({ userID: res.data });
       console.log(res.data);
     }).catch((error) => {
       console.log('Catching Error: ');
@@ -28,6 +37,25 @@ export default class landingPage extends Component {
 
   renderFeaturedProjects = () => {
 
+  }
+
+  handleLoginButton = () => {
+    axios.get('../auth/github').then((res) => {
+      console.log(res.data);
+    });
+  }
+
+  handleSignupButton = () => {
+    let form = document.querySelector('.signUpForm');
+    let button = document.querySelector('.signUpButton');
+    form.style.display = 'block';
+    button.style.display = 'none';
+  }
+
+  handleCohortCodeButton = () => {
+    axios.get('../auth/memberCohort').then((res) => {
+      console.log(res.data);
+    });
   }
 
   render() {
@@ -61,16 +89,14 @@ export default class landingPage extends Component {
               </Header.Subheader>
             </Header>
             <br/>
-            <Button primary size='huge'
-              style={{width: '450px', marginBottom: '0.75em'}}
-            >
+            <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>
               Sign Up
             </Button>
-            {/*<SignUpInput />*/}
+            <Form className='signUpForm' onSubmit={this.handleCohortCodeButton}>
+              <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
+            </Form>
             <br/>
-            <Button secondary size='huge'
-              style={{width: '450px'}}
-            >
+            <Button className='cohortCodeButton' secondary size='huge' onClick={this.handleLoginButton}>
               Log in with Github
             </Button>
           </Container>

@@ -22,6 +22,7 @@ class Dashboard extends Component {
   };
 
   // On page load, get all projects and send to this.state.projects
+  // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     axios.get('../api/projects').then((res) => {
       this.setState({ projects: res.data });
@@ -29,6 +30,12 @@ class Dashboard extends Component {
     }).catch((error) => {
       console.log('Catching Error: ');
       console.log(error);
+    });
+    axios.get('../auth/checkLoggedIn').then((res) => {
+      this.setState({ userID: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ', error);
     });
   }
 

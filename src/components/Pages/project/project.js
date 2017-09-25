@@ -21,10 +21,11 @@ class Project extends Component {
 
   state = {
     userID: {},
-    project: {},
-    activeItem: 'public'
+    project: projectData[0]
   };
 
+  // On page load, get project data and send to this.state.project
+  // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     axios.get('../api/projectData').then((res) => {
       this.setState({ project: res.data });
@@ -32,49 +33,69 @@ class Project extends Component {
     }).catch((error) => {
       console.log('Catching Error: ', error);
     });
+    axios.get('../auth/checkLoggedIn').then((res) => {
+      this.setState({ userID: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ', error);
+    });
   }
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   renderTeamMembers = () => {
     return this.state.project.members.map(member => (
-      <Table.Row>
-        <Table.Cell>
-          <Header as='h4' image>
-            <Image src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini' />
-            <Header.Content>
-                {member}
-              {/* <Header.Subheader>Project Captain</Header.Subheader> */}
-            </Header.Content>
-          </Header>
-        </Table.Cell>
-      </Table.Row>
+      <Item.Group link>
+        <Item>
+          <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+          <Item.Content>
+            <Item.Header>{member}</Item.Header>
+            <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
+          </Item.Content>
+        </Item>
+        <Divider/>
+      </Item.Group>
     ));
   }
 
   renderPendingMembers = () => {
     return this.state.project.pending_members.map(pending_member => (
-      <List.Item>
-        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-        <List.Content float='right'>
-          <List.Header as='a'>{pending_member}</List.Header>
-          {/* <List.Description>Coding Ninja</List.Description> */}
-        </List.Content>
-      </List.Item>
+      <Card className='projectRequest'>
+        <Card.Content>
+          <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini' verticalAlign='middle' /> <span> <strong> {pending_member} </strong> wants to join.</span>
+        </Card.Content>
+        <Card.Content extra>
+          <div className='ui two buttons'>
+            <Button fluid className='projectClose' >Decline</Button>
+            <Button fluid className='projectCheck' >Approve</Button>
+          </div>
+        </Card.Content>
+      </Card>
     ));
   }
 
-  // renderTechTags = (tech_tags) => {
-  //   return tech_tags.map(tech_tag => (
-  //     <Label className='tileTags'>
-  //       {tech_tag}
-  //     </Label>
-  //   ));
-  // }
+  renderTechTags = () => {
+    return this.state.project.tech_tags.map(tech_tag => (
+      <Label className='tileTags'>
+        {tech_tag}
+      </Label>
+    ));
+  }
+
+  renderPullRequests = () => {
+    return this.state.github.pullRequests.map(pullRequest => (
+      <Item.Group link>
+        <Divider/>
+        <Item>
+          <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+          <Item.Content>
+            <Item.Header>Pull Request/Issue Title</Item.Header>
+            <Item.Meta>Some other details</Item.Meta>
+          </Item.Content>
+        </Item>
+      </Item.Group>
+    ));
+  }
 
   render(props) {
-
-    const { activeItem } = this.state.activeItem
 
     return (
       <div className='projectBackground'>
@@ -96,14 +117,12 @@ class Project extends Component {
         <Grid centered columns={3} className='projectGrid'>
           <Grid.Column>
 
-
-
             <Segment className='projectSegment'>
-              <Label attached='top'>in-progress</Label>
+              <Label attached='top'>{this.state.project.status}</Label>
 
               <Segment basic>
                 <Header as='h3'>Project Details</Header>
-                {/* {this.renderTechTags(this.state.project.tech_tags)}<br/><br/> */}
+                {this.renderTechTags()}<br/><br/>
                 <p>{this.state.project.description}</p>
                 <div floated='right'>
                   <Icon link name='github' size='large' link={this.state.project.repo_link} />
@@ -132,16 +151,15 @@ class Project extends Component {
 
                 <Segment className='pullRequest'>
                   <Header as='h3'>Pull Requests</Header>
-                  <Divider/>
                   <Item.Group link>
+                    <Divider/>
                     <Item>
                       <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
                       <Item.Content>
-                        <Item.Header>Cindy Chen</Item.Header>
-                        <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
+                        <Item.Header>Pull Request/Issue Title</Item.Header>
+                        <Item.Meta>Some other details</Item.Meta>
                       </Item.Content>
                     </Item>
-                    <Divider/>
                   </Item.Group>
                 </Segment>
 
@@ -174,7 +192,7 @@ class Project extends Component {
                         </Card.Content>
                       </Card>
                       <Header as='h4'>Technologies Involved</Header>
-                      {/* {this.renderTechTags(this.state.project.tech_tags)} */}
+                      {this.renderTechTags()}
                     </Card.Content>
                     <Card.Content extra>
                         <Button fluid className='projectCheck' > View Live Demo </Button>
@@ -184,59 +202,17 @@ class Project extends Component {
               </Rail>
 
               <Rail position='right'>
-              <Segment className='joinRequest'>
-                  <Button fluid className='projectJoin' link={this.state.project.deploy_link}>Request to Join!</Button>
-              </Segment>
-              <Card.Group>
-                  <Card className='projectRequest'>
-                    <Card.Content>
-                      <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini' verticalAlign='middle' /> <span> <strong> Cindy Chen </strong> wants to join.</span>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <div className='ui two buttons'>
-                        <Button fluid className='projectClose' >Decline</Button>
-                        <Button fluid className='projectCheck' >Approve</Button>
-                      </div>
-                    </Card.Content>
-                  </Card>
+                <Segment className='joinRequest'>
+                    <Button fluid className='projectJoin' link={this.state.project.deploy_link}>Request to Join!</Button>
+                </Segment>
+                <Card.Group>
+                  {this.renderPendingMembers()}
                 </Card.Group>
 
                 <Segment className='projectSegment'>
                   <Header as='h3'>Team Members</Header>
                   <Divider/>
-                  <Item.Group link>
-                    <Item>
-                      <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
-                      <Item.Content>
-                        <Item.Header>Cindy Chen</Item.Header>
-                        <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
-                      </Item.Content>
-                    </Item>
-                    <Divider/>
-                    <Item>
-                      <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
-                      <Item.Content>
-                        <Item.Header>Cindy Chen</Item.Header>
-                        <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
-                      </Item.Content>
-                    </Item>
-                    <Divider/>
-                    <Item>
-                      <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
-                      <Item.Content>
-                        <Item.Header>Cindy Chen</Item.Header>
-                        <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
-                      </Item.Content>
-                    </Item>
-                    <Divider/>
-                    <Item>
-                      <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
-                      <Item.Content>
-                        <Item.Header>Cindy Chen</Item.Header>
-                        <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
-                      </Item.Content>
-                    </Item>
-                  </Item.Group>
+                  {this.renderTeamMembers()}
                 </Segment>
               </Rail>
             </Segment>

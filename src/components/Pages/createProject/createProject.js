@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Label, Icon, Container } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import './createProject.css';
+import axios from 'axios';
 
 const options = [
   { key: 'js', text: 'JavaScript', value: 'javascript' },
@@ -17,7 +18,27 @@ const options = [
 ]
 
 class CreateProjectForm extends Component {
-  state = {}
+  state = {
+    userID: {},
+    projects: []
+  };
+
+  // Also, get info on the user and save to this.state.userID
+  componentDidMount() {
+    axios.get('../api/projects').then((res) => {
+      this.setState({ projects: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ');
+      console.log(error);
+    });
+    axios.get('../auth/checkLoggedIn').then((res) => {
+      this.setState({ userID: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ', error);
+    });
+  }
 
   handleChange = (e, { value }) => this.setState({ value })
 
@@ -25,12 +46,12 @@ class CreateProjectForm extends Component {
     const { value } = this.state
     return (
       <div>
-        <Navbar currentPage='create' /> 
-        <Container>     
+        <Navbar currentPage='create' />
+        <Container>
           <Form size='large' class='form'>
               <Form.Input label='Project Name' placeholder='devCircle' />
               <Form.Input label='Start Date' placeholder='Oct 1, 2017' />
-              
+
           <Form.Input label='Project Length' placeholder='in weeks' />
             <Form.TextArea label='Project Summary' placeholder='Summarize your project...' />
             <Form.Select label='Main Technology' options={options} placeholder='e.g. JavaScript' />
