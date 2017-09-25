@@ -13,8 +13,9 @@ export default class landingPage extends Component {
 
   state = {
     userID: {},
-    projects: []
-  }
+    projects: [],
+    cohort: ""
+  };
 
   // On page load, get all projects and send to this.state.projects
   // Also, get info on the user and save to this.state.userID
@@ -58,6 +59,10 @@ export default class landingPage extends Component {
     });
   }
 
+  handleCohortCodeChange = (event) => {
+    this.setState({ cohort: event.target.value });
+  }
+
   render() {
     return (
       <div>
@@ -92,7 +97,7 @@ export default class landingPage extends Component {
             <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>
               Sign Up
             </Button>
-            <Form className='signUpForm' onSubmit={this.handleCohortCodeButton}>
+            <Form className='signUpForm' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
               <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
             </Form>
             <br/>
