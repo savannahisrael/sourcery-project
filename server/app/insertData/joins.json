@@ -4,34 +4,164 @@
 		"owner": "frankandbeans",
 		"members": ["frankandbeans", "margaret", "lina", "alex"],
 		"pending": ["fahad"],
-		"cohort": "UCSD0417"
+		"cohort": "UCSD0417",
+		"chat": [
+			{
+				"body": "Hi guys!",
+				"date": "09/20/2017",
+				"author_id": "fahad",
+				"chat_type": "public"
+			},
+			{
+				"body": "What's up?",
+				"date": "09/21/2017",
+				"author_id": "lina",
+				"chat_type": "public"
+			},
+			{
+				"body": "So private!",
+				"date": "09/20/2017",
+				"author_id": "fahad",
+				"chat_type": "private"
+			},
+			{
+				"body": "I know right?",
+				"date": "09/21/2017",
+				"author_id": "lina",
+				"chat_type": "private"
+			}
+		]
 	},
 	{
 		"name": "testProject2",
 		"owner": "fahad",
 		"members": ["fahad", "cindy"],
 		"pending": ["bryce"],
-		"cohort": "UCSD0417"
+		"cohort": "UCSD0417",
+		"chat": [
+			{
+				"body": "Hi Cindy!",
+				"date": "09/20/2017",
+				"author_id": "fahad",
+				"chat_type": "public"
+			},
+			{
+				"body": "What's up?",
+				"date": "09/21/2017",
+				"author_id": "cindy",
+				"chat_type": "public"
+			},
+			{
+				"body": "So private!",
+				"date": "09/20/2017",
+				"author_id": "fahad",
+				"chat_type": "private"
+			},
+			{
+				"body": "I know right?",
+				"date": "09/21/2017",
+				"author_id": "cindy",
+				"chat_type": "private"
+			}
+		]
 	},
 	{
 		"name": "testProject3",
 		"owner": "leeland",
 		"members": ["leeland", "trey", "joe", "bryce"],
 		"pending": [],
-		"cohort": "UCSD0417"
+		"cohort": "UCSD0417",
+		"chat": [
+			{
+				"body": "Hi peeps!",
+				"date": "09/20/2017",
+				"author_id": "joe",
+				"chat_type": "public"
+			},
+			{
+				"body": "What's up?",
+				"date": "09/21/2017",
+				"author_id": "bryce",
+				"chat_type": "public"
+			},
+			{
+				"body": "So private!",
+				"date": "09/20/2017",
+				"author_id": "trey",
+				"chat_type": "private"
+			},
+			{
+				"body": "I know right?",
+				"date": "09/21/2017",
+				"author_id": "leeland",
+				"chat_type": "private"
+			}
+		]
 	},
 	{
 		"name": "testProject4",
 		"owner": "alex",
 		"members": ["alex", "lina", "margaret", "joe"],
 		"pending": [],
-		"cohort": "UCSD0417"
+		"cohort": "UCSD0417",
+		"chat": [
+			{
+				"body": "Yo peeps!",
+				"date": "09/20/2017",
+				"author_id": "margaret",
+				"chat_type": "public"
+			},
+			{
+				"body": "What's up?",
+				"date": "09/21/2017",
+				"author_id": "joe",
+				"chat_type": "public"
+			},
+			{
+				"body": "So private!",
+				"date": "09/20/2017",
+				"author_id": "lina",
+				"chat_type": "private"
+			},
+			{
+				"body": "I know right?",
+				"date": "09/21/2017",
+				"author_id": "alex",
+				"chat_type": "private"
+			}
+		]
 	},
 	{
 		"name": "testProject5",
 		"owner": "joe",
 		"members": ["joe", "trey", "bryce"],
 		"pending": ["cindy"],
-		"cohort": "UCSD0417"
+		"cohort": "UCSD0417",
+		"chat": [
+			{
+				"body": "Hello everyone!",
+				"date": "09/20/2017",
+				"author_id": "joe",
+				"chat_type": "public"
+			},
+			{
+				"body": "What's up?",
+				"date": "09/21/2017",
+				"author_id": "trey",
+				"chat_type": "public"
+			},
+			{
+				"body": "So private!",
+				"date": "09/20/2017",
+				"author_id": "trey",
+				"chat_type": "private"
+			},
+			{
+				"body": "I know right?",
+				"date": "09/21/2017",
+				"author_id": "bryce",
+				"chat_type": "private"
+			}
+		]
 	}
 ]
