@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Container, Dropdown, Image,  Menu, Visibility, Button, Input} from 'semantic-ui-react';
+import { Container, Dropdown, Image,  Menu, Visibility,} from 'semantic-ui-react';
 import './navbar.css';
 
 const menuStyle = {
@@ -64,7 +64,7 @@ export default class navBar extends Component {
               {/*<Menu.Item>
                 <Image size='mini' src='/components/assets/images/dev.svg' />
               </Menu.Item>*/}
-              <Menu.Item name='devCircle' href='/' onClick={this.handleItemClick} className='navFont'/>
+              <Menu.Item name='DEVCIRCLE' href='/' onClick={this.handleItemClick} className='navFont'/>
               <Menu.Menu position='right' className='navFont'>
                 <Menu.Item name='CREATE A PROJECT' href='/create' active={activeItem === 'create'} onClick={this.handleItemClick} className='navCreate'/>
                 <Menu.Item name='Explore' href='/explore' active={activeItem === 'explore'} onClick={this.handleItemClick} className='navFont' />
