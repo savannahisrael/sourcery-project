@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input, Button, Comment, Form, Header } from 'semantic-ui-react'
+import { Input, Button, Comment, Form, Header, Divider } from 'semantic-ui-react'
 import io from 'socket.io-client';
 import axios from 'axios';
 const socket = io();
@@ -45,14 +45,13 @@ class InputExampleAction extends Component {
 	  		name: this.state.username,
 	  		avatar: this.state.avatar,
 	  		date: new Date(),
-	  		type: private
+	  		type: 'private'
 	  	}
 	  	// axios.patch('../api/projects', newChat)
 	  	// .then(res => axios.get('..api/projects'))
 	  	// .then(res => this.setState({chats: res.data})
 
 	  	socket.emit('newMsg', {msg: this.state.chatInput, type: 'public'});
-	  	this.setState({chats: newChats});
 	  	this.setState({chatInput: ''});
 
 	  }
@@ -79,16 +78,15 @@ class InputExampleAction extends Component {
 
 	render () {
 		return (
-			  <Comment.Group size='mini'>
-				  <Header as='h3' dividing>Comments</Header>
+			  <Comment.Group size='small'>
 				  {this.state.chats.map(e => this.renderChatMessage(e))}
 				  <Form reply onSubmit={this.handleSubmit}>
-				  	  <Form.Group>
-				  	      <Form.Input maxLength="140" name="chatInput" value={this.state.chatInput} onChange={this.handleChange}/>
-				  	      <Button content='Submit' labelPosition='left' icon='edit' primary/>
-				  	  </Form.Group>
+						<Form reply>
+							<Form.TextArea maxLength="140" name="chatInput" value={this.state.chatInput} onChange={this.handleChange} style={{ minHeight: 50 }}/>
+							<Button fluid >New Comment</Button>
+						</Form>
 			  	  </Form>
-			  </Comment.Group>		
+			  </Comment.Group>
 		)
 	}
 }

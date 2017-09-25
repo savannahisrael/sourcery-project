@@ -1,55 +1,104 @@
 import React, { Component } from "react";
-import { Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
+import { Tab, Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, Item, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
+import Chat from "../../Common/chat";
 import projectData from '../../../utils/sampleData/sampleProjects.json';
 import './project.css';
+import axios from 'axios';
 
+const panes = [
+  { menuItem: 'Team Chat', render: () =>
+    <Tab.Pane attached={false}>
+      <Chat/>
+    </Tab.Pane> },
+  { menuItem: 'Public Forum', render: () =>
+    <Tab.Pane attached={false}>
+      <Chat/>
+    </Tab.Pane> }
+]
 
 class Project extends Component {
 
   state = {
+    userID: {},
     project: projectData[0]
   };
 
+  // On page load, get project data and send to this.state.project
+  // Also, get info on the user and save to this.state.userID
+  componentDidMount() {
+    axios.get('../api/projectData').then((res) => {
+      this.setState({ project: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ', error);
+    });
+    axios.get('../auth/checkLoggedIn').then((res) => {
+      this.setState({ userID: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ', error);
+    });
+  }
+
   renderTeamMembers = () => {
     return this.state.project.members.map(member => (
-      <Table.Row>
-        <Table.Cell>
-          <Header as='h4' image>
-            <Image src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini' />
-            <Header.Content>
-                {member}
-              {/* <Header.Subheader>Project Captain</Header.Subheader> */}
-            </Header.Content>
-          </Header>
-        </Table.Cell>
-      </Table.Row>
+      <Item.Group link>
+        <Item>
+          <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+          <Item.Content>
+            <Item.Header>{member}</Item.Header>
+            <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
+          </Item.Content>
+        </Item>
+        <Divider/>
+      </Item.Group>
     ));
   }
 
   renderPendingMembers = () => {
     return this.state.project.pending_members.map(pending_member => (
-      <List.Item>
-        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini'/>
-        <List.Content float='right'>
-          <List.Header as='a'>{pending_member}</List.Header>
-          {/* <List.Description>Coding Ninja</List.Description> */}
-        </List.Content>
-      </List.Item>
+      <Card className='projectRequest'>
+        <Card.Content>
+          <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini' verticalAlign='middle' /> <span> <strong> {pending_member} </strong> wants to join.</span>
+        </Card.Content>
+        <Card.Content extra>
+          <div className='ui two buttons'>
+            <Button fluid className='projectClose' >Decline</Button>
+            <Button fluid className='projectCheck' >Approve</Button>
+          </div>
+        </Card.Content>
+      </Card>
     ));
   }
 
-  renderTechTags = (tech_tags) => {
-    return tech_tags.map(tech_tag => (
+  renderTechTags = () => {
+    return this.state.project.tech_tags.map(tech_tag => (
       <Label className='tileTags'>
         {tech_tag}
       </Label>
     ));
   }
 
+  renderPullRequests = () => {
+    return this.state.github.pullRequests.map(pullRequest => (
+      <Item.Group link>
+        <Divider/>
+        <Item>
+          <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+          <Item.Content>
+            <Item.Header>Pull Request/Issue Title</Item.Header>
+            <Item.Meta>Some other details</Item.Meta>
+          </Item.Content>
+        </Item>
+      </Item.Group>
+    ));
+  }
+
   render(props) {
+
     return (
-      <div>
+      <div className='projectBackground'>
         <Navbar currentPage='project' />
         <Segment textAlign='center' vertical className='projectBanner'>
           <Container text>
@@ -64,123 +113,86 @@ class Project extends Component {
             <p className='projectSummary'>{this.state.project.summary}</p>
           </Container>
         </Segment>
-        <Grid centered columns={3} className='projectBackground'>
+
+        <Grid centered columns={3} className='projectGrid'>
           <Grid.Column>
+
             <Segment className='projectSegment'>
-              <Menu pointing secondary>
-                <Menu.Item name='Team Chat' />
-                <Menu.Item name='Public Forum' />
-                {/* <Menu.Item name='Team Chat' active={activeItem === 'Team Chat'} onClick={this.handleItemClick} />
-                <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} /> */}
-              </Menu>
-                 {/* <Header textAlign='center' as='h3'>Chat</Header> */}
-                <Comment.Group>
-                  <Comment>
-                    <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                    <Comment.Content>
-                      <Comment.Author as='a'>Matt</Comment.Author>
-                      <Comment.Metadata>
-                        <div>Today at 5:42PM</div>
-                      </Comment.Metadata>
-                      <Comment.Text>How artistic!</Comment.Text>
-                      <Comment.Actions>
-                        <Comment.Action>Reply</Comment.Action>
-                      </Comment.Actions>
-                    </Comment.Content>
-                  </Comment>
-                  <Comment>
-                    <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                    <Comment.Content>
-                      <Comment.Author as='a'>Elliot Fu</Comment.Author>
-                      <Comment.Metadata>
-                        <div>Yesterday at 12:30AM</div>
-                      </Comment.Metadata>
-                      <Comment.Text>
-                        <p>This has been very useful for my research. Thanks as well!</p>
-                      </Comment.Text>
-                      <Comment.Actions>
-                        <Comment.Action>Reply</Comment.Action>
-                      </Comment.Actions>
-                    </Comment.Content>
-                    <Comment.Group>
-                      <Comment>
-                        <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                        <Comment.Content>
-                          <Comment.Author as='a'>Jenny Hess</Comment.Author>
-                          <Comment.Metadata>
-                            <div>Just now</div>
-                          </Comment.Metadata>
-                          <Comment.Text>
-                            Elliot you are always so right :)
-                          </Comment.Text>
-                          <Comment.Actions>
-                            <Comment.Action>Reply</Comment.Action>
-                          </Comment.Actions>
-                        </Comment.Content>
-                      </Comment>
-                    </Comment.Group>
-                  </Comment>
-                  <Comment>
-                    <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
-                    <Comment.Content>
-                      <Comment.Author as='a'>Joe Henderson</Comment.Author>
-                      <Comment.Metadata>
-                        <div>5 days ago</div>
-                      </Comment.Metadata>
-                      <Comment.Text>
-                        Dude, this is awesome. Thanks so much
-                      </Comment.Text>
-                      <Comment.Actions>
-                        <Comment.Action>Reply</Comment.Action>
-                      </Comment.Actions>
-                    </Comment.Content>
-                  </Comment>
-                  <Form reply>
-                    <Form.TextArea />
-                    <Divider/>
-                    <Button fluid className='projectCheck' >New Comment</Button>
-                  </Form>
-                </Comment.Group>
+              <Label attached='top'>{this.state.project.status}</Label>
+
+              <Segment basic>
+                <Header as='h3'>Project Details</Header>
+                {this.renderTechTags()}<br/><br/>
+                <p>{this.state.project.description}</p>
+                <div floated='right'>
+                  <Icon link name='github' size='large' link={this.state.project.repo_link} />
+                  <Icon link name='google' size='large' link={this.state.project.google_drive_link} />
+                  <Icon link name='trello' size='large' link={this.state.project.trello_link}  />
+                </div>
+                <Segment>
+                  <Header>{this.state.project.start_date}</Header>
+                  <p>Projected Start Date</p>
+                </Segment>
+                <Segment>
+                  <Header>{this.state.project.duration} weeks </Header>
+                  <p>Project Length</p>
+                </Segment>
+                <Segment>
+                  <Header>{this.state.project.members_wanted} members</Header>
+                  <p>Team Size</p>
+                </Segment>
+              </Segment>
+
+              <Segment basic className='projectChat'>
+                <Tab menu={{ secondary: true, pointing: true }} panes={panes}/>
+              </Segment>
 
               <Rail position='left'>
-              <Card.Group>
+
+                <Segment className='pullRequest'>
+                  <Header as='h3'>Pull Requests</Header>
+                  <Item.Group link>
+                    <Divider/>
+                    <Item>
+                      <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+                      <Item.Content>
+                        <Item.Header>Pull Request/Issue Title</Item.Header>
+                        <Item.Meta>Some other details</Item.Meta>
+                      </Item.Content>
+                    </Item>
+                  </Item.Group>
+                </Segment>
+
+                <Card.Group>
                   <Card className='projectSegment'>
                     <Card.Content>
                       <Header as='h3'>Project Details</Header>
-                      <Statistic.Group widths='two'>
-                        <Statistic>
-                          <Statistic.Value>{this.state.project.members_wanted}</Statistic.Value>
-                          <Statistic.Label>Members</Statistic.Label>
-                        </Statistic>
-
-                        <Statistic>
-                          <Statistic.Value>{this.state.project.duration}</Statistic.Value>
-                          <Statistic.Label>Weeks</Statistic.Label>
-                        </Statistic>
-                      </Statistic.Group> <br/>
-
-                      <Header as='h4'>Start Date {this.state.project.start_date}</Header>
-
-                        {this.state.project.description}
-                        <div floated='right'>
-                          <Icon floated='right' link name='github' size='large' link={this.state.project.repo_link} />
-                          <Icon floated='right' link name='google' size='large' link={this.state.project.google_drive_link} />
-                          <Icon floated='right' link name='trello' size='large' link={this.state.project.trello_link}  /> 
-                        </div>
-                      <Divider />
-                      {/* <Divider />
-                      <Card.Description>
-                        {this.state.project.duration} days
-                      </Card.Description>
-                      <Header as='h4'>Duration</Header>
-                      <Divider />
-                      <Card.Description>
-                        {this.state.project.members_wanted}
-                      </Card.Description>
-                      <Header as='h4'>Team Size</Header> */}
-                      <Divider />
+                      <p>{this.state.project.description}</p>
+                      <div floated='right'>
+                        <Icon link name='github' size='large' link={this.state.project.repo_link} />
+                        <Icon link name='google' size='large' link={this.state.project.google_drive_link} />
+                        <Icon link name='trello' size='large' link={this.state.project.trello_link}  />
+                      </div>
+                      <Card>
+                        <Card.Content>
+                          <Card.Header> {this.state.project.start_date} </Card.Header>
+                          <Card.Meta>Projected Start Date</Card.Meta>
+                        </Card.Content>
+                      </Card>
+                      <Card>
+                        <Card.Content>
+                          <Card.Header> {this.state.project.duration} weeks </Card.Header>
+                          <Card.Meta>Project Length</Card.Meta>
+                        </Card.Content>
+                      </Card>
+                      <Card>
+                        <Card.Content>
+                          <Card.Header> {this.state.project.members_wanted} members</Card.Header>
+                          <Card.Meta>Team Size</Card.Meta>
+                        </Card.Content>
+                      </Card>
                       <Header as='h4'>Technologies Involved</Header>
-                      {this.renderTechTags(this.state.project.tech_tags)}
+                      {this.renderTechTags()}
                     </Card.Content>
                     <Card.Content extra>
                         <Button fluid className='projectCheck' > View Live Demo </Button>
@@ -190,97 +202,19 @@ class Project extends Component {
               </Rail>
 
               <Rail position='right'>
-              <Segment className='projectSegment'>
-                  <Button fluid className='projectJoin' link={this.state.project.deploy_link}>Request to Join!</Button>
-              </Segment>
-              <Card.Group>
-                  <Card className='projectSegment'>
-                    <Card.Content>
-                      <Header as='h4' image>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                        <Header.Content>
-                              Cindy Chen
-                        </Header.Content>
-                        {/* <Button.Group floated='right'>
-                          <Button positive className='projectCheck' icon='check' />
-                          <Button negative className='projectClose' icon='close' />
-                        </Button.Group> */}
-                      </Header>
-                      <Card.Description>
-                        Cindy wants to join your project.
-                      </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <div className='ui two buttons'>
-                        <Button fluid className='projectCheck' >Approve</Button>
-                        <Button fluid className='projectClose' >Decline</Button>
-                      </div>
-                    </Card.Content>
-                  </Card>
+                <Segment className='joinRequest'>
+                    <Button fluid className='projectJoin' link={this.state.project.deploy_link}>Request to Join!</Button>
+                </Segment>
+                <Card.Group>
+                  {this.renderPendingMembers()}
                 </Card.Group>
 
                 <Segment className='projectSegment'>
                   <Header as='h3'>Team Members</Header>
                   <Divider/>
-                  <Container>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Aaron Gaither
-                    </Header.Content>
-                    </Header>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Fahad Rahman
-                    </Header.Content>
-                    </Header><br/>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Bryce Miller
-                    </Header.Content>
-                    </Header><br/>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Cindy Chen
-                    </Header.Content>
-                    </Header><br/>
-                  </Container>
+                  {this.renderTeamMembers()}
                 </Segment>
-                {/* <Segment className='projectSegment'>
-                  <Header as='h3'>Pending Members</Header>
-                  <Divider/>
-                  <Container>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Aaron Gaither
-                    </Header.Content>
-                    </Header>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Fahad Rahman
-                    </Header.Content>
-                    </Header><br/>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Bryce Miller
-                    </Header.Content>
-                    </Header><br/>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Cindy Chen
-                    </Header.Content>
-                    </Header><br/>
-                  </Container>
-                </Segment> */}
               </Rail>
-
             </Segment>
           </Grid.Column>
         </Grid>

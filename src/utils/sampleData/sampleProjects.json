@@ -2,7 +2,7 @@
 	{
 		"name": "Dev Circle",
 		"summary": "An app for the continuing education of coding boot camp graduates using different technologies",
-		"description": "Lorem Ipsum Dolet 1",
+		"description": "The Sentry package fundamentally is just a simple server and web UI. It will handle authenticating SDKs (such as Raven), all of the logic behind storage and aggregation, and alerting team members.",
 		"primary_language": "Python",
 		"tech_tags": ["node", "express", "mongodb", "react"],
 		"start_date": "Sept 16",

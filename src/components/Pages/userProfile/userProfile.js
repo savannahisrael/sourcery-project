@@ -3,6 +3,11 @@ import { Container, Image, Header, Segment, Grid, Card, Icon } from 'semantic-ui
 import Navbar from "../../Common/navbar";
 
 class Project extends Component {
+
+  state = {
+    userID: {}
+  }
+
   render(props) {
     return (
     <Container>
