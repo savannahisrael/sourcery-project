@@ -7,8 +7,8 @@ const menuStyle = {
   border: 'none',
   borderRadius: 0,
   boxShadow: 'none',
-  marginBottom: '.5em',
-  marginTop: '2em',
+  paddingBottom: '1em',
+  paddingTop: '2em',
   transition: 'box-shadow 0.5s ease, padding 0.5s ease',
 }
 
@@ -16,6 +16,8 @@ const fixedMenuStyle = {
   backgroundColor: '#fff',
   border: '1px solid #ddd',
   boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
+  paddingBottom: '1em',
+  paddingTop: '1em',
 }
 
 
