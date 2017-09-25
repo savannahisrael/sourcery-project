@@ -86,7 +86,7 @@ class InputExampleAction extends Component {
 							<Button fluid >New Comment</Button>
 						</Form>
 			  	  </Form>
-			  </Comment.Group>		
+			  </Comment.Group>
 		)
 	}
 }

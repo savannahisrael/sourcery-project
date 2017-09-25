@@ -1,9 +1,9 @@
 import React from 'react';
 import { Form, Input } from 'semantic-ui-react';
-import "./signUp.css";
+import './signUp.css';
 
 const SignUpInput = () => (
-  <Form>
+  <Form className='signUpForm'>
     <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
   </Form>
 )

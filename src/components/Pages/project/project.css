@@ -1,59 +1,80 @@
 .devIcon {
-    font-size: 64px !important;
-} 
+  font-size: 64px !important;
+}
 
-  .projectBanner {
-    min-height: 350px !important;
-    padding: 75px 125px 0 0 !important;
-    /* margin-bottom: 50px !important; */
-    background-color: #F4f7f9 !important;
-    /* border-bottom: none !important; */
+.projectBanner {
+  min-height: 350px !important;
+  padding: 75px 125px 0 0 !important;
+  /* margin-bottom: 50px !important; */
+  background-color: #F4f7f9 !important;
+  /* border-bottom: none !important; */
 }
 
 .projectTitle {
-    font-size: 4em !important;
-    font-weight: 300 !important;
-    margin: 10px 0 0 0 !important;
-    color: #001738 !important;   
+  font-size: 4em !important;
+  font-weight: 300 !important;
+  margin: 10px 0 0 0 !important;
+  color: #001738 !important;
 }
 
 .projectSummary {
-    margin: -75px !important;
-    font-size: 1.25em !important;
+  margin: -75px !important;
+  font-size: 1.25em !important;
 }
 
 .projectBackground {
-    background-color: #f4f7f9 !important;    
-    padding-top: 100px !important;
+  background-color: #f4f7f9 !important;
+  padding-top: 1px !important;
+}
+
+.projectGrid {
+  background-color: #f4f7f9 !important;
+  padding-top: 100px !important;
+}
+
+.projectChat {
+  /*min-height: 600px;*/
+}
+
+.joinRequest {
+  border: none !important;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 1px !important;
+}
+
+.pullRequest {
+  border: none !important;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 1px !important;
 }
 
 .projectSegment {
-    border: none !important;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important;
-    border-radius: 1px !important;
+  border: none !important;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 1px !important;
+  margin-bottom: 100px !important;
 }
 
-
 .projectJoin {
-    background-color: #5FA8F9 !important;
-    color: #fff !important;
+  background-color: #5FA8F9 !important;
+  color: #fff !important;
 }
 
 .projectRequest {
-    /* border-style: solid !important; */
-    /* border-color: #3CAFB1 !important; */
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important; 
-    border-radius: 1px !important; 
+  /* border-style: solid !important; */
+  /* border-color: #3CAFB1 !important; */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 1px !important;
 }
 
 .projectCheck {
-    color: #3ACFB1 !important;
-    background-color: #fff !important;
-    border: none !important;  
+  color: #3ACFB1 !important;
+  background-color: #fff !important;
+  border: none !important;
 }
 
 .projectClose {
-    color: #FD6A55 !important;
-    background-color: #fff !important;
-    border-style: none !important;    
+  color: #FD6A55 !important;
+  background-color: #fff !important;
+  border-style: none !important;
 }
