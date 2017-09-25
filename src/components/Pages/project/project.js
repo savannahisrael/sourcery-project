@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
+import { Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, Item, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
+import Chat from "../../Common/chat";
 import projectData from '../../../utils/sampleData/sampleProjects.json';
 import './project.css';
 
@@ -64,6 +65,7 @@ class Project extends Component {
             <p className='projectSummary'>{this.state.project.summary}</p>
           </Container>
         </Segment>
+      
         <Grid centered columns={3} className='projectBackground'>
           <Grid.Column>
             <Segment className='projectSegment'>
@@ -74,7 +76,7 @@ class Project extends Component {
                 <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} /> */}
               </Menu>
                  {/* <Header textAlign='center' as='h3'>Chat</Header> */}
-                <Comment.Group>
+                {/* <Comment.Group>
                   <Comment>
                     <Comment.Avatar src='http://lorempixel.com/output/cats-q-c-100-100-5.jpg' shape='rounded' size='mini'/>
                     <Comment.Content>
@@ -140,45 +142,37 @@ class Project extends Component {
                     <Divider/>
                     <Button fluid className='projectCheck' >New Comment</Button>
                   </Form>
-                </Comment.Group>
-
+                </Comment.Group> */}
+              <Chat/>
               <Rail position='left'>
               <Card.Group>
                   <Card className='projectSegment'>
                     <Card.Content>
                       <Header as='h3'>Project Details</Header>
-                      <Statistic.Group widths='two'>
-                        <Statistic>
-                          <Statistic.Value>{this.state.project.members_wanted}</Statistic.Value>
-                          <Statistic.Label>Members</Statistic.Label>
-                        </Statistic>
-
-                        <Statistic>
-                          <Statistic.Value>{this.state.project.duration}</Statistic.Value>
-                          <Statistic.Label>Weeks</Statistic.Label>
-                        </Statistic>
-                      </Statistic.Group> <br/>
-
-                      <Header as='h4'>Start Date {this.state.project.start_date}</Header>
-
-                        {this.state.project.description}
-                        <div floated='right'>
-                          <Icon floated='right' link name='github' size='large' link={this.state.project.repo_link} />
-                          <Icon floated='right' link name='google' size='large' link={this.state.project.google_drive_link} />
-                          <Icon floated='right' link name='trello' size='large' link={this.state.project.trello_link}  /> 
-                        </div>
-                      <Divider />
-                      {/* <Divider />
-                      <Card.Description>
-                        {this.state.project.duration} days
-                      </Card.Description>
-                      <Header as='h4'>Duration</Header>
-                      <Divider />
-                      <Card.Description>
-                        {this.state.project.members_wanted}
-                      </Card.Description>
-                      <Header as='h4'>Team Size</Header> */}
-                      <Divider />
+                      <p>{this.state.project.description}</p>
+                      <div floated='right'>
+                        <Icon link name='github' size='large' link={this.state.project.repo_link} />
+                        <Icon link name='google' size='large' link={this.state.project.google_drive_link} />
+                        <Icon link name='trello' size='large' link={this.state.project.trello_link}  /> 
+                      </div>
+                      <Card>
+                        <Card.Content>
+                          <Card.Header> {this.state.project.start_date} </Card.Header>
+                          <Card.Meta>Projected Start Date</Card.Meta>
+                        </Card.Content>
+                      </Card>
+                      <Card>
+                        <Card.Content>
+                          <Card.Header> {this.state.project.duration} weeks </Card.Header>
+                          <Card.Meta>Project Length</Card.Meta>
+                        </Card.Content>
+                      </Card>
+                      <Card>
+                        <Card.Content>
+                          <Card.Header> {this.state.project.members_wanted} members</Card.Header>
+                          <Card.Meta>Team Size</Card.Meta>
+                        </Card.Content>
+                      </Card>
                       <Header as='h4'>Technologies Involved</Header>
                       {this.renderTechTags(this.state.project.tech_tags)}
                     </Card.Content>
@@ -194,26 +188,14 @@ class Project extends Component {
                   <Button fluid className='projectJoin' link={this.state.project.deploy_link}>Request to Join!</Button>
               </Segment>
               <Card.Group>
-                  <Card className='projectSegment'>
+                  <Card className='projectRequest'>
                     <Card.Content>
-                      <Header as='h4' image>
-                        <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                        <Header.Content>
-                              Cindy Chen
-                        </Header.Content>
-                        {/* <Button.Group floated='right'>
-                          <Button positive className='projectCheck' icon='check' />
-                          <Button negative className='projectClose' icon='close' />
-                        </Button.Group> */}
-                      </Header>
-                      <Card.Description>
-                        Cindy wants to join your project.
-                      </Card.Description>
+                      <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini' verticalAlign='middle' /> <span> <strong> Cindy Chen </strong> wants to join.</span>
                     </Card.Content>
                     <Card.Content extra>
                       <div className='ui two buttons'>
-                        <Button fluid className='projectCheck' >Approve</Button>
                         <Button fluid className='projectClose' >Decline</Button>
+                        <Button fluid className='projectCheck' >Approve</Button>
                       </div>
                     </Card.Content>
                   </Card>
@@ -222,65 +204,68 @@ class Project extends Component {
                 <Segment className='projectSegment'>
                   <Header as='h3'>Team Members</Header>
                   <Divider/>
-                  <Container>
+                  {/* <Container>
                     <Header as='h4' image>
                     <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
                     <Header.Content>
-                          Aaron Gaither
+                      Aaron Gaither
                     </Header.Content>
                     </Header>
                     <Header as='h4' image>
                     <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
                     <Header.Content>
-                          Fahad Rahman
+                      Fahad Rahman
                     </Header.Content>
                     </Header><br/>
                     <Header as='h4' image>
                     <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
                     <Header.Content>
-                          Bryce Miller
+                      Bryce Miller
                     </Header.Content>
                     </Header><br/>
                     <Header as='h4' image>
                     <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
                     <Header.Content>
-                          Cindy Chen
+                      Cindy Chen
                     </Header.Content>
                     </Header><br/>
-                  </Container>
-                </Segment>
-                {/* <Segment className='projectSegment'>
-                  <Header as='h3'>Pending Members</Header>
-                  <Divider/>
-                  <Container>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Aaron Gaither
-                    </Header.Content>
-                    </Header>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Fahad Rahman
-                    </Header.Content>
-                    </Header><br/>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Bryce Miller
-                    </Header.Content>
-                    </Header><br/>
-                    <Header as='h4' image>
-                    <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='large'/>
-                    <Header.Content>
-                          Cindy Chen
-                    </Header.Content>
-                    </Header><br/>
-                  </Container>
-                </Segment> */}
-              </Rail>
+                  </Container> */}
 
+                  <Item.Group link>
+                    <Item>
+                      <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+                      <Item.Content>
+                        <Item.Header>Cindy Chen</Item.Header>
+                        <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
+                      </Item.Content>
+                    </Item>
+                    <Divider/>
+                    <Item>
+                      <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+                      <Item.Content>
+                        <Item.Header>Cindy Chen</Item.Header>
+                        <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
+                      </Item.Content>
+                    </Item>
+                    <Divider/>
+                    <Item>
+                      <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+                      <Item.Content>
+                        <Item.Header>Cindy Chen</Item.Header>
+                        <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
+                      </Item.Content>
+                    </Item>
+                    <Divider/>
+                    <Item>
+                      <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+                      <Item.Content>
+                        <Item.Header>Cindy Chen</Item.Header>
+                        <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
+                      </Item.Content>
+                    </Item>
+                  </Item.Group>
+                </Segment>
+              </Rail>
             </Segment>
           </Grid.Column>
         </Grid>
