@@ -23,6 +23,9 @@ module.exports = function (app, passport) {
         }),
         function (req, res) {
             // Successful authentication, redirect home.
+
+            console.log(req);
+
             console.log("logged in");
 
             //provide code
