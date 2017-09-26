@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Input, Button, Comment, Form, Header, Divider } from 'semantic-ui-react'
-import io from 'socket.io-client';
 import axios from 'axios';
+import io from 'socket.io-client';
 const socket = io();
+
 
 const testData = [
 	{
@@ -10,50 +11,41 @@ const testData = [
 		name: "Matt",
 		date: "06/15/17",
 		body: "Whoa! guys?!",
-		id: 1
+		_id: 1
 	},
 	{
 		avatar: "https://react.semantic-ui.com/assets/images/avatar/small/joe.jpg",
 		name: "Joe",
 		date: "06/15/17",
 		body: "Yeah, really!",
-		id: 2
+		_id: 2
 	}
 ]
 
 class InputExampleAction extends Component {
 
-	state = {
-		chatInput: '',
-		chats: testData
-	}
-
-	componentWillMount() {
-		socket.on('connect', () => console.log('Chat connected, yo!'));
-		socket.on('refreshMsg', data => {
-			console.log("Refresh Msg Requested")
-			// axios.get('../api/projects/')
-		})
+	constructor(props){
+		super(props)
+		this.state = {
+			chatInput: ''
+		}
 	}
 
 	handleSubmit = event => {
 	  event.preventDefault();
 	  if (this.state.chatInput.length) {
-	  	console.log('Msg:',this.state.chatInput)
 	  	const newChat = {
 	  		body: this.state.chatInput,
-	  		name: this.state.username,
-	  		avatar: this.state.avatar,
+	  		author_id: '59c98010339e5c29743839e5', //this.props.user once using log-ins
 	  		date: new Date(),
-	  		type: 'private'
+	  		chat_type: this.props.chat_type
 	  	}
-	  	// axios.patch('../api/projects', newChat)
-	  	// .then(res => axios.get('..api/projects'))
-	  	// .then(res => this.setState({chats: res.data})
-
-	  	socket.emit('newMsg', {msg: this.state.chatInput, type: 'public'});
+	  	axios.patch('/api/projects', {projectId: this.props.projectId, update: {$push: {chat:newChat}}})
+	  	.then(res => {
+	  		socket.emit('newMsg', newChat)
+	  	})
+	  	.catch(err => console.log('Err on chat push to db:', err))
 	  	this.setState({chatInput: ''});
-
 	  }
 	}
 
@@ -61,16 +53,16 @@ class InputExampleAction extends Component {
 	  this.setState({ chatInput: event.target.value });
 	}
 
-	renderChatMessage = chatObj => {
+	renderChatMessage = chat => {
 		return (
-			<Comment key={chatObj.id}>
-			  <Comment.Avatar src={chatObj.avatar} />
+			<Comment key={chat._id}>
+			  <Comment.Avatar src="https://react.semantic-ui.com/assets/images/avatar/small/elliot.jpg" />
 			  <Comment.Content>
-			    <Comment.Author as='a'>{chatObj.name}</Comment.Author>
+			    <Comment.Author as='a'>{chat.author_id}</Comment.Author>
 			    <Comment.Metadata>
-			      <div>{chatObj.date}</div>
+			      <div>{chat.date}</div>
 			    </Comment.Metadata>
-			    <Comment.Text>{chatObj.body}</Comment.Text>
+			    <Comment.Text>{chat.body}</Comment.Text>
 			  </Comment.Content>
 			</Comment>
 			)
@@ -79,7 +71,7 @@ class InputExampleAction extends Component {
 	render () {
 		return (
 			  <Comment.Group size='small'>
-				  {this.state.chats.map(e => this.renderChatMessage(e))}
+				  {this.props.chats.map(e => this.renderChatMessage(e))}
 				  <Form reply onSubmit={this.handleSubmit}>
 						<Form reply>
 							<Form.TextArea maxLength="140" name="chatInput" value={this.state.chatInput} onChange={this.handleChange} style={{ minHeight: 50 }}/>
