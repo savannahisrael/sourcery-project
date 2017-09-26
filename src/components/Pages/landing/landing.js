@@ -1,7 +1,10 @@
 import React, {
   Component
 } from 'react';
-import {Route, Redirect} from 'react-router';
+import {
+  Route,
+  Redirect
+} from 'react-router';
 import ReactRotatingText from 'react-rotating-text';
 import {
   Button,
@@ -62,9 +65,8 @@ export default class landingPage extends Component {
   }
 
   handleLoginButton = () => {
-    axios.get('../auth/github').then((res) => {
-      console.log(res.data);
-    });
+      window.location = '../auth/github';
+    
   }
 
   handleSignupButton = () => {
@@ -76,14 +78,15 @@ export default class landingPage extends Component {
 
   handleCohortCodeButton = () => {
     console.log("button clicked");
-    axios.get('../auth/cohortVerify', {
+     axios.get('../auth/cohortVerify', {
       params: {
         cohortCode: this.state.cohort
       }
-    }).then(res =>{
-      if(res.data.cohortExists){
-        <Redirect to= "/dashboard"/>
-      }else{
+    }).then(res => {
+      if (res.data.cohortExists) { 
+        let proxyURL = "https://cors-anywhere.herokuapp.com/"
+        axios.get(proxyURL+'/dashboard')
+      } else {
         console.log("Cohort code incorrect");
       }
     });
@@ -97,14 +100,18 @@ export default class landingPage extends Component {
 
   render() {
     return ( < div >
-      <Navbar currentPage = 'landing' / >
-      <Segment textAlign = 'center'
+      <
+      Navbar currentPage = 'landing' / >
+      <
+      Segment textAlign = 'center'
       /*style={{ minHeight: 1080, padding: '1em 0em', backgroundImage: `url(${BackgroundImg})`, flex: 1, resizeMode: 'cover'
       }}*/
 
       basic >
-      <div className = 'aboveTheFold' >
-      <Container text >
+      <
+      div className = 'aboveTheFold' >
+      <
+      Container text >
       <
       Header as = 'h1'
       content = 'devCircle'
@@ -123,7 +130,7 @@ export default class landingPage extends Component {
           fontWeight: 'normal',
         }
       } >
-      Create your own team projects <Header.Subheader >
+      Create your own team projects < Header.Subheader >
       <
       ReactRotatingText style = {
         {
@@ -134,30 +141,35 @@ export default class landingPage extends Component {
       items = {
         ['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']
       }
-      /> </Header.Subheader > </Header> <br / >
-      <Button className = 'signUpButton'
+      /> </Header.Subheader > < /Header> <br / >
+      <
+      Button className = 'signUpButton'
       primary size = 'huge'
       onClick = {
         this.handleSignupButton
       } >
-      Sign Up </Button> <Form className = 'signUpForm'
+      Sign Up < /Button> <Form className = 'signUpForm'
       onChange = {
         this.handleCohortCodeChange
       }
       onSubmit = {
         this.handleCohortCodeButton
       } >
-      <Form.Input size = 'huge'
+      <
+      Form.Input size = 'huge'
       action = 'Sign Up'
       placeholder = 'Enter code...' / >
-      </Form> <br / >
-      <Button className = 'cohortCodeButton'
+      <
+      /Form> <br / >
+      <
+      Button className = 'cohortCodeButton'
       secondary size = 'huge'
       onClick = {
         this.handleLoginButton
       } >
-      Log in with Github </Button> </Container > </div> </Segment > <Container >
-      <Grid columns = {
+      Log in with Github < /Button> </Container > < /div> </Segment > < Container >
+      <
+      Grid columns = {
         5
       } >
       <
