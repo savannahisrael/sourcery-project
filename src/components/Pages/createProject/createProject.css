@@ -1,3 +1,24 @@
 .form {
   /*padding: 50px 0;*/
 }
+
+.createBackground {
+  background-color: #f4f7f9 !important;
+}
+
+.createContainer {
+  margin: 0px 30px 15px 15px !important;
+}
+
+.createBanner {
+  min-height: 200px !important;
+  padding: 25px 0px !important;
+}
+
+.createHeader {
+  margin-top: 25px !important;
+  font-size: 3.5em !important;
+  font-weight: 300 !important;
+  color: #001738 !important;
+}
+

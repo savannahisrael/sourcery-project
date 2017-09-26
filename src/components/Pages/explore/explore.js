@@ -108,28 +108,17 @@ class Explore extends Component {
     return (
       <div>
         <Navbar currentPage='explore' />
-        {/* <Divider/> */}
+        <div className='exploreBackground'>
         <Segment textAlign='center' vertical className='exploreBanner'>
           <Container>
-            {/* <Header as='h1' className='exploreTitle'>
-              Explore Projects
-            </Header><br/> */}
-            {/* <Dropdown text='Proposed' inline selection options={projectProgress} className='exploreDropdown' /> */}
             <Header className='exploreHeader'>
               <span className='exploreProjectsSpan'>Explore Projects</span> {' '}
               <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilter()}/>
             </Header>
-            {/* <Header className='exploreSubheader'>
-              Search by
-            </Header>
-            <Dropdown placeholder='Technologies' multiple search selection options={techSelection} className='exploreDropdown2'/> */}
             <h1 className='searchHeader'>
               <span className='searchBySpan'>Search by</span> {' '}
-              <Dropdown inline multiple search selection options={techSelection} placeholder='Technologies' className='searchDropdown' onChange={this.handleTechFilter()}/>
+              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilter()}/>
             </h1>
-            {/* <Header as='h2' className='exploreSubtitle'>
-              Solve interesting problems.
-            </Header> */}
           </Container>
         </Segment>
         <Grid stackable centered container columns={3}>
@@ -145,6 +134,7 @@ class Explore extends Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
+        </div>
       </div>
     );
   }

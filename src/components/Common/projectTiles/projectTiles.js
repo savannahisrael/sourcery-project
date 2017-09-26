@@ -1,19 +1,21 @@
 import React from 'react';
-import { Card, Icon, Image, Button, Label } from 'semantic-ui-react';
+import { Card, Icon, Image, Button, Label, Divider } from 'semantic-ui-react';
 import './projectTiles.css';
 
 const Tile = (props) => (
   <Card raised className='tileCard'>
     <Card.Content className='tileHeader'>
+      <i className="devicon-angularjs-plain colored devIcon iconStyle"></i>
       <Card.Header className='tileTitle'>
         {props.title}
       </Card.Header>
-      <i className="devicon-python-plain iconStyle"></i>
-       <Card.Meta className='tileState'>
-          {props.start_date} | {props.duration} Days
-      </Card.Meta>
     </Card.Content>
     <Card.Content className='tileContent'>
+      <Divider/>
+      <Card.Meta className='tileState'>
+          {props.start_date} | {props.duration} Days
+      </Card.Meta>
+      <Divider/>
         {props.renderTechTags(props.tech_tags)}
       <Card.Description className='tileSummary'>
         {props.summary}
@@ -32,7 +34,7 @@ const Tile = (props) => (
     </Card.Content>
     <Button animated='vertical' fluid attached='bottom' className='tileJoin' onClick={props.handleJoinButton}>
       <Button.Content visible>
-        Join the team
+        View Details
       </Button.Content>
       <Button.Content hidden>
         3 spots left!
