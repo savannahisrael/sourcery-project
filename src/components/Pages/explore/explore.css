@@ -1,7 +1,11 @@
+.exploreBackground {
+  background-color: #f4f7f9 !important;
+}
 .exploreBanner {
-  min-height: 350px !important;
+  min-height: 300px !important;
   padding: 50px 0px !important;
-  background-color: #DEE1E5 !important;
+  /* background-color: #fff !important; */
+  background-color: #fff !important;
 }
 
 .exploreHeader {
@@ -21,7 +25,7 @@
 }
 
 .exploreProjectsSpan {
-  font-size: 4em !important;
+  font-size: 3.5em !important;
   font-weight: 300 !important;
   color: #001738 !important;
 }
@@ -34,23 +38,30 @@
 
 .exploreDropdown {
   border: none !important;
-  border-bottom: 1px solid !important;
   border-radius: 0px !important;
-  background-color: #DEE1E5 !important;
+  background-color: #fff !important;
   margin-left: 20px !important;
   width: 400px !important;
-  font-size: 3.25em !important;
-  /*font-weight: 300 !important;*/
+  font-size: 3.5em !important;
+  color: #25569B !important;
 }
 
 .searchDropdown {
   border: none !important;
-  border-bottom: 1px solid !important;
   border-radius: 0px !important;
-  background-color: #DEE1E5 !important;
-  width: 800px !important;
-  font-size: 0.75em !important;
-  /*font-weight: 300 !important;*/
+  background-color: #fff !important;
+  font-size: 1em !important;  
+}
+
+div.default.text {
+  color: #001738 !important;  
+}
+
+a.ui.label {
+  margin: 5px 5px !important;
+  border: none !important;  
+  background-color: #98A8BC !important;
+  border-radius: 30px !important;
 }
 
 

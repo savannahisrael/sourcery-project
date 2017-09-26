@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Label, Icon, Container } from 'semantic-ui-react';
+import { Form, Label, Icon, Container, Segment, Header } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import './createProject.css';
 import axios from 'axios';
@@ -134,9 +134,17 @@ class CreateProjectForm extends Component {
   render() {
     const { value } = this.state
     return (
-      <div>
+      <div className='createBackground'>
         <Navbar currentPage='create' />
-        <Container>
+        <Segment basic textAlign='center' vertical className='createBanner'>
+          <Container>
+            <Header className='createHeader'>
+              Create a Project
+            </Header>
+          </Container>
+        </Segment>
+        <Container text className='createContainer'>
+          <Segment>
           <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
             <Form.Input label='Project Name' placeholder='devCircle' onChange={this.handleprojectNameChange}/>
             <Form.Input label='Start Date' placeholder='Oct 1, 2017' onChange={this.handleStartDateChange}/>
@@ -152,6 +160,7 @@ class CreateProjectForm extends Component {
             <Form.Input label='Deployment Link' onChange={this.handleDeployLinkChange}/>
             <Form.Button>Create Project</Form.Button>
           </Form>
+          </Segment>
         </Container>
       </div>
     )
