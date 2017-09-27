@@ -39,6 +39,10 @@ module.exports = function (app) {
                 project.owner_id = users.find(u => u.github.login === projectJoin.owner)._id
                 project.members = projectJoin.members.map(e => users.find(u => u.github.login === e)._id)
                 project.pending_members = projectJoin.pending.map(e => users.find(u => u.github.login === e)._id)
+                project.chat = projectJoin.chat.map(e => {
+                    e.author_id = users.find(u => u.github.login === e.author_id)._id;
+                    return e
+                })
                 return project
             }))
         })
