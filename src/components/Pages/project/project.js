@@ -92,25 +92,17 @@ class Project extends Component {
           this.setState({priviledge: 'owner'})
         } else if (this.state.members.find(m => m.github.login === curUser)) {
           this.setState({priviledge: 'member'})
+        } else if (this.state.pending_members.find(m => m.github.login === curUser)) {
+          this.setState({priviledge: 'pending'})
         }
       }
       this.setState({ userID: res.data });
 
 
       // ------- Manual Auth Overrides
-      // this.setState({userID: {
-      //   login: true,
-      //   user: {
-      //     _id: '1234',
-      //     github: {
-      //       login: "aarongaither",
-      //       name: "Aaron Gaither",
-      //       avatar_url: "https://avatars1.githubusercontent.com/u/16161706?v=4&s=400"
-      //     }
-      //   }
-      // }})
       // this.setState({priviledge: 'owner'})
       // this.setState({priviledge: 'member'})
+      // this.setState({priviledge: 'pending'})
       console.log('User:',res.data, 'priviledge:', this.state.priviledge);
     }).catch(error => {
       console.log('Catching Error while authing user: ', error);
@@ -191,28 +183,30 @@ class Project extends Component {
     const priv = this.state.priviledge;
     if (priv === 'owner') {
       buttonText = 'Edit Project Details';
-    } else if (this.state.userID.login) {
-      if (this.state.pending_members.find(m => m.github.login === this.state.userID.user.github.login)) {
-        buttonText = "You've requested to join!"
-      } 
+    } else if (priv === 'member') {
+      buttonText = 'You are a member!';
+    } else if (priv === 'pending') {
+      buttonText = "You've requested to join!"
     } else {
       buttonText = 'Request to Join!'
     }
     return buttonText;
   }
 
-  panes = [
-    { menuItem: 'Team Chat', render: () =>
+  panes = () => {
+    const teamChat = { menuItem: 'Team Chat', render: () =>
       <Tab.Pane attached={false}>
         <Chat chat_type='private' cohort={this.props.match.params.cohort} user={this.state.userID} projectId={this.state._id}
         chats={this.state.chat.filter(chat => chat.chat_type === 'private')}  />
-      </Tab.Pane> },
-    { menuItem: 'Public Forum', render: () =>
+      </Tab.Pane> }
+    const pubChat = { menuItem: 'Public Forum', render: () =>
       <Tab.Pane attached={false}>
         <Chat chat_type='public' cohort={this.props.match.params.cohort} user={this.state.userID} projectId={this.state._id}
         chats={this.state.chat.filter(chat => chat.chat_type === 'public')} />
       </Tab.Pane> }
-  ]
+
+      return this.state.priviledge === 'owner' || this.state.priviledge === 'member' ? [pubChat, teamChat] : [pubChat];
+  }
 
   render(props) {
     return (
@@ -262,7 +256,7 @@ class Project extends Component {
               </Segment>
 
               <Segment basic className='projectChat'>
-                <Tab menu={{ secondary: true, pointing: true }} panes={this.panes}/>
+                <Tab menu={{ secondary: true, pointing: true }} panes={this.panes()}/>
               </Segment>
 
               <Rail position='left'>
@@ -316,15 +310,11 @@ class Project extends Component {
               </Rail>
 
               <Rail position='right'>
-                {
-                  this.state.priviledge !== 'member' ?
                   <Segment className='joinRequest'>
                     <Button fluid className='projectJoin' link={this.state.deploy_link}>
                       {this.renderButtonText()}
                     </Button>
-                  </Segment> :
-                  ''
-                }
+                  </Segment>
 
                 <Card.Group>
                   {this.renderPendingMembers()}
