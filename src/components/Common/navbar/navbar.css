@@ -13,7 +13,8 @@
     color: #5FA8F9 !important;
 }
 
-/* .navFont {
+.navFont {
     font-size: 1em !important;
     font-weight: 300 !important;
-} */
+    color: #000 !important;
+}

@@ -66,76 +66,48 @@ export default class landingPage extends Component {
   render() {
     return (
       <div>
-        <Segment className='aboveTheFold' textAlign='center'basic>
+        <Segment className='aboveTheFold' basic>
           <Navbar currentPage='landing' />
           <div>
-          <Container text >
-            <Header className='landingHeader'content='devCircle'/>
-            <Header className='landingSubheader'>
-              Create your own team projects
-            </Header>
-            <Header>
-                <ReactRotatingText className='landingRotating'
-                  items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']} />
-            </Header>
-            <br/>
-            <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>
-              Sign Up
-            </Button>
-            <Form className='signUpForm' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
-              <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
-            </Form>
-            <br/>
-            <Button className='cohortCodeButton' secondary size='huge' onClick={this.handleLoginButton}>
-              Log in with Github
-            </Button>
+          <Container textAlign='center'>
+            <Grid >
+              <Grid.Column width={8} className='landingGrid'>
+                <Header className='landingHeader'content='devCircle'/>
+                <Header className='landingSubheader'>
+                  Create your own team projects
+                </Header>
+                <Header>
+                    <ReactRotatingText className='landingRotating'
+                      items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']} />
+                </Header>
+                <br/>
+                <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>
+                  Register
+                </Button>
+                <Form className='signUpForm' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
+                  <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
+                </Form>
+                <br/>
+                {/* <Button className='cohortCodeButton' secondary size='huge' onClick={this.handleLoginButton}>
+                  Log in with Github
+                </Button> */}
+              </Grid.Column>
+              <Grid.Column width={8} className='img'/>
+            </Grid>
           </Container>
           </div>
         </Segment>
-        <Container>
-          <Grid columns={5}>
-            <Grid.Row>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Container>
+
+
+
         <Container>
           <Grid columns={3}>
             <Grid.Row>
               <Header as='h2' icon>
                 <Icon name='calendar outline' />
                 Simplify Planning
+                <Image src='../../../assets/images/background.png' size='small'/>
+
                 <Header.Subheader>
                   Easily turn ideas into an actionable plan to achieve success.
                 </Header.Subheader>

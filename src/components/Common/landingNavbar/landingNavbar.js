@@ -13,7 +13,7 @@ const menuStyle = {
 }
 
 const fixedMenuStyle = {
-  backgroundColor: '#344078',
+  backgroundColor: '#4d5991',
   // opacity: '0.9',
   // border: '1px solid #ddd',
   // boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
@@ -62,7 +62,7 @@ export default class navBar extends Component {
             style={menuFixed ? fixedMenuStyle : menuStyle}
           >
             <Container >
-              <Menu.Item name='DEVCIRCLE' href='/' onClick={this.handleItemClick} className='navFont'/>
+              <Menu.Item name='DEVCIRCLE' href='/' onClick={this.handleItemClick} className='landingnavFont'/>
               <Menu.Menu position='right'>
                 <Menu.Item>
                   <Button inverted color='white'>LOG IN</Button>
