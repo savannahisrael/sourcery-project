@@ -5,6 +5,7 @@ import Chat from "../../Common/chat";
 import './project.css';
 import axios from 'axios';
 import moment from 'moment';
+import githubAPI from '../../../utils/github-API';
 import io from 'socket.io-client';
 
 const socket = io();
@@ -21,7 +22,7 @@ class Project extends Component {
     description: 'Loading data...',
     tech_tags: [],
     start_date: '',
-    duration: 7,
+    duration: 0,
     members_wanted: 0,
     "google_drive_link": "https://google.com",
     "trello_link": "https://trello.com",
@@ -31,18 +32,21 @@ class Project extends Component {
     pending_members: [],
     members: [],
     owner: '',
-    cohort: ''
+    cohort: '',
+    issues: [],
+    pulls: [],
+    contributors: []
   };
 
   // On page load, get project data and send to this.state.project
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    this.fetchProjectData();
+    this.fetchProjectData().then(repoLink => this.fetchGithubData(repoLink));
 
     axios.get('/auth/checkLoggedIn').then((res) => {
       this.setState({ userID: res.data });
       console.log(res.data);
-    }).catch((error) => {
+    }).catch(error => {
       console.log('Catching Error while authing user: ', error);
     });
 
@@ -54,27 +58,56 @@ class Project extends Component {
   }
 
   fetchProjectData = () => {
-    axios.get(`/api/projectData${this.props.location.pathname}`).then((res) => {
-      console.log('data:',res.data[0]);
+    return axios.get(`/api/projectData${this.props.location.pathname}`).then(res => {
+      console.log('Project data:',res.data[0]);
       this.setState({ ...res.data[0] });
-    }).catch((error) => {
-      console.log('Catching Error while fetching data: ', error);
+      return res.data[0].repo_link
+    }).catch(error => {
+      console.log('Error while fetching data:', error);
+      return error;
     });
   }
 
+  fetchGithubData = repo => {
+    githubAPI.repo(repo).then(res => {
+      const {issues, pulls} = res;
+      console.log('github issues/pulls:', issues, pulls)
+      this.setState({issues, pulls })
+      return res;
+    }).then(result => {
+       return githubAPI.repoContributors(repo)
+    }).then(res => {
+      console.log('github contributors:', res)
+      this.setState({contributors: res})
+    }).catch(err => console.log('Error in github pull:', err))
+  }
+
   renderTeamMembers = () => {
-    return this.state.members.map(member => (
-      <Item.Group link>
-        <Item>
-          <Item.Image size='mini' src={member.github.avatar_url} shape='rounded'  />
-          <Item.Content>
-            <Item.Header>{member.github.name}</Item.Header>
-            <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
-          </Item.Content>
-        </Item>
-        <Divider/>
-      </Item.Group>
-    ));
+    return this.state.members.map(member => {
+      member.contributions = this.state.contributors.find(c => c.name === member.github.login )
+      console.log('member:', member)
+      return member
+    }).map(member => {
+      const cons = member.contributions ? 
+      {
+        c: member.contributions.commits,
+        a: member.contributions.additions,
+        d: member.contributions.deletions
+      } :
+      {c: 0, a: 0, d: 0}
+      return (
+        <Item.Group link>
+          <Item>
+            <Item.Image size='mini' src={member.github.avatar_url} shape='rounded'  />
+            <Item.Content>
+              <Item.Header>{member.github.name}</Item.Header>
+              <Item.Meta>{`${cons.c} commits / ${cons.a} ++ / ${cons.d} --`}</Item.Meta>
+            </Item.Content>
+          </Item>
+          <Divider/>
+        </Item.Group>
+      )
+    });
   }
 
   renderPendingMembers = () => {
@@ -101,15 +134,15 @@ class Project extends Component {
     ));
   }
 
-  renderPullRequests = () => {
-    return this.state.github.pullRequests.map(pullRequest => (
-      <Item.Group link>
+  renderPRorIssue = type => {
+    return this.state[type].map( item => (
+      <Item.Group>
         <Divider/>
         <Item>
-          <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+          <Item.Image size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} shape='rounded'  />
           <Item.Content>
-            <Item.Header>Pull Request/Issue Title</Item.Header>
-            <Item.Meta>Some other details</Item.Meta>
+            <Item.Header as='a' href={item.url}>{item.title}</Item.Header>
+            <Item.Meta>State: {item.state}</Item.Meta>
           </Item.Content>
         </Item>
       </Item.Group>
@@ -184,16 +217,12 @@ class Project extends Component {
 
                 <Segment className='pullRequest'>
                   <Header as='h3'>Pull Requests</Header>
-                  <Item.Group link>
-                    <Divider/>
-                    <Item>
-                      <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
-                      <Item.Content>
-                        <Item.Header>Pull Request/Issue Title</Item.Header>
-                        <Item.Meta>Some other details</Item.Meta>
-                      </Item.Content>
-                    </Item>
-                  </Item.Group>
+                  {this.renderPRorIssue('pulls')}
+                </Segment>
+
+                <Segment className='pullRequest'>
+                  <Header as='h3'>Issues</Header>
+                  {this.renderPRorIssue('issues')}
                 </Segment>
 
                 <Card.Group>
