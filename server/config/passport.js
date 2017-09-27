@@ -39,7 +39,7 @@ module.exports = function(passport) {
             passReqToCallback: true
         },
         function(req, accessToken, refreshToken, profile, done) {
-            console.log("before auth starts:", req.session)
+            // console.log("before auth starts:", req.session)
             process.nextTick(function() {
                 users.findOne({
                     'github.id': parseInt(profile.id)
