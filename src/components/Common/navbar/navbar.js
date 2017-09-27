@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Container, Dropdown, Image,  Menu, Visibility, Button, Input} from 'semantic-ui-react';
+import { Container, Dropdown, Image,  Menu, Visibility,} from 'semantic-ui-react';
 import './navbar.css';
 
 const menuStyle = {
   border: 'none',
   borderRadius: 0,
   boxShadow: 'none',
-  marginBottom: '.5em',
-  marginTop: '2em',
+  paddingBottom: '1em',
+  paddingTop: '2em',
   transition: 'box-shadow 0.5s ease, padding 0.5s ease',
 }
 
@@ -16,6 +16,8 @@ const fixedMenuStyle = {
   backgroundColor: '#fff',
   border: '1px solid #ddd',
   boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
+  paddingBottom: '1em',
+  paddingTop: '1em',
 }
 
 
@@ -62,7 +64,7 @@ export default class navBar extends Component {
               {/*<Menu.Item>
                 <Image size='mini' src='/components/assets/images/dev.svg' />
               </Menu.Item>*/}
-              <Menu.Item name='devCircle' href='/' onClick={this.handleItemClick} className='navFont'/>
+              <Menu.Item name='DEVCIRCLE' href='/' onClick={this.handleItemClick} className='navFont'/>
               <Menu.Menu position='right' className='navFont'>
                 <Menu.Item name='CREATE A PROJECT' href='/create' active={activeItem === 'create'} onClick={this.handleItemClick} className='navCreate'/>
                 <Menu.Item name='Explore' href='/explore' active={activeItem === 'explore'} onClick={this.handleItemClick} className='navFont' />
