@@ -43,7 +43,7 @@ class InputExampleAction extends Component {
 			<Comment key={chat._id}>
 			  <Comment.Avatar src={chat.author_id.github.avatar_url} />
 			  <Comment.Content>
-			    <Comment.Author as='a'>{chat.author_id.github.name}</Comment.Author>
+			    <Comment.Author as='a' href={`/${this.props.cohort}/${chat.author_id.github.login}/profile`}>{chat.author_id.github.name}</Comment.Author>
 			    <Comment.Metadata>
 			      <div>{formatDate(chat.date)}</div>
 			    </Comment.Metadata>

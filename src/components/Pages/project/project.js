@@ -96,7 +96,7 @@ class Project extends Component {
       } :
       {c: 0, a: 0, d: 0}
       return (
-        <Item.Group link>
+        <Item.Group link href={`/${this.props.match.params.cohort}/${member.github.login}/profile`}>
           <Item>
             <Item.Image size='mini' src={member.github.avatar_url} shape='rounded'  />
             <Item.Content>
@@ -152,12 +152,12 @@ class Project extends Component {
   panes = [
     { menuItem: 'Team Chat', render: () =>
       <Tab.Pane attached={false}>
-        <Chat chat_type='private' user={this.state.userID} projectId={this.state._id}
+        <Chat chat_type='private' cohort={this.props.match.params.cohort} user={this.state.userID} projectId={this.state._id}
         chats={this.state.chat.filter(chat => chat.chat_type === 'private')}  />
       </Tab.Pane> },
     { menuItem: 'Public Forum', render: () =>
       <Tab.Pane attached={false}>
-        <Chat chat_type='public' user={this.state.userID} projectId={this.state._id}
+        <Chat chat_type='public' cohort={this.props.match.params.cohort} user={this.state.userID} projectId={this.state._id}
         chats={this.state.chat.filter(chat => chat.chat_type === 'public')} />
       </Tab.Pane> }
   ]
