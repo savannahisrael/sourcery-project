@@ -31,24 +31,21 @@ class Project extends Component {
     chat: [],
     pending_members: [],
     members: [],
-    owner: '',
-    cohort: '',
+    owner_id: '',
+    cohort_id: '',
     issues: [],
     pulls: [],
-    contributors: []
+    contributors: [],
+    priviledge: 'public'
   };
 
   // On page load, get project data and send to this.state.project
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    this.fetchProjectData().then(repoLink => this.fetchGithubData(repoLink));
+    this.fetchProjectData()
+    .then(repoLink => this.fetchGithubData(repoLink))
+    .then(repoInfo => this.checkLoggedIn())
 
-    axios.get('/auth/checkLoggedIn').then((res) => {
-      this.setState({ userID: res.data });
-      console.log(res.data);
-    }).catch(error => {
-      console.log('Catching Error while authing user: ', error);
-    });
 
     socket.on('refreshMsg', data => {
      console.log("Refresh Msg Requested:", data);
@@ -69,23 +66,47 @@ class Project extends Component {
   }
 
   fetchGithubData = repo => {
-    githubAPI.repo(repo).then(res => {
+    return githubAPI.repo(repo)
+    .then(res => {
       const {issues, pulls} = res;
       console.log('github issues/pulls:', issues, pulls)
       this.setState({issues, pulls })
       return res;
-    }).then(result => {
+    })
+    .then(result => {
        return githubAPI.repoContributors(repo)
-    }).then(res => {
+    })
+    .then(res => {
       console.log('github contributors:', res)
       this.setState({contributors: res})
-    }).catch(err => console.log('Error in github pull:', err))
+      return res
+    })
+    .catch(err => console.log('Error in github pull:', err))
+  }
+
+  checkLoggedIn = () => {
+    axios.get('/auth/checkLoggedIn').then(res => {
+      if (res.data.login) {
+        const curUser = res.data.user.github.login;
+        if (this.state.owner_id.github.login === curUser) {
+          this.setState({priviledge: 'owner'})
+        } else if (this.state.members.find(m => m.github.login === curUser)) {
+          this.setState({priviledge: 'member'})
+        }
+      }
+      this.setState({ userID: res.data });
+
+      // this.setState({priviledge: 'owner'})
+      // this.setState({priviledge: 'member'})
+      console.log('User:',res.data, 'priviledge:', this.state.priviledge);
+    }).catch(error => {
+      console.log('Catching Error while authing user: ', error);
+    });
   }
 
   renderTeamMembers = () => {
     return this.state.members.map(member => {
       member.contributions = this.state.contributors.find(c => c.name === member.github.login )
-      console.log('member:', member)
       return member
     }).map(member => {
       const cons = member.contributions ? 
