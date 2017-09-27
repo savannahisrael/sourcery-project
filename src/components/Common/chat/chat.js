@@ -2,25 +2,10 @@ import React, { Component } from 'react'
 import { Input, Button, Comment, Form, Header, Divider } from 'semantic-ui-react'
 import axios from 'axios';
 import io from 'socket.io-client';
+import moment from 'moment';
 const socket = io();
 
-
-const testData = [
-	{
-		avatar: "https://react.semantic-ui.com/assets/images/avatar/small/elliot.jpg",
-		name: "Matt",
-		date: "06/15/17",
-		body: "Whoa! guys?!",
-		_id: 1
-	},
-	{
-		avatar: "https://react.semantic-ui.com/assets/images/avatar/small/joe.jpg",
-		name: "Joe",
-		date: "06/15/17",
-		body: "Yeah, really!",
-		_id: 2
-	}
-]
+const formatDate = date => moment(date).format('MM/DD/YYYY');
 
 class InputExampleAction extends Component {
 
@@ -60,7 +45,7 @@ class InputExampleAction extends Component {
 			  <Comment.Content>
 			    <Comment.Author as='a'>{chat.author_id.github.name}</Comment.Author>
 			    <Comment.Metadata>
-			      <div>{chat.date}</div>
+			      <div>{formatDate(chat.date)}</div>
 			    </Comment.Metadata>
 			    <Comment.Text>{chat.body}</Comment.Text>
 			  </Comment.Content>

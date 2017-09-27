@@ -8,6 +8,7 @@ import moment from 'moment';
 import io from 'socket.io-client';
 
 const socket = io();
+const formatDate = date => moment(date).format('MM/DD/YYYY');
 
 
 class Project extends Component {
@@ -162,7 +163,7 @@ class Project extends Component {
                   <Icon link name='trello' size='large' link={this.state.trello_link}  />
                 </div>
                 <Segment>
-                  <Header>{this.state.start_date}</Header>
+                  <Header>{formatDate(this.state.start_date)}</Header>
                   <p>Projected Start Date</p>
                 </Segment>
                 <Segment>
@@ -207,7 +208,7 @@ class Project extends Component {
                       </div>
                       <Card>
                         <Card.Content>
-                          <Card.Header> {this.state.start_date} </Card.Header>
+                          <Card.Header> {formatDate(this.state.start_date)} </Card.Header>
                           <Card.Meta>Projected Start Date</Card.Meta>
                         </Card.Content>
                       </Card>
