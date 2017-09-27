@@ -32,7 +32,6 @@ const memberOptions = [
 class CreateProjectForm extends Component {
   state = {
     userID: {},
-    projects: [],
     projectNameInput: '',
     startDateInput: '',
     projectDurationInput: '',
@@ -49,13 +48,6 @@ class CreateProjectForm extends Component {
 
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    axios.get('../api/projects').then((res) => {
-      this.setState({ projects: res.data });
-      console.log(res.data);
-    }).catch((error) => {
-      console.log('Catching Error: ');
-      console.log(error);
-    });
     axios.get('../auth/checkLoggedIn').then((res) => {
       this.setState({ userID: res.data });
       console.log(res.data);
@@ -132,8 +124,6 @@ class CreateProjectForm extends Component {
     });
   }
 
-  // handleChange = (e, { value }) => this.setState({ value })
-
   render() {
     const { value } = this.state
     return (
@@ -150,7 +140,7 @@ class CreateProjectForm extends Component {
           <Segment>
           <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
             <Form.Input label='Project Name' placeholder='devCircle' onChange={this.handleprojectNameChange}/>
-            <Form.Input label='Start Date' placeholder='Oct 1, 2017' onChange={this.handleStartDateChange}/>
+            <Form.Input label='Start Date' placeholder='MM/DD/YYYY' onChange={this.handleStartDateChange}/>
             <Form.Input label='Project Length' placeholder='in weeks' onChange={this.handleProjectDurationChange}/>
             <Form.TextArea label='Project Summary' placeholder='Summarize your project...' onChange={this.handleProjectSummaryChange}/>
             <Form.Select label='Main Technology' options={techOptions} placeholder='e.g. JavaScript' onChange={this.handleMainTechnologyChange}/>
