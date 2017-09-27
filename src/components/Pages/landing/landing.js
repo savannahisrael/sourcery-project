@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactRotatingText from 'react-rotating-text';
-import { Button, Container,Divider, Grid, Header, Form, Icon, Image, List, Menu, Segment, Visibility, Card } from 'semantic-ui-react';
+import { Button, Container,Divider, Grid, Header, Form, Icon, Image, List, Menu, Segment, Visibility, Card, Item } from 'semantic-ui-react';
 import Tiles from '../../Common/projectTiles';
 import SignUpInput from '../../Common/signUp';
 import Navbar from "../../Common/landingNavbar";
@@ -98,72 +98,59 @@ export default class landingPage extends Component {
         </Segment>
 
         <Container>
-
-        <Grid >
-          <Grid.Column width={8} className=''>
-            <Header className='landingWho'>
-            WHO <br/> WE <br/> ARE
-            </Header> 
-          </Grid.Column>
-          <Grid.Column width={8}>
-          </Grid.Column>
-        </Grid>
-
-
-          <Grid columns={3}>
+          <Grid>
             <Grid.Row>
-              <Header as='h2' icon>
-                <Icon name='calendar outline' />
-                Simplify Planning
-                <Image src='../../../assets/images/background.png' size='small'/>
-
-                <Header.Subheader>
-                  Easily turn ideas into an actionable plan to achieve success.
-                </Header.Subheader>
-              </Header>
-              <Header as='h2' icon>
-                <Icon name='users' />
-                Facilitate Collaboration
-                <Header.Subheader>
-                  Centralize communication with team members.
-                </Header.Subheader>
-              </Header>
-              <Header as='h2' icon>
-                <Icon name='fighter jet' />
-                Streamline Workflow
-                <Header.Subheader>
-                  View status for all your team projects in one place.
-                </Header.Subheader>
+              <Grid.Column width={8} className=''>
+                <Header className='landingWho'>
+                HOW <br/> CAN <br/> WE <br/> HELP
+                </Header>
+              </Grid.Column>
+              <Grid.Column width={8} className='iconSection'>
+                <Item.Group relaxed>
+                  <Item>
+                    <Icon name='calendar outline'className='icon'/>                
+                    <Item.Content>
+                      <Item.Header className='itemHeader' >Simplify Planning</Item.Header>
+                      <Item.Meta className='itemMeta'>Easily turn ideas into an actionable plan to achieve success.</Item.Meta>
+                    </Item.Content>
+                  </Item>
+                  <br/>
+                  <Item>
+                    <Icon name='users' className='icon'/> 
+                    <Item.Content>
+                      <Item.Header className='itemHeader'>Facilitate Collaboration</Item.Header>
+                      <Item.Meta className='itemMeta'>Centralize communication with team members.</Item.Meta>
+                    </Item.Content>
+                  </Item>       
+                  <br/>       
+                  <Item>
+                    <Icon name='fighter jet' className='icon'/>               
+                    <Item.Content>
+                      <Item.Header className='itemHeader'>Streamline Workflow</Item.Header>
+                      <Item.Meta className='itemMeta'>View status for all your team projects in one place.</Item.Meta>
+                    </Item.Content>
+                  </Item>
+                </Item.Group>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row textAlign='centered'> 
+              <Header className='quote'>
+                We’re here to help you keep up with the latest technologies and stay in touch with your fellow Boot Campers.
               </Header>
             </Grid.Row>
           </Grid>
         </Container>
-        <Segment style={{ padding: '8em 0em' }} vertical>
+      <Segment style={{ padding: '8em 0em' }} vertical>
           <Grid container stackable verticalAlign='middle'>
             <Grid.Row>
-              <Grid.Column width={8}>
-                <Header as='h3' style={{ fontSize: '2em' }}>We Help Companies and Companions</Header>
+              <Grid.Column width={16}>
+                <Header as='h3' style={{ fontSize: '2em' }}>devCircle’s Features at a Glance</Header>
                 <p style={{ fontSize: '1.33em' }}>
-                  We can give your company superpowers to do things that they never thought possible. Let us delight
-                  your customers and empower your needs... through pure data analytics.
+                Create team projects <br/>
+                Collaboration: sign up to contribute to projects or create projects for others to participate in<br/>
+                Engage with your team members: Be a part of the conversation as a group.<br/>
+                Explore: Find new projects based on technologies to participate in         <br/>       
                 </p>
-                <Header as='h3' style={{ fontSize: '2em' }}>We Make Bananas That Can Dance</Header>
-                <p style={{ fontSize: '1.33em' }}>
-                  Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.
-                </p>
-              </Grid.Column>
-              <Grid.Column floated='right' width={6}>
-                <Image
-                  bordered
-                  rounded
-                  size='large'
-                  src='/assets/images/wireframe/white-image.png'
-                />
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column textAlign='center'>
-                <Button size='huge'>Check Them Out</Button>
               </Grid.Column>
             </Grid.Row>
           </Grid>

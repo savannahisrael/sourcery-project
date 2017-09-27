@@ -76,6 +76,33 @@
   font-weight: 400 !important;
   margin-bottom: 0 !important;
   margin-top: 0.5em !important;
-  color: #98A8BC !important;
+  color: #4d5991 !important;
 }
 
+.iconSection {
+  margin-top: 100px !important;
+}
+
+.icon {
+  font-size: 4em !important;
+  color: #4d5991 !important;  
+}
+
+.itemHeader {
+  margin-left: 20px !important;
+  font-size: 2.5em !important;
+  font-weight: 400 !important;
+}
+
+.itemMeta {
+  margin-left: 20px !important;
+  font-size: 1.5em !important;
+  font-weight: 300 !important;
+  width: 300px !important;
+}
+
+.quote {
+  margin-top: 150px !important;
+  font-size: 2.5em !important;
+  font-weight: 400 !important;
+}
