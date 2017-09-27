@@ -8,6 +8,7 @@ import './explore.css';
 import projectData from '../../../utils/sampleData/sampleProjects.json';
 import search from '../../Common/navbar';
 import axios from 'axios';
+import moment from 'moment';
 
 const techSelection = [ { key: 'Py', value: 'Py', text: 'Python' }, { key: 'CS', value: 'CS', text: 'CSS' }, { key: 'HT', value: 'HT', text: 'HTML5' }, { key: 'Ja', value: 'Ja', text: 'JavaScript' }, { key: 'C+', value: 'C+', text: 'C++' }, { key: 'Ru', value: 'Ru', text: 'Ruby' }  ]
 
@@ -88,6 +89,7 @@ class Explore extends Component {
         members={project.members}
         renderTechTags={this.renderTechTags}
         handleJoinButton={this.handleJoinButton}
+        formatDate={this.formatDate}
       />
     ));
   }
@@ -102,6 +104,12 @@ class Explore extends Component {
 
   handleJoinButton = () => {
 
+  }
+
+  formatDate = (date) => {
+    return (
+      moment(date).format('MM/DD/YYYY')
+    )
   }
 
   render() {
@@ -121,7 +129,8 @@ class Explore extends Component {
             </h1>
           </Container>
         </Segment>
-        <Grid stackable centered container columns={3}>
+        <br/><br/>
+        <Grid stackable container columns={3}>
           <Grid.Row>
             <Grid.Column>
               {this.renderTiles(0)}

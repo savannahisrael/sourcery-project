@@ -1,6 +1,5 @@
 .tileCard {
-    width: 335px !important;
-    margin: 30px !important;
+  width: 335px !important;
 }
 
 .tileHeader {
@@ -12,7 +11,6 @@
 .tileTitle {
   padding: 10px 0 0 0 !important;
   text-align: center !important;
-  
 }
 
 .iconStyle {
@@ -42,7 +40,7 @@
 
 .tileSummary {
   margin-top: 10px !important;
-  font-size: 18px !important;  
+  font-size: 18px !important;
   font-weight: 300 !important;
 }
 
@@ -62,6 +60,6 @@
 .tileJoin {
   background-color: #25569B !important;
   color: white !important;
-  font-size: 18px !important;    
+  font-size: 18px !important;
   font-weight: 300 !important;
 }

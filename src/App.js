@@ -30,7 +30,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )}/>
 )
 
-axios.get('../auth/checkLoggedIn').then(res=>  console.log(res.data))
+axios.get('../auth/checkLoggedIn').then(res=>  console.log(res.data.login))
 
 const App = () =>
   <Router>

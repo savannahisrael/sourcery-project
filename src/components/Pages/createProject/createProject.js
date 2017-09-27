@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Form, Label, Icon, Container, Segment, Header } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import './createProject.css';
+import gitTopics from '../../utils/gitTopics.json';
 import axios from 'axios';
+
+const techOptions2 = [];
 
 const techOptions = [
   { key: 'js', text: 'JavaScript', value: 'javascript' },
