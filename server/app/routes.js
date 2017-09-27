@@ -5,24 +5,27 @@ const projectController = require('./controllers/projectsController');
 const cohortController = require('./controllers/cohortsController');
 const activityController = require('./controllers/activityFeedController');
 
-module.exports = function(app, passport) {
+module.exports = function (app, passport) {
 
     //Authentication through gitHub
     // =============================================================
 
-    //route for github authentication and login
+    //Route for github authentication and login
     app.get('/auth/github', passport.authenticate('github', {
         scope: ['user:email']
     }));
 
-    //handle the call back after github has authenticated the user
+    //Handle the call back after github has authenticated the user
     app.get('/auth/github/callback',
         passport.authenticate('github', {
-            failureRedirect: '/login',
+            failureRedirect: '/',
             successRedirect: '/dashboard'
         }),
-        function(req, res) {
+        function (req, res) {
             // Successful authentication, redirect home.
+
+            console.log(req);
+
             console.log("logged in");
 
             //provide code
@@ -32,12 +35,11 @@ module.exports = function(app, passport) {
             console.log(req.isAuthenticated())
 
             //provide user profile
-            // console.log(req.user)
             res.end();
         });
 
     //Authentication check 
-    app.get('/auth/checkLoggedIn', isLoggedIn, (req, res)=>{
+    app.get('/auth/checkLoggedIn', isLoggedIn, (req, res) => {
         let userLog = {
             login: true,
             user: req.user
@@ -48,8 +50,14 @@ module.exports = function(app, passport) {
     //Check to see if member is a part of a cohort
     app.get('/auth/memberCohort', cohortController.verifyMember);
 
+    //Check to see if specific COHORT exists and pull data based on code
+    app.get('/auth/cohortVerify', cohortVerified, function (req, res) {
+        console.log("cohort exists");
+        res.send({cohortExists:true});
+    });
+
     //Logout route
-    app.get('/auth/logout',(req, res)=>{
+    app.get('/auth/logout', (req, res) => {
         req.logout();
         req.session.destroy();
         res.redirect('/');
@@ -74,27 +82,9 @@ module.exports = function(app, passport) {
     //All ACTIVITY FEED data
     app.get('/api/activityfeed', activityController.index);
 
-    
+
     //Routes to pull specific data for all models
     // =============================================================
-
-    //Specifc COHORT data based on code
-    app.get('/api/cohortVerify', cohortVerified, function(req, res) {
-        console.log("cohort exists");
-        console.log(req.body);
-        res.end();
-    });
-
-    //Specific COHORT data based on code 
-    // app.get('/:cohortCode', (req, res)=>{
-    //     let cohortCode = req.params.cohortCode;
-    //     res.redirect(`/${cohortCode}/explore`);
-    // });
-
-    app.get(`/:cohortCode/explore`, (req, res)=>{
-        console.log(req.params);
-        cohortController.oneCohort(req, res);
-    });
 
     //All PROJECTS for specific user in a specific cohort
     app.get('/api/projectsDashboard', projectController.dashboard);
@@ -162,8 +152,12 @@ module.exports = function(app, passport) {
     //will update visible to false
     app.patch('/api/activityHide', activityController.hide);
 
+
     //TEST ROUTES
-    app.get('/test/reqUser', (req, res)=>{
+    // =============================================================    
+
+    //check to see if req.User is populated
+    app.get('/test/reqUser', (req, res) => {
         console.log(req.user);
         res.json(req.user);
     })
@@ -188,12 +182,12 @@ function isLoggedIn(req, res, next) {
 };
 
 function cohortVerified(req, res, next) {
+
     cohortController.verify(req, res).then(result => {
         if (result) {
-            // req.session.cohortId = result._id;
-            // console.log("req.body inside middleware: ", req.session);
             return next();
         }
-        res.redirect('/');
+        console.log("cohort doesn't exist");
+        res.send({cohortExists:false});
     })
 };

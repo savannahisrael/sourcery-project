@@ -1,6 +1,26 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
+import {
+  Route,
+  Redirect
+} from 'react-router';
 import ReactRotatingText from 'react-rotating-text';
-import { Button, Container,Divider, Grid, Header, Form, Icon, Image, List, Menu, Segment, Visibility, Card } from 'semantic-ui-react';
+import {
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Header,
+  Form,
+  Icon,
+  Image,
+  List,
+  Menu,
+  Segment,
+  Visibility,
+  Card
+} from 'semantic-ui-react';
 import Tiles from '../../Common/projectTiles';
 import SignUpInput from '../../Common/signUp';
 import Navbar from "../../Common/landingNavbar";
@@ -21,14 +41,18 @@ export default class landingPage extends Component {
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     axios.get('../api/projects').then((res) => {
-      this.setState({ projects: res.data });
+      this.setState({
+        projects: res.data
+      });
       console.log(res.data);
     }).catch((error) => {
       console.log('Catching Error: ');
       console.log(error);
     });
     axios.get('../auth/checkLoggedIn').then((res) => {
-      this.setState({ userID: res.data });
+      this.setState({
+        userID: res.data
+      });
       console.log(res.data);
     }).catch((error) => {
       console.log('Catching Error: ');
@@ -41,9 +65,7 @@ export default class landingPage extends Component {
   }
 
   handleLoginButton = () => {
-    axios.get('../auth/github').then((res) => {
-      console.log(res.data);
-    });
+    window.location = '../auth/github';
   }
 
   handleSignupButton = () => {
@@ -54,13 +76,24 @@ export default class landingPage extends Component {
   }
 
   handleCohortCodeButton = () => {
-    axios.get('../auth/memberCohort').then((res) => {
-      console.log(res.data);
+    console.log("button clicked");
+    axios.get('../auth/cohortVerify', {
+      params: {
+        cohortCode: this.state.cohort
+      }
+    }).then(res => {
+      if (res.data.cohortExists) {
+        window.location = '../auth/github'
+      } else {
+        console.log("Cohort code incorrect");
+      }
     });
   }
 
   handleCohortCodeChange = (event) => {
-    this.setState({ cohort: event.target.value });
+    this.setState({
+      cohort: event.target.value
+    });
   }
 
   render() {
