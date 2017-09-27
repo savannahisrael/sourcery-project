@@ -1,6 +1,6 @@
 [
 	{
-		"name": "DixitOnline",
+		"name": "dixitOnline",
 		"summary": "An online version of the card game Dixit.",
 		"description": "Using only client side javascript and Firebase realtime db, we will create an online version of the seminal card game, Dixit.",
 		"tech_tags": ["javascript", "firebase", "materialize"],
