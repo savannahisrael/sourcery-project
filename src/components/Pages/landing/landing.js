@@ -77,8 +77,7 @@ export default class landingPage extends Component {
                   Create your own team projects
                 </Header>
                 <Header>
-                    <ReactRotatingText className='landingRotating'
-                      items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']} />
+                  <ReactRotatingText className='landingRotating' items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']} />
                 </Header>
                 <br/>
                 <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>
@@ -98,9 +97,19 @@ export default class landingPage extends Component {
           </div>
         </Segment>
 
-
-
         <Container>
+
+        <Grid >
+          <Grid.Column width={8} className=''>
+            <Header className='landingWho'>
+            WHO <br/> WE <br/> ARE
+            </Header> 
+          </Grid.Column>
+          <Grid.Column width={8}>
+          </Grid.Column>
+        </Grid>
+
+
           <Grid columns={3}>
             <Grid.Row>
               <Header as='h2' icon>

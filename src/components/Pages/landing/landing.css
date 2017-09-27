@@ -17,9 +17,8 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    margin-top: 70px !important;
+    margin-top: 50px !important;
     margin-bottom: 0px !important;
-    
 }
 
 .landingGrid {
@@ -71,3 +70,12 @@
 .cohortCodeButton {
   width: 450px !important;
 }
+
+.landingWho {
+  font-size: 7em !important;
+  font-weight: 400 !important;
+  margin-bottom: 0 !important;
+  margin-top: 0.5em !important;
+  color: #98A8BC !important;
+}
+
