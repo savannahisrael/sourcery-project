@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Form, Label, Icon, Container, Segment, Header } from 'semantic-ui-react';
+import { Form, Label, Icon, Container, Segment, Header, Image } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import './createProject.css';
+// import gitTopics from '../../utils/gitTopics.js';
 import axios from 'axios';
+
+const techOptions2 = [];
 
 const techOptions = [
   { key: 'js', text: 'JavaScript', value: 'javascript' },
@@ -143,25 +146,26 @@ class CreateProjectForm extends Component {
             </Header>
           </Container>
         </Segment>
-        <Container text className='createContainer'>
+        <Container className='createContainer'>
           <Segment>
-          <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
-            <Form.Input label='Project Name' placeholder='devCircle' onChange={this.handleprojectNameChange}/>
-            <Form.Input label='Start Date' placeholder='Oct 1, 2017' onChange={this.handleStartDateChange}/>
-            <Form.Input label='Project Length' placeholder='in weeks' onChange={this.handleProjectDurationChange}/>
-            <Form.TextArea label='Project Summary' placeholder='Summarize your project...' onChange={this.handleProjectSummaryChange}/>
-            <Form.Select label='Main Technology' options={techOptions} placeholder='e.g. JavaScript' onChange={this.handleMainTechnologyChange}/>
-            <Form.TextArea label='Other Technologies' placeholder='MySql, HTML5, CSS3' onChange={this.handleOtherTechnologiesChange}/>
-            <Form.TextArea label='Project Details' placeholder='Describe your project...' onChange={this.handleProjectDetailsChange}/>
-            <Form.Select label='Members Wanted' options={memberOptions} onChange={this.handleMembersWantedChange}/>
-            <Form.Input label='Google Drive Link' onChange={this.handleGoogleLinkChange}/>
-            <Form.Input label='Trello Link' onChange={this.handleTrelloLinkChange}/>
-            <Form.Input label='Github Link' onChange={this.handleRepoLinkChange}/>
-            <Form.Input label='Deployment Link' onChange={this.handleDeployLinkChange}/>
-            <Form.Button>Create Project</Form.Button>
-          </Form>
+            <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
+              <Form.Input label='Project Name' placeholder='devCircle' onChange={this.handleprojectNameChange}/>
+              <Form.Input label='Start Date' placeholder='Oct 1, 2017' onChange={this.handleStartDateChange}/>
+              <Form.Input label='Project Length' placeholder='in weeks' onChange={this.handleProjectDurationChange}/>
+              <Form.TextArea label='Project Summary' placeholder='Summarize your project...' onChange={this.handleProjectSummaryChange}/>
+              <Form.Select label='Main Technology' options={techOptions} placeholder='e.g. JavaScript' onChange={this.handleMainTechnologyChange}/>
+              <Form.TextArea label='Other Technologies' placeholder='MySql, HTML5, CSS3' onChange={this.handleOtherTechnologiesChange}/>
+              <Form.TextArea label='Project Details' placeholder='Describe your project...' onChange={this.handleProjectDetailsChange}/>
+              <Form.Select label='Members Wanted' options={memberOptions} onChange={this.handleMembersWantedChange}/>
+              <Form.Input label='Google Drive Link' onChange={this.handleGoogleLinkChange}/>
+              <Form.Input label='Trello Link' onChange={this.handleTrelloLinkChange}/>
+              <Form.Input label='Github Link' onChange={this.handleRepoLinkChange}/>
+              <Form.Input label='Deployment Link' onChange={this.handleDeployLinkChange}/>
+              <Form.Button>Create Project</Form.Button>
+            </Form>
           </Segment>
         </Container>
+        <Image src='../../../assets/images/createProj.png'className='imageTest'/>
       </div>
     )
   }

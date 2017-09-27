@@ -1,9 +1,29 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
+import {
+  Route,
+  Redirect
+} from 'react-router';
 import ReactRotatingText from 'react-rotating-text';
-import { Button, Container,Divider, Grid, Header, Form, Icon, Image, List, Menu, Segment, Visibility, Card } from 'semantic-ui-react';
+import {
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Header,
+  Form,
+  Icon,
+  Image,
+  List,
+  Menu,
+  Segment,
+  Visibility,
+  Card
+} from 'semantic-ui-react';
 import Tiles from '../../Common/projectTiles';
 import SignUpInput from '../../Common/signUp';
-import Navbar from "../../Common/navbar";
+import Navbar from "../../Common/landingNavbar";
 // import BackgroundImg from '../../../assets/images/home.png';
 import './landing.css';
 // import API from '../../../../server/app/routes.js';
@@ -21,14 +41,18 @@ export default class landingPage extends Component {
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     axios.get('../api/projects').then((res) => {
-      this.setState({ projects: res.data });
+      this.setState({
+        projects: res.data
+      });
       console.log(res.data);
     }).catch((error) => {
       console.log('Catching Error: ');
       console.log(error);
     });
     axios.get('../auth/checkLoggedIn').then((res) => {
-      this.setState({ userID: res.data });
+      this.setState({
+        userID: res.data
+      });
       console.log(res.data);
     }).catch((error) => {
       console.log('Catching Error: ');
@@ -41,9 +65,7 @@ export default class landingPage extends Component {
   }
 
   handleLoginButton = () => {
-    axios.get('../auth/github').then((res) => {
-      console.log(res.data);
-    });
+    window.location = '../auth/github';
   }
 
   handleSignupButton = () => {
@@ -54,103 +76,71 @@ export default class landingPage extends Component {
   }
 
   handleCohortCodeButton = () => {
-    axios.get('../auth/memberCohort').then((res) => {
-      console.log(res.data);
+    console.log("button clicked");
+    axios.get('../auth/cohortVerify', {
+      params: {
+        cohortCode: this.state.cohort
+      }
+    }).then(res => {
+      if (res.data.cohortExists) {
+        window.location = '../auth/github'
+      } else {
+        console.log("Cohort code incorrect");
+      }
     });
   }
 
   handleCohortCodeChange = (event) => {
-    this.setState({ cohort: event.target.value });
+    this.setState({
+      cohort: event.target.value
+    });
   }
 
   render() {
     return (
       <div>
-        <Navbar currentPage='landing' />
-        <Segment
-          textAlign='center'
-          /*style={{ minHeight: 1080, padding: '1em 0em', backgroundImage: `url(${BackgroundImg})`, flex: 1, resizeMode: 'cover'
-          }}*/
-
-          basic
-        >
-          <div className='aboveTheFold'>
-          <Container text >
-            <Header
-              as='h1'
-              content='devCircle'
-              style={{ fontSize: '6em', fontWeight: 'normal', marginBottom: 0, marginTop: '.5em' }}
-            />
-            <Header
-              as='h2'
-              style={{ fontSize: '2em', fontWeight: 'normal',}}
-            >
-              Create your own team projects
-              <Header.Subheader>
-                <ReactRotatingText
-                  style={{ fontSize: '2em', fontWeight: 'normal' }}
-                  items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']}
-                />
-              </Header.Subheader>
-            </Header>
-            <br/>
-            <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>
-              Sign Up
-            </Button>
-            <Form className='signUpForm' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
-              <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
-            </Form>
-            <br/>
-            <Button className='cohortCodeButton' secondary size='huge' onClick={this.handleLoginButton}>
-              Log in with Github
-            </Button>
+        <Segment className='aboveTheFold' basic>
+          <Navbar currentPage='landing' />
+          <div>
+          <Container textAlign='center'>
+            <Grid >
+              <Grid.Column width={8} className='landingGrid'>
+                <Header className='landingHeader'content='devCircle'/>
+                <Header className='landingSubheader'>
+                  Create your own team projects
+                </Header>
+                <Header>
+                    <ReactRotatingText className='landingRotating'
+                      items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']} />
+                </Header>
+                <br/>
+                <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>
+                  Register
+                </Button>
+                <Form className='signUpForm' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
+                  <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
+                </Form>
+                <br/>
+                {/* <Button className='cohortCodeButton' secondary size='huge' onClick={this.handleLoginButton}>
+                  Log in with Github
+                </Button> */}
+              </Grid.Column>
+              <Grid.Column width={8} className='img'/>
+            </Grid>
           </Container>
           </div>
         </Segment>
-        <Container>
-          <Grid columns={5}>
-            <Grid.Row>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Container>
+
+
+
         <Container>
           <Grid columns={3}>
             <Grid.Row>
               <Header as='h2' icon>
                 <Icon name='calendar outline' />
                 Simplify Planning
+                <Image src='../../../assets/images/background.png' size='small'/>
+
                 <Header.Subheader>
                   Easily turn ideas into an actionable plan to achieve success.
                 </Header.Subheader>
