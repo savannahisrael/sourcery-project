@@ -1,9 +1,9 @@
 [
 	{
-		"name": "testProject1",
+		"name": "dixitOnline",
 		"owner": "aarongaither",
-		"members": ["aarongaither", "margaretchoi", "leenbean16", "hockey4life63"],
-		"pending": ["fbrahman"],
+		"members": ["aarongaither", "margaretchoi", "fbrahman", "hockey4life63"],
+		"pending": ["leenbean16"],
 		"cohort": "UCSD0417",
 		"chat": [
 			{
@@ -27,20 +27,20 @@
 			{
 				"body": "I know right?",
 				"date": "09/21/2017",
-				"author_id": "leenbean16",
+				"author_id": "margaretchoi",
 				"chat_type": "private"
 			}
 		]
 	},
 	{
-		"name": "testProject2",
+		"name": "devCircle",
 		"owner": "fbrahman",
-		"members": ["fbrahman", "cindygchen"],
-		"pending": ["bcmiller713"],
+		"members": ["fbrahman", "cindygchen", "aarongaither", "bcmiller713"],
+		"pending": ["hockey4life63"],
 		"cohort": "UCSD0417",
 		"chat": [
 			{
-				"body": "Hi cindygchen!",
+				"body": "Hi world!",
 				"date": "09/20/2017",
 				"author_id": "fbrahman",
 				"chat_type": "public"
@@ -48,13 +48,13 @@
 			{
 				"body": "What's up?",
 				"date": "09/21/2017",
-				"author_id": "cindygchen",
+				"author_id": "hockey4life63",
 				"chat_type": "public"
 			},
 			{
 				"body": "So private!",
 				"date": "09/20/2017",
-				"author_id": "fbrahman",
+				"author_id": "bcmiller713",
 				"chat_type": "private"
 			},
 			{
@@ -66,10 +66,10 @@
 		]
 	},
 	{
-		"name": "testProject3",
+		"name": "parkify",
 		"owner": "leelandmiller",
-		"members": ["leelandmiller", "Gruebes", "jhuynh85", "bcmiller713"],
-		"pending": [],
+		"members": ["leelandmiller", "hockey4life63", "leenbean16", "margaretchoi"],
+		"pending": ["jhuynh85", "aarongaither"],
 		"cohort": "UCSD0417",
 		"chat": [
 			{
@@ -81,28 +81,28 @@
 			{
 				"body": "What's up?",
 				"date": "09/21/2017",
-				"author_id": "bcmiller713",
+				"author_id": "leelandmiller",
 				"chat_type": "public"
 			},
 			{
 				"body": "So private!",
 				"date": "09/20/2017",
-				"author_id": "Gruebes",
+				"author_id": "margaretchoi",
 				"chat_type": "private"
 			},
 			{
 				"body": "I know right?",
 				"date": "09/21/2017",
-				"author_id": "leelandmiller",
+				"author_id": "hockey4life63",
 				"chat_type": "private"
 			}
 		]
 	},
 	{
-		"name": "testProject4",
+		"name": "cahGame",
 		"owner": "hockey4life63",
-		"members": ["hockey4life63", "leenbean16", "margaretchoi", "jhuynh85"],
-		"pending": [],
+		"members": ["hockey4life63", "leenbean16", "Gruebes", "leelandmiller"],
+		"pending": ["margaretchoi", "jhuynh85"],
 		"cohort": "UCSD0417",
 		"chat": [
 			{
@@ -112,7 +112,7 @@
 				"chat_type": "public"
 			},
 			{
-				"body": "What's up?",
+				"body": "I wish I was in your class...",
 				"date": "09/21/2017",
 				"author_id": "jhuynh85",
 				"chat_type": "public"
@@ -132,10 +132,10 @@
 		]
 	},
 	{
-		"name": "testProject5",
-		"owner": "jhuynh85",
-		"members": ["jhuynh85", "Gruebes", "bcmiller713"],
-		"pending": ["cindygchen"],
+		"name": "greenThumb",
+		"owner": "fbrahman",
+		"members": ["fbrahman", "cindygchen", "Gruebes", "bcmiller713"],
+		"pending": ["jhuynh85"],
 		"cohort": "UCSD0417",
 		"chat": [
 			{

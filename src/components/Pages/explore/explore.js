@@ -9,8 +9,7 @@ import projectData from '../../../utils/sampleData/sampleProjects.json';
 import search from '../../Common/navbar';
 import axios from 'axios';
 import moment from 'moment';
-
-const techSelection = [ { key: 'Py', value: 'Py', text: 'Python' }, { key: 'CS', value: 'CS', text: 'CSS' }, { key: 'HT', value: 'HT', text: 'HTML5' }, { key: 'Ja', value: 'Ja', text: 'JavaScript' }, { key: 'C+', value: 'C+', text: 'C++' }, { key: 'Ru', value: 'Ru', text: 'Ruby' }  ]
+import techSelection from '../../../utils/techTags.json'; 
 
 const projectProgress = [
   {
