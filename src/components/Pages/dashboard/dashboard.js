@@ -3,7 +3,6 @@ import { Grid, Divider, Header, Label, Container, Image, Segment, Tab, Card, Fee
 import CreateProjectForm from '../createProject';
 import Tile from '../../Common/projectTiles';
 import Navbar from "../../Common/navbar";
-import projectData from '../../../utils/sampleData/sampleProjects.json';
 import './dashboard.css';
 import axios from 'axios';
 import moment from 'moment';
@@ -12,36 +11,63 @@ class Dashboard extends Component {
 
   state = {
     userID: {},
-    projects: []
+    activeProjects: [],
+    pastProjects: []
   };
 
   // On page load, get all projects and send to this.state.projects
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    axios.get('../../../api/projects').then((res) => {
-      this.setState({ projects: res.data });
-      console.log(res.data);
-    }).catch((error) => {
-      console.log('Catching Error: ', error);
-    });
-    axios.get('../../../auth/checkLoggedIn').then((res) => {
+    this.checkLoggedIn()
+    .then(user => {
+      this.fetchProjects();
+    })
+  }
+
+  checkLoggedIn = () => {
+    return axios.get('/auth/checkLoggedIn').then(res => {
       this.setState({ userID: res.data });
-      console.log(res.data);
-    }).catch((error) => {
+
+      // ------- Manual Auth Override
+      this.setState({userID: {
+        login: true,
+        user: {
+          github: {
+            login: 'aarongaither',
+            avatar_url: 'https://avatars1.githubusercontent.com/u/16161706?v=4&s=400',
+            name: 'Aaron Gaither'
+          }
+        }
+      }})
+      console.log('User:',this.state.userID);
+      return res.data;
+    }).catch(error => {
+      console.log('Catching Error while authing user: ', error);
+    });
+  }
+
+  fetchProjects = () => {
+    axios.get('/api/projects').then(res => {
+      const userProjects = res.data.filter(p => {
+        const curUser = this.state.userID.user.github.login;
+        return p.members.find(m => m.github.login === curUser) || p.owner_id.github.login === curUser
+      })
+      this.setState({ 
+        pastProjects: userProjects.filter(p => p.status === 'completed'),
+        activeProjects: userProjects.filter(p => p.status === 'proposal' || p.status === 'in-progress')
+      });
+      console.log('Filtered:', this.state.pastProjects, this.state.activeProjects);
+    }).catch(error => {
       console.log('Catching Error: ', error);
     });
   }
 
   // A helper method for rendering Tiles for projects that have a status of 'proposal' or 'in-progress'.
   // Designed for generating 3 columns in semantic-ui grid format. Pass remainder value of 0, 1, and 2.
-  renderActiveTiles = (remainder) => {
-    let colArrActive = this.state.projects.filter((project) => {
-      return project.status === 'proposal' || project.status === 'in-progress';
-    }).filter((project, index) => {
-      return index % 3 === remainder;
-    });
-    console.log('colArrActive', colArrActive);
-    return colArrActive.map(project => (
+  renderActiveTiles = remainder => {
+    return this.state.activeProjects
+    .filter((project, index) => index % 3 === remainder)
+    .map(project => (
       <Tile
         title={project.name}
         summary={project.summary}
@@ -66,14 +92,10 @@ class Dashboard extends Component {
 
   // A helper method for rendering Tiles for projects that have a status of 'completed'.
   // Designed for generating 3 columns in semantic-ui grid format. Pass remainder value of 0, 1, and 2.
-  renderPastTiles = (remainder) => {
-    let colArrPast = this.state.projects.filter((project) => {
-      return project.status === 'completed';
-    }).filter((project, index) => {
-      return index % 3 === remainder;
-    });
-    console.log('colArrPast', colArrPast);
-    return colArrPast.map(project => (
+  renderPastTiles = remainder => {
+    return this.state.pastProjects
+    .filter((project, index) => index % 3 === remainder)
+    .map(project => (
       <Tile
         title={project.name}
         summary={project.summary}
@@ -96,7 +118,7 @@ class Dashboard extends Component {
     ));
   }
 
-  renderTechTags = (tech_tags) => {
+  renderTechTags = tech_tags => {
     return tech_tags.map(tech_tag => (
       <Label className='tileTags'>
         {tech_tag}
@@ -112,9 +134,9 @@ class Dashboard extends Component {
 
   renderPanes = () => {
     return (
-      [{ menuItem: 'Active Projects', render: () =>
+      [{ menuItem: 'Active Projects', render: () => 
           <Tab.Pane className='tabPane' attached={false}>
-            <br/><br/>
+            {this.state.activeProjects.length > 0 ?
             <Grid columns='equal'>
               <Grid.Row>
                 <Grid.Column>
@@ -127,10 +149,14 @@ class Dashboard extends Component {
                   {this.renderActiveTiles(2)}
                 </Grid.Column>
               </Grid.Row>
-            </Grid>
-          </Tab.Pane> },
-      { menuItem: 'Past Projects', render: () =>
+            </Grid> :
+            'No Active Projects To Display.'}
+          </Tab.Pane>
+
+      },
+      { menuItem: 'Past Projects', render: () =>      
         <Tab.Pane className='tabPane' attached={false}>
+          {this.state.pastProjects.length > 0 ?
           <Grid columns='equal'>
             <Grid.Row>
               <Grid.Column>
@@ -143,8 +169,10 @@ class Dashboard extends Component {
                 {this.renderPastTiles(2)}
               </Grid.Column>
             </Grid.Row>
-          </Grid>
-        </Tab.Pane> }
+          </Grid> :
+          'No Completed Projects To Display.'}
+        </Tab.Pane>
+      }
     ])
   }
 
