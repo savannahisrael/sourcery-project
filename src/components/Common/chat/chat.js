@@ -56,9 +56,9 @@ class InputExampleAction extends Component {
 	renderChatMessage = chat => {
 		return (
 			<Comment key={chat._id}>
-			  <Comment.Avatar src="https://react.semantic-ui.com/assets/images/avatar/small/elliot.jpg" />
+			  <Comment.Avatar src={chat.author_id.github.avatar_url} />
 			  <Comment.Content>
-			    <Comment.Author as='a'>{chat.author_id}</Comment.Author>
+			    <Comment.Author as='a'>{chat.author_id.github.name}</Comment.Author>
 			    <Comment.Metadata>
 			      <div>{chat.date}</div>
 			    </Comment.Metadata>

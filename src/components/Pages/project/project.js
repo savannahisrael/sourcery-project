@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { Tab, Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, Item, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import Chat from "../../Common/chat";
-// import projectData from '../../../utils/sampleData/sampleProjects.json';
 import './project.css';
 import axios from 'axios';
+import moment from 'moment';
 import io from 'socket.io-client';
+
 const socket = io();
 
 
@@ -64,7 +65,7 @@ class Project extends Component {
     return this.state.members.map(member => (
       <Item.Group link>
         <Item>
-          <Item.Image size='mini' src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded'  />
+          <Item.Image size='mini' src={member.github.avatar_url} shape='rounded'  />
           <Item.Content>
             <Item.Header>{member.github.name}</Item.Header>
             <Item.Meta>30 commits / 1,287 ++ / 623 --</Item.Meta>
@@ -79,7 +80,7 @@ class Project extends Component {
     return this.state.pending_members.map(pending_member => (
       <Card className='projectRequest'>
         <Card.Content>
-          <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' shape='rounded' size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
+          <Image src={pending_member.github.avatar_url} shape='rounded' size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
         </Card.Content>
         <Card.Content extra>
           <div className='ui two buttons'>

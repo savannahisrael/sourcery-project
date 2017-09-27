@@ -181,6 +181,7 @@ module.exports = {
                         .populate('cohort_id')
                         .populate('pending_members')
                         .populate('members')
+                        .populate('chat.author_id')
                         .exec((err, data) => {
                             res.json(data);
                         })
