@@ -33,11 +33,18 @@ module.exports = function (app, passport) {
 
             //will return true if logged in
             // console.log(req.isAuthenticated())
-            
+
             //provide user profile
             // console.log(req.user);
 
             if (req.session.cohortCode) {
+
+                req.body.cohortId = req.session.cohortId;
+                req.body.update = {
+                    $push: { members: req.user._id}
+                };
+                cohortController.update(req);
+
                 res.redirect(`/${req.session.cohortCode}/${req.user.github.login}/dashboard`);
             } else {
                 res.redirect('/cohortCode');
@@ -193,7 +200,8 @@ function cohortVerified(req, res, next) {
 
     cohortController.verify(req, res).then(result => {
         if (result) {
-            req.session.cohortCode = req.query.cohortCode;
+            req.session.cohortCode = result.code;
+            req.session.cohortId = result._id;
             return next();
         }
         console.log("cohort doesn't exist");
