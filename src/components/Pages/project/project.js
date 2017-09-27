@@ -96,6 +96,19 @@ class Project extends Component {
       }
       this.setState({ userID: res.data });
 
+
+      // ------- Manual Auth Overrides
+      // this.setState({userID: {
+      //   login: true,
+      //   user: {
+      //     _id: '1234',
+      //     github: {
+      //       login: "aarongaither",
+      //       name: "Aaron Gaither",
+      //       avatar_url: "https://avatars1.githubusercontent.com/u/16161706?v=4&s=400"
+      //     }
+      //   }
+      // }})
       // this.setState({priviledge: 'owner'})
       // this.setState({priviledge: 'member'})
       console.log('User:',res.data, 'priviledge:', this.state.priviledge);
@@ -132,17 +145,20 @@ class Project extends Component {
   }
 
   renderPendingMembers = () => {
+    const DecisionButtons = () =>
+    (<Card.Content extra>
+      <div className='ui two buttons'>
+        <Button fluid className='projectClose' >Decline</Button>
+        <Button fluid className='projectCheck' >Approve</Button>
+      </div>
+    </Card.Content>)
+
     return this.state.pending_members.map(pending_member => (
       <Card className='projectRequest'>
         <Card.Content>
           <Image src={pending_member.github.avatar_url} shape='rounded' size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
         </Card.Content>
-        <Card.Content extra>
-          <div className='ui two buttons'>
-            <Button fluid className='projectClose' >Decline</Button>
-            <Button fluid className='projectCheck' >Approve</Button>
-          </div>
-        </Card.Content>
+        {this.state.priviledge === 'owner' ? <DecisionButtons /> : ''}
       </Card>
     ));
   }
@@ -168,6 +184,21 @@ class Project extends Component {
         </Item>
       </Item.Group>
     ));
+  }
+
+  renderButtonText = () => {
+    let buttonText = '';
+    const priv = this.state.priviledge;
+    if (priv === 'owner') {
+      buttonText = 'Edit Project Details';
+    } else if (this.state.userID.login) {
+      if (this.state.pending_members.find(m => m.github.login === this.state.userID.user.github.login)) {
+        buttonText = "You've requested to join!"
+      } 
+    } else {
+      buttonText = 'Request to Join!'
+    }
+    return buttonText;
   }
 
   panes = [
@@ -285,12 +316,19 @@ class Project extends Component {
               </Rail>
 
               <Rail position='right'>
-                <Segment className='joinRequest'>
-                    <Button fluid className='projectJoin' link={this.state.deploy_link}>Request to Join!</Button>
-                </Segment>
+                {
+                  this.state.priviledge !== 'member' ?
+                  <Segment className='joinRequest'>
+                    <Button fluid className='projectJoin' link={this.state.deploy_link}>
+                      {this.renderButtonText()}
+                    </Button>
+                  </Segment> :
+                  ''
+                }
+
                 <Card.Group>
                   {this.renderPendingMembers()}
-                </Card.Group>
+                </Card.Group> 
 
                 <Segment className='projectSegment'>
                   <Header as='h3'>Team Members</Header>
