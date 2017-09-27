@@ -3,7 +3,7 @@ import ReactRotatingText from 'react-rotating-text';
 import { Button, Container,Divider, Grid, Header, Form, Icon, Image, List, Menu, Segment, Visibility, Card } from 'semantic-ui-react';
 import Tiles from '../../Common/projectTiles';
 import SignUpInput from '../../Common/signUp';
-import Navbar from "../../Common/navbar";
+import Navbar from "../../Common/landingNavbar";
 // import BackgroundImg from '../../../assets/images/home.png';
 import './landing.css';
 // import API from '../../../../server/app/routes.js';
@@ -66,91 +66,48 @@ export default class landingPage extends Component {
   render() {
     return (
       <div>
-        <Navbar currentPage='landing' />
-        <Segment
-          textAlign='center'
-          /*style={{ minHeight: 1080, padding: '1em 0em', backgroundImage: `url(${BackgroundImg})`, flex: 1, resizeMode: 'cover'
-          }}*/
-
-          basic
-        >
-          <div className='aboveTheFold'>
-          <Container text >
-            <Header
-              as='h1'
-              content='devCircle'
-              style={{ fontSize: '6em', fontWeight: 'normal', marginBottom: 0, marginTop: '.5em' }}
-            />
-            <Header
-              as='h2'
-              style={{ fontSize: '2em', fontWeight: 'normal',}}
-            >
-              Create your own team projects
-              <Header.Subheader>
-                <ReactRotatingText
-                  style={{ fontSize: '2em', fontWeight: 'normal' }}
-                  items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']}
-                />
-              </Header.Subheader>
-            </Header>
-            <br/>
-            <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>
-              Sign Up
-            </Button>
-            <Form className='signUpForm' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
-              <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
-            </Form>
-            <br/>
-            <Button className='cohortCodeButton' secondary size='huge' onClick={this.handleLoginButton}>
-              Log in with Github
-            </Button>
+        <Segment className='aboveTheFold' basic>
+          <Navbar currentPage='landing' />
+          <div>
+          <Container textAlign='center'>
+            <Grid >
+              <Grid.Column width={8} className='landingGrid'>
+                <Header className='landingHeader'content='devCircle'/>
+                <Header className='landingSubheader'>
+                  Create your own team projects
+                </Header>
+                <Header>
+                    <ReactRotatingText className='landingRotating'
+                      items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']} />
+                </Header>
+                <br/>
+                <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>
+                  Register
+                </Button>
+                <Form className='signUpForm' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
+                  <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
+                </Form>
+                <br/>
+                {/* <Button className='cohortCodeButton' secondary size='huge' onClick={this.handleLoginButton}>
+                  Log in with Github
+                </Button> */}
+              </Grid.Column>
+              <Grid.Column width={8} className='img'/>
+            </Grid>
           </Container>
           </div>
         </Segment>
-        <Container>
-          <Grid columns={5}>
-            <Grid.Row>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-              <Grid.Column>
-                {/* <Tiles/> */}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Container>
+
+
+
         <Container>
           <Grid columns={3}>
             <Grid.Row>
               <Header as='h2' icon>
                 <Icon name='calendar outline' />
                 Simplify Planning
+                <Image src='../../../assets/images/background.png' size='small'/>
+
                 <Header.Subheader>
                   Easily turn ideas into an actionable plan to achieve success.
                 </Header.Subheader>
