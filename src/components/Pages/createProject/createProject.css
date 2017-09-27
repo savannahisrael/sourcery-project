@@ -27,3 +27,18 @@
   height: 500px !important;
 }
 
+.img {
+  height: 200px !important;
+  width: 300px !important;
+}
+
+.asterisk {
+  color: red;
+  display: none;
+}
+
+.warning {
+  color: red;
+  font-size: 20px;
+  padding-top: 15px;
+}
