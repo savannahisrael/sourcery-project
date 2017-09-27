@@ -64,36 +64,8 @@ class Dashboard extends Component {
 
   // A helper method for rendering Tiles for projects that have a status of 'proposal' or 'in-progress'.
   // Designed for generating 3 columns in semantic-ui grid format. Pass remainder value of 0, 1, and 2.
-  renderActiveTiles = remainder => {
-    return this.state.activeProjects
-    .filter((project, index) => index % 3 === remainder)
-    .map(project => (
-      <Tile
-        title={project.name}
-        summary={project.summary}
-        description={project.description}
-        tech_tags={project.tech_tags}
-        start_date={project.start_date}
-        duration={project.duration}
-        members_wanted={project.members_wanted}
-        google_drive_link={project.google_drive_link}
-        trello_link={project.trello_link}
-        repo_link={project.repo_link}
-        deploy_link={project.deploy_link}
-        status={project.status}
-        pending_members={project.pending_members}
-        members={project.members}
-        renderTechTags={this.renderTechTags}
-        handleJoinButton={this.handleJoinButton}
-        formatDate={this.formatDate}
-      />
-    ));
-  }
-
-  // A helper method for rendering Tiles for projects that have a status of 'completed'.
-  // Designed for generating 3 columns in semantic-ui grid format. Pass remainder value of 0, 1, and 2.
-  renderPastTiles = remainder => {
-    return this.state.pastProjects
+  renderTiles = (remainder, type) => {
+    return this.state[type]
     .filter((project, index) => index % 3 === remainder)
     .map(project => (
       <Tile
@@ -140,13 +112,13 @@ class Dashboard extends Component {
             <Grid columns='equal'>
               <Grid.Row>
                 <Grid.Column>
-                  {this.renderActiveTiles(0)}
+                  {this.renderTiles(0, 'activeProjects')}
                 </Grid.Column>
                 <Grid.Column>
-                  {this.renderActiveTiles(1)}
+                  {this.renderTiles(1, 'activeProjects')}
                 </Grid.Column>
                 <Grid.Column>
-                  {this.renderActiveTiles(2)}
+                  {this.renderTiles(2, 'activeProjects')}
                 </Grid.Column>
               </Grid.Row>
             </Grid> :
@@ -160,13 +132,13 @@ class Dashboard extends Component {
           <Grid columns='equal'>
             <Grid.Row>
               <Grid.Column>
-                {this.renderPastTiles(0)}
+                {this.renderTiles(0, 'pastProjects')}
               </Grid.Column>
               <Grid.Column>
-                {this.renderPastTiles(1)}
+                {this.renderTiles(1, 'pastProjects')}
               </Grid.Column>
               <Grid.Column>
-                {this.renderPastTiles(2)}
+                {this.renderTiles(2, 'pastProjects')}
               </Grid.Column>
             </Grid.Row>
           </Grid> :
