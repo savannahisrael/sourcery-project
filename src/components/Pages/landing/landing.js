@@ -65,9 +65,7 @@ export default class landingPage extends Component {
   }
 
   handleLoginButton = () => {
-    // axios.get('http://cors.io/?http://localhost:4000/auth/github');
     window.location = '../auth/github';
-
   }
 
   handleSignupButton = () => {
@@ -85,8 +83,7 @@ export default class landingPage extends Component {
       }
     }).then(res => {
       if (res.data.cohortExists) {
-        let proxyURL = "https://cors-anywhere.herokuapp.com/"
-        axios.get(proxyURL + '/dashboard')
+        window.location = '../auth/github'
       } else {
         console.log("Cohort code incorrect");
       }

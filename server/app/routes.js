@@ -10,7 +10,7 @@ module.exports = function (app, passport) {
     //Authentication through gitHub
     // =============================================================
 
-    //route for github authentication and login
+    //Route for github authentication and login
     app.get('/auth/github', passport.authenticate('github', {
         scope: ['user:email']
     }));
@@ -18,7 +18,7 @@ module.exports = function (app, passport) {
     //Handle the call back after github has authenticated the user
     app.get('/auth/github/callback',
         passport.authenticate('github', {
-            failureRedirect: '/login',
+            failureRedirect: '/',
             successRedirect: '/dashboard'
         }),
         function (req, res) {
