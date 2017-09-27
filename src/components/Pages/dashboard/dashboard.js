@@ -6,13 +6,7 @@ import Navbar from "../../Common/navbar";
 import projectData from '../../../utils/sampleData/sampleProjects.json';
 import './dashboard.css';
 import axios from 'axios';
-
-const panes = [
-  { menuItem: 'Active Projects', render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane> },
-  { menuItem: 'Projects in Progress', render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane> },
-  { menuItem: 'Complete Projects', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
-]
-
+import moment from 'moment';
 
 class Dashboard extends Component {
 
@@ -24,14 +18,13 @@ class Dashboard extends Component {
   // On page load, get all projects and send to this.state.projects
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    axios.get('../api/projects').then((res) => {
+    axios.get('../../../api/projects').then((res) => {
       this.setState({ projects: res.data });
       console.log(res.data);
     }).catch((error) => {
-      console.log('Catching Error: ');
-      console.log(error);
+      console.log('Catching Error: ', error);
     });
-    axios.get('../auth/checkLoggedIn').then((res) => {
+    axios.get('../../../auth/checkLoggedIn').then((res) => {
       this.setState({ userID: res.data });
       console.log(res.data);
     }).catch((error) => {
@@ -42,13 +35,13 @@ class Dashboard extends Component {
   // A helper method for rendering Tiles for projects that have a status of 'proposal' or 'in-progress'.
   // Designed for generating 3 columns in semantic-ui grid format. Pass remainder value of 0, 1, and 2.
   renderActiveTiles = (remainder) => {
-    let colArr = this.state.projects.filter((project) => {
+    let colArrActive = this.state.projects.filter((project) => {
       return project.status === 'proposal' || project.status === 'in-progress';
     }).filter((project, index) => {
       return index % 3 === remainder;
     });
-    console.log('colArr', colArr);
-    return colArr.map(project => (
+    console.log('colArrActive', colArrActive);
+    return colArrActive.map(project => (
       <Tile
         title={project.name}
         summary={project.summary}
@@ -66,6 +59,7 @@ class Dashboard extends Component {
         members={project.members}
         renderTechTags={this.renderTechTags}
         handleJoinButton={this.handleJoinButton}
+        formatDate={this.formatDate}
       />
     ));
   }
@@ -73,13 +67,13 @@ class Dashboard extends Component {
   // A helper method for rendering Tiles for projects that have a status of 'completed'.
   // Designed for generating 3 columns in semantic-ui grid format. Pass remainder value of 0, 1, and 2.
   renderPastTiles = (remainder) => {
-    let colArr = this.state.projects.filter((project) => {
+    let colArrPast = this.state.projects.filter((project) => {
       return project.status === 'completed';
     }).filter((project, index) => {
       return index % 3 === remainder;
     });
-    console.log('colArr', colArr);
-    return colArr.map(project => (
+    console.log('colArrPast', colArrPast);
+    return colArrPast.map(project => (
       <Tile
         title={project.name}
         summary={project.summary}
@@ -97,6 +91,7 @@ class Dashboard extends Component {
         members={project.members}
         renderTechTags={this.renderTechTags}
         handleJoinButton={this.handleJoinButton}
+        formatDate={this.formatDate}
       />
     ));
   }
@@ -107,6 +102,50 @@ class Dashboard extends Component {
         {tech_tag}
       </Label>
     ));
+  }
+
+  formatDate = (date) => {
+    return (
+      moment(date).format('MM/DD/YYYY')
+    )
+  }
+
+  renderPanes = () => {
+    return (
+      [{ menuItem: 'Active Projects', render: () =>
+          <Tab.Pane className='tabPane' attached={false}>
+            <br/><br/>
+            <Grid columns='equal'>
+              <Grid.Row>
+                <Grid.Column>
+                  {this.renderActiveTiles(0)}
+                </Grid.Column>
+                <Grid.Column>
+                  {this.renderActiveTiles(1)}
+                </Grid.Column>
+                <Grid.Column>
+                  {this.renderActiveTiles(2)}
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Tab.Pane> },
+      { menuItem: 'Past Projects', render: () =>
+        <Tab.Pane className='tabPane' attached={false}>
+          <Grid columns='equal'>
+            <Grid.Row>
+              <Grid.Column>
+                {this.renderPastTiles(0)}
+              </Grid.Column>
+              <Grid.Column>
+                {this.renderPastTiles(1)}
+              </Grid.Column>
+              <Grid.Column>
+                {this.renderPastTiles(2)}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Tab.Pane> }
+    ])
   }
 
   render(props) {
@@ -123,78 +162,70 @@ class Dashboard extends Component {
           </Header><br/><br/><br/>
           </Container>
         </Segment>
-        <Container text className='dashboardTab'>
-            <Tab menu={{ secondary: true, pointing: true }} panes={panes}/>
-        </Container>
-        <Card>
-    <Card.Content>
-      <Card.Header>
-        Recent Activity
-      </Card.Header>
-    </Card.Content>
-    <Card.Content>
-      <Feed>
-        <Feed.Event>
-          <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
-          <Feed.Content>
-            <Feed.Date content='1 day ago' />
-            <Feed.Summary>
-              You added <a>Jenny Hess</a> to your <a>coworker</a> group.
-            </Feed.Summary>
-          </Feed.Content>
-        </Feed.Event>
+        <br/><br/>
 
-        <Feed.Event>
-          <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
-          <Feed.Content>
-            <Feed.Date content='3 days ago' />
-            <Feed.Summary>
-              You added <a>Molly Malone</a> as a friend.
-            </Feed.Summary>
-          </Feed.Content>
-        </Feed.Event>
+        <Grid columns={4}>
+          <Grid.Row >
 
-        <Feed.Event>
-          <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
-          <Feed.Content>
-            <Feed.Date content='4 days ago' />
-            <Feed.Summary>
-              You added <a>Elliot Baker</a> to your <a>musicians</a> group.
-            </Feed.Summary>
-          </Feed.Content>
-        </Feed.Event>
-      </Feed>
-    </Card.Content>
-  </Card>
-        <Header as='h4'>Active Projects</Header>
-        <Divider/>
-        <Grid stackable centered container columns={3}>
-          <Grid.Row>
-            <Grid.Column>
-              {this.renderActiveTiles(0)}
+            <Grid.Column width={1}>
+              {/* this column is just here for padding */}
             </Grid.Column>
-            <Grid.Column>
-              {this.renderActiveTiles(1)}
+
+            <Grid.Column width={2}>
+              <Card centered>
+                <Card.Content>
+                  <Card.Header>
+                    Recent Activity
+                  </Card.Header>
+                </Card.Content>
+                <Card.Content>
+                  <Feed>
+                    <Feed.Event>
+                      <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
+                      <Feed.Content>
+                        <Feed.Date content='1 day ago' />
+                        <Feed.Summary>
+                          You added <a>Jenny Hess</a> to your <a>coworker</a> group.
+                        </Feed.Summary>
+                      </Feed.Content>
+                    </Feed.Event>
+
+                    <Feed.Event>
+                      <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
+                      <Feed.Content>
+                        <Feed.Date content='3 days ago' />
+                        <Feed.Summary>
+                          You added <a>Molly Malone</a> as a friend.
+                        </Feed.Summary>
+                      </Feed.Content>
+                    </Feed.Event>
+
+                    <Feed.Event>
+                      <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
+                      <Feed.Content>
+                        <Feed.Date content='4 days ago' />
+                        <Feed.Summary>
+                          You added <a>Elliot Baker</a> to your <a>musicians</a> group.
+                        </Feed.Summary>
+                      </Feed.Content>
+                    </Feed.Event>
+                  </Feed>
+                </Card.Content>
+              </Card>
             </Grid.Column>
-            <Grid.Column>
-              {this.renderActiveTiles(2)}
+
+            <Grid.Column width={1}>
+              {/* this column is just here for padding */}
             </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Divider/>
-        <Header as='h4'>Past Projects</Header>
-        <Divider/>
-        <Grid stackable centered container columns={3}>
-          <Grid.Row>
-            <Grid.Column>
-              {this.renderPastTiles(0)}
+
+            <Grid.Column width={11}>
+              <Tab className='tabMenu' menu={{ secondary: true, pointing: true }} panes={this.renderPanes()}/>
             </Grid.Column>
-            <Grid.Column>
-              {this.renderPastTiles(1)}
+
+            <Grid.Column width={1}>
+              {/* this column is just here for padding */}
             </Grid.Column>
-            <Grid.Column>
-              {this.renderPastTiles(2)}
-            </Grid.Column>
+
           </Grid.Row>
         </Grid>
       </div>

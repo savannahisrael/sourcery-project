@@ -93,8 +93,8 @@ module.exports = function (app, passport) {
     app.get('/api/projectsUserProfile', projectController.profile);
 
     //All data for a specific PROJECT
-    app.get('/api/projectData', projectController.oneProject);
-
+    app.get('/api/projectData/:cohort/:username/app/:project', projectController.oneProject);
+   
     //All chat data for a specific PROJECT
     app.get('/api/projectChat', projectController.chat);
 
