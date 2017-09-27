@@ -3,7 +3,7 @@ import ReactRotatingText from 'react-rotating-text';
 import { Button, Container,Divider, Grid, Header, Form, Icon, Image, List, Menu, Segment, Visibility, Card } from 'semantic-ui-react';
 import Tiles from '../../Common/projectTiles';
 import SignUpInput from '../../Common/signUp';
-import Navbar from "../../Common/navbar";
+import Navbar from "../../Common/landingNavbar";
 // import BackgroundImg from '../../../assets/images/home.png';
 import './landing.css';
 // import API from '../../../../server/app/routes.js';
@@ -66,32 +66,17 @@ export default class landingPage extends Component {
   render() {
     return (
       <div>
-        <Navbar currentPage='landing' />
-        <Segment
-          textAlign='center'
-          /*style={{ minHeight: 1080, padding: '1em 0em', backgroundImage: `url(${BackgroundImg})`, flex: 1, resizeMode: 'cover'
-          }}*/
-
-          basic
-        >
-          <div className='aboveTheFold'>
+        <Segment className='aboveTheFold' textAlign='center'basic>
+          <Navbar currentPage='landing' />
+          <div>
           <Container text >
-            <Header
-              as='h1'
-              content='devCircle'
-              style={{ fontSize: '6em', fontWeight: 'normal', marginBottom: 0, marginTop: '.5em' }}
-            />
-            <Header
-              as='h2'
-              style={{ fontSize: '2em', fontWeight: 'normal',}}
-            >
+            <Header className='landingHeader'content='devCircle'/>
+            <Header className='landingSubheader'>
               Create your own team projects
-              <Header.Subheader>
-                <ReactRotatingText
-                  style={{ fontSize: '2em', fontWeight: 'normal' }}
-                  items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']}
-                />
-              </Header.Subheader>
+            </Header>
+            <Header>
+                <ReactRotatingText className='landingRotating'
+                  items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']} />
             </Header>
             <br/>
             <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>

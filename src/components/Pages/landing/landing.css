@@ -1,11 +1,35 @@
 .aboveTheFold {
   min-height: 1024px;
-  padding: 1em 0em;
-  background-image: url('../../../assets/images/home.png');
-  background-repeat: no-repeat;
+  /* padding: 1em 0em; */
+  background-color: #4d5991 !important;
+  /* background-image: url('../../../assets/images/home.png'); */
+  /* background-repeat: no-repeat;
   background-size: contain;
-  background-position: center;
+  background-position: center; */
 }
+
+.landingHeader {
+  font-size: 6em !important;
+  font-weight: 400 !important;
+  margin-bottom: 0 !important;
+  margin-top: 0.5em !important;
+  color: #fff !important;
+}
+
+.landingSubheader {
+  font-size: 2em !important;
+  font-weight: 400 !important;  
+  color: #fff !important;
+  margin-bottom: -20px !important;  
+}
+
+.landingRotating {
+  font-size: 2em !important;
+  font-weight: 400 !important;
+  color: #fff !important;
+  opacity: 0.3 !important;  
+}
+
 
 .signUpButton {
   width: 450px !important;
