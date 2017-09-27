@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Label, Icon, Container, Segment, Header } from 'semantic-ui-react';
+import { Form, Label, Icon, Container, Segment, Header, Image } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import './createProject.css';
 // import gitTopics from '../../utils/gitTopics.js';
@@ -136,7 +136,7 @@ class CreateProjectForm extends Component {
             </Header>
           </Container>
         </Segment>
-        <Container text className='createContainer'>
+        <Container className='createContainer'>
           <Segment>
           <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
             <Form.Input label='Project Name' placeholder='devCircle' onChange={this.handleprojectNameChange}/>
@@ -155,6 +155,7 @@ class CreateProjectForm extends Component {
           </Form>
           </Segment>
         </Container>
+        <Image src='../../../assets/images/createProj.png'className='imageTest'/>
       </div>
     )
   }
