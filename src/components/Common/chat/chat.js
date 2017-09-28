@@ -21,7 +21,7 @@ class InputExampleAction extends Component {
 	  if (this.state.chatInput.length) {
 	  	const newChat = {
 	  		body: this.state.chatInput,
-	  		author_id: '59c98010339e5c29743839e5', //this.props.user once using log-ins
+	  		author_id: this.props.user._id,
 	  		date: new Date(),
 	  		chat_type: this.props.chat_type
 	  	}
