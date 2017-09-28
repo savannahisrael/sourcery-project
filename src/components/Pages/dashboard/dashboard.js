@@ -8,20 +8,27 @@ import axios from 'axios';
 import moment from 'moment';
 
 class Dashboard extends Component {
+  constructor() {
+    super()
+    this.state = {
+      userID: {
+        login: false,
+        user: {
+          github: {
+            login: '',
+            avatar_url: '',
+            name: ''
+          }
+        }
+      },
+      activeProjects: [],
+      pastProjects: []
+    };
+  }
 
-  state = {
-    userID: {},
-    activeProjects: [],
-    pastProjects: []
-  };
-
-  // On page load, get all projects and send to this.state.projects
-  // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     this.checkLoggedIn()
-    .then(user => {
-      this.fetchProjects();
-    })
+    .then(user => this.fetchProjects())
   }
 
   checkLoggedIn = () => {
@@ -29,17 +36,18 @@ class Dashboard extends Component {
       this.setState({ userID: res.data });
 
       // ------- Manual Auth Override
-      this.setState({userID: {
-        login: true,
-        user: {
-          github: {
-            login: 'aarongaither',
-            avatar_url: 'https://avatars1.githubusercontent.com/u/16161706?v=4&s=400',
-            name: 'Aaron Gaither'
+      this.setState({
+        userID: {
+          login: true,
+          user: {
+            github: {
+              login: 'aarongaither',
+              avatar_url: 'https://avatars1.githubusercontent.com/u/16161706?v=4&s=400',
+              name: 'Aaron Gaither'
+            }
           }
         }
-      }})
-      console.log('User:',this.state.userID);
+      })
       return res.data;
     }).catch(error => {
       console.log('Catching Error while authing user: ', error);
@@ -47,7 +55,7 @@ class Dashboard extends Component {
   }
 
   fetchProjects = () => {
-    axios.get('/api/projects').then(res => {
+    return axios.get('/api/projects').then(res => {
       const userProjects = res.data.filter(p => {
         const curUser = this.state.userID.user.github.login;
         return p.members.find(m => m.github.login === curUser) || p.owner_id.github.login === curUser
@@ -56,53 +64,26 @@ class Dashboard extends Component {
         pastProjects: userProjects.filter(p => p.status === 'completed'),
         activeProjects: userProjects.filter(p => p.status === 'proposal' || p.status === 'in-progress')
       });
-      console.log('Filtered:', this.state.pastProjects, this.state.activeProjects);
+      return userProjects;
     }).catch(error => {
       console.log('Catching Error: ', error);
     });
   }
 
-  // A helper method for rendering Tiles for projects that have a status of 'proposal' or 'in-progress'.
   // Designed for generating 3 columns in semantic-ui grid format. Pass remainder value of 0, 1, and 2.
   renderTiles = (remainder, type) => {
     return this.state[type]
     .filter((project, index) => index % 3 === remainder)
-    .map(project => (
-      <Tile
-        title={project.name}
-        summary={project.summary}
-        description={project.description}
-        tech_tags={project.tech_tags}
-        start_date={project.start_date}
-        duration={project.duration}
-        members_wanted={project.members_wanted}
-        google_drive_link={project.google_drive_link}
-        trello_link={project.trello_link}
-        repo_link={project.repo_link}
-        deploy_link={project.deploy_link}
-        status={project.status}
-        pending_members={project.pending_members}
-        members={project.members}
-        renderTechTags={this.renderTechTags}
-        handleJoinButton={this.handleJoinButton}
-        formatDate={this.formatDate}
-      />
-    ));
+    .map(project => <Tile {...project} renderTechTags={this.renderTechTags} formatDate={this.formatDate} />);
   }
 
-  renderTechTags = tech_tags => {
-    return tech_tags.map(tech_tag => (
-      <Label className='tileTags'>
-        {tech_tag}
-      </Label>
-    ));
-  }
+  renderTechTags = tech_tags => tech_tags.map(tech_tag => (
+    <Label className='tileTags'>
+      {tech_tag}
+    </Label>
+  ));
 
-  formatDate = (date) => {
-    return (
-      moment(date).format('MM/DD/YYYY')
-    )
-  }
+  formatDate = date => moment(date).format('MM/DD/YYYY');
 
   renderPanes = () => {
     return (
@@ -156,76 +137,23 @@ class Dashboard extends Component {
         <p>Username: {this.props.match.params.username}</p> */}
         <Segment textAlign='center' vertical className='dashboardBanner'>
           <Container text>
-          <Image src='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' size='tiny' shape='circular' centered />
           <Header as='h1' className='dashboardTitle'>
             Dashboard
           </Header><br/><br/><br/>
           </Container>
         </Segment>
         <br/><br/>
-
-        <Grid columns={4}>
+        <Grid columns={3}>
           <Grid.Row >
-
             <Grid.Column width={1}>
               {/* this column is just here for padding */}
             </Grid.Column>
-
-            <Grid.Column width={2}>
-              <Card centered>
-                <Card.Content>
-                  <Card.Header>
-                    Recent Activity
-                  </Card.Header>
-                </Card.Content>
-                <Card.Content>
-                  <Feed>
-                    <Feed.Event>
-                      <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
-                      <Feed.Content>
-                        <Feed.Date content='1 day ago' />
-                        <Feed.Summary>
-                          You added <a>Jenny Hess</a> to your <a>coworker</a> group.
-                        </Feed.Summary>
-                      </Feed.Content>
-                    </Feed.Event>
-
-                    <Feed.Event>
-                      <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
-                      <Feed.Content>
-                        <Feed.Date content='3 days ago' />
-                        <Feed.Summary>
-                          You added <a>Molly Malone</a> as a friend.
-                        </Feed.Summary>
-                      </Feed.Content>
-                    </Feed.Event>
-
-                    <Feed.Event>
-                      <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
-                      <Feed.Content>
-                        <Feed.Date content='4 days ago' />
-                        <Feed.Summary>
-                          You added <a>Elliot Baker</a> to your <a>musicians</a> group.
-                        </Feed.Summary>
-                      </Feed.Content>
-                    </Feed.Event>
-                  </Feed>
-                </Card.Content>
-              </Card>
-            </Grid.Column>
-
-            <Grid.Column width={1}>
-              {/* this column is just here for padding */}
-            </Grid.Column>
-
-            <Grid.Column width={11}>
+            <Grid.Column width={14}>
               <Tab className='tabMenu' menu={{ secondary: true, pointing: true }} panes={this.renderPanes()}/>
             </Grid.Column>
-
             <Grid.Column width={1}>
               {/* this column is just here for padding */}
             </Grid.Column>
-
           </Grid.Row>
         </Grid>
       </div>
