@@ -45,7 +45,7 @@ export default class navBar extends Component {
 
   unStickTopMenu = () => this.setState({ menuFixed: false })
 
-  render () {
+  render (props) {
     const { menuFixed } = this.state
     const { activeItem } = this.state
 
@@ -65,7 +65,7 @@ export default class navBar extends Component {
               <Menu.Item name='DEVCIRCLE' href='/' onClick={this.handleItemClick} className='landingnavFont'/>
               <Menu.Menu position='right'>
                 <Menu.Item>
-                  <Button inverted color='white'>LOG IN</Button>
+                  <Button inverted color='white' onClick={this.props.handleLoginButton}>LOG IN</Button>
                 </Menu.Item>
               </Menu.Menu>
             </Container>

@@ -60,9 +60,9 @@ export default class landingPage extends Component {
     });
   }
 
-  renderFeaturedProjects = () => {
-
-  }
+  // renderFeaturedProjects = () => {
+  //
+  // }
 
   handleLoginButton = () => {
     window.location = '../auth/github';
@@ -86,6 +86,8 @@ export default class landingPage extends Component {
         window.location = '../auth/github'
       } else {
         console.log("Cohort code incorrect");
+        const noAccess = document.querySelector('.noAccess');
+        noAccess.style.display = 'block';
       }
     });
   }
@@ -100,7 +102,7 @@ export default class landingPage extends Component {
     return (
       <div>
         <Segment className='aboveTheFold' basic>
-          <Navbar currentPage='landing' />
+          <Navbar currentPage='landing' handleLoginButton={this.handleLoginButton} />
           <div>
           <Container textAlign='center'>
             <Grid >
@@ -120,6 +122,7 @@ export default class landingPage extends Component {
                 <Form className='signUpForm' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
                   <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
                 </Form>
+                <p className='noAccess'>Please enter a valid access code.</p>
                 <br/>
                 {/* <Button className='cohortCodeButton' secondary size='huge' onClick={this.handleLoginButton}>
                   Log in with Github
