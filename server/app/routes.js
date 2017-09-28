@@ -41,13 +41,22 @@ module.exports = function (app, passport) {
 
                 req.body.cohortId = req.session.cohortId;
                 req.body.update = {
-                    $addToSet: { members: req.user._id}
+                    $addToSet: {
+                        members: req.user._id
+                    }
                 };
                 cohortController.update(req);
-
                 res.redirect(`/${req.session.cohortCode}/${req.user.github.login}/dashboard`);
             } else {
-                res.redirect('/cohortCode');
+                cohortController.verifyMember(req, res).then(result => {
+                    // console.log("result: ", result);
+                    // console.log("req.session", req.session);
+                    if (result) {
+                        res.redirect(`/${result.code}/${req.user.github.login}/dashboard`);
+                    }else{
+                        res.send("enter cohort code");
+                    }
+                });
             }
         });
 
