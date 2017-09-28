@@ -76,13 +76,14 @@ module.exports = {
     },
     //Method to verify if user exists in cohort member list
     verifyMember: (req, res)=>{
-        Cohort.findOne({
+        return Cohort.findOne({
             members: req.user._id
         })
         .populate('members')
         .populate('projects')
         .then(doc=>{
-            res.json(doc);
+            // console.log("doc", doc);
+            return doc
         }).catch(err => {
             res.json(err)
         })
