@@ -54,7 +54,7 @@ module.exports = function (app, passport) {
                     if (result) {
                         res.redirect(`/${result.code}/${req.user.github.login}/dashboard`);
                     }else{
-                        res.send("enter cohort code");
+                        res.redirect('/cohortCodeLogin');
                     }
                 });
             }
