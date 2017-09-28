@@ -24,10 +24,10 @@ class Project extends Component {
     start_date: '',
     duration: 0,
     members_wanted: 0,
-    "google_drive_link": "https://google.com",
-    "trello_link": "https://trello.com",
-    "repo_link": "https://github.com",
-    "deploy_link": "https://heroku.com",
+    google_drive_link: "",
+    trello_link: "",
+    repo_link: "",
+    deploy_link: "",
     chat: [],
     pending_members: [],
     members: [],
@@ -74,7 +74,7 @@ class Project extends Component {
       return res;
     })
     .then(result => {
-       return githubAPI.repoContributors(repo)
+       return repo ? githubAPI.repoContributors(repo) : [];
     })
     .then(res => {
       console.log('github contributors:', res)
@@ -86,6 +86,18 @@ class Project extends Component {
 
   checkLoggedIn = () => {
     axios.get('/auth/checkLoggedIn').then(res => {
+      // ------- Manual Auth Override
+      res.data = {
+        login: true,
+        _id: '59cd80c251fe492bb4096713',
+        user: {
+          github: {
+            login: 'aarongaither',
+            avatar_url: 'https://avatars1.githubusercontent.com/u/16161706?v=4&s=400',
+            name: 'Aaron Gaither'
+          }
+        }
+      }
       if (res.data.login) {
         const curUser = res.data.user.github.login;
         if (this.state.owner_id.github.login === curUser) {
@@ -103,6 +115,7 @@ class Project extends Component {
       // this.setState({priviledge: 'owner'})
       // this.setState({priviledge: 'member'})
       // this.setState({priviledge: 'pending'})
+
       console.log('User:',res.data, 'priviledge:', this.state.priviledge);
     }).catch(error => {
       console.log('Catching Error while authing user: ', error);
@@ -122,7 +135,7 @@ class Project extends Component {
       } :
       {c: 0, a: 0, d: 0}
       return (
-        <Item.Group link href={`/${this.props.match.params.cohort}/${member.github.login}/profile`}>
+        <Item.Group link href={`https://github.com/${member.github.login}`}>
           <Item>
             <Item.Image size='mini' src={member.github.avatar_url} shape='rounded'  />
             <Item.Content>
@@ -164,7 +177,10 @@ class Project extends Component {
   }
 
   renderPRorIssue = type => {
-    return this.state[type].map( item => (
+    const list = this.state[type];
+    return list.length === 0 ?
+    `No ${type} for this repository, yet.` :
+    list.map( item => (
       <Item.Group>
         <Divider/>
         <Item>
@@ -186,7 +202,7 @@ class Project extends Component {
     } else if (priv === 'member') {
       buttonText = 'You are a member!';
     } else if (priv === 'pending') {
-      buttonText = "You've requested to join!"
+      buttonText = "Awaiting approval..."
     } else {
       buttonText = 'Request to Join!'
     }
@@ -217,9 +233,6 @@ class Project extends Component {
             <i className="devicon-angularjs-plain colored devIcon"></i>
             <Header textAlign='center' as='h1' className='projectTitle'>
             {this.state.name}
-            {/* <p>Cohort: {this.props.match.params.cohort}</p>
-            <p>Username: {this.props.match.params.username}</p>
-            <p>Project: {this.props.match.params.project}</p> */}
             </Header>
             <br/><br/><br/>
             <p className='projectSummary'>{this.state.summary}</p>
@@ -237,9 +250,9 @@ class Project extends Component {
                 {this.renderTechTags()}<br/><br/>
                 <p>{this.state.description}</p>
                 <div floated='right'>
-                  <Icon link name='github' size='large' link={this.state.repo_link} />
-                  <Icon link name='google' size='large' link={this.state.google_drive_link} />
-                  <Icon link name='trello' size='large' link={this.state.trello_link}  />
+                  {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} name='github' size='large' /> : ''}
+                  {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} name='google' size='large' /> : ''}
+                  {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} name='trello' size='large' /> : ''}
                 </div>
                 <Segment>
                   <Header>{formatDate(this.state.start_date)}</Header>
@@ -263,12 +276,20 @@ class Project extends Component {
 
                 <Segment className='pullRequest'>
                   <Header as='h3'>Pull Requests</Header>
-                  {this.renderPRorIssue('pulls')}
+                  {
+                    this.state.repo_link === '' ?
+                    'No Github Repository Connected.' :
+                     this.renderPRorIssue('pulls')
+                  }
                 </Segment>
 
                 <Segment className='pullRequest'>
                   <Header as='h3'>Issues</Header>
-                  {this.renderPRorIssue('issues')}
+                  {
+                    this.state.repo_link === '' ?
+                    'No Github Repository Connected.' :
+                     this.renderPRorIssue('issues')
+                  }
                 </Segment>
 
                 <Card.Group>
@@ -277,9 +298,9 @@ class Project extends Component {
                       <Header as='h3'>Project Details</Header>
                       <p>{this.state.description}</p>
                       <div floated='right'>
-                        <Icon link name='github' size='large' link={this.state.repo_link} />
-                        <Icon link name='google' size='large' link={this.state.google_drive_link} />
-                        <Icon link name='trello' size='large' link={this.state.trello_link}  />
+                        {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} name='github' size='large' /> : ''}
+                        {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} name='google' size='large' /> : ''}
+                        {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} name='trello' size='large' /> : ''}
                       </div>
                       <Card>
                         <Card.Content>
@@ -302,9 +323,14 @@ class Project extends Component {
                       <Header as='h4'>Technologies Involved</Header>
                       {this.renderTechTags()}
                     </Card.Content>
-                    <Card.Content extra>
-                        <Button fluid className='projectCheck' > View Live Demo </Button>
-                    </Card.Content>
+                    {
+                      this.state.deploy_link !== '' ?
+                      <Card.Content extra>
+                          <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
+                      </Card.Content>
+                      : ''
+                    }
+
                   </Card>
                 </Card.Group>
               </Rail>
