@@ -5,11 +5,11 @@ import './projectTiles.css';
 
 const Tile = (props) => (
   <div>
-    <Card centered raised className='tileCard'>
+    <Card centered raised className='tileCard' link href={`/${props.cohort_id.code}/${props.owner_id.github.login}/app/${props.name}`}>
       <Card.Content className='tileHeader'>
-        <i className="devicon-angularjs-plain colored devIcon iconStyle"></i>
+        <Image src={props.owner_id.github.avatar_url} />
         <Card.Header className='tileTitle'>
-          {props.title}
+          {props.name}
         </Card.Header>
       </Card.Content>
       <Card.Content className='tileContent'>
@@ -24,22 +24,19 @@ const Tile = (props) => (
         </Card.Description>
       </Card.Content>
       <Card.Content extra >
-          <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
-          <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
-          <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
-          <Image className='tileTeam' src='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' size='mini' shape='circular' />
+        {props.members.map(member => 
+          <Image as='a' className='tileTeam' size='mini' shape='circular'
+          src={member.github.avatar_url} href={`https://github.com/${member.github.login}`} />
+        )}
           <Icon  className='tileMore'name='ellipsis horizontal' size='large' />
           <br/>
-          <Label className='tileCreator'>
-            Creator
-          </Label>
       </Card.Content>
-      <Button animated='vertical' fluid attached='bottom' className='tileJoin' onClick={props.handleJoinButton}>
+      <Button animated='vertical' fluid attached='bottom' className='tileJoin'>
         <Button.Content visible>
           View Details
         </Button.Content>
         <Button.Content hidden>
-          3 spots left!
+          {`${props.members_wanted - props.members.length + 1} spots left!`}
         </Button.Content>
       </Button>
     </Card>
