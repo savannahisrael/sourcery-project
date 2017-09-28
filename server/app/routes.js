@@ -41,7 +41,7 @@ module.exports = function (app, passport) {
 
                 req.body.cohortId = req.session.cohortId;
                 req.body.update = {
-                    $push: { members: req.user._id}
+                    $addToSet: { members: req.user._id}
                 };
                 cohortController.update(req);
 
