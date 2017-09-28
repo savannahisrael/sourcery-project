@@ -18,24 +18,46 @@ module.exports = function (app, passport) {
     //Handle the call back after github has authenticated the user
     app.get('/auth/github/callback',
         passport.authenticate('github', {
-            failureRedirect: '/',
-            successRedirect: '/dashboard'
+            failureRedirect: '/'
         }),
         function (req, res) {
-            // Successful authentication, redirect home.
-
-            console.log(req);
-
+            // Successful authentication, redirect dashboard.
             console.log("logged in");
+
+            // console.log(req);
+            // console.log(req.session);
+            // console.log(req.user);          
 
             //provide code
             // console.log('req.query', req.query);
 
             //will return true if logged in
-            console.log(req.isAuthenticated())
+            // console.log(req.isAuthenticated())
 
             //provide user profile
-            res.end();
+            // console.log(req.user);
+
+            if (req.session.cohortCode) {
+
+                req.body.cohortId = req.session.cohortId;
+                req.body.update = {
+                    $addToSet: {
+                        members: req.user._id
+                    }
+                };
+                cohortController.update(req);
+                res.redirect(`/${req.session.cohortCode}/${req.user.github.login}/dashboard`);
+            } else {
+                cohortController.verifyMember(req, res).then(result => {
+                    // console.log("result: ", result);
+                    // console.log("req.session", req.session);
+                    if (result) {
+                        res.redirect(`/${result.code}/${req.user.github.login}/dashboard`);
+                    }else{
+                        res.send("enter cohort code");
+                    }
+                });
+            }
         });
 
     //Authentication check 
@@ -53,7 +75,9 @@ module.exports = function (app, passport) {
     //Check to see if specific COHORT exists and pull data based on code
     app.get('/auth/cohortVerify', cohortVerified, function (req, res) {
         console.log("cohort exists");
-        res.send({cohortExists:true});
+        res.send({
+            cohortExists: true
+        });
     });
 
     //Logout route
@@ -94,7 +118,7 @@ module.exports = function (app, passport) {
 
     //All data for a specific PROJECT
     app.get('/api/projectData/:cohort/:username/app/:project', projectController.oneProject);
-   
+
     //All chat data for a specific PROJECT
     app.get('/api/projectChat', projectController.chat);
 
@@ -185,9 +209,13 @@ function cohortVerified(req, res, next) {
 
     cohortController.verify(req, res).then(result => {
         if (result) {
+            req.session.cohortCode = result.code;
+            req.session.cohortId = result._id;
             return next();
         }
         console.log("cohort doesn't exist");
-        res.send({cohortExists:false});
+        res.send({
+            cohortExists: false
+        });
     })
 };
