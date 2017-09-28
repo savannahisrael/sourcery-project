@@ -38,12 +38,12 @@ const App = () =>
     <div className='Main'>
       <div className='Main-content'>
         <Route exact path='/' component={Landing} />
+        <PrivateRoute path='/cohortCodeLogin' component={CohortLogin} />
         <PrivateRoute exact path='/:cohort/explore' component={Explore} />
         <PrivateRoute exact path='/:cohort/create' component={Create} />
         <PrivateRoute path='/:cohort/:username/profile' component={Profile} />
         <PrivateRoute path='/:cohort/:username/dashboard' component={Dashboard} />
         <PrivateRoute path='/:cohort/:username/app/:project' component={Project} />
-        <PrivateRoute path='/cohortCodeEntry' component={CohortLogin} />
       </div>
       <Footer />
     </div>

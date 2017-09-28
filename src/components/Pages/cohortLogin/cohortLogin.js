@@ -9,6 +9,15 @@ class CohortLogin extends Component {
     cohort: ''
   };
 
+  componentDidMount() {
+    axios.get('../auth/checkLoggedIn').then((res) => {
+      this.setState({ userID: res.data });
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Catching Error: ', error);
+    });
+  }
+
   handleCohortCodeChange = (event) => {
     this.setState({
       cohort: event.target.value
