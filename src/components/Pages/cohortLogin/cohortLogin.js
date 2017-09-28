@@ -23,7 +23,7 @@ class CohortLogin extends Component {
       }
     }).then(res => {
       if (res.data.cohortExists) {
-        window.location = `../../${this.userID.cohort}/${this.userID.username}/dashboard`;
+        window.location = `../../${this.state.userID.cohort}/${this.state.userID.username}/dashboard`;
       } else {
         console.log("Cohort code incorrect");
         const accessDenied = document.querySelector('.accessDenied');
@@ -35,12 +35,12 @@ class CohortLogin extends Component {
   render() {
     return (
       <div>
-        <Segment className='background'>
-          <Header className='devCircle' textAlign='center'>devCircle</Header>
-          <Form onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
-            <Form.Input className='signupInput' size='huge' action='Sign Up' placeholder='Enter code...'/>
+        <Segment className='background' textAlign='center'>
+          <Header className='devCircle'>devCircle</Header>
+          <Form className='signupInput' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
+            <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
           </Form>
-          <Header className='accessDenied' textAlign='center'>Please enter a valid access code</Header>
+          <p className='accessDenied'>Please enter a valid access code</p>
         </Segment>
       </div>
     )
