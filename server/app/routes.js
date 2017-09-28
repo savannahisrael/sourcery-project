@@ -33,14 +33,30 @@ module.exports = function (app, passport) {
 
             //will return true if logged in
             // console.log(req.isAuthenticated())
-            
+
             //provide user profile
             // console.log(req.user);
 
             if (req.session.cohortCode) {
+
+                req.body.cohortId = req.session.cohortId;
+                req.body.update = {
+                    $addToSet: {
+                        members: req.user._id
+                    }
+                };
+                cohortController.update(req);
                 res.redirect(`/${req.session.cohortCode}/${req.user.github.login}/dashboard`);
             } else {
-                res.redirect('/cohortCode');
+                cohortController.verifyMember(req, res).then(result => {
+                    // console.log("result: ", result);
+                    // console.log("req.session", req.session);
+                    if (result) {
+                        res.redirect(`/${result.code}/${req.user.github.login}/dashboard`);
+                    }else{
+                        res.send("enter cohort code");
+                    }
+                });
             }
         });
 
@@ -193,7 +209,8 @@ function cohortVerified(req, res, next) {
 
     cohortController.verify(req, res).then(result => {
         if (result) {
-            req.session.cohortCode = req.query.cohortCode;
+            req.session.cohortCode = result.code;
+            req.session.cohortId = result._id;
             return next();
         }
         console.log("cohort doesn't exist");
