@@ -44,6 +44,7 @@ const App = () =>
         <PrivateRoute path='/:cohort/:username/profile' component={Profile} />
         <PrivateRoute path='/:cohort/:username/dashboard' component={Dashboard} />
         <PrivateRoute path='/:cohort/:username/app/:project' component={Project} />
+        <PrivateRoute path='/:cohort/:username/app/:project/edit' component={Create} />
       </div>
       <Footer />
     </div>

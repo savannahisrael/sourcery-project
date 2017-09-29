@@ -159,10 +159,10 @@ class CreateProjectForm extends Component {
 
   render(props) {
     const { value } = this.state
-    
+
     return (
       <div className='createBackground'>
-        <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login}/>
+        <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         <Segment basic textAlign='center' vertical className='createBanner'>
           <Container>
             <Header className='createHeader'>

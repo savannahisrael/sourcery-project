@@ -211,7 +211,7 @@ class Project extends Component {
   render(props) {
     return (
       <div className='projectBackground'>
-        <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
+        <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.props.match.params.username} avatar={this.state.userID.user.github.avatar_url}/>
         <Segment textAlign='center' vertical className='projectBanner'>
           <Container text>
             <i className="devicon-angularjs-plain colored devIcon"></i>
