@@ -94,7 +94,7 @@ class Explore extends Component {
       default: projectStatus = "proposal";
     }
     let colArr = this.state.projects.filter(project => {
-      return ((project.status == projectStatus) &&(this.compareArray(this.state.techFilters, project.tech_tags)))
+      return ((project.status == projectStatus) && (this.compareArray(this.state.techFilters, project.tech_tags)))
     }).filter((project, index) => {
       return index % 3 === remainder;
     });
