@@ -266,6 +266,11 @@ class Project extends Component {
                   <Header>{this.state.members_wanted} members</Header>
                   <p>Team Size</p>
                 </Segment>
+                {/* {
+                      this.state.deploy_link !== '' ?
+                          <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
+                      : ''
+                    } */}
               </Segment>
 
               <Segment basic className='projectChat'>

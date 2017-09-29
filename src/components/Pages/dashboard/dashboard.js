@@ -77,7 +77,7 @@ class Dashboard extends Component {
     .map(project => <Tile {...project} renderTechTags={this.renderTechTags} formatDate={this.formatDate} />);
   }
 
-  renderTechTags = tech_tags => tech_tags.map(tech_tag => (
+  renderTechTags = tech_tags => tech_tags.slice(0, 6).map(tech_tag => (
     <Label className='tileTags'>
       {tech_tag}
     </Label>
