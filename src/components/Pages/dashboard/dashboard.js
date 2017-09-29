@@ -21,8 +21,52 @@ class Dashboard extends Component {
           }
         }
       },
-      activeProjects: [],
-      pastProjects: []
+      activeProjects: [
+        {
+          members_wanted: 0,
+          cohort_id: {
+            code: ''
+          },
+          owner_id: {
+            github: {
+              login: '',
+              avatar_url: '',
+
+            }
+          },
+          status: '',
+          members: [
+            {
+              github: {
+                login: ''
+              }
+            }
+          ]
+        }
+      ],
+      pastProjects: [
+        {
+          members_wanted: 0,
+          cohort_id: {
+            code: ''
+          },
+          owner_id: {
+            github: {
+              login: '',
+              avatar_url: '',
+
+            }
+          },
+          status: '',
+          members: [
+            {
+              github: {
+                login: ''
+              }
+            }
+          ]
+        }
+      ]
     };
   }
 
