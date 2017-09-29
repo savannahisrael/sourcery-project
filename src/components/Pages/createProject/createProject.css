@@ -32,17 +32,17 @@
   width: 300px !important;
 }
 
-.asterisk {
+
+/*.asterisk {
   color: red;
   display: none;
-}
+}*/
 
 .warning {
   color: red;
   font-size: 20px;
   padding-top: 15px;
 }
-
 
 .createStatus {
   margin-bottom: 10px !important;
