@@ -1,0 +1,32 @@
+.background {
+  min-height: 900px !important;
+  background: #4d5991 !important;
+  /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #4d5991, #1A265E) !important;
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #4d5991, #1A265E) !important;
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #4d5991, #1A265E) !important;
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #4d5991, #1A265E) !important;
+}
+
+.devCircle {
+  font-size: 7em !important;
+  font-weight: 400 !important;
+  padding-top: 250px !important;
+  color: #fff !important;
+}
+
+.signupInput {
+  width: 450px !important;
+  margin: 0 auto !important;
+  padding-top: 100px !important;
+}
+
+.accessDenied {
+  display: none;
+  font-size: 18px;
+  color: red;
+  padding-top: 15px;
+}

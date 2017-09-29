@@ -33,7 +33,7 @@ const repo = url => {
 		    	login
 		    	url
 		    }
-		    issues(last: 10) {
+		    issues(last: 5) {
 		      edges {
 		        node {
 		          author {
@@ -41,16 +41,16 @@ const repo = url => {
 		          	login
 		          	url
 		          }
-		          number
 		          title
-		          body
+		          number
+		          bodyText
 		          url
 		          createdAt
 		          state
 		        }
 		      }
 		    }
-		    pullRequests(last: 10){
+		    pullRequests(last: 5){
 		      edges {
 		        node {
 		          author {
@@ -58,8 +58,10 @@ const repo = url => {
 		            login
 		            url
 		          }
+		          title
 		          number
 		          bodyText
+		          url
 		          createdAt
 		          state
 		        }
@@ -91,7 +93,7 @@ const repo = url => {
 		.catch(err => err instanceof TypeError ? 'Invalid Repo' : err)
 }
 
-const repoStats = url => {
+const repoContributors = url => {
 	const [name, repo] = url.split('/').slice(-2)
 	return axios.get(`https://api.github.com/repos/${name}/${repo}/stats/contributors`)
 	.then(res => res.data.map(e => {
@@ -117,5 +119,5 @@ const user = name => {
 module.exports = {
 	user,
 	repo,
-	repoStats
+	repoContributors
 };

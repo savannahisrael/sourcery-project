@@ -8,8 +8,8 @@ import './explore.css';
 import projectData from '../../../utils/sampleData/sampleProjects.json';
 import search from '../../Common/navbar';
 import axios from 'axios';
-
-const techSelection = [ { key: 'Py', value: 'Py', text: 'Python' }, { key: 'CS', value: 'CS', text: 'CSS' }, { key: 'HT', value: 'HT', text: 'HTML5' }, { key: 'Ja', value: 'Ja', text: 'JavaScript' }, { key: 'C+', value: 'C+', text: 'C++' }, { key: 'Ru', value: 'Ru', text: 'Ruby' }  ]
+import moment from 'moment';
+import techSelection from '../../../utils/techTags.json'; 
 
 const projectProgress = [
   {
@@ -88,6 +88,7 @@ class Explore extends Component {
         members={project.members}
         renderTechTags={this.renderTechTags}
         handleJoinButton={this.handleJoinButton}
+        formatDate={this.formatDate}
       />
     ));
   }
@@ -102,6 +103,12 @@ class Explore extends Component {
 
   handleJoinButton = () => {
 
+  }
+
+  formatDate = (date) => {
+    return (
+      moment(date).format('MM/DD/YYYY')
+    )
   }
 
   render() {
@@ -121,7 +128,8 @@ class Explore extends Component {
             </h1>
           </Container>
         </Segment>
-        <Grid stackable centered container columns={3}>
+        <br/><br/>
+        <Grid stackable container columns={3}>
           <Grid.Row>
             <Grid.Column>
               {this.renderTiles(0)}
@@ -141,3 +149,46 @@ class Explore extends Component {
 }
 
 export default Explore;
+
+// <Grid.Column width={2}>
+//   <Card centered>
+//     <Card.Content>
+//       <Card.Header>
+//         Recent Activity
+//       </Card.Header>
+//     </Card.Content>
+//     <Card.Content>
+//       <Feed>
+//         <Feed.Event>
+//           <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
+//           <Feed.Content>
+//             <Feed.Date content='1 day ago' />
+//             <Feed.Summary>
+//               You added <a>Jenny Hess</a> to your <a>coworker</a> group.
+//             </Feed.Summary>
+//           </Feed.Content>
+//         </Feed.Event>
+
+//         <Feed.Event>
+//           <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
+//           <Feed.Content>
+//             <Feed.Date content='3 days ago' />
+//             <Feed.Summary>
+//               You added <a>Molly Malone</a> as a friend.
+//             </Feed.Summary>
+//           </Feed.Content>
+//         </Feed.Event>
+
+//         <Feed.Event>
+//           <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
+//           <Feed.Content>
+//             <Feed.Date content='4 days ago' />
+//             <Feed.Summary>
+//               You added <a>Elliot Baker</a> to your <a>musicians</a> group.
+//             </Feed.Summary>
+//           </Feed.Content>
+//         </Feed.Event>
+//       </Feed>
+//     </Card.Content>
+//   </Card>
+// </Grid.Column>

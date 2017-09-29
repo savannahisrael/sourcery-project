@@ -1,10 +1,16 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
+import {
+  Route,
+  Redirect
+} from 'react-router';
 import ReactRotatingText from 'react-rotating-text';
 import { Button, Container,Divider, Grid, Header, Form, Icon, Image, List, Menu, Segment, Visibility, Card, Item } from 'semantic-ui-react';
 import Tiles from '../../Common/projectTiles';
 import SignUpInput from '../../Common/signUp';
 import Navbar from "../../Common/landingNavbar";
-// import BackgroundImg from '../../../assets/images/home.png';
+import BackgroundImg from '../../../assets/images/background.png';
 import './landing.css';
 // import API from '../../../../server/app/routes.js';
 import axios from 'axios';
@@ -21,14 +27,18 @@ export default class landingPage extends Component {
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     axios.get('../api/projects').then((res) => {
-      this.setState({ projects: res.data });
+      this.setState({
+        projects: res.data
+      });
       console.log(res.data);
     }).catch((error) => {
       console.log('Catching Error: ');
       console.log(error);
     });
     axios.get('../auth/checkLoggedIn').then((res) => {
-      this.setState({ userID: res.data });
+      this.setState({
+        userID: res.data
+      });
       console.log(res.data);
     }).catch((error) => {
       console.log('Catching Error: ');
@@ -36,14 +46,12 @@ export default class landingPage extends Component {
     });
   }
 
-  renderFeaturedProjects = () => {
-
-  }
+  // renderFeaturedProjects = () => {
+  //
+  // }
 
   handleLoginButton = () => {
-    axios.get('../auth/github').then((res) => {
-      console.log(res.data);
-    });
+    window.location = '../auth/github';
   }
 
   handleSignupButton = () => {
@@ -54,24 +62,37 @@ export default class landingPage extends Component {
   }
 
   handleCohortCodeButton = () => {
-    axios.get('../auth/memberCohort').then((res) => {
-      console.log(res.data);
+    console.log("button clicked");
+    axios.get('../auth/cohortVerify', {
+      params: {
+        cohortCode: this.state.cohort
+      }
+    }).then(res => {
+      if (res.data.cohortExists) {
+        window.location = '../auth/github'
+      } else {
+        console.log("Cohort code incorrect");
+        const noAccess = document.querySelector('.noAccess');
+        noAccess.style.display = 'block';
+      }
     });
   }
 
   handleCohortCodeChange = (event) => {
-    this.setState({ cohort: event.target.value });
+    this.setState({
+      cohort: event.target.value
+    });
   }
 
   render() {
     return (
       <div>
         <Segment className='aboveTheFold' basic>
-          <Navbar currentPage='landing' />
+          <Navbar currentPage='landing' handleLoginButton={this.handleLoginButton} />
           <div>
           <Container textAlign='center'>
-            <Grid >
-              <Grid.Column width={8} className='landingGrid'>
+            <Grid className='landingGrid'>
+              <Grid.Column width={8}>
                 <Header className='landingHeader'content='devCircle'/>
                 <Header className='landingSubheader'>
                   Create your own team projects
@@ -86,51 +107,43 @@ export default class landingPage extends Component {
                 <Form className='signUpForm' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
                   <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
                 </Form>
+                <p className='noAccess'>Please enter a valid access code.</p>
                 <br/>
                 {/* <Button className='cohortCodeButton' secondary size='huge' onClick={this.handleLoginButton}>
                   Log in with Github
                 </Button> */}
               </Grid.Column>
-              <Grid.Column width={8} className='img'/>
+              <Grid.Column width={8}>
+                <Image className='landingImg' src={BackgroundImg} size='large'/>
+              </Grid.Column>
             </Grid>
           </Container>
           </div>
         </Segment>
 
-        <Container>
+        <Container className='landingContainer'>
           <Grid>
-            <Grid.Row>
-              <Grid.Column width={8} className=''>
-                <Header className='landingWho'>
-                HOW <br/> CAN <br/> WE <br/> HELP
-                </Header>
-              </Grid.Column>
-              <Grid.Column width={8} className='iconSection'>
-                <Item.Group relaxed>
+            <Grid.Row columns={3}>
+              <Grid.Column className='iconSection'>
                   <Item>
                     <Icon name='calendar outline'className='icon'/>                
-                    <Item.Content>
-                      <Item.Header className='itemHeader' >Simplify Planning</Item.Header>
-                      <Item.Meta className='itemMeta'>Easily turn ideas into an actionable plan to achieve success.</Item.Meta>
-                    </Item.Content>
+                    <Item.Header className='itemHeader' >Build</Item.Header><br/><br/>
+                    <Item.Meta className='itemMeta'>Practice the basics to cutting edge development techniques. No matter what skill level, create projects or join projects you're interested in to gain hands-on experience.</Item.Meta>
                   </Item>
-                  <br/>
+                </Grid.Column>
+              <Grid.Column className='iconSection'>
                   <Item>
                     <Icon name='users' className='icon'/> 
-                    <Item.Content>
-                      <Item.Header className='itemHeader'>Facilitate Collaboration</Item.Header>
-                      <Item.Meta className='itemMeta'>Centralize communication with team members.</Item.Meta>
-                    </Item.Content>
+                    <Item.Header className='itemHeader'>Learn</Item.Header> <br/><br/>
+                    <Item.Meta className='itemMeta'> There will always be new, hot technologies that we’ll need to learn if we want to stay relevant. So, we decided to create a platform where we could build upon the foundational knowledge we gained during our boot camp. </Item.Meta>
                   </Item>       
-                  <br/>       
+                </Grid.Column>  
+                <Grid.Column className='iconSection'>
                   <Item>
-                    <Icon name='fighter jet' className='icon'/>               
-                    <Item.Content>
-                      <Item.Header className='itemHeader'>Streamline Workflow</Item.Header>
-                      <Item.Meta className='itemMeta'>View status for all your team projects in one place.</Item.Meta>
-                    </Item.Content>
+                    <Icon name='fighter jet' className='icon'/>            
+                    <Item.Header className='itemHeader'>Connect</Item.Header><br/><br/>
+                    <Item.Meta className='itemMeta'>Stay in touch with you peers from your boot camp. All members of your cohort are given access to the system where they can continue working together and collaborating on projects and technologies that interest them.</Item.Meta>
                   </Item>
-                </Item.Group>
               </Grid.Column>
             </Grid.Row>
             <Grid.Row textAlign='centered'> 
@@ -140,65 +153,9 @@ export default class landingPage extends Component {
             </Grid.Row>
           </Grid>
         </Container>
-      <Segment style={{ padding: '8em 0em' }} vertical>
-          <Grid container stackable verticalAlign='middle'>
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <Header as='h3' style={{ fontSize: '2em' }}>devCircle’s Features at a Glance</Header>
-                <p style={{ fontSize: '1.33em' }}>
-                Create team projects <br/>
-                Collaboration: sign up to contribute to projects or create projects for others to participate in<br/>
-                Engage with your team members: Be a part of the conversation as a group.<br/>
-                Explore: Find new projects based on technologies to participate in         <br/>       
-                </p>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Segment>
-        <Segment style={{ padding: '0em' }} vertical>
-          <Grid celled='internally' columns='equal' stackable>
-            <Grid.Row textAlign='center'>
-              <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-                <Header as='h3' style={{ fontSize: '2em' }}>"What a Company"</Header>
-                <p style={{ fontSize: '1.33em' }}>That is what they all say about us</p>
-              </Grid.Column>
-              <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-                <Header as='h3' style={{ fontSize: '2em' }}>"I shouldn't have gone with their competitor."</Header>
-                <p style={{ fontSize: '1.33em' }}>
-                  <Image avatar src='/assets/images/avatar/large/nan.jpg' />
-                  <b>Nan</b> Chief Fun Officer Acme Toys
-                </p>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Segment>
-        <Segment style={{ padding: '8em 0em' }} vertical>
-          <Container text>
-            <Header as='h3' style={{ fontSize: '2em' }}>Breaking The Grid, Grabs Your Attention</Header>
-            <p style={{ fontSize: '1.33em' }}>
-              Instead of focusing on content creation and hard work, we have learned how to master the art of doing
-              nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic
-              and worth your attention.
-            </p>
-            <Button as='a' size='large'>Read More</Button>
-            <Divider
-              as='h4'
-              className='header'
-              horizontal
-              style={{ margin: '3em 0em', textTransform: 'uppercase' }}
-            >
-              <a href='#'>Case Studies</a>
-            </Divider>
-            <Header as='h3' style={{ fontSize: '2em' }}>Did We Tell You About Our Bananas?</Header>
-            <p style={{ fontSize: '1.33em' }}>
-              Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but its really
-              true.
-              It took years of gene splicing and combinatory DNA research, but our bananas can really dance.
-            </p>
-            <Button as='a' size='large'>I'm Still Quite Interested</Button>
-          </Container>
-        </Segment>
       </div>
     )
   }
 }
+
+

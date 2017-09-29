@@ -34,7 +34,7 @@ let ProjectSchema = new Schema({
             ref:'User'
         },
         //public vs. private chats
-        type: String
+        chat_type: String
     }],
     //4 statuses: proposal, in-progress, completed, deleted
     status:{
