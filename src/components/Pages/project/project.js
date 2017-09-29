@@ -87,17 +87,17 @@ class Project extends Component {
   checkLoggedIn = () => {
     axios.get('/auth/checkLoggedIn').then(res => {
       // ------- Manual Auth Override
-      res.data = {
-        login: true,
-        _id: '59cd80c251fe492bb4096713',
-        user: {
-          github: {
-            login: 'aarongaither',
-            avatar_url: 'https://avatars1.githubusercontent.com/u/16161706?v=4&s=400',
-            name: 'Aaron Gaither'
-          }
-        }
-      }
+      // res.data = {
+      //   login: true,
+      //   _id: '59cd80c251fe492bb4096713',
+      //   user: {
+      //     github: {
+      //       login: 'aarongaither',
+      //       avatar_url: 'https://avatars1.githubusercontent.com/u/16161706?v=4&s=400',
+      //       name: 'Aaron Gaither'
+      //     }
+      //   }
+      // }
       if (res.data.login) {
         const curUser = res.data.user.github.login;
         if (this.state.owner_id.github.login === curUser) {
