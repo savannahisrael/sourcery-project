@@ -118,11 +118,11 @@ class Explore extends Component {
           <Container>
             <Header className='exploreHeader'>
               <span className='exploreProjectsSpan'>Explore Projects</span> {' '}
-              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilterChange}/>
+              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilter}/>
             </Header>
             <h1 className='searchHeader'>
               <span className='searchBySpan'>Search by</span> {' '}
-              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilterChange}/>
+              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilter}/>
             </h1>
           </Container>
         </Segment>
