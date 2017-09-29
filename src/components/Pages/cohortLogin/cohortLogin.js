@@ -10,7 +10,7 @@ class CohortLogin extends Component {
   };
 
   componentDidMount() {
-    axios.get('../auth/checkLoggedIn').then((res) => {
+    axios.get('/auth/checkLoggedIn').then((res) => {
       this.setState({ userID: res.data });
       console.log(res.data);
     }).catch((error) => {
@@ -26,13 +26,13 @@ class CohortLogin extends Component {
 
   handleCohortCodeButton = () => {
     console.log("button clicked");
-    axios.get('../auth/cohortVerify', {
+    axios.get('/auth/cohortVerify', {
       params: {
         cohortCode: this.state.cohort
       }
     }).then(res => {
       if (res.data.cohortExists) {
-        window.location = `../../${this.state.cohort}/${this.state.userID.user.github.login}/dashboard`;
+        window.location = `/auth/github`;
       } else {
         console.log("Cohort code incorrect");
         const accessDenied = document.querySelector('.accessDenied');

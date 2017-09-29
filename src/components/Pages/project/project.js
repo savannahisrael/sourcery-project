@@ -5,7 +5,6 @@ import Chat from "../../Common/chat";
 import './project.css';
 import axios from 'axios';
 import moment from 'moment';
-import githubAPI from '../../../utils/github-API';
 import io from 'socket.io-client';
 
 const socket = io();
@@ -43,7 +42,7 @@ class Project extends Component {
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     this.fetchProjectData()
-    .then(repoLink => this.fetchGithubData(repoLink))
+    .then(repoLink => repoLink ? this.fetchGithubData(repoLink) : repoLink )
     .then(repoInfo => this.checkLoggedIn())
 
 
@@ -56,7 +55,7 @@ class Project extends Component {
 
   fetchProjectData = () => {
     return axios.get(`/api/projectData${this.props.location.pathname}`).then(res => {
-      console.log('Project data:',res.data[0]);
+      console.log('Project data:',res.data);
       this.setState({ ...res.data[0] });
       return res.data[0].repo_link
     }).catch(error => {
@@ -66,20 +65,11 @@ class Project extends Component {
   }
 
   fetchGithubData = repo => {
-    return githubAPI.repo(repo)
+    return axios.get('/api/github', {params: { repo }})
     .then(res => {
-      const {issues, pulls} = res;
-      console.log('github issues/pulls:', issues, pulls)
-      this.setState({issues, pulls })
-      return res;
-    })
-    .then(result => {
-       return repo ? githubAPI.repoContributors(repo) : [];
-    })
-    .then(res => {
-      console.log('github contributors:', res)
-      this.setState({contributors: res})
-      return res
+      const {issues, pulls, contributors} = res.data;
+      this.setState({issues, pulls, contributors})
+      return res.data;
     })
     .catch(err => console.log('Error in github pull:', err))
   }

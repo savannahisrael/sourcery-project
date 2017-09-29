@@ -26,7 +26,7 @@ export default class landingPage extends Component {
   // On page load, get all projects and send to this.state.projects
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    axios.get('../api/projects').then((res) => {
+    axios.get('/api/projects').then((res) => {
       this.setState({
         projects: res.data
       });
@@ -35,7 +35,7 @@ export default class landingPage extends Component {
       console.log('Catching Error: ');
       console.log(error);
     });
-    axios.get('../auth/checkLoggedIn').then((res) => {
+    axios.get('/auth/checkLoggedIn').then((res) => {
       this.setState({
         userID: res.data
       });
@@ -51,7 +51,7 @@ export default class landingPage extends Component {
   // }
 
   handleLoginButton = () => {
-    window.location = '../auth/github';
+    window.location = '/auth/github';
   }
 
   handleSignupButton = () => {
@@ -63,13 +63,13 @@ export default class landingPage extends Component {
 
   handleCohortCodeButton = () => {
     console.log("button clicked");
-    axios.get('../auth/cohortVerify', {
+    axios.get('/auth/cohortVerify', {
       params: {
         cohortCode: this.state.cohort
       }
     }).then(res => {
       if (res.data.cohortExists) {
-        window.location = '../auth/github'
+        window.location = '/auth/github'
       } else {
         console.log("Cohort code incorrect");
         const noAccess = document.querySelector('.noAccess');
