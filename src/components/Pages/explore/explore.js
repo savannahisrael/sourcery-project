@@ -35,30 +35,28 @@ class Explore extends Component {
     techFilters: [],
     projects: [
       {
-        {
-          name: '',
-          start_date: '',
-          tech_tags: [],
-          members_wanted: 0,
-          duration: '',
-          cohort_id: {
-            code: ''
-          },
-          owner_id: {
+        name: '',
+        start_date: '',
+        tech_tags: [],
+        members_wanted: 0,
+        duration: '',
+        cohort_id: {
+          code: ''
+        },
+        owner_id: {
+          github: {
+            login: '',
+            avatar_url: ''
+          }
+        },
+        status: '',
+        members: [
+          {
             github: {
-              login: '',
-              avatar_url: ''
+              login: ''
             }
-          },
-          status: '',
-          members: [
-            {
-              github: {
-                login: ''
-              }
-            }
-          ]
-        }
+          }
+        ]
       }
     ]
   };
