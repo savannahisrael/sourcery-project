@@ -31,7 +31,16 @@ const projectOptions = [
 
 class CreateProjectForm extends Component {
   state = {
-    userID: {},
+    userID: {
+      login: false,
+      user: {
+        github: {
+          login: '',
+          avatar_url: '',
+          name: ''
+        }
+      }
+    },
     projectNameInput: '',
     startDateInput: '',
     projectDurationInput: '',
@@ -46,11 +55,11 @@ class CreateProjectForm extends Component {
     deployLinkInput: ''
   };
 
-
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     axios.get('/auth/checkLoggedIn').then((res) => {
       this.setState({ userID: res.data });
+      console.log("state:", this.state)
       console.log(res.data);
     }).catch((error) => {
       console.log('Catching Error: ', error);
@@ -114,16 +123,16 @@ class CreateProjectForm extends Component {
     if (this.state.projectNameInput === '' || this.state.mainTechnologyInput === '' || this.state.membersWantedInput === '') {
       warning.innerHTML = '*Please complete all required fields';
       warning.style.display = 'block';
-      for (let i = 0; i < asterisk.length; i++) {
-        asterisk[i].style.display = 'block';
-      }
+      // for (let i = 0; i < asterisk.length; i++) {
+      //   asterisk[i].style.display = 'block';
+      // }
     }
     else if (this.state.projectNameInput.search(regex) === -1) {
       warning.innerHTML = '*Project title may only contain letters, numbers, dashes, and underscores';
       warning.style.display = 'block';
-      for (let i = 0; i < asterisk.length; i++) {
-        asterisk[0].style.display = 'block';
-      }
+      // for (let i = 0; i < asterisk.length; i++) {
+      //   asterisk[0].style.display = 'block';
+      // }
     }
     else {
       axios.post('/api/projectNew', {
@@ -141,16 +150,19 @@ class CreateProjectForm extends Component {
         deploy_link: this.state.deployLinkInput
       }).then((res) => {
         console.log(res.data);
-        window.location = `../${this.state.userID.cohort}/${this.state.userID.username}/app/${this.state.projectNameInput}`;
+        window.location = `../${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.projectNameInput}`;
       });
     }
   }
 
+  // this.props.match.params.username
+
   render(props) {
     const { value } = this.state
+
     return (
       <div className='createBackground'>
-        <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
+        <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         <Segment basic textAlign='center' vertical className='createBanner'>
           <Container>
             <Header className='createHeader'>
@@ -161,18 +173,15 @@ class CreateProjectForm extends Component {
         <Container className='createContainer'>
           <Segment>
           <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
-            <span className='asterisk'>*</span>
             <Form.Select label='Project Status' options={projectOptions} onChange={this.handleMembersWantedChange}/>
-            <Form.Input label='Project Name' onChange={this.handleprojectNameChange}/>
+            <Form.Input label='Project Name *' onChange={this.handleprojectNameChange}/>
             <Form.Input label='Start Date' placeholder='MM/DD/YYYY' onChange={this.handleStartDateChange}/>
             <Form.Input label='Project Length' placeholder='in weeks' onChange={this.handleProjectDurationChange}/>
             <Form.TextArea label='Project Summary' placeholder='Keep it short and sweet' onChange={this.handleProjectSummaryChange}/>
-            <span className='asterisk'>*</span>
-            <Form.Select search label='Main Technology' options={techSelection} placeholder='e.g. JavaScript' onChange={this.handleMainTechnologyChange}/>
+            <Form.Select search label='Main Technology *' options={techSelection} placeholder='e.g. JavaScript' onChange={this.handleMainTechnologyChange}/>
             <Form.Select multiple search label='Other Technologies' options={techSelection} onChange={this.handleOtherTechnologiesChange}/>
             <Form.TextArea label='Project Details' placeholder='Describe your project in detail...' onChange={this.handleProjectDetailsChange}/>
-            <span className='asterisk'>*</span>
-            <Form.Select label='Team Size' options={memberOptions} onChange={this.handleMembersWantedChange}/>
+            <Form.Select label='Team Size *' options={memberOptions} onChange={this.handleMembersWantedChange}/>
             <Form.Input label='Google Drive Link' onChange={this.handleGoogleLinkChange}/>
             <Form.Input label='Trello Link' onChange={this.handleTrelloLinkChange}/>
             <Form.Input label='Github Link' onChange={this.handleRepoLinkChange}/>

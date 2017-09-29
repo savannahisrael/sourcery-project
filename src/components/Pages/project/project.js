@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Tab, Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, Item, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import Chat from "../../Common/chat";
+import MemberBlock from "./MemberBlock";
 import './project.css';
 import axios from 'axios';
 import moment from 'moment';
@@ -115,34 +116,19 @@ class Project extends Component {
   renderTeamMembers = () => {
     return this.state.members.map(member => {
       member.contributions = this.state.contributors.find(c => c.name === member.github.login )
-      return member
-    }).map(member => {
-      const cons = member.contributions ?
-      {
-        c: member.contributions.commits,
-        a: member.contributions.additions,
-        d: member.contributions.deletions
-      } :
-      {c: 0, a: 0, d: 0}
+      if (!member.contributions) {
+        {
+          member.contributions = {
+              commits: 0,
+              additions: 0,
+              deletions: 0
+          }
+        }
+      }
       return (
-        <Item.Group>
-          <Icon link color='grey' className='projectRemove' fitted name='remove' size='large'/>
-          <Item link href={`https://github.com/${member.github.login}`}>
-            <Item.Image size='mini' src={member.github.avatar_url} shape='circular' />
-            <Item.Content>
-              <Item.Header>{member.github.name}</Item.Header>
-              <Item.Meta>{`${cons.c} commits / ${cons.a} ++ / ${cons.d} --`}</Item.Meta>
-            </Item.Content>
-          </Item>
-          <Item.Content className='projectEject'>Are you sure you want to eject this team member?</Item.Content>
-          <div className='ui two buttons'>
-            <Button fluid basic color='red' >Yes, Eject</Button>
-            <Button fluid basic color='green' >No</Button>
-          </div>
-          <Divider/>
-        </Item.Group>
+        <MemberBlock {...member}/>
       )
-    });
+    })
   }
 
   renderPendingMembers = () => {
@@ -225,7 +211,7 @@ class Project extends Component {
   render(props) {
     return (
       <div className='projectBackground'>
-        <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
+        <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.props.match.params.username} avatar={this.state.userID.user.github.avatar_url}/>
         <Segment textAlign='center' vertical className='projectBanner'>
           <Container text>
             <i className="devicon-angularjs-plain colored devIcon"></i>
