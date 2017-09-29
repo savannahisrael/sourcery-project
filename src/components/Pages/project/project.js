@@ -117,7 +117,7 @@ class Project extends Component {
       member.contributions = this.state.contributors.find(c => c.name === member.github.login )
       return member
     }).map(member => {
-      const cons = member.contributions ? 
+      const cons = member.contributions ?
       {
         c: member.contributions.commits,
         a: member.contributions.additions,
@@ -125,14 +125,20 @@ class Project extends Component {
       } :
       {c: 0, a: 0, d: 0}
       return (
-        <Item.Group link href={`https://github.com/${member.github.login}`}>
-          <Item>
-            <Item.Image size='mini' src={member.github.avatar_url} shape='rounded'  />
+        <Item.Group>
+          <Icon link color='grey' className='projectRemove' fitted name='remove' size='large'/>
+          <Item link href={`https://github.com/${member.github.login}`}>
+            <Item.Image size='mini' src={member.github.avatar_url} shape='circular' />
             <Item.Content>
               <Item.Header>{member.github.name}</Item.Header>
               <Item.Meta>{`${cons.c} commits / ${cons.a} ++ / ${cons.d} --`}</Item.Meta>
             </Item.Content>
           </Item>
+          <Item.Content className='projectEject'>Are you sure you want to eject this team member?</Item.Content>
+          <div className='ui two buttons'>
+            <Button fluid basic color='red' >Yes, Eject</Button>
+            <Button fluid basic color='green' >No</Button>
+          </div>
           <Divider/>
         </Item.Group>
       )
@@ -151,7 +157,9 @@ class Project extends Component {
     return this.state.pending_members.map(pending_member => (
       <Card className='projectRequest'>
         <Card.Content>
-          <Image src={pending_member.github.avatar_url} shape='rounded' size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
+        <Header as='h3'>Pending Members</Header>
+        <Divider/>
+          <Image src={pending_member.github.avatar_url} shape='circular' size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
         </Card.Content>
         {this.state.priviledge === 'owner' ? <DecisionButtons /> : ''}
       </Card>
@@ -174,7 +182,7 @@ class Project extends Component {
       <Item.Group>
         <Divider/>
         <Item>
-          <Item.Image size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} shape='rounded'  />
+          <Item.Image size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} shape='circular'  />
           <Item.Content>
             <Item.Header as='a' href={item.url}>{item.title}</Item.Header>
             <Item.Meta>State: {item.state}</Item.Meta>
@@ -217,7 +225,7 @@ class Project extends Component {
   render(props) {
     return (
       <div className='projectBackground'>
-        <Navbar currentPage='project' />
+        <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
         <Segment textAlign='center' vertical className='projectBanner'>
           <Container text>
             <i className="devicon-angularjs-plain colored devIcon"></i>
@@ -236,26 +244,40 @@ class Project extends Component {
               <Label attached='top'>{this.state.status}</Label>
 
               <Segment basic>
-                <Header as='h3'>Project Details</Header>
-                {this.renderTechTags()}<br/><br/>
+                <Header as='h3'>Project Details
+                  {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} className='projectIcons' name='github' size='large'/> : ''}
+                  {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} className='projectIcons' name='google' size='large' color='red'/> : ''}
+                  {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} className='projectIcons' name='trello' size='large' color='blue' /> : ''}
+                </Header>
                 <p>{this.state.description}</p>
-                <div floated='right'>
-                  {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} name='github' size='large' /> : ''}
-                  {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} name='google' size='large' /> : ''}
-                  {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} name='trello' size='large' /> : ''}
-                </div>
-                <Segment>
-                  <Header>{formatDate(this.state.start_date)}</Header>
-                  <p>Projected Start Date</p>
-                </Segment>
-                <Segment>
-                  <Header>{this.state.duration} weeks </Header>
-                  <p>Project Length</p>
-                </Segment>
-                <Segment>
-                  <Header>{this.state.members_wanted} members</Header>
-                  <p>Team Size</p>
-                </Segment>
+                {this.renderTechTags()}<br/><br/>
+                <Grid divided='vertically'>
+                  <Grid.Row columns={3}>
+                    <Grid.Column>
+                      <Segment>
+                        <Header>{formatDate(this.state.start_date)}</Header>
+                        <p>Projected Start Date</p>
+                      </Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Segment>
+                        <Header>{this.state.duration} weeks </Header>
+                        <p>Project Length</p>
+                      </Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Segment>
+                        <Header>{this.state.members_wanted} members</Header>
+                        <p>Team Size</p>
+                      </Segment>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                {/* {
+                      this.state.deploy_link !== '' ?
+                          <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
+                      : ''
+                    } */}
               </Segment>
 
               <Segment basic className='projectChat'>
@@ -288,9 +310,9 @@ class Project extends Component {
                       <Header as='h3'>Project Details</Header>
                       <p>{this.state.description}</p>
                       <div floated='right'>
-                        {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} name='github' size='large' /> : ''}
-                        {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} name='google' size='large' /> : ''}
-                        {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} name='trello' size='large' /> : ''}
+                        {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} name='github' size='big' /> : ''}
+                        {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} name='google' size='big' /> : ''}
+                        {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} name='trello' size='big' /> : ''}
                       </div>
                       <Card>
                         <Card.Content>
@@ -334,7 +356,7 @@ class Project extends Component {
 
                 <Card.Group>
                   {this.renderPendingMembers()}
-                </Card.Group> 
+                </Card.Group>
 
                 <Segment className='projectSegment'>
                   <Header as='h3'>Team Members</Header>

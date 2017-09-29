@@ -31,16 +31,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )}/>
 )
 
-axios.get('../auth/checkLoggedIn').then(res=>  console.log(res.data.login))
+axios.get('/auth/checkLoggedIn').then(res=>  console.log(res.data.login))
 
 const App = () =>
   <Router>
     <div className='Main'>
       <div className='Main-content'>
         <Route exact path='/' component={Landing} />
-        <PrivateRoute path='/cohortCodeLogin' component={CohortLogin} />
-        <PrivateRoute exact path='/:cohort/explore' component={Explore} />
-        <PrivateRoute exact path='/:cohort/create' component={Create} />
+        <Route exact path='/cohortCodeLogin' component={CohortLogin} />
+        <PrivateRoute path='/:cohort/explore' component={Explore} />
+        <PrivateRoute path='/:cohort/create' component={Create} />
         <PrivateRoute path='/:cohort/:username/profile' component={Profile} />
         <PrivateRoute path='/:cohort/:username/dashboard' component={Dashboard} />
         <PrivateRoute path='/:cohort/:username/app/:project' component={Project} />

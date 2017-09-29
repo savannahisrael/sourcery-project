@@ -7,16 +7,16 @@ const Tile = (props) => (
   <div>
     <Card centered raised className='tileCard' link href={`/${props.cohort_id.code}/${props.owner_id.github.login}/app/${props.name}`}>
       <Card.Content className='tileHeader'>
-        <Image src={props.owner_id.github.avatar_url} />
+        <Image src={props.owner_id.github.avatar_url} size='tiny' shape='circular' className='projecttileIcon'/>
         <Card.Header className='tileTitle'>
           {props.name}
         </Card.Header>
       </Card.Content>
       <Card.Content className='tileContent'>
         <Divider/>
-        <Card.Meta className='tileState'>
+        <Card.Description className='tileState'>
           {props.formatDate(props.start_date)} | {props.duration} Weeks
-        </Card.Meta>
+        </Card.Description>
         <Divider/>
           {props.renderTechTags(props.tech_tags)}
         <Card.Description className='tileSummary'>
@@ -24,11 +24,11 @@ const Tile = (props) => (
         </Card.Description>
       </Card.Content>
       <Card.Content extra >
-        {props.members.map(member => 
-          <Image as='a' className='tileTeam' size='mini' shape='circular'
+        {props.members.slice(0, 4).map(member => 
+          <Image as='a' className='tileTeam' shape='circular'
           src={member.github.avatar_url} href={`https://github.com/${member.github.login}`} />
         )}
-          <Icon  className='tileMore'name='ellipsis horizontal' size='large' />
+          <Icon className='tileMore'name='ellipsis horizontal' size='large' />
           <br/>
       </Card.Content>
       <Button animated='vertical' fluid attached='bottom' className='tileJoin'>

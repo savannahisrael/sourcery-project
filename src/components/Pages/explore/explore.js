@@ -9,7 +9,7 @@ import projectData from '../../../utils/sampleData/sampleProjects.json';
 import search from '../../Common/navbar';
 import axios from 'axios';
 import moment from 'moment';
-import techSelection from '../../../utils/techTags.json'; 
+import techSelection from '../../../utils/techTags.json';
 
 const projectProgress = [
   {
@@ -76,8 +76,8 @@ class Explore extends Component {
     ));
   }
 
-  renderTechTags = tech_tags => {
-    return tech_tags.map(tech_tag => (
+  renderTechTags = (tech_tags) => {
+    return tech_tags.slice(0, 6).map(tech_tag => (
       <Label className='tileTags'>
         {tech_tag}
       </Label>
@@ -93,7 +93,7 @@ class Explore extends Component {
   render() {
     return (
       <div>
-        <Navbar currentPage='explore' />
+        <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
         <div className='exploreBackground'>
         <Segment textAlign='center' vertical className='exploreBanner'>
           <Container>

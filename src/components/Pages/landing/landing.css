@@ -1,5 +1,5 @@
 .aboveTheFold {
-  min-height: 800px;
+  min-height: 850px;
   /* padding: 1em 0em; */
   background: #4d5991;
   /* For browsers that do not support gradients */
@@ -16,13 +16,9 @@
   background-position: center; */
 }
 
-.img {
-  background-image: url('../../../assets/images/background.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  margin-top: 70px !important;
-  margin-bottom: 0px !important;
+.landingImg {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
 }
 
 .landingGrid {
@@ -73,6 +69,47 @@
 
 .cohortCodeButton {
   width: 450px !important;
+}
+
+.landingWho {
+  font-size: 7em !important;
+  font-weight: 400 !important;
+  margin-bottom: 0 !important;
+  margin-top: 0.5em !important;
+  color: #25569B !important;
+}
+
+.iconSection {
+  margin-top: 100px !important;
+}
+
+.landingIcon {
+  font-size: 4em !important;
+  color: #25569B !important;  
+  margin-bottom: 10px !important;
+}
+
+.itemHeader {
+  font-size: 2.5em !important;
+  font-weight: 400 !important;
+}
+
+.itemMeta {
+  font-size: 1.5em !important;
+  font-weight: 300 !important;
+  width: 300px !important;
+  line-height: 1.5em !important;
+}
+
+.quote {
+  margin-top: 150px !important;
+  font-size: 2.5em !important;
+  font-weight: 400 !important;
+}
+
+.landingContainer {
+  margin-top: 50px !important;
+  margin-bottom: 100px !important;
 }
 
 .noAccess {
