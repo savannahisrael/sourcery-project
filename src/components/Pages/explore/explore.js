@@ -71,6 +71,16 @@ class Explore extends Component {
     this.setState({techFilters:value})
   }
 
+  compareArray = (searchArray, mainArray) =>{
+    let status = true;
+    searchArray.forEach(key=>{
+      if(-1 === mainArray.indexOf(key)){
+        status = false
+      }
+    }, this)
+    return status;
+  }
+
   // A helper method for rendering one Tile for each 1/3 project
   renderTiles = remainder => {
     let projectStatus = this.state.statusFilter;
@@ -84,7 +94,7 @@ class Explore extends Component {
       default: projectStatus = "proposal";
     }
     let colArr = this.state.projects.filter(project => {
-      return project.status == projectStatus;
+      return ((project.status == projectStatus) &&(this.compareArray(this.state.techFilters, project.tech_tags)))
     }).filter((project, index) => {
       return index % 3 === remainder;
     });
@@ -112,7 +122,7 @@ class Explore extends Component {
     console.log("before render state", this.state)
     return (
       <div>
-        <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login}/>
+        <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         <div className='exploreBackground'>
         <Segment textAlign='center' vertical className='exploreBanner'>
           <Container>
