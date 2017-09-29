@@ -17,7 +17,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const flash = require('connect-flash');
-const githubAuth = require('./config/auth.js').github;
 
 //=============== DATABASE PACKAGES & CONFIG ===============//
 const mongoose = require('mongoose');
@@ -48,7 +47,8 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 //=============== ROUTES SETUP ===============//
 require('./app/routes.js')(app, passport) //load our routes and pass in our app and fully configured passport
-require('./app/testRoutes.js')(app) //load our routes and pass in our app and fully configured passport
+require('./app/githubRoutes.js')(app)
+require('./app/testRoutes.js')(app)
 
 //=============== API ROUTES ===============//
 app.get("/api/test", (req, res) => res.json({id:1, first:'hello', last:'world'}));

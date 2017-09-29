@@ -26,7 +26,7 @@ export default class landingPage extends Component {
   // On page load, get all projects and send to this.state.projects
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    axios.get('../api/projects').then((res) => {
+    axios.get('/api/projects').then((res) => {
       this.setState({
         projects: res.data
       });
@@ -35,7 +35,7 @@ export default class landingPage extends Component {
       console.log('Catching Error: ');
       console.log(error);
     });
-    axios.get('../auth/checkLoggedIn').then((res) => {
+    axios.get('/auth/checkLoggedIn').then((res) => {
       this.setState({
         userID: res.data
       });
@@ -51,7 +51,7 @@ export default class landingPage extends Component {
   // }
 
   handleLoginButton = () => {
-    window.location = '../auth/github';
+    window.location = '/auth/github';
   }
 
   handleSignupButton = () => {
@@ -63,13 +63,13 @@ export default class landingPage extends Component {
 
   handleCohortCodeButton = () => {
     console.log("button clicked");
-    axios.get('../auth/cohortVerify', {
+    axios.get('/auth/cohortVerify', {
       params: {
         cohortCode: this.state.cohort
       }
     }).then(res => {
       if (res.data.cohortExists) {
-        window.location = '../auth/github'
+        window.location = '/auth/github'
       } else {
         console.log("Cohort code incorrect");
         const noAccess = document.querySelector('.noAccess');
@@ -126,21 +126,21 @@ export default class landingPage extends Component {
             <Grid.Row columns={3}>
               <Grid.Column className='iconSection'>
                   <Item>
-                    <Icon name='calendar outline'className='icon'/>                
+                    <Icon name='cubes'className='landingIcon'/>                
                     <Item.Header className='itemHeader' >Build</Item.Header><br/><br/>
                     <Item.Meta className='itemMeta'>Practice the basics to cutting edge development techniques. No matter what skill level, create projects or join projects you're interested in to gain hands-on experience.</Item.Meta>
                   </Item>
                 </Grid.Column>
               <Grid.Column className='iconSection'>
                   <Item>
-                    <Icon name='users' className='icon'/> 
+                    <Icon name='code' className='landingIcon'/> 
                     <Item.Header className='itemHeader'>Learn</Item.Header> <br/><br/>
                     <Item.Meta className='itemMeta'> There will always be new, hot technologies that we’ll need to learn if we want to stay relevant. So, we decided to create a platform where we could build upon the foundational knowledge we gained during our boot camp. </Item.Meta>
                   </Item>       
                 </Grid.Column>  
                 <Grid.Column className='iconSection'>
                   <Item>
-                    <Icon name='fighter jet' className='icon'/>            
+                    <Icon name='users' className='landingIcon'/>            
                     <Item.Header className='itemHeader'>Connect</Item.Header><br/><br/>
                     <Item.Meta className='itemMeta'>Stay in touch with you peers from your boot camp. All members of your cohort are given access to the system where they can continue working together and collaborating on projects and technologies that interest them.</Item.Meta>
                   </Item>
