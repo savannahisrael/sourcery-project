@@ -40,9 +40,9 @@ module.exports = function(passport) {
     //passport login check
     // =============================================================
     passport.use(new GitHubStrategy({
-            clientID: process.env.GITHUB_CLIENTID,
-            clientSecret: process.env.GITHUB_CLIENTSECRET,
-            callbackURL: 'https://devcircle.herokuapp.com/auth/github/callback',
+            clientID: configAuth.github.clientID,
+            clientSecret: configAuth.github.clientSecret,
+            callbackURL: configAuth.github.callbackURL,
             passReqToCallback: true
         },
         function(req, accessToken, refreshToken, profile, done) {
