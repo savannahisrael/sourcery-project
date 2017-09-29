@@ -54,12 +54,14 @@ module.exports = {
                         .populate('pending_members')
                         .populate('members')
                         .exec((err, data) => {
+                            console.log('Project data:', data)
                             res.json(data);
                         })
                 } else {
                     console.log("invalid cohort or user")
                 }
             })
+            .catch(err => console.log('Project data err:', err));
     },
 
     profile: (req, res) => {
