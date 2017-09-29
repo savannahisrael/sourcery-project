@@ -40,7 +40,7 @@ class Explore extends Component {
         }
       }
     },
-    statusFilter: "",
+    statusFilter: "Proposed",
     techFilters: [],
     projects: []
   };
@@ -48,8 +48,7 @@ class Explore extends Component {
   // On page load, get all projects and send to this.state.projects
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    console.log("inside component did mount")
-    axios.get('/api/projects').then((res) => {
+     axios.get('/api/projects').then((res) => {
       this.setState({ projects: res.data });
       console.log(res.data);
     }).catch(error => {
@@ -64,14 +63,16 @@ class Explore extends Component {
     console.log(this.state);
   }
 
-  handleStatusFilter = event => {
+  handleStatusFilter = (e, {value}) => {
     // this.setState({ statusFilter: event.target.value });
     // console.log(this.state.statusFilter);
+    this.setState({statusFilter:value})
   }
 
-  handleTechFilter = event => {
+  handleTechFilter = (e, {value}) => {
     // this.setState({ techFilters: event.target.value });
     // console.log(this.state.techFilters);
+    this.setState({techFilters:value})
   }
 
   // A helper method for rendering one Tile for each 1/3 project
@@ -102,6 +103,7 @@ class Explore extends Component {
   formatDate = date => moment(date).format('MM/DD/YYYY');
 
   render(props) {
+    console.log("before render state", this.state)
     return (
       <div>
         <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login}/>
@@ -110,11 +112,11 @@ class Explore extends Component {
           <Container>
             <Header className='exploreHeader'>
               <span className='exploreProjectsSpan'>Explore Projects</span> {' '}
-              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilter()}/>
+              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilter}/>
             </Header>
             <h1 className='searchHeader'>
               <span className='searchBySpan'>Search by</span> {' '}
-              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilter()}/>
+              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilter}/>
             </h1>
           </Container>
         </Segment>
