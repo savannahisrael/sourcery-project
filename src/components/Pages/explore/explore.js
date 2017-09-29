@@ -30,15 +30,25 @@ const projectProgress = [
 class Explore extends Component {
 
   state = {
-    userID: {},
-    statusFilter: '',
-    techFilters: '',
+    userID: {
+      login: false,
+      user: {
+        github: {
+          login: '',
+          avatar_url: '',
+          name: ''
+        }
+      }
+    },
+    statusFilter: "",
+    techFilters: [],
     projects: []
   };
 
   // On page load, get all projects and send to this.state.projects
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
+    console.log("inside component did mount")
     axios.get('/api/projects').then((res) => {
       this.setState({ projects: res.data });
       console.log(res.data);
@@ -51,6 +61,7 @@ class Explore extends Component {
     }).catch(error => {
       console.log('Catching Error: ', error);
     });
+    console.log(this.state);
   }
 
   // handleStatusFilterChange = event => {
@@ -93,7 +104,7 @@ class Explore extends Component {
   render(props) {
     return (
       <div>
-        <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
+        <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login}/>
         <div className='exploreBackground'>
         <Segment textAlign='center' vertical className='exploreBanner'>
           <Container>

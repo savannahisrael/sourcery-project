@@ -1,6 +1,6 @@
 const axios = require('axios');
 const moment = require('moment');
-const key = process.env.HEROKU ? process.env.GITHUB_GRAPH_TOKEN : require('./config');
+const key = process.env.HEROKU ? process.env.GITHUB_GRAPH_TOKEN : require('../../../src/utils/config.js');
 
 const formatDate = date => moment(date).format('MM/DD/YYYY');
 

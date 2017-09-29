@@ -31,7 +31,16 @@ const projectOptions = [
 
 class CreateProjectForm extends Component {
   state = {
-    userID: {},
+    userID: {
+      login: false,
+      user: {
+        github: {
+          login: '',
+          avatar_url: '',
+          name: ''
+        }
+      }
+    },
     projectNameInput: '',
     startDateInput: '',
     projectDurationInput: '',
@@ -46,11 +55,11 @@ class CreateProjectForm extends Component {
     deployLinkInput: ''
   };
 
-
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     axios.get('/auth/checkLoggedIn').then((res) => {
       this.setState({ userID: res.data });
+      console.log("state:", this.state)
       console.log(res.data);
     }).catch((error) => {
       console.log('Catching Error: ', error);
@@ -146,11 +155,14 @@ class CreateProjectForm extends Component {
     }
   }
 
+  // this.props.match.params.username
+
   render(props) {
     const { value } = this.state
+    
     return (
       <div className='createBackground'>
-        <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
+        <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login}/>
         <Segment basic textAlign='center' vertical className='createBanner'>
           <Container>
             <Header className='createHeader'>
