@@ -150,7 +150,7 @@ class CreateProjectForm extends Component {
         deploy_link: this.state.deployLinkInput
       }).then((res) => {
         console.log(res.data);
-        window.location = `../${this.state.userID.cohort}/${this.state.userID.username}/app/${this.state.projectNameInput}`;
+        window.location = `../${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.projectNameInput}`;
       });
     }
   }
