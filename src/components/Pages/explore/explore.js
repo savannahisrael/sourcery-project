@@ -39,6 +39,7 @@ class Explore extends Component {
   // On page load, get all projects and send to this.state.projects
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
+    console.log("inside component did mount")
     axios.get('/api/projects').then((res) => {
       this.setState({ projects: res.data });
       console.log(res.data);
@@ -51,6 +52,7 @@ class Explore extends Component {
     }).catch((error) => {
       console.log('Catching Error: ', error);
     });
+    console.log(this.state);
   }
 
   handleStatusFilter = (event) => {

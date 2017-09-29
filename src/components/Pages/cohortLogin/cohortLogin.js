@@ -32,7 +32,7 @@ class CohortLogin extends Component {
       }
     }).then(res => {
       if (res.data.cohortExists) {
-        window.location = `../../${this.state.cohort}/${this.state.userID.user.github.login}/dashboard`;
+        window.location = '/auth/github';
       } else {
         console.log("Cohort code incorrect");
         const accessDenied = document.querySelector('.accessDenied');
