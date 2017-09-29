@@ -4,6 +4,7 @@ import './projectTiles.css';
 
 
 const Tile = (props) => (
+  {!props.cohort_id ?
   <div>
     <Card centered raised className='tileCard' link href={`/${props.cohort_id.code}/${props.owner_id.github.login}/app/${props.name}`}>
       <Card.Content className='tileHeader'>
@@ -42,6 +43,7 @@ const Tile = (props) => (
     </Card>
     <br/><br/>
   </div>
+  : ''}
 )
 
 export default Tile
