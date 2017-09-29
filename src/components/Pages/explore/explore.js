@@ -63,7 +63,6 @@ class Explore extends Component {
     console.log(this.state);
   }
 
-<<<<<<< HEAD
   handleStatusFilter = (e, {value}) => {
     this.setState({statusFilter:value})
   }
@@ -71,17 +70,6 @@ class Explore extends Component {
   handleTechFilter = (e, {value}) => {
     this.setState({techFilters:value})
   }
-=======
-  // handleStatusFilterChange = event => {
-  //   this.setState({ statusFilter: event.target.value });
-  //   console.log(event.target.value);
-  // }
-
-  // handleTechFilterChange = event => {
-  //   this.setState({ techFilters: event.target.value });
-  //   console.log(event.target.value);
-  // }
->>>>>>> 184a28398d6936f12d9c891be97f57f379674cbf
 
   // A helper method for rendering one Tile for each 1/3 project
   renderTiles = remainder => {
@@ -130,19 +118,11 @@ class Explore extends Component {
           <Container>
             <Header className='exploreHeader'>
               <span className='exploreProjectsSpan'>Explore Projects</span> {' '}
-<<<<<<< HEAD
-              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilter}/>
-            </Header>
-            <h1 className='searchHeader'>
-              <span className='searchBySpan'>Search by</span> {' '}
-              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilter}/>
-=======
               <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilterChange}/>
             </Header>
             <h1 className='searchHeader'>
               <span className='searchBySpan'>Search by</span> {' '}
               <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilterChange}/>
->>>>>>> 184a28398d6936f12d9c891be97f57f379674cbf
             </h1>
           </Container>
         </Segment>

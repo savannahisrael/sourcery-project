@@ -72,7 +72,7 @@ export default class navBar extends Component {
                 {/* <Menu.Item>
                   <Button color='teal' href='/create' >CREATE PROJECT</Button>
                 </Menu.Item> */}
-                {/* <Image src={this.props.userID.user.github.avatar_url}/> */}
+                <Image as='img' src={this.props.avatar} alt={`Logged in as ${this.props.username}`} className='navbarAvatar' inline shape='circular'/>
                 <Dropdown simple className='navIcon'>
                   <Dropdown.Menu className='navItem'>
                     <Dropdown.Item className='navFont'>Log Out</Dropdown.Item>
