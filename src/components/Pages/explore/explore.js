@@ -71,7 +71,7 @@ class Explore extends Component {
       return index % 3 === remainder;
     });
     return colArr.map(project => (
-      <Tile {...project} renderTechTags={this.renderTechTags} 
+      <Tile {...project} renderTechTags={this.renderTechTags}
       handleJoinButton={this.handleJoinButton} formatDate={this.formatDate}/>
     ));
   }
@@ -90,7 +90,7 @@ class Explore extends Component {
 
   formatDate = date => moment(date).format('MM/DD/YYYY');
 
-  render() {
+  render(props) {
     return (
       <div>
         <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>

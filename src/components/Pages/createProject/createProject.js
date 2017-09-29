@@ -141,7 +141,7 @@ class CreateProjectForm extends Component {
         deploy_link: this.state.deployLinkInput
       }).then((res) => {
         console.log(res.data);
-        window.location = `../${this.state.userID.cohort}/${this.state.userID.username}/app/${this.state.projectNameInput}`;
+        window.location = `../${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.projectNameInput}`;
       });
     }
   }
@@ -150,7 +150,7 @@ class CreateProjectForm extends Component {
     const { value } = this.state
     return (
       <div className='createBackground'>
-        <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login}/>
+        <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
         <Segment basic textAlign='center' vertical className='createBanner'>
           <Container>
             <Header className='createHeader'>
