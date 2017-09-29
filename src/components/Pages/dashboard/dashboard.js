@@ -60,7 +60,7 @@ class Dashboard extends Component {
         const curUser = this.state.userID.user.github.login;
         return p.members.find(m => m.github.login === curUser) || p.owner_id.github.login === curUser
       })
-      this.setState({ 
+      this.setState({
         pastProjects: userProjects.filter(p => p.status === 'completed'),
         activeProjects: userProjects.filter(p => p.status === 'proposal' || p.status === 'in-progress')
       });
@@ -87,7 +87,7 @@ class Dashboard extends Component {
 
   renderPanes = () => {
     return (
-      [{ menuItem: 'Active Projects', render: () => 
+      [{ menuItem: 'Active Projects', render: () =>
           <Tab.Pane className='tabPane' attached={false}>
             {this.state.activeProjects.length > 0 ?
             <Grid columns='equal'>
@@ -107,7 +107,7 @@ class Dashboard extends Component {
           </Tab.Pane>
 
       },
-      { menuItem: 'Past Projects', render: () =>      
+      { menuItem: 'Past Projects', render: () =>
         <Tab.Pane className='tabPane' attached={false}>
           {this.state.pastProjects.length > 0 ?
           <Grid columns='equal'>
@@ -132,7 +132,7 @@ class Dashboard extends Component {
   render(props) {
     return (
       <div>
-        <Navbar currentPage='dashboard' />
+        <Navbar currentPage='dashboard' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
         {/* <p>Cohort: {this.props.match.params.cohort}</p>
         <p>Username: {this.props.match.params.username}</p> */}
         <Segment textAlign='center' vertical className='dashboardBanner'>

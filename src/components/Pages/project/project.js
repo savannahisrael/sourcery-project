@@ -117,7 +117,7 @@ class Project extends Component {
       member.contributions = this.state.contributors.find(c => c.name === member.github.login )
       return member
     }).map(member => {
-      const cons = member.contributions ? 
+      const cons = member.contributions ?
       {
         c: member.contributions.commits,
         a: member.contributions.additions,
@@ -217,7 +217,7 @@ class Project extends Component {
   render(props) {
     return (
       <div className='projectBackground'>
-        <Navbar currentPage='project' />
+        <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
         <Segment textAlign='center' vertical className='projectBanner'>
           <Container text>
             <i className="devicon-angularjs-plain colored devIcon"></i>
@@ -334,7 +334,7 @@ class Project extends Component {
 
                 <Card.Group>
                   {this.renderPendingMembers()}
-                </Card.Group> 
+                </Card.Group>
 
                 <Segment className='projectSegment'>
                   <Header as='h3'>Team Members</Header>
