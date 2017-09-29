@@ -363,6 +363,59 @@ class Project extends Component {
           </Grid.Column>
         </Grid>
 
+
+        <Container>
+          <Grid>
+            <Grid.Row columns={3}>
+
+              <Grid.Column width={4}>
+                <Segment className='joinRequest'>
+                  <Button fluid className='projectJoin' link={this.state.deploy_link}>
+                    {this.renderButtonText()}
+                  </Button>
+                </Segment>
+
+                <Card.Group>
+                  {this.renderPendingMembers()}
+                </Card.Group>
+
+                <Segment className='projectSegment'>
+                  <Header as='h3'>Team Members</Header>
+                  <Divider/>
+                  {this.renderTeamMembers()}
+                </Segment>
+              </Grid.Column>
+
+              <Grid.Column width={8}>    
+
+              </Grid.Column>  
+
+              <Grid.Column width={4}>
+                <Segment className='pullRequest'>
+                  <Header as='h3'>Pull Requests</Header>
+                  {
+                    this.state.repo_link === '' ?
+                    'No Github Repository Connected.' :
+                    this.renderPRorIssue('pulls')
+                  }
+                </Segment>
+
+                <Segment className='pullRequest'>
+                  <Header as='h3'>Issues</Header>
+                  {
+                    this.state.repo_link === '' ?
+                    'No Github Repository Connected.' :
+                    this.renderPRorIssue('issues')
+                  }
+                </Segment>
+              </Grid.Column>
+
+            </Grid.Row>
+          </Grid>
+        </Container>
+
+
+
        </div>
     );
   }
