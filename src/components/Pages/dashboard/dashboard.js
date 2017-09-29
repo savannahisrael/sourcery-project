@@ -23,6 +23,7 @@ class Dashboard extends Component {
       },
       activeProjects: [
         {
+          tech_tags: [],
           members_wanted: 0,
           cohort_id: {
             code: ''
@@ -30,8 +31,7 @@ class Dashboard extends Component {
           owner_id: {
             github: {
               login: '',
-              avatar_url: '',
-
+              avatar_url: ''
             }
           },
           status: '',
@@ -46,6 +46,7 @@ class Dashboard extends Component {
       ],
       pastProjects: [
         {
+          tech_tags: [],
           members_wanted: 0,
           cohort_id: {
             code: ''
@@ -53,8 +54,7 @@ class Dashboard extends Component {
           owner_id: {
             github: {
               login: '',
-              avatar_url: '',
-
+              avatar_url: ''
             }
           },
           status: '',
@@ -70,7 +70,7 @@ class Dashboard extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.checkLoggedIn()
     .then(user => this.fetchProjects())
   }
