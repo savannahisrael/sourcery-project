@@ -36,18 +36,18 @@ class Dashboard extends Component {
       this.setState({ userID: res.data });
 
       // ------- Manual Auth Override
-      this.setState({
-        userID: {
-          login: true,
-          user: {
-            github: {
-              login: 'aarongaither',
-              avatar_url: 'https://avatars1.githubusercontent.com/u/16161706?v=4&s=400',
-              name: 'Aaron Gaither'
-            }
-          }
-        }
-      })
+      // this.setState({
+      //   userID: {
+      //     login: true,
+      //     user: {
+      //       github: {
+      //         login: 'aarongaither',
+      //         avatar_url: 'https://avatars1.githubusercontent.com/u/16161706?v=4&s=400',
+      //         name: 'Aaron Gaither'
+      //       }
+      //     }
+      //   }
+      // })
       return res.data;
     }).catch(error => {
       console.log('Catching Error while authing user: ', error);

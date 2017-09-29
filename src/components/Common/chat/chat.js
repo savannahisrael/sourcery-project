@@ -21,7 +21,7 @@ class InputExampleAction extends Component {
 	  if (this.state.chatInput.length) {
 	  	const newChat = {
 	  		body: this.state.chatInput,
-	  		author_id: '59c98010339e5c29743839e5', //this.props.user once using log-ins
+	  		author_id: this.props.user._id,
 	  		date: new Date(),
 	  		chat_type: this.props.chat_type
 	  	}
@@ -41,9 +41,9 @@ class InputExampleAction extends Component {
 	renderChatMessage = chat => {
 		return (
 			<Comment key={chat._id}>
-			  <Comment.Avatar src={chat.author_id.github.avatar_url} />
+			  <Comment.Avatar as='a' href={`https://github.com/${chat.author_id.github.login}`} src={chat.author_id.github.avatar_url} />
 			  <Comment.Content>
-			    <Comment.Author as='a' href={`/${this.props.cohort}/${chat.author_id.github.login}/profile`}>{chat.author_id.github.name}</Comment.Author>
+			    <Comment.Author as='a' href={`https://github.com/${chat.author_id.github.login}`}>{chat.author_id.github.name}</Comment.Author>
 			    <Comment.Metadata>
 			      <div>{formatDate(chat.date)}</div>
 			    </Comment.Metadata>
