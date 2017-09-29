@@ -39,61 +39,44 @@ class Explore extends Component {
   // On page load, get all projects and send to this.state.projects
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    axios.get('../api/projects').then((res) => {
+    axios.get('/api/projects').then((res) => {
       this.setState({ projects: res.data });
       console.log(res.data);
-    }).catch((error) => {
+    }).catch(error => {
       console.log('Catching Error: ', error);
     });
-    axios.get('../auth/checkLoggedIn').then((res) => {
+    axios.get('/auth/checkLoggedIn').then((res) => {
       this.setState({ userID: res.data });
       console.log(res.data);
-    }).catch((error) => {
+    }).catch(error => {
       console.log('Catching Error: ', error);
     });
   }
 
-  handleStatusFilter = (event) => {
+  handleStatusFilter = event => {
     // this.setState({ statusFilter: event.target.value });
     // console.log(this.state.statusFilter);
   }
 
-  handleTechFilter = (event) => {
+  handleTechFilter = event => {
     // this.setState({ techFilters: event.target.value });
     // console.log(this.state.techFilters);
   }
 
   // A helper method for rendering one Tile for each 1/3 project
-  renderTiles = (remainder) => {
-    let colArr = this.state.projects.filter((project) => {
+  renderTiles = remainder => {
+    let colArr = this.state.projects.filter(project => {
       return project.status !== 'deleted';
     }).filter((project, index) => {
       return index % 3 === remainder;
     });
     return colArr.map(project => (
-      <Tile
-        title={project.name}
-        summary={project.summary}
-        description={project.description}
-        tech_tags={project.tech_tags}
-        start_date={project.start_date}
-        duration={project.duration}
-        members_wanted={project.members_wanted}
-        google_drive_link={project.google_drive_link}
-        trello_link={project.trello_link}
-        repo_link={project.repo_link}
-        deploy_link={project.deploy_link}
-        status={project.status}
-        pending_members={project.pending_members}
-        members={project.members}
-        renderTechTags={this.renderTechTags}
-        handleJoinButton={this.handleJoinButton}
-        formatDate={this.formatDate}
-      />
+      <Tile {...project} renderTechTags={this.renderTechTags} 
+      handleJoinButton={this.handleJoinButton} formatDate={this.formatDate}/>
     ));
   }
 
-  renderTechTags = (tech_tags) => {
+  renderTechTags = tech_tags => {
     return tech_tags.map(tech_tag => (
       <Label className='tileTags'>
         {tech_tag}
@@ -105,11 +88,7 @@ class Explore extends Component {
 
   }
 
-  formatDate = (date) => {
-    return (
-      moment(date).format('MM/DD/YYYY')
-    )
-  }
+  formatDate = date => moment(date).format('MM/DD/YYYY');
 
   render() {
     return (
