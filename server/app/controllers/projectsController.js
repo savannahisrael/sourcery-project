@@ -185,12 +185,14 @@ module.exports = {
                         .populate('members')
                         .populate('chat.author_id')
                         .exec((err, data) => {
+                            console.log('Project data:', data)
                             res.json(data);
                         })
                 } else {
                     console.log("invalid cohort or user")
                 }
             })
+            .catch(err => console.log('Project data err:', err));
     },
     //Method to create new Project
     create: (req, res) => {
