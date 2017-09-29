@@ -30,7 +30,16 @@ const projectProgress = [
 class Explore extends Component {
 
   state = {
-    userID: {},
+    userID: {
+      login: false,
+      user: {
+        github: {
+          login: '',
+          avatar_url: '',
+          name: ''
+        }
+      }
+    },
     statusFilter: "",
     techFilters: [],
     projects: []
@@ -95,7 +104,7 @@ class Explore extends Component {
   render() {
     return (
       <div>
-        <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
+        <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login}/>
         <div className='exploreBackground'>
         <Segment textAlign='center' vertical className='exploreBanner'>
           <Container>
