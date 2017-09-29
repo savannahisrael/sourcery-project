@@ -5,7 +5,6 @@ import Chat from "../../Common/chat";
 import './project.css';
 import axios from 'axios';
 import moment from 'moment';
-import githubAPI from '../../../utils/github-API';
 import io from 'socket.io-client';
 
 const socket = io();
@@ -43,7 +42,7 @@ class Project extends Component {
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     this.fetchProjectData()
-    .then(repoLink => this.fetchGithubData(repoLink))
+    .then(repoLink => repoLink ? this.fetchGithubData(repoLink) : repoLink )
     .then(repoInfo => this.checkLoggedIn())
 
 
@@ -56,7 +55,7 @@ class Project extends Component {
 
   fetchProjectData = () => {
     return axios.get(`/api/projectData${this.props.location.pathname}`).then(res => {
-      console.log('Project data:',res.data[0]);
+      console.log('Project data:',res.data);
       this.setState({ ...res.data[0] });
       return res.data[0].repo_link
     }).catch(error => {
@@ -66,20 +65,11 @@ class Project extends Component {
   }
 
   fetchGithubData = repo => {
-    return githubAPI.repo(repo)
+    return axios.get('/api/github', {params: { repo }})
     .then(res => {
-      const {issues, pulls} = res;
-      console.log('github issues/pulls:', issues, pulls)
-      this.setState({issues, pulls })
-      return res;
-    })
-    .then(result => {
-       return repo ? githubAPI.repoContributors(repo) : [];
-    })
-    .then(res => {
-      console.log('github contributors:', res)
-      this.setState({contributors: res})
-      return res
+      const {issues, pulls, contributors} = res.data;
+      this.setState({issues, pulls, contributors})
+      return res.data;
     })
     .catch(err => console.log('Error in github pull:', err))
   }
@@ -135,14 +125,20 @@ class Project extends Component {
       } :
       {c: 0, a: 0, d: 0}
       return (
-        <Item.Group link href={`https://github.com/${member.github.login}`}>
-          <Item>
-            <Item.Image size='mini' src={member.github.avatar_url} shape='rounded'  />
+        <Item.Group>
+          <Icon link color='grey' className='projectRemove' fitted name='remove' size='large'/>
+          <Item link href={`https://github.com/${member.github.login}`}>
+            <Item.Image size='mini' src={member.github.avatar_url} shape='circular' />
             <Item.Content>
               <Item.Header>{member.github.name}</Item.Header>
               <Item.Meta>{`${cons.c} commits / ${cons.a} ++ / ${cons.d} --`}</Item.Meta>
             </Item.Content>
           </Item>
+          <Item.Content className='projectEject'>Are you sure you want to eject this team member?</Item.Content>
+          <div className='ui two buttons'>
+            <Button fluid basic color='red' >Yes, Eject</Button>
+            <Button fluid basic color='green' >No</Button>
+          </div>
           <Divider/>
         </Item.Group>
       )
@@ -161,7 +157,9 @@ class Project extends Component {
     return this.state.pending_members.map(pending_member => (
       <Card className='projectRequest'>
         <Card.Content>
-          <Image src={pending_member.github.avatar_url} shape='rounded' size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
+        <Header as='h3'>Pending Members</Header>
+        <Divider/>
+          <Image src={pending_member.github.avatar_url} shape='circular' size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
         </Card.Content>
         {this.state.priviledge === 'owner' ? <DecisionButtons /> : ''}
       </Card>
@@ -184,7 +182,7 @@ class Project extends Component {
       <Item.Group>
         <Divider/>
         <Item>
-          <Item.Image size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} shape='rounded'  />
+          <Item.Image size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} shape='circular'  />
           <Item.Content>
             <Item.Header as='a' href={item.url}>{item.title}</Item.Header>
             <Item.Meta>State: {item.state}</Item.Meta>
@@ -246,26 +244,40 @@ class Project extends Component {
               <Label attached='top'>{this.state.status}</Label>
 
               <Segment basic>
-                <Header as='h3'>Project Details</Header>
-                {this.renderTechTags()}<br/><br/>
+                <Header as='h3'>Project Details
+                  {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} className='projectIcons' name='github' size='large'/> : ''}
+                  {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} className='projectIcons' name='google' size='large' color='red'/> : ''}
+                  {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} className='projectIcons' name='trello' size='large' color='blue' /> : ''}
+                </Header>
                 <p>{this.state.description}</p>
-                <div floated='right'>
-                  {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} name='github' size='large' /> : ''}
-                  {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} name='google' size='large' /> : ''}
-                  {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} name='trello' size='large' /> : ''}
-                </div>
-                <Segment>
-                  <Header>{formatDate(this.state.start_date)}</Header>
-                  <p>Projected Start Date</p>
-                </Segment>
-                <Segment>
-                  <Header>{this.state.duration} weeks </Header>
-                  <p>Project Length</p>
-                </Segment>
-                <Segment>
-                  <Header>{this.state.members_wanted} members</Header>
-                  <p>Team Size</p>
-                </Segment>
+                {this.renderTechTags()}<br/><br/>
+                <Grid divided='vertically'>
+                  <Grid.Row columns={3}>
+                    <Grid.Column>
+                      <Segment>
+                        <Header>{formatDate(this.state.start_date)}</Header>
+                        <p>Projected Start Date</p>
+                      </Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Segment>
+                        <Header>{this.state.duration} weeks </Header>
+                        <p>Project Length</p>
+                      </Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Segment>
+                        <Header>{this.state.members_wanted} members</Header>
+                        <p>Team Size</p>
+                      </Segment>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                {/* {
+                      this.state.deploy_link !== '' ?
+                          <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
+                      : ''
+                    } */}
               </Segment>
 
               <Segment basic className='projectChat'>
@@ -298,9 +310,9 @@ class Project extends Component {
                       <Header as='h3'>Project Details</Header>
                       <p>{this.state.description}</p>
                       <div floated='right'>
-                        {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} name='github' size='large' /> : ''}
-                        {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} name='google' size='large' /> : ''}
-                        {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} name='trello' size='large' /> : ''}
+                        {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} name='github' size='big' /> : ''}
+                        {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} name='google' size='big' /> : ''}
+                        {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} name='trello' size='big' /> : ''}
                       </div>
                       <Card>
                         <Card.Content>

@@ -1,3 +1,1 @@
-module.exports={
-    'url':'mongodb://localhost/devCircle'
-}
+module.exports = {url: process.env.MONGODB_URI || 'mongodb://localhost/devCircle'}

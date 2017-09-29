@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Label, Icon, Container, Segment, Header, Image } from 'semantic-ui-react';
+import { Form, Label, Icon, Container, Segment, Header, Image, Dropdown } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import './createProject.css';
 import techSelection from '../../../utils/techTags.json';
@@ -12,6 +12,21 @@ const memberOptions = [
   { key: '4', text: '4', value: '4' },
   { key: '5', text: '5', value: '5' },
   { key: '6', text: '6', value: '6' }
+]
+
+const projectOptions = [
+  {
+    text: 'Proposed',
+    value: 'Proposed'
+  },
+  {
+    text: 'In Progress',
+    value: 'In Progress'
+  },
+  {
+    text: 'Completed',
+    value: 'Completed'
+  },
 ]
 
 class CreateProjectForm extends Component {
@@ -30,6 +45,7 @@ class CreateProjectForm extends Component {
     repoLinkInput: '',
     deployLinkInput: ''
   };
+
 
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
@@ -146,6 +162,7 @@ class CreateProjectForm extends Component {
           <Segment>
           <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
             <span className='asterisk'>*</span>
+            <Form.Select label='Project Status' options={projectOptions} onChange={this.handleMembersWantedChange}/>
             <Form.Input label='Project Name' onChange={this.handleprojectNameChange}/>
             <Form.Input label='Start Date' placeholder='MM/DD/YYYY' onChange={this.handleStartDateChange}/>
             <Form.Input label='Project Length' placeholder='in weeks' onChange={this.handleProjectDurationChange}/>
