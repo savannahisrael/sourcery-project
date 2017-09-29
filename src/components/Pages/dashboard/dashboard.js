@@ -21,8 +21,52 @@ class Dashboard extends Component {
           }
         }
       },
-      activeProjects: [],
-      pastProjects: []
+      activeProjects: [
+        {
+          tech_tags: [],
+          members_wanted: 0,
+          cohort_id: {
+            code: ''
+          },
+          owner_id: {
+            github: {
+              login: '',
+              avatar_url: ''
+            }
+          },
+          status: '',
+          members: [
+            {
+              github: {
+                login: ''
+              }
+            }
+          ]
+        }
+      ],
+      pastProjects: [
+        {
+          tech_tags: [],
+          members_wanted: 0,
+          cohort_id: {
+            code: ''
+          },
+          owner_id: {
+            github: {
+              login: '',
+              avatar_url: ''
+            }
+          },
+          status: '',
+          members: [
+            {
+              github: {
+                login: ''
+              }
+            }
+          ]
+        }
+      ]
     };
   }
 
@@ -58,7 +102,7 @@ class Dashboard extends Component {
     return axios.get('/api/projects').then(res => {
       const userProjects = res.data.filter(p => {
         const curUser = this.state.userID.user.github.login;
-        return p.members.find(m => m.github.login === curUser) || p.owner_id.github.login === curUser
+        return p.members.find(m => m.github.login === curUser || p.owner_id.github.login === curUser)
       })
       this.setState({
         pastProjects: userProjects.filter(p => p.status === 'completed'),

@@ -42,7 +42,32 @@ class Explore extends Component {
     },
     statusFilter: '',
     techFilters: [],
-    projects: []
+    projects: [
+      {
+        name: '',
+        start_date: '',
+        tech_tags: [],
+        members_wanted: 0,
+        duration: '',
+        cohort_id: {
+          code: ''
+        },
+        owner_id: {
+          github: {
+            login: '',
+            avatar_url: ''
+          }
+        },
+        status: '',
+        members: [
+          {
+            github: {
+              login: ''
+            }
+          }
+        ]
+      }
+    ]
   };
 
   // On page load, get all projects and send to this.state.projects
