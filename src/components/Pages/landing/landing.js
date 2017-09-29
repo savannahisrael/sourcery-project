@@ -126,7 +126,7 @@ export default class landingPage extends Component {
             <Grid.Row columns={3}>
               <Grid.Column className='iconSection'>
                   <Item>
-                    <Icon name='cubesç'className='landingIcon'/>                
+                    <Icon name='cubes'className='landingIcon'/>                
                     <Item.Header className='itemHeader' >Build</Item.Header><br/><br/>
                     <Item.Meta className='itemMeta'>Practice the basics to cutting edge development techniques. No matter what skill level, create projects or join projects you're interested in to gain hands-on experience.</Item.Meta>
                   </Item>
