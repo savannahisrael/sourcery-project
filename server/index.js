@@ -17,7 +17,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const flash = require('connect-flash');
-const githubAuth = require('./config/auth.js').github;
 
 //=============== DATABASE PACKAGES & CONFIG ===============//
 const mongoose = require('mongoose');
