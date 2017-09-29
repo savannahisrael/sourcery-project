@@ -55,7 +55,7 @@ class Project extends Component {
 
   fetchProjectData = () => {
     return axios.get(`/api/projectData${this.props.location.pathname}`).then(res => {
-      console.log('Project data:',res.data[0]);
+      console.log('Project data:',res.data);
       this.setState({ ...res.data[0] });
       return res.data[0].repo_link
     }).catch(error => {
