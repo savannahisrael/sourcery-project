@@ -94,7 +94,7 @@ class Explore extends Component {
   }
 
   renderTechTags = (tech_tags) => {
-    return tech_tags.map(tech_tag => (
+    return tech_tags.slice(0, 6).map(tech_tag => (
       <Label className='tileTags'>
         {tech_tag}
       </Label>
