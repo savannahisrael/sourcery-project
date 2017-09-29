@@ -64,15 +64,15 @@ class Explore extends Component {
     console.log(this.state);
   }
 
-  handleStatusFilter = event => {
-    // this.setState({ statusFilter: event.target.value });
-    // console.log(this.state.statusFilter);
-  }
+  // handleStatusFilterChange = event => {
+  //   this.setState({ statusFilter: event.target.value });
+  //   console.log(event.target.value);
+  // }
 
-  handleTechFilter = event => {
-    // this.setState({ techFilters: event.target.value });
-    // console.log(this.state.techFilters);
-  }
+  // handleTechFilterChange = event => {
+  //   this.setState({ techFilters: event.target.value });
+  //   console.log(event.target.value);
+  // }
 
   // A helper method for rendering one Tile for each 1/3 project
   renderTiles = remainder => {
@@ -110,11 +110,11 @@ class Explore extends Component {
           <Container>
             <Header className='exploreHeader'>
               <span className='exploreProjectsSpan'>Explore Projects</span> {' '}
-              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilter()}/>
+              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilterChange}/>
             </Header>
             <h1 className='searchHeader'>
               <span className='searchBySpan'>Search by</span> {' '}
-              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilter()}/>
+              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilterChange}/>
             </h1>
           </Container>
         </Segment>
