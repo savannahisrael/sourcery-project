@@ -16,7 +16,16 @@ class Project extends Component {
 
   state = {
     _id: '',
-    userID: {},
+    userID: {
+      login: false,
+      user: {
+        github: {
+          login: '',
+          avatar_url: '',
+          name: ''
+        }
+      }
+    },
     name: 'Loading',
     summary: 'Loading data...',
     description: 'Loading data...',
