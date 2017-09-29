@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Divider, Header, Label, Grid, Menu, Button, Icon, Segment, Input, Dropdown} from 'semantic-ui-react';
+import { Container, Divider, Header, Label, Grid, Menu, Button, Icon, Segment , Input, Dropdown} from 'semantic-ui-react';
 import contentContainer from '../../Common/contentContainer';
 import TileGrid from '../../Common/tileGrid';
 import Tile from '../../Common/projectTiles';
@@ -40,41 +40,15 @@ class Explore extends Component {
         }
       }
     },
-    statusFilter: '',
+    statusFilter: "Proposed",
     techFilters: [],
-    projects: [
-      {
-        name: '',
-        start_date: '',
-        tech_tags: [],
-        members_wanted: 0,
-        duration: '',
-        cohort_id: {
-          code: ''
-        },
-        owner_id: {
-          github: {
-            login: '',
-            avatar_url: ''
-          }
-        },
-        status: '',
-        members: [
-          {
-            github: {
-              login: ''
-            }
-          }
-        ]
-      }
-    ]
+    projects: []
   };
 
   // On page load, get all projects and send to this.state.projects
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    console.log("inside component did mount")
-    axios.get('/api/projects').then((res) => {
+     axios.get('/api/projects').then((res) => {
       this.setState({ projects: res.data });
       console.log(res.data);
     }).catch(error => {
@@ -89,22 +63,38 @@ class Explore extends Component {
     console.log(this.state);
   }
 
-  handleStatusFilterChange = event => {
-    this.setState({ statusFilter: event.target.value });
-    console.log('event.target.value: ', event.target.value);
-    console.log('this.state.statusFilter: ', this.state.statusFilter);
+  handleStatusFilter = (e, {value}) => {
+    this.setState({statusFilter:value})
   }
 
-  handleTechFilterChange = event => {
-    this.setState({ techFilters: event.target.value });
-    console.log('event.target.value: ', event.target.value);
-    console.log('this.state.techFilters: ', this.state.techFilters);
+  handleTechFilter = (e, {value}) => {
+    this.setState({techFilters:value})
+  }
+
+  compareArray = (searchArray, mainArray) =>{
+    let status = true;
+    searchArray.forEach(key=>{
+      if(-1 === mainArray.indexOf(key)){
+        status = false
+      }
+    }, this)
+    return status;
   }
 
   // A helper method for rendering one Tile for each 1/3 project
   renderTiles = remainder => {
+    let projectStatus = this.state.statusFilter;
+    switch(this.state.statusFilter){
+      case "Proposed": projectStatus = "proposal"
+        break;
+      case "in Progress": projectStatus = "in-progress"
+        break;
+      case "Completed": projectStatus = "completed"
+        break;
+      default: projectStatus = "proposal";
+    }
     let colArr = this.state.projects.filter(project => {
-      return project.status !== 'deleted';
+      return ((project.status == projectStatus) &&(this.compareArray(this.state.techFilters, project.tech_tags)))
     }).filter((project, index) => {
       return index % 3 === remainder;
     });
@@ -129,6 +119,7 @@ class Explore extends Component {
   formatDate = date => moment(date).format('MM/DD/YYYY');
 
   render(props) {
+    console.log("before render state", this.state)
     return (
       <div>
         <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
@@ -137,11 +128,11 @@ class Explore extends Component {
           <Container>
             <Header className='exploreHeader'>
               <span className='exploreProjectsSpan'>Explore Projects</span> {' '}
-              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilterChange}/>
+              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilter}/>
             </Header>
             <h1 className='searchHeader'>
               <span className='searchBySpan'>Search by</span> {' '}
-              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilterChange}/>
+              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilter}/>
             </h1>
           </Container>
         </Segment>
