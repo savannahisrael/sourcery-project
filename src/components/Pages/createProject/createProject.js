@@ -33,7 +33,7 @@ class CreateProjectForm extends Component {
 
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    axios.get('../auth/checkLoggedIn').then((res) => {
+    axios.get('/auth/checkLoggedIn').then((res) => {
       this.setState({ userID: res.data });
       console.log(res.data);
     }).catch((error) => {
@@ -110,7 +110,7 @@ class CreateProjectForm extends Component {
       }
     }
     else {
-      axios.post('../api/projectNew', {
+      axios.post('/api/projectNew', {
         name: this.state.projectNameInput,
         summary: this.state.projectSummaryInput,
         description: this.state.projectDetailsInput,
@@ -130,11 +130,11 @@ class CreateProjectForm extends Component {
     }
   }
 
-  render() {
+  render(props) {
     const { value } = this.state
     return (
       <div className='createBackground'>
-        <Navbar currentPage='create' />
+        <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
         <Segment basic textAlign='center' vertical className='createBanner'>
           <Container>
             <Header className='createHeader'>
