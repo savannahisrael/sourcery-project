@@ -132,7 +132,7 @@ class Dashboard extends Component {
   render(props) {
     return (
       <div>
-        <Navbar currentPage='dashboard' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login}/>
+        <Navbar currentPage='dashboard' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         {/* <p>Cohort: {this.props.match.params.cohort}</p>
         <p>Username: {this.props.match.params.username}</p> */}
         <Segment textAlign='center' vertical className='dashboardBanner'>

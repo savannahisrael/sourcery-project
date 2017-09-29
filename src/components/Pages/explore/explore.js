@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Divider, Header, Label, Grid, Menu, Button, Icon, Segment , Input, Dropdown} from 'semantic-ui-react';
+import { Container, Divider, Header, Label, Grid, Menu, Button, Icon, Segment, Input, Dropdown} from 'semantic-ui-react';
 import contentContainer from '../../Common/contentContainer';
 import TileGrid from '../../Common/tileGrid';
 import Tile from '../../Common/projectTiles';
@@ -40,7 +40,7 @@ class Explore extends Component {
         }
       }
     },
-    statusFilter: "",
+    statusFilter: '',
     techFilters: [],
     projects: []
   };
@@ -64,15 +64,17 @@ class Explore extends Component {
     console.log(this.state);
   }
 
-  // handleStatusFilterChange = event => {
-  //   this.setState({ statusFilter: event.target.value });
-  //   console.log(event.target.value);
-  // }
+  handleStatusFilterChange = event => {
+    this.setState({ statusFilter: event.target.value });
+    console.log('event.target.value: ', event.target.value);
+    console.log('this.state.statusFilter: ', this.state.statusFilter);
+  }
 
-  // handleTechFilterChange = event => {
-  //   this.setState({ techFilters: event.target.value });
-  //   console.log(event.target.value);
-  // }
+  handleTechFilterChange = event => {
+    this.setState({ techFilters: event.target.value });
+    console.log('event.target.value: ', event.target.value);
+    console.log('this.state.techFilters: ', this.state.techFilters);
+  }
 
   // A helper method for rendering one Tile for each 1/3 project
   renderTiles = remainder => {
@@ -104,7 +106,7 @@ class Explore extends Component {
   render(props) {
     return (
       <div>
-        <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login}/>
+        <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         <div className='exploreBackground'>
         <Segment textAlign='center' vertical className='exploreBanner'>
           <Container>
