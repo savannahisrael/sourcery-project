@@ -70,7 +70,7 @@ class Dashboard extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.checkLoggedIn()
     .then(user => this.fetchProjects())
   }
