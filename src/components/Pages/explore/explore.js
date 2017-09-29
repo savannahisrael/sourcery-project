@@ -30,7 +30,16 @@ const projectProgress = [
 class Explore extends Component {
 
   state = {
-    userID: {},
+    userID: {
+      login: false,
+      user: {
+        github: {
+          login: '',
+          avatar_url: '',
+          name: ''
+        }
+      }
+    },
     statusFilter: "",
     techFilters: [],
     projects: [
@@ -64,6 +73,7 @@ class Explore extends Component {
   // On page load, get all projects and send to this.state.projects
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
+    console.log("inside component did mount")
     axios.get('/api/projects').then((res) => {
       this.setState({ projects: res.data });
       console.log(res.data);
@@ -76,17 +86,18 @@ class Explore extends Component {
     }).catch(error => {
       console.log('Catching Error: ', error);
     });
+    console.log(this.state);
   }
 
-  handleStatusFilter = event => {
-    // this.setState({ statusFilter: event.target.value });
-    // console.log(this.state.statusFilter);
-  }
+  // handleStatusFilterChange = event => {
+  //   this.setState({ statusFilter: event.target.value });
+  //   console.log(event.target.value);
+  // }
 
-  handleTechFilter = event => {
-    // this.setState({ techFilters: event.target.value });
-    // console.log(this.state.techFilters);
-  }
+  // handleTechFilterChange = event => {
+  //   this.setState({ techFilters: event.target.value });
+  //   console.log(event.target.value);
+  // }
 
   // A helper method for rendering one Tile for each 1/3 project
   renderTiles = remainder => {
@@ -96,13 +107,13 @@ class Explore extends Component {
       return index % 3 === remainder;
     });
     return colArr.map(project => (
-      <Tile {...project} renderTechTags={this.renderTechTags} 
+      <Tile {...project} renderTechTags={this.renderTechTags}
       handleJoinButton={this.handleJoinButton} formatDate={this.formatDate}/>
     ));
   }
 
-  renderTechTags = tech_tags => {
-    return tech_tags.map(tech_tag => (
+  renderTechTags = (tech_tags) => {
+    return tech_tags.slice(0, 6).map(tech_tag => (
       <Label className='tileTags'>
         {tech_tag}
       </Label>
@@ -115,20 +126,20 @@ class Explore extends Component {
 
   formatDate = date => moment(date).format('MM/DD/YYYY');
 
-  render() {
+  render(props) {
     return (
       <div>
-        <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
+        <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login}/>
         <div className='exploreBackground'>
         <Segment textAlign='center' vertical className='exploreBanner'>
           <Container>
             <Header className='exploreHeader'>
               <span className='exploreProjectsSpan'>Explore Projects</span> {' '}
-              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilter()}/>
+              <Dropdown inline options={projectProgress} defaultValue={projectProgress[0].text} className='exploreDropdown' onChange={this.handleStatusFilterChange}/>
             </Header>
             <h1 className='searchHeader'>
               <span className='searchBySpan'>Search by</span> {' '}
-              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilter()}/>
+              <Dropdown inline multiple search selection options={techSelection} placeholder='All Technologies' className='searchDropdown' onChange={this.handleTechFilterChange}/>
             </h1>
           </Container>
         </Segment>

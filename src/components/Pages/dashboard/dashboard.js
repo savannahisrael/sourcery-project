@@ -121,7 +121,7 @@ class Dashboard extends Component {
     .map(project => <Tile {...project} renderTechTags={this.renderTechTags} formatDate={this.formatDate} />);
   }
 
-  renderTechTags = tech_tags => tech_tags.map(tech_tag => (
+  renderTechTags = tech_tags => tech_tags.slice(0, 6).map(tech_tag => (
     <Label className='tileTags'>
       {tech_tag}
     </Label>
@@ -176,7 +176,7 @@ class Dashboard extends Component {
   render(props) {
     return (
       <div>
-        <Navbar currentPage='dashboard' cohort={this.props.match.params.cohort} username={this.props.match.params.username}/>
+        <Navbar currentPage='dashboard' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login}/>
         {/* <p>Cohort: {this.props.match.params.cohort}</p>
         <p>Username: {this.props.match.params.username}</p> */}
         <Segment textAlign='center' vertical className='dashboardBanner'>
