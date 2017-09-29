@@ -135,14 +135,20 @@ class Project extends Component {
       } :
       {c: 0, a: 0, d: 0}
       return (
-        <Item.Group link href={`https://github.com/${member.github.login}`}>
-          <Item>
+        <Item.Group>
+          <Icon link color='grey' className='projectRemove' fitted name='remove' size='large'/>
+          <Item link href={`https://github.com/${member.github.login}`}>
             <Item.Image size='mini' src={member.github.avatar_url} shape='rounded'  />
             <Item.Content>
               <Item.Header>{member.github.name}</Item.Header>
               <Item.Meta>{`${cons.c} commits / ${cons.a} ++ / ${cons.d} --`}</Item.Meta>
             </Item.Content>
           </Item>
+          <Item.Content className='projectEject'>Are you sure you want to eject this team member?</Item.Content>
+          <div className='ui two buttons'>
+            <Button fluid basic color='red' >Yes, Eject</Button>
+            <Button fluid basic color='green' >No</Button>
+          </div>
           <Divider/>
         </Item.Group>
       )

@@ -78,3 +78,16 @@
   background-color: #fff !important;
   border-style: none !important;
 }
+
+.projectRemove {
+  float: right !important;
+
+}
+
+.projectRemove:hover {
+  color: red !important;
+}
+
+.projectEject {
+  margin-bottom: 5px !important; 
+}
