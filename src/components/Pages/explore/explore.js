@@ -64,21 +64,27 @@ class Explore extends Component {
   }
 
   handleStatusFilter = (e, {value}) => {
-    // this.setState({ statusFilter: event.target.value });
-    // console.log(this.state.statusFilter);
     this.setState({statusFilter:value})
   }
 
   handleTechFilter = (e, {value}) => {
-    // this.setState({ techFilters: event.target.value });
-    // console.log(this.state.techFilters);
     this.setState({techFilters:value})
   }
 
   // A helper method for rendering one Tile for each 1/3 project
   renderTiles = remainder => {
+    let projectStatus = this.state.statusFilter;
+    switch(this.state.statusFilter){
+      case "Proposed": projectStatus = "proposal"
+        break;
+      case "in Progress": projectStatus = "in-progress"
+        break;
+      case "Completed": projectStatus = "completed"
+        break;
+      default: projectStatus = "proposal";
+    }
     let colArr = this.state.projects.filter(project => {
-      return project.status !== 'deleted';
+      return project.status == projectStatus;
     }).filter((project, index) => {
       return index % 3 === remainder;
     });
