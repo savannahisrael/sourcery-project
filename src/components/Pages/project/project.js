@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Tab, Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, Item, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import Chat from "../../Common/chat";
+import MemberBlock from "./MemberBlock";
 import './project.css';
 import axios from 'axios';
 import moment from 'moment';
@@ -15,7 +16,16 @@ class Project extends Component {
 
   state = {
     _id: '',
-    userID: {},
+    userID: {
+      login: false,
+      user: {
+        github: {
+          login: '',
+          avatar_url: '',
+          name: ''
+        }
+      }
+    },
     name: 'Loading',
     summary: 'Loading data...',
     description: 'Loading data...',
@@ -115,34 +125,19 @@ class Project extends Component {
   renderTeamMembers = () => {
     return this.state.members.map(member => {
       member.contributions = this.state.contributors.find(c => c.name === member.github.login )
-      return member
-    }).map(member => {
-      const cons = member.contributions ?
-      {
-        c: member.contributions.commits,
-        a: member.contributions.additions,
-        d: member.contributions.deletions
-      } :
-      {c: 0, a: 0, d: 0}
+      if (!member.contributions) {
+        {
+          member.contributions = {
+              commits: 0,
+              additions: 0,
+              deletions: 0
+          }
+        }
+      }
       return (
-        <Item.Group>
-          <Icon link color='grey' className='projectRemove' fitted name='remove' size='large'/>
-          <Item link href={`https://github.com/${member.github.login}`}>
-            <Item.Image size='mini' src={member.github.avatar_url} shape='circular' />
-            <Item.Content>
-              <Item.Header>{member.github.name}</Item.Header>
-              <Item.Meta>{`${cons.c} commits / ${cons.a} ++ / ${cons.d} --`}</Item.Meta>
-            </Item.Content>
-          </Item>
-          <Item.Content className='projectEject'>Are you sure you want to eject this team member?</Item.Content>
-          <div className='ui two buttons'>
-            <Button fluid basic color='red' >Yes, Eject</Button>
-            <Button fluid basic color='green' >No</Button>
-          </div>
-          <Divider/>
-        </Item.Group>
+        <MemberBlock {...member}/>
       )
-    });
+    })
   }
 
   renderPendingMembers = () => {
@@ -367,6 +362,59 @@ class Project extends Component {
             </Segment>
           </Grid.Column>
         </Grid>
+
+
+        <Container>
+          <Grid>
+            <Grid.Row columns={3}>
+
+              <Grid.Column width={4}>
+                <Segment className='joinRequest'>
+                  <Button fluid className='projectJoin' link={this.state.deploy_link}>
+                    {this.renderButtonText()}
+                  </Button>
+                </Segment>
+
+                <Card.Group>
+                  {this.renderPendingMembers()}
+                </Card.Group>
+
+                <Segment className='projectSegment'>
+                  <Header as='h3'>Team Members</Header>
+                  <Divider/>
+                  {this.renderTeamMembers()}
+                </Segment>
+              </Grid.Column>
+
+              <Grid.Column width={8}>    
+
+              </Grid.Column>  
+
+              <Grid.Column width={4}>
+                <Segment className='pullRequest'>
+                  <Header as='h3'>Pull Requests</Header>
+                  {
+                    this.state.repo_link === '' ?
+                    'No Github Repository Connected.' :
+                    this.renderPRorIssue('pulls')
+                  }
+                </Segment>
+
+                <Segment className='pullRequest'>
+                  <Header as='h3'>Issues</Header>
+                  {
+                    this.state.repo_link === '' ?
+                    'No Github Repository Connected.' :
+                    this.renderPRorIssue('issues')
+                  }
+                </Segment>
+              </Grid.Column>
+
+            </Grid.Row>
+          </Grid>
+        </Container>
+
+
 
        </div>
     );
