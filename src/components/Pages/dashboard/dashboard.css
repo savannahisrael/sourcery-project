@@ -24,9 +24,22 @@
 
 .tabPane {
   margin-top: 37px !important;
-  background-color: #f4f7f9 !important;  
+  background-color: #f4f7f9 !important;
+  border-style: none !important;
+  box-shadow: none !important;  
 }
 
 .dashboardBackground {
   background-color: #f4f7f9 !important;
 }
+
+.dashboardEmptyStateHeader {
+  font-size: 2em !important;
+  font-weight: 400 !important;
+}
+
+.dashboardEmptyStateText {
+  font-size: 1.25em !important;
+  font-weight: 300 !important;
+}
+

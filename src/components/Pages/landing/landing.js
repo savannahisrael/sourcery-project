@@ -142,7 +142,7 @@ export default class landingPage extends Component {
                   <Item>
                     <Icon name='users' className='landingIcon'/>            
                     <Item.Header className='itemHeader'>Connect</Item.Header><br/><br/>
-                    <Item.Meta className='itemMeta'>Stay in touch with you peers from your boot camp. All members of your cohort are given access to the system where they can continue working together and collaborating on projects and technologies that interest them.</Item.Meta>
+                    <Item.Meta className='itemMeta'>Stay in touch with your peers from boot camp. All members of your cohort are given access to the system where they can continue working together and collaborating on projects and technologies that interest them.</Item.Meta>
                   </Item>
               </Grid.Column>
             </Grid.Row>
