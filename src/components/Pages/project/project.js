@@ -53,8 +53,7 @@ class Project extends Component {
   componentDidMount() {
     this.fetchProjectData()
     .then(repoLink => repoLink ? this.fetchGithubData(repoLink) : repoLink )
-    .then(repoInfo => this.checkLoggedIn())
-
+    .then(repoInfo => this.checkLoggedIn());
 
     socket.on('refreshMsg', data => {
      console.log("Refresh Msg Requested:", data);

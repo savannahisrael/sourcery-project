@@ -184,7 +184,7 @@ module.exports = {
                             name:req.params.project
                         })
                         .populate('owner_id')
-                        .populate('cohort_id')
+                        .populate('cohort_id', "name code isActive")
                         .populate('pending_members')
                         .populate('members')
                         .populate('chat.author_id')
