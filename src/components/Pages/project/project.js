@@ -248,6 +248,62 @@ class Project extends Component {
     this.fetchProjectData();
   }
 
+  // renderDevIcons = () => {
+  //   switch (this.state.primary_language) {
+  //     case 'javascript':
+  //       return (
+  //         <i class="devicon-javascript-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'python':
+  //       return (
+  //         <i class="devicon-python-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'c#':
+  //       return (
+  //         <i class="devicon-csharp-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'c++':
+  //       return (
+  //         <i class="devicon-cplusplus-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'php':
+  //       return (
+  //         <i class="devicon-php-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'go':
+  //       return (
+  //         <i class="devicon-go-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'swift':
+  //       return (
+  //         <i class="devicon-swift-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'java':
+  //       return (
+  //         <i class="devicon-java-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'ruby':
+  //       return (
+  //         <i class="devicon-ruby-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'html+css':
+  //       return (
+  //         <i class="devicon-html5-plain colored"></i>
+  //       )
+  //     break;
+  //     default:
+  //       // Do nothing
+  //   }
+  // }
   render(props) {
     console.log("this is the state before the render:", this.state);
     return (
@@ -255,6 +311,7 @@ class Project extends Component {
         <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         <Segment textAlign='center' vertical basic className='projectBanner'>
           <Container textAlign='center' vertical>
+            {/* {this.renderDevIcons} */}
             <Header as='h1' className='projectTitle'>
             {this.state.name}
             </Header>
