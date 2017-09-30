@@ -415,7 +415,6 @@ class Project extends Component {
         </Container>
 
 
-
        </div>
     );
   }
