@@ -42,7 +42,8 @@ class Explore extends Component {
     },
     statusFilter: "Proposed",
     techFilters: [],
-    projects: []
+    projects: [],
+    activities: []
   };
 
   // On page load, get all projects and send to this.state.projects
@@ -57,6 +58,12 @@ class Explore extends Component {
     axios.get('/auth/checkLoggedIn').then((res) => {
       this.setState({ userID: res.data });
       console.log(res.data);
+    }).catch(error => {
+      console.log('Catching Error: ', error);
+    });
+    axios.get('/api/activityfeed').then((res) => {
+      this.setState({ activities: res.data });
+      console.log('activities data: ', res.data);
     }).catch(error => {
       console.log('Catching Error: ', error);
     });
@@ -94,7 +101,7 @@ class Explore extends Component {
       default: projectStatus = "proposal";
     }
     let colArr = this.state.projects.filter(project => {
-      return ((project.status == projectStatus) &&(this.compareArray(this.state.techFilters, project.tech_tags)))
+      return ((project.status === projectStatus) &&(this.compareArray(this.state.techFilters, project.tech_tags)))
     }).filter((project, index) => {
       return index % 3 === remainder;
     });
@@ -116,6 +123,67 @@ class Explore extends Component {
 
   }
 
+  renderActivityJoinCohort = () => {
+    return this.state.activities.map(activity => (
+      <Feed.Event>
+        <Feed.Label image={activity.user_id.github.avatar_url} />
+        <Feed.Content>
+          <Feed.Summary>
+            {activity.user_id.github.name} joined the cohort.
+          </Feed.Summary>
+        </Feed.Content>
+      </Feed.Event>
+    ));
+  }
+
+  renderActivityJoinProject = () => {
+    return this.state.activities.map(activity => (
+      <Feed.Event>
+        <Feed.Label image={activity.user_id.github.avatar_url} />
+        <Feed.Content>
+          <Feed.Summary>
+            {activity.user_id.github.name} joined {activity.project_id.name}.
+          </Feed.Summary>
+        </Feed.Content>
+      </Feed.Event>
+    ));
+  }
+
+  renderActivityCreateProject = () => {
+    return this.state.activities.map(activity => (
+      <Feed.Event>
+        <Feed.Label image={activity.user_id.github.avatar_url} />
+        <Feed.Content>
+          <Feed.Summary>
+            {activity.user_id.github.name} joined {activity.project_id.name}.
+          </Feed.Summary>
+        </Feed.Content>
+      </Feed.Event>
+    ));
+  }
+
+  // renderAllActivity = () => {
+  //   return this.state.activities.map(activity => {
+  //     switch (activityType) {
+  //       case value1:
+  //         //Statements executed when the result of expression matches value1
+  //       break;
+  //       case value2:
+  //         //Statements executed when the result of expression matches value2
+  //       break;
+  //       case valueN:
+  //         //Statements executed when the result of expression matches valueN
+  //       break;
+  //       default:
+  //         //Statements executed when none of the values match the value of the expression
+  //       break;
+  //     }
+  //
+  //   })
+  // }
+
+
+
   formatDate = date => moment(date).format('MM/DD/YYYY');
 
   render(props) {
@@ -124,8 +192,9 @@ class Explore extends Component {
       <div className='exploreBackground'>
         <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         <div>
-          <Grid columns={2}>
-            <Grid.Row> 
+          <Segment basic className='exploreNavBuffer'></Segment>
+          <Grid columns={4}>
+            <Grid.Row>
 
               <Grid.Column width={1}>
               </Grid.Column>
@@ -134,17 +203,9 @@ class Explore extends Component {
                 <Segment className='exploreactivityFeed'>
                   <Header as='h3'>Activity Feed</Header>
                   <Divider/>
-                        <Feed>
-                          <Feed.Event>
-                            <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
-                            <Feed.Content>
-                              <Feed.Date content='1 day ago' />
-                              <Feed.Summary>
-                                Bryce Miller joined project devCircle.
-                              </Feed.Summary>
-                            </Feed.Content>
-                          </Feed.Event>
-                        </Feed>
+                  <Feed>
+                    {this.renderActivityJoinCohort()}
+                  </Feed>
                 </Segment>
               </Grid.Column>
 
@@ -189,4 +250,3 @@ class Explore extends Component {
 }
 
 export default Explore;
-

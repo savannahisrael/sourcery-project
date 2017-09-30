@@ -20,7 +20,7 @@ socket.on('connect', () => console.log('Socket connected.'));
 //function checking github auth
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    true ? (
+    axios.get('/auth/checkLoggedIn').then(res=>  console.log(res.data.login)) ? (
       <Component {...props}/>
     ) : (
       <Redirect to={{
@@ -30,8 +30,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     )
   )}/>
 )
-
-axios.get('/auth/checkLoggedIn').then(res=>  console.log(res.data.login))
 
 const App = () =>
   <Router>
