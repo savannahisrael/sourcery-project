@@ -123,66 +123,89 @@ class Explore extends Component {
 
   }
 
-  renderActivityJoinCohort = () => {
-    return this.state.activities.map(activity => (
-      <Feed.Event>
-        <Feed.Label image={activity.user_id.github.avatar_url} />
-        <Feed.Content>
-          <Feed.Summary>
-            {activity.user_id.github.name} joined the cohort.
-          </Feed.Summary>
-        </Feed.Content>
-      </Feed.Event>
-    ));
+  renderActivityJoinCohort = (activity) => (
+    <Feed.Event>
+      <Feed.Label className='activityFeedImage' image={activity.user_id.github.avatar_url} />
+      <Feed.Content>
+        <Feed.Summary>
+          {activity.user_id.github.name} joined the cohort.
+        </Feed.Summary>
+        <Divider/>
+      </Feed.Content>
+    </Feed.Event>
+  )
+
+  renderActivityJoinProject = (activity) => (
+    <Feed.Event>
+      <Feed.Label className='activityFeedImage' image={activity.user_id.github.avatar_url} />
+      <Feed.Content>
+        <Feed.Summary>
+          {activity.user_id.github.name} joined {activity.project_id.name}.
+        </Feed.Summary>
+        <Divider/>
+      </Feed.Content>
+    </Feed.Event>
+  )
+
+  renderActivityCreateProject = (activity) => (
+    <Feed.Event>
+      <Feed.Label className='activityFeedImage' image={activity.user_id.github.avatar_url} />
+      <Feed.Content>
+        <Feed.Summary>
+          {activity.user_id.github.name} created {activity.project_id.name}.
+        </Feed.Summary>
+        <Divider/>
+      </Feed.Content>
+    </Feed.Event>
+  )
+
+  renderActivityInProgressProject = (activity) => (
+    <Feed.Event>
+      <Feed.Label className='activityFeedImage' image={activity.user_id.github.avatar_url} />
+      <Feed.Content>
+        <Feed.Summary>
+          {activity.user_id.github.name} changed status of {activity.project_id.name} to 'in-progress'.
+        </Feed.Summary>
+        <Divider/>
+      </Feed.Content>
+    </Feed.Event>
+  )
+
+  renderActivityCompletedProject = (activity) => (
+    <Feed.Event>
+      <Feed.Label className='activityFeedImage' image={activity.user_id.github.avatar_url} />
+      <Feed.Content>
+        <Feed.Summary>
+          {activity.user_id.github.name} changed status of {activity.project_id.name} to 'completed'.
+        </Feed.Summary>
+        <Divider/>
+      </Feed.Content>
+    </Feed.Event>
+  )
+
+  renderAllActivity = () => {
+    return this.state.activities.slice(0, 10).map(activity => {
+      switch (activity.event) {
+        case 'proposal':
+          return this.renderActivityCreateProject(activity)
+        break;
+        case 'in-progress':
+          return this.renderActivityInProgressProject(activity)
+        break;
+        case 'completed':
+          return this.renderActivityCompletedProject(activity)
+        break;
+        case 'member joined cohort':
+          return this.renderActivityJoinCohort(activity)
+        break;
+        case 'member joined project':
+          return this.renderActivityJoinProject(activity)
+        break;
+        default:
+          // Do nothing
+      }
+    });
   }
-
-  renderActivityJoinProject = () => {
-    return this.state.activities.map(activity => (
-      <Feed.Event>
-        <Feed.Label image={activity.user_id.github.avatar_url} />
-        <Feed.Content>
-          <Feed.Summary>
-            {activity.user_id.github.name} joined {activity.project_id.name}.
-          </Feed.Summary>
-        </Feed.Content>
-      </Feed.Event>
-    ));
-  }
-
-  renderActivityCreateProject = () => {
-    return this.state.activities.map(activity => (
-      <Feed.Event>
-        <Feed.Label image={activity.user_id.github.avatar_url} />
-        <Feed.Content>
-          <Feed.Summary>
-            {activity.user_id.github.name} joined {activity.project_id.name}.
-          </Feed.Summary>
-        </Feed.Content>
-      </Feed.Event>
-    ));
-  }
-
-  // renderAllActivity = () => {
-  //   return this.state.activities.map(activity => {
-  //     switch (activityType) {
-  //       case value1:
-  //         //Statements executed when the result of expression matches value1
-  //       break;
-  //       case value2:
-  //         //Statements executed when the result of expression matches value2
-  //       break;
-  //       case valueN:
-  //         //Statements executed when the result of expression matches valueN
-  //       break;
-  //       default:
-  //         //Statements executed when none of the values match the value of the expression
-  //       break;
-  //     }
-  //
-  //   })
-  // }
-
-
 
   formatDate = date => moment(date).format('MM/DD/YYYY');
 
@@ -204,7 +227,7 @@ class Explore extends Component {
                   <Header as='h3'>Activity Feed</Header>
                   <Divider/>
                   <Feed>
-                    {this.renderActivityJoinCohort()}
+                    {this.renderAllActivity()}
                   </Feed>
                 </Segment>
               </Grid.Column>

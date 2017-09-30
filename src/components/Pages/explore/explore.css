@@ -23,6 +23,12 @@
   /*display: inline !important;*/
 }
 
+.activityFeedImage {
+  height: 30px !important;
+  width: 30px !important;
+  margin-top: 5px !important;
+}
+
 .searchHeader {
   /*font-size: 0.5em !important;*/
   /*font-weight: 300 !important;*/
@@ -75,6 +81,6 @@ a.ui.label {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important;
   border-radius: 1px !important;
   margin-top: 75px !important;
-  min-height: 600px !important;
+  min-height: 800px !important;
   margin-bottom: 75px !important;
 }
