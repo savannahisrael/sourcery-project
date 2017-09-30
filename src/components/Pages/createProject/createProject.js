@@ -226,4 +226,4 @@ class CreateProjectForm extends Component {
   }
 }
 
-export default CreateProjectForm
+export default CreateProjectForm;
