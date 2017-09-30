@@ -50,15 +50,15 @@ const languageOptions = [
 const statusOptions = [
   {
     text: 'Proposed',
-    value: 'Proposed'
+    value: 'proposal'
   },
   {
     text: 'In Progress',
-    value: 'In Progress'
+    value: 'in-progress'
   },
   {
     text: 'Completed',
-    value: 'Completed'
+    value: 'completed'
   }
 ]
 
@@ -86,7 +86,7 @@ class CreateProjectForm extends Component {
       trello_link: '',
       repo_link: '',
       deploy_link: '',
-      status: ''
+      status: 'proposal'
     }
   };
 
@@ -102,23 +102,48 @@ class CreateProjectForm extends Component {
   }
 
   handleMainTechnologyChange = (e, {value}) => {
-    this.setState({ primary_language: value});
+    this.setState({
+      project: {
+        ...this.state.project,
+        primary_language: value
+      }
+    });
   }
 
   handleOtherTechnologiesChange = (e, {value}) => {
-    this.setState({ tech_tags: value });
+    this.setState({
+      project: { 
+        ...this.state.project,
+        tech_tags: value 
+      }
+    });
   }
 
   handleMembersWantedChange = (e, {value}) => {
-    this.setState({ members_wanted: value });
+    this.setState({
+      project: {
+        ...this.state.project,
+        members_wanted: value 
+      }
+    });
   }
 
   handleStatusChange = (e, {value}) => {
-    this.setState({ status: value });
+    this.setState({ 
+      project: {
+        ...this.state.project,
+        status: value
+      }
+    });
   }
 
   handleInputChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ 
+      project: {
+        ...this.state.project,
+        [event.target.name]: event.target.value
+      }
+    });
   }
 
   handleSubmitButton = event => {
@@ -127,14 +152,14 @@ class CreateProjectForm extends Component {
     const warning = document.querySelector('.warning');
     const asterisk = document.getElementsByClassName('asterisk');
     warning.style.display = 'none';
-    if (this.state.projectNameInput === '' || this.state.mainTechnologyInput === '' || this.state.membersWantedInput === '') {
-      warning.innerHTML = '*Please complete all required fields';
-      warning.style.display = 'block';
-      // for (let i = 0; i < asterisk.length; i++) {
-      //   asterisk[i].style.display = 'block';
-      // }
-    }
-    else if (this.state.projectNameInput.search(regex) === -1) {
+    // if (this.state.project.name === '' || this.state.project.primary_language === '' || this.state.membersWantedInput === '') {
+    //   warning.innerHTML = '*Please complete all required fields';
+    //   warning.style.display = 'block';
+    //   // for (let i = 0; i < asterisk.length; i++) {
+    //   //   asterisk[i].style.display = 'block';
+    //   // }
+    // }
+    if (this.state.project.name.search(regex) === -1) {
       warning.innerHTML = '*Project title may only contain letters, numbers, dashes, and underscores';
       warning.style.display = 'block';
       // for (let i = 0; i < asterisk.length; i++) {
@@ -142,22 +167,10 @@ class CreateProjectForm extends Component {
       // }
     }
     else {
-      axios.post('/api/projectNew', {
-        name: this.state.projectNameInput,
-        summary: this.state.projectSummaryInput,
-        description: this.state.projectDetailsInput,
-        primary_language: this.state.mainTechnologyInput,
-        tech_tags: this.state.otherTechnologiesInput,
-        start_date: this.state.startDateInput,
-        duration: this.state.projectDurationInput,
-        members_wanted: this.state.membersWantedInput,
-        google_drive_link: this.state.googleLinkInput,
-        trello_link: this.state.trelloLinkInput,
-        repo_link: this.state.repoLinkInput,
-        deploy_link: this.state.deployLinkInput
-      }).then((res) => {
+      axios.post('/api/projectNew', this.state.project)
+      .then(res => {
         console.log(res.data);
-        window.location = `../${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.projectNameInput}`;
+        window.location = `../${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.name}`;
       });
     }
   }
