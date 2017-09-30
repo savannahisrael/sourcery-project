@@ -95,3 +95,7 @@
 .projectIcons {
   float: right !important;
 }
+
+.projectStat {
+  margin-bottom: -20px !important;
+}

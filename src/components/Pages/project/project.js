@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tab, Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, Item, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
+import { Tab, Label, Container, Image, Header, Segment, Grid, Divider, Button, Item, Icon, Card } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import Chat from "../../Common/chat";
 import MemberBlock from "./MemberBlock";
@@ -269,30 +269,24 @@ class Project extends Component {
                     <Grid divided='vertically'>
                       <Grid.Row columns={3}>
                         <Grid.Column>
-                          <Segment>
+                            <p className='projectStat'>Start Date</p>
                             <Header>{formatDate(this.state.start_date)}</Header>
-                            <p>Projected Start Date</p>
-                          </Segment>
                         </Grid.Column>
                         <Grid.Column>
-                          <Segment>
+                            <p className='projectStat'>Project Length</p>
                             <Header>{this.state.duration} weeks </Header>
-                            <p>Project Length</p>
-                          </Segment>
                         </Grid.Column>
                         <Grid.Column>
-                          <Segment>
+                            <p className='projectStat'>Team Size</p>
                             <Header>{this.state.members_wanted} members</Header>
-                            <p>Team Size</p>
-                          </Segment>
                         </Grid.Column>
                       </Grid.Row>
                     </Grid>
-                    {/* {
+                    {
                           this.state.deploy_link !== '' ?
                               <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
                           : ''
-                        } */}
+                        }
                   </Segment>
                   <Segment basic className='projectChat'>
                     <Tab menu={{ secondary: true, pointing: true }} panes={this.panes()}/>

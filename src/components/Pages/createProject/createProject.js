@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Label, Icon, Container, Segment, Header, Image, Dropdown } from 'semantic-ui-react';
+import { Form, Container, Segment, Header} from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import './createProject.css';
 import techSelection from '../../../utils/techTags.json';
