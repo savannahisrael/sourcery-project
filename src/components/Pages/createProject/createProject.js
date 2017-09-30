@@ -82,8 +82,8 @@ class CreateProjectForm extends Component {
     this.setState({ projectSummaryInput: event.target.value });
   }
 
-  handleMainTechnologyChange = (event) => {
-    this.setState({ mainTechnologyInput: event.target.value });
+  handleMainTechnologyChange = (e, {value}) => {
+    this.setState({ mainTechnologyInput: value});
   }
 
   handleOtherTechnologiesChange = (event) => {
@@ -159,6 +159,7 @@ class CreateProjectForm extends Component {
 
   render(props) {
     const { value } = this.state
+    console.log("this is state before the render", this.state);
 
     return (
       <div className='createBackground'>
