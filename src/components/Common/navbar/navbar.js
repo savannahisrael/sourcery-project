@@ -44,6 +44,8 @@ export default class navBar extends Component {
 
   unStickTopMenu = () => this.setState({ menuFixed: false })
 
+  handleLogout = () => window.location = '/auth/logout'
+
   render (props) {
     const { menuFixed } = this.state
     const { activeItem } = this.state
@@ -75,7 +77,7 @@ export default class navBar extends Component {
                 <Image as='img' src={this.props.avatar} alt={`Logged in as ${this.props.username}`} className='navbarAvatar' inline shape='circular'/>
                 <Dropdown simple className='navIcon'>
                   <Dropdown.Menu className='navItem'>
-                    <Dropdown.Item className='navFont'>Log Out</Dropdown.Item>
+                    <Dropdown.Item className='navFont' onClick={this.handleLogout}>Log Out</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </Menu.Menu>

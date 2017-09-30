@@ -23,13 +23,14 @@ class MemberBlock extends Component {
   render() {
     return (
       <Item.Group>
-        <Icon link color='grey' className='projectRemove' 
+        <Icon link color='grey' className='projectRemove'
         fitted name='remove' size='large' onClick={this.handleXClick} />
           <Item link href={`https://github.com/${this.props.github.login}`}>
           <Item.Image size='mini' src={this.props.github.avatar_url} shape='circular' />
           <Item.Content>
             <Item.Header>{this.props.github.name}</Item.Header>
-            <Item.Meta>{`${this.props.contributions.commits} commits / ${this.props.contributions.additions} ++ / ${this.props.contributions.deletions} --`}</Item.Meta>
+            <Item.Meta>{`${this.props.contributions.commits} commits`}</Item.Meta>
+            <Item.Meta>{`${this.props.contributions.additions} ++ / ${this.props.contributions.deletions} --`}</Item.Meta>
           </Item.Content>
         </Item>
         {this.state.eject ?
