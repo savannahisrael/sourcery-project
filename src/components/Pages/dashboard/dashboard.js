@@ -147,7 +147,14 @@ class Dashboard extends Component {
                 </Grid.Column>
               </Grid.Row>
             </Grid> :
-            'No Active Projects To Display.'}
+            <div>
+              <p className='dashboardEmptyStateHeader'>
+              No projects yet!
+              </p>
+              <p className='dashboardEmptyStateText'>
+              Join or create your own project to get started. 
+            </p> 
+            </div>}
           </Tab.Pane>
 
       },
@@ -167,7 +174,14 @@ class Dashboard extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid> :
-          'No Completed Projects To Display.'}
+          <div>
+            <p className='dashboardEmptyStateHeader'>
+            No projects yet!
+            </p>
+            <p className='dashboardEmptyStateText'>
+            Keep up the good work and check back when you've completed your first project. 
+          </p> 
+          </div>}
         </Tab.Pane>
       }
     ])
