@@ -17,6 +17,7 @@ class Project extends Component {
   state = {
     _id: '',
     userID: {
+      _id: '',
       login: false,
       user: {
         github: {
@@ -220,12 +221,12 @@ class Project extends Component {
   panes = () => {
     const teamChat = { menuItem: 'Team Chat', render: () =>
       <Tab.Pane attached={false}>
-        <Chat chat_type='private' cohort={this.props.match.params.cohort} user={this.state.userID} projectId={this.state._id}
+        <Chat chat_type='private' cohort={this.props.match.params.cohort} userID={this.state.userID} projectId={this.state._id}
         chats={this.state.chat.filter(chat => chat.chat_type === 'private')}  />
       </Tab.Pane> }
     const pubChat = { menuItem: 'Public Forum', render: () =>
       <Tab.Pane attached={false}>
-        <Chat chat_type='public' cohort={this.props.match.params.cohort} user={this.state.userID} projectId={this.state._id}
+        <Chat chat_type='public' cohort={this.props.match.params.cohort} userID={this.state.userID} projectId={this.state._id}
         chats={this.state.chat.filter(chat => chat.chat_type === 'public')} />
       </Tab.Pane> }
 
