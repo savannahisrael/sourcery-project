@@ -2,3 +2,16 @@
    background-color: #25569B !important;
    color: #fff !important;
 }
+
+.chatImage {
+    border-radius: 50% !important;
+    height: 40px !important;
+    width: 40px !important;
+    margin: 10px !important;
+  }
+
+.chatComment {
+    margin-left: 60px !important;
+    /* padding-top: -20px !important; */
+    margin-top: -20px !important;
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Comment, Form} from 'semantic-ui-react'
+import { Button, Comment, Form, Image} from 'semantic-ui-react'
 import axios from 'axios';
 import io from 'socket.io-client';
 import moment from 'moment';
@@ -43,13 +43,13 @@ class InputExampleAction extends Component {
 	renderChatMessage = chat => {
 		return (
 			<Comment key={chat._id}>
-			  <Comment.Avatar as='a' href={`https://github.com/${chat.author_id.github.login}`} src={chat.author_id.github.avatar_url} />
 			  <Comment.Content>
+					<Image className='chatImage' shape='circular' as='a' href={`https://github.com/${chat.author_id.github.login}`} src={chat.author_id.github.avatar_url} />
 			    <Comment.Author as='a' href={`https://github.com/${chat.author_id.github.login}`}>{chat.author_id.github.name}</Comment.Author>
 			    <Comment.Metadata>
 			      <div>{formatDate(chat.date)}</div>
 			    </Comment.Metadata>
-			    <Comment.Text>{chat.body}</Comment.Text>
+			    <Comment.Text className='chatComment'>{chat.body}</Comment.Text>
 			  </Comment.Content>
 			</Comment>
 			)

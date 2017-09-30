@@ -154,7 +154,7 @@ class Project extends Component {
         <Card.Content>
         <Header as='h3'>Pending Members</Header>
         <Divider/>
-          <Image src={pending_member.github.avatar_url} shape='circular' size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
+          <Image className='projectImage' shape='circular' src={pending_member.github.avatar_url} size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
         </Card.Content>
         {this.state.priviledge === 'owner' ? <DecisionButtons /> : ''}
       </Card>
@@ -177,10 +177,10 @@ class Project extends Component {
       <Item.Group>
         <Divider/>
         <Item>
-          <Item.Image size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} shape='circular'  />
+          <Image className='projectImage' shape='circular' size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} />
           <Item.Content>
             <Item.Header as='a' href={item.url}>{item.title}</Item.Header>
-            <Item.Meta>State: {item.state}</Item.Meta>
+            <Item.Meta>{item.state}</Item.Meta>
           </Item.Content>
         </Item>
       </Item.Group>
@@ -222,7 +222,7 @@ class Project extends Component {
       <div className='projectBackground'>
         <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         <Segment textAlign='center' vertical basic className='projectBanner'>
-          <Container text>
+          <Container text textAlign='center'>
             <Header textAlign='center' as='h1' className='projectTitle'>
             {this.state.name}
             </Header>
