@@ -49,7 +49,9 @@ module.exports = function (app, passport) {
                 res.redirect(`/${req.session.cohortCode}/${req.user.github.login}/dashboard`);
             } else {
                 cohortController.verifyMember(req, res).then(result => {
-                    // console.log("result: ", result);
+                    req.session.cohortCode = result.code;
+                    req.session.cohortId = result._id;
+                    // console.log(result);
                     // console.log("req.session", req.session);
                     if (result) {
                         res.redirect(`/${result.code}/${req.user.github.login}/dashboard`);
