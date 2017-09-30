@@ -140,11 +140,11 @@ class Project extends Component {
   }
 
   renderPendingMembers = () => {
-    const DecisionButtons = () =>
+    const DecisionButtons = (props) =>
     (<Card.Content extra>
       <div className='ui two buttons'>
-        <Button fluid className='projectClose' >Decline</Button>
-        <Button fluid className='projectCheck' >Approve</Button>
+        <Button fluid className='projectClose' onClick= {()=> this.declineJoin(props)}>Decline </Button>
+        <Button fluid className='projectCheck' onClick= {()=> this.approveJoin(props)}>Approve </Button>
       </div>
     </Card.Content>)
 
@@ -155,9 +155,36 @@ class Project extends Component {
         <Divider/>
           <Image className='projectImage' shape='circular' src={pending_member.github.avatar_url} size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
         </Card.Content>
-        {this.state.priviledge === 'owner' ? <DecisionButtons /> : ''}
+        {this.state.priviledge === 'owner' ? <DecisionButtons {...pending_member} /> : ''}
       </Card>
     ));
+  }
+
+  approveJoin = (props) =>{
+    console.log(props)
+    
+    let update = {update:{
+      $pull:{pending_members:props._id}, 
+      $push:{members:props._id}
+    }, projectId:this.state._id};
+   
+    axios.patch('/api/projects', update)
+      .then(
+        this.update()
+      )
+  }
+
+  declineJoin =(props) =>{
+    console.log(props)
+    
+    let update = {update:{
+      $pull:{pending_members:props._id}
+    }, projectId:this.state._id};
+
+    axios.patch('/api/projects', update)
+    .then(
+      this.update()
+    )
   }
 
   renderTechTags = () => {
