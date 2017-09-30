@@ -23,10 +23,11 @@ class InputExampleAction extends Component {
 	  if (this.state.chatInput.length) {
 	  	const newChat = {
 	  		body: this.state.chatInput,
-	  		author_id: this.props.user._id,
+	  		author_id: this.props.userID.user._id,
 	  		date: new Date(),
 	  		chat_type: this.props.chat_type
 	  	}
+	  	console.log('chat:',newChat)
 	  	axios.patch('/api/projects', {projectId: this.props.projectId, update: {$push: {chat:newChat}}})
 	  	.then(res => {
 	  		socket.emit('newMsg', newChat)

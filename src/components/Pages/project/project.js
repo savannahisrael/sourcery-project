@@ -17,6 +17,7 @@ class Project extends Component {
   state = {
     _id: '',
     userID: {
+      _id: '',
       login: false,
       user: {
         github: {
@@ -213,6 +214,8 @@ class Project extends Component {
     ));
   }
 
+  getParams = () => [this.props.match.params.cohort, this.props.match.params.username, this.props.match.params.project];
+
   renderButtonText = () => {
     let buttonText = '';
     const priv = this.state.priviledge;
@@ -228,15 +231,35 @@ class Project extends Component {
     return buttonText;
   }
 
+  handleButtonClick = () => {
+    const priv = this.state.priviledge;
+    if (priv === 'owner') {
+      console.log('Edit details clicked.')
+      const [cohort, username, project] = this.getParams();
+      window.location = `/${cohort}/${username}/edit/${project}`
+    } else if (priv === 'public') {
+      console.log('Request to join was clicked.')
+      axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}})
+      .then(res => {
+        console.log('Request to join:', res);
+        this.state.priviledge = 'pending';
+        this.fetchProjectData();
+      })
+      .catch(err => console.log('err on request to join:', err))
+    } else {
+      console.log('Button clicked...')
+    }
+  }
+
   panes = () => {
     const teamChat = { menuItem: 'Team Chat', render: () =>
       <Tab.Pane attached={false}>
-        <Chat chat_type='private' cohort={this.props.match.params.cohort} user={this.state.userID} projectId={this.state._id}
+        <Chat chat_type='private' cohort={this.props.match.params.cohort} userID={this.state.userID} projectId={this.state._id}
         chats={this.state.chat.filter(chat => chat.chat_type === 'private')}  />
       </Tab.Pane> }
     const pubChat = { menuItem: 'Public Forum', render: () =>
       <Tab.Pane attached={false}>
-        <Chat chat_type='public' cohort={this.props.match.params.cohort} user={this.state.userID} projectId={this.state._id}
+        <Chat chat_type='public' cohort={this.props.match.params.cohort} userID={this.state.userID} projectId={this.state._id}
         chats={this.state.chat.filter(chat => chat.chat_type === 'public')} />
       </Tab.Pane> }
 
@@ -385,7 +408,7 @@ class Project extends Component {
 
               <Grid.Column width={4}>
                 <Segment className='joinRequest'>
-                  <Button fluid className='projectJoin' link={this.state.deploy_link}>
+                  <Button fluid className='projectJoin' onClick={this.handleButtonClick}>
                     {this.renderButtonText()}
                   </Button>
                 </Segment>
