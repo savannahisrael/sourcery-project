@@ -99,8 +99,7 @@ class CreateProjectForm extends Component {
     this.fetchProjectData(...this.getParams())
     .then(owner => this.checkLoggedIn())
     .then(user => {
-      if (this.state.userID.user._id !== this.state.owner_id._id) {
-        console.log('not the owner!')
+      if (this.state.userID.user.github.login !== this.state.owner_id.github.login) {
         const [cohort, username, project] = this.getParams();
         window.location = `/${cohort}/${username}/app/${project}`
       }
