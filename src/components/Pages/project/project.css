@@ -4,7 +4,7 @@
 
 .projectBanner {
   min-height: 350px !important;
-  padding: 75px 125px 0 0 !important;
+  padding: 75px 0 50px 0 !important;
   /* margin-bottom: 50px !important; */
   background-color: #F4f7f9 !important;
   /* border-bottom: none !important; */
@@ -28,7 +28,8 @@
 }
 
 .projectGrid {
-  margin-bottom: 1000px;
+  margin-bottom: 100px !important;
+  background-color: #F4f7f9 !important;  
 }
 
 .projectCenterCol {}
@@ -103,4 +104,9 @@
 .projectImage {
   height: 40px !important;
   width: 40px !important;
+}
+
+.projectProgress {
+  background-color:#25569B !important;
+  color: white !important;
 }
