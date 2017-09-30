@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Image, Header, Segment, Grid, Card, Icon } from 'semantic-ui-react';
+import { Container, Image, Header, Grid, } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 
 class Project extends Component {

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Divider, Header, Label, Container, Image, Segment, Tab, Card, Feed } from 'semantic-ui-react';
-import CreateProjectForm from '../createProject';
+import { Grid, Header, Label, Container, Segment, Tab } from 'semantic-ui-react';
 import Tile from '../../Common/projectTiles';
 import Navbar from "../../Common/navbar";
 import './dashboard.css';

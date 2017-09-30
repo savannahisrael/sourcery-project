@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sticky, Segment, Container, Divider, Image, List, Grid, Header } from 'semantic-ui-react';
+import { Segment, Container, Image } from 'semantic-ui-react';
 import "./footer.css";
 
 const footer = () => (

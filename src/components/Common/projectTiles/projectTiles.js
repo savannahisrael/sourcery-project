@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Icon, Image, Button, Label, Divider } from 'semantic-ui-react';
+import { Card, Icon, Image, Button, Divider } from 'semantic-ui-react';
 import './projectTiles.css';
 
 

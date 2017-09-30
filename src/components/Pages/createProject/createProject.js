@@ -1,20 +1,53 @@
 import React, { Component } from 'react';
-import { Form, Label, Icon, Container, Segment, Header, Image, Dropdown } from 'semantic-ui-react';
+import { Form, Container, Segment, Header, Button} from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import './createProject.css';
 import techSelection from '../../../utils/techTags.json';
 import axios from 'axios';
 
 const memberOptions = [
-  { key: '1', text: '1', value: '1' },
-  { key: '2', text: '2', value: '2' },
-  { key: '3', text: '3', value: '3' },
-  { key: '4', text: '4', value: '4' },
-  { key: '5', text: '5', value: '5' },
-  { key: '6', text: '6', value: '6' }
+  { key: '1', text: '1', value: 1 },
+  { key: '2', text: '2', value: 2 },
+  { key: '3', text: '3', value: 3 },
+  { key: '4', text: '4', value: 4 },
+  { key: '5', text: '5', value: 5 },
+  { key: '6', text: '6', value: 6 }
 ]
 
-const projectOptions = [
+const languageOptions = [
+  {
+    text: 'Javascript', value: 'Javascript'
+  },
+  {
+    text: 'Python', value: 'Python'
+  },
+  {
+    text: 'Ruby', value: 'Ruby'
+  },
+  {
+    text: 'PHP', value: 'PHP'
+  },
+  {
+    text: 'C#', value: 'C#'
+  },
+  {
+    text: 'C++', value: 'C++'
+  },
+  {
+    text: 'Java', value: 'Java'
+  },
+  {
+    text: 'Go', value: 'Go'
+  },
+  {
+    text: 'Swift', value: 'Swift'
+  },
+  {
+    text: 'HTML/CSS', value: 'HTML/CSS'
+  }
+]
+
+const statusOptions = [
   {
     text: 'Proposed',
     value: 'Proposed'
@@ -26,7 +59,7 @@ const projectOptions = [
   {
     text: 'Completed',
     value: 'Completed'
-  },
+  }
 ]
 
 class CreateProjectForm extends Component {
@@ -41,18 +74,20 @@ class CreateProjectForm extends Component {
         }
       }
     },
-    projectNameInput: '',
-    startDateInput: '',
-    projectDurationInput: '',
-    projectSummaryInput: '',
-    mainTechnologyInput: '',
-    otherTechnologiesInput: '',
-    projectDetailsInput: '',
-    membersWantedInput: '',
-    googleLinkInput: '',
-    trelloLinkInput: '',
-    repoLinkInput: '',
-    deployLinkInput: ''
+    project: {
+      name: '',
+      summary: '',
+      description: '',
+      tech_tags: [],
+      start_date: '',
+      duration: 0,
+      members_wanted: 0,
+      google_drive_link: '',
+      trello_link: '',
+      repo_link: '',
+      deploy_link: '',
+      status: ''
+    }
   };
 
   // Also, get info on the user and save to this.state.userID
@@ -66,55 +101,27 @@ class CreateProjectForm extends Component {
     });
   }
 
-  handleprojectNameChange = (event) => {
-    this.setState({ projectNameInput: event.target.value });
+  handleMainTechnologyChange = (e, {value}) => {
+    this.setState({ primary_language: value});
   }
 
-  handleStartDateChange = (event) => {
-    this.setState({ startDateInput: event.target.value });
+  handleOtherTechnologiesChange = (e, {value}) => {
+    this.setState({ tech_tags: value });
   }
 
-  handleProjectDurationChange = (event) => {
-    this.setState({ projectDurationInput: event.target.value });
+  handleMembersWantedChange = (e, {value}) => {
+    this.setState({ members_wanted: value });
   }
 
-  handleProjectSummaryChange = (event) => {
-    this.setState({ projectSummaryInput: event.target.value });
+  handleStatusChange = (e, {value}) => {
+    this.setState({ status: value });
   }
 
-  handleMainTechnologyChange = (event) => {
-    this.setState({ mainTechnologyInput: event.target.value });
+  handleInputChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleOtherTechnologiesChange = (event) => {
-    this.setState({ otherTechnologiesInput: event.target.value });
-  }
-
-  handleProjectDetailsChange = (event) => {
-    this.setState({ projectDetailsInput: event.target.value });
-  }
-
-  handleMembersWantedChange = (event) => {
-    this.setState({ membersWantedInput: event.target.value });
-  }
-
-  handleGoogleLinkChange = (event) => {
-    this.setState({ googleLinkInput: event.target.value });
-  }
-
-  handleTrelloLinkChange = (event) => {
-    this.setState({ trelloLinkInput: event.target.value });
-  }
-
-  handleRepoLinkChange = (event) => {
-    this.setState({ repoLinkInput: event.target.value });
-  }
-
-  handleDeployLinkChange = (event) => {
-    this.setState({ deployLinkInput: event.target.value });
-  }
-
-  handleSubmitButton = (event) => {
+  handleSubmitButton = event => {
     event.preventDefault();
     const regex = /^[a-zA-Z0-9-_]+$/;
     const warning = document.querySelector('.warning');
@@ -159,6 +166,7 @@ class CreateProjectForm extends Component {
 
   render(props) {
     const { value } = this.state
+    console.log("this is state before the render", this.state);
 
     return (
       <div className='createBackground'>
@@ -170,23 +178,32 @@ class CreateProjectForm extends Component {
             </Header>
           </Container>
         </Segment>
-        <Container className='createContainer'>
+        <Container className='createContainer' text>
           <Segment>
           <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
-            <Form.Select label='Project Status' options={projectOptions} onChange={this.handleMembersWantedChange}/>
-            <Form.Input label='Project Name *' onChange={this.handleprojectNameChange}/>
-            <Form.Input label='Start Date' placeholder='MM/DD/YYYY' onChange={this.handleStartDateChange}/>
-            <Form.Input label='Project Length' placeholder='in weeks' onChange={this.handleProjectDurationChange}/>
-            <Form.TextArea label='Project Summary' placeholder='Keep it short and sweet' onChange={this.handleProjectSummaryChange}/>
-            <Form.Select search label='Main Technology *' options={techSelection} placeholder='e.g. JavaScript' onChange={this.handleMainTechnologyChange}/>
-            <Form.Select multiple search label='Other Technologies' options={techSelection} onChange={this.handleOtherTechnologiesChange}/>
-            <Form.TextArea label='Project Details' placeholder='Describe your project in detail...' onChange={this.handleProjectDetailsChange}/>
-            <Form.Select label='Team Size *' options={memberOptions} onChange={this.handleMembersWantedChange}/>
-            <Form.Input label='Google Drive Link' onChange={this.handleGoogleLinkChange}/>
-            <Form.Input label='Trello Link' onChange={this.handleTrelloLinkChange}/>
-            <Form.Input label='Github Link' onChange={this.handleRepoLinkChange}/>
-            <Form.Input label='Deployment Link' onChange={this.handleDeployLinkChange}/>
-            <Form.Button>Create Project</Form.Button>
+            <Form.Select name='status' label='Project Status' options={statusOptions} 
+              onChange={this.handleStatusChange} disabled/>
+            <Form.Input name='name' label='Project Name' 
+              onChange={this.handleInputChange} required/>
+            <Form.Input name='start_date' label='Start Date'placeholder='MM/DD/YYYY' 
+              onChange={this.handleInputChange} type='date' required/>
+            <Form.Input name='duration' label='Project Length'placeholder='in weeks' 
+              onChange={this.handleInputChange} type='number' min='1' max='52'  required/>
+            <Form.TextArea name='summary' label='Project Summary' placeholder='Keep it short and sweet' 
+              onChange={this.handleInputChange} max='140' required/>
+            <Form.Select name='primary_language' search label='Main Technology' options={languageOptions}
+              onChange={this.handleMainTechnologyChange} required/>
+            <Form.Select name='tech_tags' multiple search label='Other Technologies' options={techSelection} 
+              onChange={this.handleOtherTechnologiesChange}/>
+            <Form.TextArea name='description' label='Project Details' placeholder='Describe your project in detail...' 
+              onChange={this.handleInputChange}/>
+            <Form.Select name='members_wanted' label='Team Size' options={memberOptions} 
+              onChange={this.handleMembersWantedChange} type='number' required/>
+            <Form.Input name='google_drive_link' type='url' label='Google Drive Link' onChange={this.handleGoogleLinkChange}/>
+            <Form.Input name='trello_link' type='url' label='Trello Link' onChange={this.handleTrelloLinkChange}/>
+            <Form.Input name='repo_link' type='url' label='Github Link' onChange={this.handleRepoLinkChange}/>
+            <Form.Input name='deploy_link' type='url' label='Deployment Link' onChange={this.handleDeployLinkChange}/>
+            <Form.Button className='createButton'>Create Project</Form.Button>
           </Form>
           <p className='warning'></p>
           </Segment>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Item, Icon, Button, Divider } from 'semantic-ui-react';
+import './MemberBlock.css';
 
 
 class MemberBlock extends Component {
@@ -26,7 +27,7 @@ class MemberBlock extends Component {
         <Icon link color='grey' className='projectRemove'
         fitted name='remove' size='large' onClick={this.handleXClick} />
           <Item link href={`https://github.com/${this.props.github.login}`}>
-          <Item.Image size='mini' src={this.props.github.avatar_url} shape='circular' />
+          <Item.Image className='memberImage' shape='circular' size='mini' src={this.props.github.avatar_url}/>
           <Item.Content>
             <Item.Header>{this.props.github.name}</Item.Header>
             <Item.Meta>{`${this.props.contributions.commits} commits`}</Item.Meta>
