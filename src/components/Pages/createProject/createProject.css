@@ -7,7 +7,7 @@
 }
 
 .createContainer {
-  margin: 0px 30px 15px 15px !important;
+  margin: 0px 100px 15px 15px !important;
 }
 
 .createBanner {
@@ -47,3 +47,19 @@
 .createStatus {
   margin-bottom: 10px !important;
 }
+
+.createButton {
+  background-color: #5fa8f9 !important;
+  -webkit-transition-duration: 0.4s !important;
+  transition-duration: 0.4s !important;
+  color: white !important;
+}
+
+.createButton:hover {
+  background-color: #2C75C6 !important;
+  color: white !important;
+}
+
+/* .createWidth {
+  width: 300px !important;
+} */

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tab, Label, Container, Image, Header, Table, Segment, Grid, Rail, Divider, Button, Comment, Form, Item, List, Menu, Icon, Card, Statistic } from 'semantic-ui-react';
+import { Tab, Label, Container, Image, Header, Segment, Grid, Divider, Button, Item, Icon, Card } from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import Chat from "../../Common/chat";
 import MemberBlock from "./MemberBlock";
@@ -154,7 +154,7 @@ class Project extends Component {
         <Card.Content>
         <Header as='h3'>Pending Members</Header>
         <Divider/>
-          <Image src={pending_member.github.avatar_url} shape='circular' size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
+          <Image className='projectImage' shape='circular' src={pending_member.github.avatar_url} size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
         </Card.Content>
         {this.state.priviledge === 'owner' ? <DecisionButtons /> : ''}
       </Card>
@@ -177,10 +177,10 @@ class Project extends Component {
       <Item.Group>
         <Divider/>
         <Item>
-          <Item.Image size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} shape='circular'  />
+          <Image className='projectImage' shape='circular' size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} />
           <Item.Content>
             <Item.Header as='a' href={item.url}>{item.title}</Item.Header>
-            <Item.Meta>State: {item.state}</Item.Meta>
+            <Item.Meta>{item.state}</Item.Meta>
           </Item.Content>
         </Item>
       </Item.Group>
@@ -223,7 +223,7 @@ class Project extends Component {
       <div className='projectBackground'>
         <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         <Segment textAlign='center' vertical basic className='projectBanner'>
-          <Container text>
+          <Container text textAlign='center'>
             <Header textAlign='center' as='h1' className='projectTitle'>
             {this.state.name}
             </Header>
@@ -270,30 +270,24 @@ class Project extends Component {
                     <Grid divided='vertically'>
                       <Grid.Row columns={3}>
                         <Grid.Column>
-                          <Segment>
+                            <p className='projectStat'>Start Date</p>
                             <Header>{formatDate(this.state.start_date)}</Header>
-                            <p>Projected Start Date</p>
-                          </Segment>
                         </Grid.Column>
                         <Grid.Column>
-                          <Segment>
+                            <p className='projectStat'>Project Length</p>
                             <Header>{this.state.duration} weeks </Header>
-                            <p>Project Length</p>
-                          </Segment>
                         </Grid.Column>
                         <Grid.Column>
-                          <Segment>
+                            <p className='projectStat'>Team Size</p>
                             <Header>{this.state.members_wanted} members</Header>
-                            <p>Team Size</p>
-                          </Segment>
                         </Grid.Column>
                       </Grid.Row>
                     </Grid>
-                    {/* {
+                    {
                           this.state.deploy_link !== '' ?
                               <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
                           : ''
-                        } */}
+                        }
                   </Segment>
                   <Segment basic className='projectChat'>
                     <Tab menu={{ secondary: true, pointing: true }} panes={this.panes()}/>

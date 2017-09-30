@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Divider, Header, Label, Grid, Menu, Button, Icon, Segment , Input, Dropdown, Feed, Card} from 'semantic-ui-react';
-import contentContainer from '../../Common/contentContainer';
-import TileGrid from '../../Common/tileGrid';
+import { Container, Divider, Header, Label, Grid, Segment , Dropdown, Feed} from 'semantic-ui-react';
 import Tile from '../../Common/projectTiles';
 import Navbar from '../../Common/navbar';
 import './explore.css';
-import projectData from '../../../utils/sampleData/sampleProjects.json';
-import search from '../../Common/navbar';
 import axios from 'axios';
 import moment from 'moment';
 import techSelection from '../../../utils/techTags.json';

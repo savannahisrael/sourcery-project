@@ -1,14 +1,8 @@
 import React, {
   Component
 } from 'react';
-import {
-  Route,
-  Redirect
-} from 'react-router';
 import ReactRotatingText from 'react-rotating-text';
-import { Button, Container,Divider, Grid, Header, Form, Icon, Image, List, Menu, Segment, Visibility, Card, Item } from 'semantic-ui-react';
-import Tiles from '../../Common/projectTiles';
-import SignUpInput from '../../Common/signUp';
+import { Button, Container,Grid, Header, Form, Icon, Image, Segment, Item } from 'semantic-ui-react';
 import Navbar from "../../Common/landingNavbar";
 import BackgroundImg from '../../../assets/images/background.png';
 import './landing.css';
