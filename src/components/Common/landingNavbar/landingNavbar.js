@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Container, Dropdown, Image,  Menu, Visibility, Button} from 'semantic-ui-react';
+import { Container, Menu, Visibility, Button} from 'semantic-ui-react';
 import './landingNavbar.css';
 
 const menuStyle = {

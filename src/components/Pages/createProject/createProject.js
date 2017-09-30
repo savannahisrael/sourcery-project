@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Label, Icon, Container, Segment, Header, Image, Dropdown } from 'semantic-ui-react';
+import { Form, Container, Segment, Header, Button} from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
 import './createProject.css';
 import techSelection from '../../../utils/techTags.json';
@@ -178,7 +178,7 @@ class CreateProjectForm extends Component {
             </Header>
           </Container>
         </Segment>
-        <Container className='createContainer'>
+        <Container className='createContainer' text>
           <Segment>
           <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
             <Form.Select name='status' label='Project Status' options={statusOptions} 
@@ -203,7 +203,7 @@ class CreateProjectForm extends Component {
             <Form.Input name='trello_link' type='url' label='Trello Link' onChange={this.handleTrelloLinkChange}/>
             <Form.Input name='repo_link' type='url' label='Github Link' onChange={this.handleRepoLinkChange}/>
             <Form.Input name='deploy_link' type='url' label='Deployment Link' onChange={this.handleDeployLinkChange}/>
-            <Form.Button>Create Project</Form.Button>
+            <Form.Button className='createButton'>Create Project</Form.Button>
           </Form>
           <p className='warning'></p>
           </Segment>

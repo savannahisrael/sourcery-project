@@ -1,7 +1,6 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
-import { Container } from 'semantic-ui-react'
 import Landing from './components/Pages/landing';
 import Dashboard from './components/Pages/dashboard';
 import Explore from './components/Pages/explore';
