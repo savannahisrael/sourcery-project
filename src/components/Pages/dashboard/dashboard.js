@@ -179,6 +179,7 @@ class Dashboard extends Component {
         <Navbar currentPage='dashboard' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         {/* <p>Cohort: {this.props.match.params.cohort}</p>
         <p>Username: {this.props.match.params.username}</p> */}
+        <div className='dashboardBackground'>
         <Segment textAlign='center' vertical className='dashboardBanner'>
           <Container text>
           <Header as='h1' className='dashboardTitle'>
@@ -190,6 +191,7 @@ class Dashboard extends Component {
         <Container>
           <Tab className='tabMenu' menu={{ secondary: true, pointing: true }} panes={this.renderPanes()}/>
         </Container>
+        </div>
       </div>
     );
   }
