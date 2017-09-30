@@ -218,6 +218,7 @@ class Project extends Component {
   }
 
   render(props) {
+    console.log("this is the state before the render:", this.state);
     return (
       <div className='projectBackground'>
         <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>

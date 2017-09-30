@@ -158,6 +158,8 @@ module.exports = {
         // req.params.cohort = '0417';
         // req.params.username = "fahad";
         // req.params.project = 'testProject4';
+        console.log("inside One Project ORM");
+        console.log("req.params: ",req.params);
         let query1 = Cohort.findOne({
             code: req.params.cohort
         }, [{
@@ -170,10 +172,12 @@ module.exports = {
 
         Promise.all([query1, query2]).then(
             results => {
+                console.log("results: ", results);
                 let cohortId = results[0]._id;
                 let userId = results[1]._id;
 
                 if (cohortId && userId) {
+                    console.log("query variables inside if statement: ", cohortId, userId, req.params.project)
                     Project.find({
                             cohort_id: cohortId,
                             owner_id: userId,
