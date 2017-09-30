@@ -212,7 +212,13 @@ class Project extends Component {
       const [cohort, username, project] = this.getParams();
       window.location = `/${cohort}/${username}/edit/${project}`
     } else if (priv === 'public') {
-      console.log('Request to join was clicked.')      
+      console.log('Request to join was clicked.')
+      axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}})
+      .then(res => {
+        console.log('Request to join:', res);
+        this.fetchProjectData();
+      })
+      .catch(err => console.log('err on request to join:', err))
     } else {
       console.log('Button clicked...')
     }
