@@ -222,8 +222,8 @@ class Project extends Component {
       <div className='projectBackground'>
         <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         <Segment textAlign='center' vertical basic className='projectBanner'>
-          <Container text textAlign='center'>
-            <Header textAlign='center' as='h1' className='projectTitle'>
+          <Container textAlign='center' vertical>
+            <Header as='h1' className='projectTitle'>
             {this.state.name}
             </Header>
             <br/><br/><br/>
@@ -257,7 +257,7 @@ class Project extends Component {
 
               <Grid.Column width={8}>
                 <Segment>
-                  <Label attached='top'>{this.state.status}</Label>
+                  <Label className='projectProgress' attached='top'>{this.state.status}</Label>
                   <Segment basic>
                     <Header as='h3'>Project Details
                       {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} className='projectIcons' name='github' size='large'/> : ''}

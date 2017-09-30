@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Container, Menu, Visibility, Button} from 'semantic-ui-react';
+import { Container, Menu, Visibility, Button, Image} from 'semantic-ui-react';
 import './landingNavbar.css';
+import favIcon from '../../../assets/images/favicon.png';
+
 
 const menuStyle = {
   border: 'none',
@@ -62,6 +64,7 @@ export default class navBar extends Component {
             style={menuFixed ? fixedMenuStyle : menuStyle}
           >
             <Container >
+              {/* <Image className='landingBanana' src={favIcon} /> */}
               <Menu.Item name='DEVCIRCLE' href='/' onClick={this.handleItemClick} className='landingnavFont'/>
               <Menu.Menu position='right'>
                 <Menu.Item>

@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Container, Dropdown, Image,  Menu, Visibility,} from 'semantic-ui-react';
+import { Container, Dropdown, Image,  Menu, Visibility} from 'semantic-ui-react';
 import './navbar.css';
+
 
 const menuStyle = {
   border: 'none',
@@ -57,15 +58,15 @@ export default class navBar extends Component {
           onBottomVisible={this.unStickTopMenu}
           once={false}
         >
-          <Menu
+          <Menu stackable
             pointing secondary
             fixed={menuFixed && 'top'}
             style={menuFixed ? fixedMenuStyle : menuStyle}
           >
             <Container>
-              {/*<Menu.Item>
-                <Image size='mini' src='/components/assets/images/dev.svg' />
-              </Menu.Item>*/}
+              {/* <Menu.Item>
+                <Image className='navbarIcon' src={favIcon} />
+              </Menu.Item> */}
               <Menu.Item name='DEVCIRCLE' href='/' onClick={this.handleItemClick} className='navFont'/>
               <Menu.Menu position='right' className='navFont'>
                 <Menu.Item name='CREATE A PROJECT' href={`/${this.props.cohort}/create`} active={activeItem === 'create'} onClick={this.handleItemClick} className='navCreate'/>
@@ -74,7 +75,7 @@ export default class navBar extends Component {
                 {/* <Menu.Item>
                   <Button color='teal' href='/create' >CREATE PROJECT</Button>
                 </Menu.Item> */}
-                <Image as='img' src={this.props.avatar} alt={`Logged in as ${this.props.username}`} className='navbarAvatar' inline shape='circular'/>
+                <Image as='img' src={this.props.avatar} className='navbarAvatar' inline shape='circular'/>
                 <Dropdown simple className='navIcon'>
                   <Dropdown.Menu className='navItem'>
                     <Dropdown.Item className='navFont' onClick={this.handleLogout}>Log Out</Dropdown.Item>

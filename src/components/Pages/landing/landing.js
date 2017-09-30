@@ -103,9 +103,6 @@ export default class landingPage extends Component {
                 </Form>
                 <p className='noAccess'>Please enter a valid access code.</p>
                 <br/>
-                {/* <Button className='cohortCodeButton' secondary size='huge' onClick={this.handleLoginButton}>
-                  Log in with Github
-                </Button> */}
               </Grid.Column>
               <Grid.Column width={8}>
                 <Image className='landingImg' src={BackgroundImg} size='large'/>
