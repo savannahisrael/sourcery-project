@@ -63,7 +63,7 @@ module.exports = {
             })
             .catch(err => console.log('Project data err:', err));
     },
-
+    //Method to get aggregate number of created counts created and contributed for a specific cohort and user
     profile: (req, res) => {
         // req.params.cohort = '0417';
         // req.params.username = "joe";
@@ -196,6 +196,12 @@ module.exports = {
     },
     //Method to create new Project
     create: (req, res) => {
+        // console.log("inside the create project ORM");
+        // console.log("req.user", req.user);
+        // console.log("req.session", req.session);
+        req.body.owner_id = req.user._id;
+        req.body.cohort_id = req.session.cohortId;
+        req.body.members = [req.user._id];
         Project.create(req.body)
             .then(doc => {
 
