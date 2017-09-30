@@ -13,7 +13,7 @@
 .projectTitle {
   font-size: 4em !important;
   font-weight: 300 !important;
-  margin: 10px 0 0 0 !important;
+  margin: 10px 0 !important;
   color: #001738 !important;
 }
 
@@ -28,9 +28,10 @@
 }
 
 .projectGrid {
-  background-color: #f4f7f9 !important;
-  padding-top: 100px !important;
+  margin-bottom: 1000px;
 }
+
+.projectCenterCol {}
 
 .projectChat {
   /*min-height: 600px;*/
@@ -81,7 +82,6 @@
 
 .projectRemove {
   float: right !important;
-
 }
 
 .projectRemove:hover {
@@ -89,7 +89,7 @@
 }
 
 .projectEject {
-  margin-bottom: 5px !important; 
+  margin-bottom: 5px !important;
 }
 
 .projectIcons {

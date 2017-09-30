@@ -2,10 +2,10 @@
   background-color: #f4f7f9 !important;
 }
 .exploreBanner {
-  min-height: 300px !important;
+  min-height: 250px !important;
   padding: 50px 0px !important;
   /* background-color: #fff !important; */
-  background-color: #fff !important;
+  background-color: #f4f7f9 !important;
 }
 
 .exploreHeader {
@@ -25,7 +25,7 @@
 }
 
 .exploreProjectsSpan {
-  font-size: 3.5em !important;
+  font-size: 3em !important;
   font-weight: 300 !important;
   color: #001738 !important;
 }
@@ -39,17 +39,17 @@
 .exploreDropdown {
   border: none !important;
   border-radius: 0px !important;
-  background-color: #fff !important;
+  background-color: #f4f7f9 !important;
   margin-left: 20px !important;
   width: 400px !important;
-  font-size: 3.5em !important;
+  font-size: 3em !important;
   color: #25569B !important;
 }
 
 .searchDropdown {
   border: none !important;
   border-radius: 0px !important;
-  background-color: #fff !important;
+  background-color: #f4f7f9 !important;
   font-size: 1em !important;  
 }
 
@@ -65,15 +65,11 @@ a.ui.label {
 }
 
 
-/*.exploreSubtitle {
-  font-size: 1.5em !important;
-  font-weight: 300 !important;
-  color: #001738 !important;
-}*/
-
-
-/* .exploreSearch {
-    width: 400px !important;
-    margin-top: 5px !important;
-    /* font-weight: 200 !important;
-} */
+.exploreactivityFeed{
+  border: none !important;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 1px !important;
+  margin-top: 75px !important;
+  min-height: 600px !important;
+  margin-bottom: 75px !important;
+}

@@ -43,13 +43,16 @@ class CohortLogin extends Component {
 
   render() {
     return (
-      <div>
-        <Segment className='background' textAlign='center'>
-          <Header className='devCircle'>devCircle</Header>
-          <Form className='signupInput' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
+      <div className='cohortBackground'>
+        <Segment basic textAlign='center'>
+          <Header className='cohortHeader'>devCircle</Header>
+          <Header className='cohortSubheader'>
+            Please enter your access code.
+          </Header>
+          <Form className='cohortsignupInput' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
             <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
           </Form>
-          <p className='accessDenied'>Please enter a valid access code</p>
+          <p className='cohortaccessDenied'>Sorry, your code is not valid. Please try again.</p>
         </Segment>
       </div>
     )

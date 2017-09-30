@@ -134,7 +134,7 @@ class Dashboard extends Component {
       [{ menuItem: 'Active Projects', render: () =>
           <Tab.Pane className='tabPane' attached={false}>
             {this.state.activeProjects.length > 0 ?
-            <Grid columns='equal'>
+            <Grid stackable container columns={3}>
               <Grid.Row>
                 <Grid.Column>
                   {this.renderTiles(0, 'activeProjects')}
@@ -147,14 +147,21 @@ class Dashboard extends Component {
                 </Grid.Column>
               </Grid.Row>
             </Grid> :
-            'No Active Projects To Display.'}
+            <div>
+              <p className='dashboardEmptyStateHeader'>
+              No projects yet!
+              </p>
+              <p className='dashboardEmptyStateText'>
+              Join or create your own project to get started. 
+            </p> 
+            </div>}
           </Tab.Pane>
 
       },
       { menuItem: 'Past Projects', render: () =>
         <Tab.Pane className='tabPane' attached={false}>
           {this.state.pastProjects.length > 0 ?
-          <Grid columns='equal'>
+          <Grid stackable container columns={3}>
             <Grid.Row>
               <Grid.Column>
                 {this.renderTiles(0, 'pastProjects')}
@@ -167,7 +174,14 @@ class Dashboard extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid> :
-          'No Completed Projects To Display.'}
+          <div>
+            <p className='dashboardEmptyStateHeader'>
+            No projects yet!
+            </p>
+            <p className='dashboardEmptyStateText'>
+            Keep up the good work and check back when you've completed your first project. 
+          </p> 
+          </div>}
         </Tab.Pane>
       }
     ])
@@ -179,6 +193,7 @@ class Dashboard extends Component {
         <Navbar currentPage='dashboard' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         {/* <p>Cohort: {this.props.match.params.cohort}</p>
         <p>Username: {this.props.match.params.username}</p> */}
+        <div className='dashboardBackground'>
         <Segment textAlign='center' vertical className='dashboardBanner'>
           <Container text>
           <Header as='h1' className='dashboardTitle'>
@@ -187,19 +202,10 @@ class Dashboard extends Component {
           </Container>
         </Segment>
         <br/><br/>
-        <Grid columns={3}>
-          <Grid.Row >
-            <Grid.Column width={1}>
-              {/* this column is just here for padding */}
-            </Grid.Column>
-            <Grid.Column width={14}>
-              <Tab className='tabMenu' menu={{ secondary: true, pointing: true }} panes={this.renderPanes()}/>
-            </Grid.Column>
-            <Grid.Column width={1}>
-              {/* this column is just here for padding */}
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <Container>
+          <Tab className='tabMenu' menu={{ secondary: true, pointing: true }} panes={this.renderPanes()}/>
+        </Container>
+        </div>
       </div>
     );
   }

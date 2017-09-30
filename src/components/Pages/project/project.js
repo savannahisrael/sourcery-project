@@ -220,10 +220,9 @@ class Project extends Component {
   render(props) {
     return (
       <div className='projectBackground'>
-        <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.props.match.params.username} avatar={this.state.userID.user.github.avatar_url}/>
-        <Segment textAlign='center' vertical className='projectBanner'>
+        <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
+        <Segment textAlign='center' vertical basic className='projectBanner'>
           <Container text>
-            <i className="devicon-angularjs-plain colored devIcon"></i>
             <Header textAlign='center' as='h1' className='projectTitle'>
             {this.state.name}
             </Header>
@@ -232,163 +231,9 @@ class Project extends Component {
           </Container>
         </Segment>
 
-        <Grid centered columns={3} className='projectGrid'>
-          <Grid.Column>
-
-            <Segment className='projectSegment'>
-              <Label attached='top'>{this.state.status}</Label>
-
-              <Segment basic>
-                <Header as='h3'>Project Details
-                  {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} className='projectIcons' name='github' size='large'/> : ''}
-                  {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} className='projectIcons' name='google' size='large' color='red'/> : ''}
-                  {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} className='projectIcons' name='trello' size='large' color='blue' /> : ''}
-                </Header>
-                <p>{this.state.description}</p>
-                {this.renderTechTags()}<br/><br/>
-                <Grid divided='vertically'>
-                  <Grid.Row columns={3}>
-                    <Grid.Column>
-                      <Segment>
-                        <Header>{formatDate(this.state.start_date)}</Header>
-                        <p>Projected Start Date</p>
-                      </Segment>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Segment>
-                        <Header>{this.state.duration} weeks </Header>
-                        <p>Project Length</p>
-                      </Segment>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Segment>
-                        <Header>{this.state.members_wanted} members</Header>
-                        <p>Team Size</p>
-                      </Segment>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-                {/* {
-                      this.state.deploy_link !== '' ?
-                          <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
-                      : ''
-                    } */}
-              </Segment>
-
-              <Segment basic className='projectChat'>
-                <Tab menu={{ secondary: true, pointing: true }} panes={this.panes()}/>
-              </Segment>
-
-              <Rail position='left'>
-
-                <Segment className='pullRequest'>
-                  <Header as='h3'>Pull Requests</Header>
-                  {
-                    this.state.repo_link === '' ?
-                    'No Github Repository Connected.' :
-                     this.renderPRorIssue('pulls')
-                  }
-                </Segment>
-
-                <Segment className='pullRequest'>
-                  <Header as='h3'>Issues</Header>
-                  {
-                    this.state.repo_link === '' ?
-                    'No Github Repository Connected.' :
-                     this.renderPRorIssue('issues')
-                  }
-                </Segment>
-
-                <Card.Group>
-                  <Card className='projectSegment'>
-                    <Card.Content>
-                      <Header as='h3'>Project Details</Header>
-                      <p>{this.state.description}</p>
-                      <div floated='right'>
-                        {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} name='github' size='big' /> : ''}
-                        {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} name='google' size='big' /> : ''}
-                        {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} name='trello' size='big' /> : ''}
-                      </div>
-                      <Card>
-                        <Card.Content>
-                          <Card.Header> {formatDate(this.state.start_date)} </Card.Header>
-                          <Card.Meta>Projected Start Date</Card.Meta>
-                        </Card.Content>
-                      </Card>
-                      <Card>
-                        <Card.Content>
-                          <Card.Header> {this.state.duration} weeks </Card.Header>
-                          <Card.Meta>Project Length</Card.Meta>
-                        </Card.Content>
-                      </Card>
-                      <Card>
-                        <Card.Content>
-                          <Card.Header> {this.state.members_wanted} members</Card.Header>
-                          <Card.Meta>Team Size</Card.Meta>
-                        </Card.Content>
-                      </Card>
-                      <Header as='h4'>Technologies Involved</Header>
-                      {this.renderTechTags()}
-                    </Card.Content>
-                    {
-                      this.state.deploy_link !== '' ?
-                      <Card.Content extra>
-                          <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
-                      </Card.Content>
-                      : ''
-                    }
-
-                  </Card>
-                </Card.Group>
-              </Rail>
-
-              <Rail position='right'>
-                  <Segment className='joinRequest'>
-                    <Button fluid className='projectJoin' link={this.state.deploy_link}>
-                      {this.renderButtonText()}
-                    </Button>
-                  </Segment>
-
-                <Card.Group>
-                  {this.renderPendingMembers()}
-                </Card.Group>
-
-                <Segment className='projectSegment'>
-                  <Header as='h3'>Team Members</Header>
-                  <Divider/>
-                  {this.renderTeamMembers()}
-                </Segment>
-              </Rail>
-            </Segment>
-          </Grid.Column>
-        </Grid>
-
-
         <Container>
-          <Grid>
-            <Grid.Row columns={3}>
-
-              <Grid.Column width={4}>
-                <Segment className='joinRequest'>
-                  <Button fluid className='projectJoin' link={this.state.deploy_link}>
-                    {this.renderButtonText()}
-                  </Button>
-                </Segment>
-
-                <Card.Group>
-                  {this.renderPendingMembers()}
-                </Card.Group>
-
-                <Segment className='projectSegment'>
-                  <Header as='h3'>Team Members</Header>
-                  <Divider/>
-                  {this.renderTeamMembers()}
-                </Segment>
-              </Grid.Column>
-
-              <Grid.Column width={8}>    
-
-              </Grid.Column>  
+          <Grid columns={3} className='projectGrid'>
+            <Grid.Row>
 
               <Grid.Column width={4}>
                 <Segment className='pullRequest'>
@@ -410,10 +255,71 @@ class Project extends Component {
                 </Segment>
               </Grid.Column>
 
+              <Grid.Column width={8}>
+                <Segment>
+                  <Label attached='top'>{this.state.status}</Label>
+                  <Segment basic>
+                    <Header as='h3'>Project Details
+                      {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} className='projectIcons' name='github' size='large'/> : ''}
+                      {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} className='projectIcons' name='google' size='large' color='red'/> : ''}
+                      {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} className='projectIcons' name='trello' size='large' color='blue' /> : ''}
+                    </Header>
+                    <p>{this.state.description}</p>
+                    {this.renderTechTags()}<br/><br/>
+                    <Grid divided='vertically'>
+                      <Grid.Row columns={3}>
+                        <Grid.Column>
+                          <Segment>
+                            <Header>{formatDate(this.state.start_date)}</Header>
+                            <p>Projected Start Date</p>
+                          </Segment>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Segment>
+                            <Header>{this.state.duration} weeks </Header>
+                            <p>Project Length</p>
+                          </Segment>
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Segment>
+                            <Header>{this.state.members_wanted} members</Header>
+                            <p>Team Size</p>
+                          </Segment>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                    {/* {
+                          this.state.deploy_link !== '' ?
+                              <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
+                          : ''
+                        } */}
+                  </Segment>
+                  <Segment basic className='projectChat'>
+                    <Tab menu={{ secondary: true, pointing: true }} panes={this.panes()}/>
+                  </Segment>
+                </Segment>
+              </Grid.Column>
+
+              <Grid.Column width={4}>
+                <Segment className='joinRequest'>
+                  <Button fluid className='projectJoin' link={this.state.deploy_link}>
+                    {this.renderButtonText()}
+                  </Button>
+                </Segment>
+
+                <Card.Group>
+                  {this.renderPendingMembers()}
+                </Card.Group>
+
+                <Segment className='projectSegment'>
+                  <Header as='h3'>Team Members</Header>
+                  <Divider/>
+                  {this.renderTeamMembers()}
+                </Segment>
+              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Container>
-
 
 
        </div>
