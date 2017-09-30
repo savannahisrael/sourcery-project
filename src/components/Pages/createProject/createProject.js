@@ -216,7 +216,7 @@ class CreateProjectForm extends Component {
             <Form.Input name='trello_link' type='url' label='Trello Link' onChange={this.handleTrelloLinkChange}/>
             <Form.Input name='repo_link' type='url' label='Github Link' onChange={this.handleRepoLinkChange}/>
             <Form.Input name='deploy_link' type='url' label='Deployment Link' onChange={this.handleDeployLinkChange}/>
-            <Form.Button className='createButton'>Create Project</Form.Button>
+            <Button className='createButton'>Create Project</Button>
           </Form>
           <p className='warning'></p>
           </Segment>
