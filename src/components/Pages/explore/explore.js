@@ -38,7 +38,8 @@ class Explore extends Component {
     },
     statusFilter: "Proposed",
     techFilters: [],
-    projects: []
+    projects: [],
+    activities: []
   };
 
   // On page load, get all projects and send to this.state.projects
@@ -53,6 +54,12 @@ class Explore extends Component {
     axios.get('/auth/checkLoggedIn').then((res) => {
       this.setState({ userID: res.data });
       console.log(res.data);
+    }).catch(error => {
+      console.log('Catching Error: ', error);
+    });
+    axios.get('/api/activityfeed').then((res) => {
+      this.setState({ activities: res.data });
+      console.log('activities data: ', res.data);
     }).catch(error => {
       console.log('Catching Error: ', error);
     });
@@ -90,7 +97,7 @@ class Explore extends Component {
       default: projectStatus = "proposal";
     }
     let colArr = this.state.projects.filter(project => {
-      return ((project.status == projectStatus) && (this.compareArray(this.state.techFilters, project.tech_tags)))
+      return ((project.status === projectStatus) &&(this.compareArray(this.state.techFilters, project.tech_tags)))
     }).filter((project, index) => {
       return index % 3 === remainder;
     });
@@ -112,6 +119,90 @@ class Explore extends Component {
 
   }
 
+  renderActivityJoinCohort = (activity) => (
+    <Feed.Event>
+      <Feed.Label className='activityFeedImage' image={activity.user_id.github.avatar_url} />
+      <Feed.Content>
+        <Feed.Summary>
+          {activity.user_id.github.name} joined the cohort.
+        </Feed.Summary>
+        <Divider/>
+      </Feed.Content>
+    </Feed.Event>
+  )
+
+  renderActivityJoinProject = (activity) => (
+    <Feed.Event>
+      <Feed.Label className='activityFeedImage' image={activity.user_id.github.avatar_url} />
+      <Feed.Content>
+        <Feed.Summary>
+          {activity.user_id.github.name} joined {activity.project_id.name}.
+        </Feed.Summary>
+        <Divider/>
+      </Feed.Content>
+    </Feed.Event>
+  )
+
+  renderActivityCreateProject = (activity) => (
+    <Feed.Event>
+      <Feed.Label className='activityFeedImage' image={activity.user_id.github.avatar_url} />
+      <Feed.Content>
+        <Feed.Summary>
+          {activity.user_id.github.name} created {activity.project_id.name}.
+        </Feed.Summary>
+        <Divider/>
+      </Feed.Content>
+    </Feed.Event>
+  )
+
+  renderActivityInProgressProject = (activity) => (
+    <Feed.Event>
+      <Feed.Label className='activityFeedImage' image={activity.user_id.github.avatar_url} />
+      <Feed.Content>
+        <Feed.Summary>
+          {activity.user_id.github.name} changed status of {activity.project_id.name} to 'in-progress'.
+        </Feed.Summary>
+        <Divider/>
+      </Feed.Content>
+    </Feed.Event>
+  )
+
+  renderActivityCompletedProject = (activity) => (
+    <Feed.Event>
+      <Feed.Label className='activityFeedImage' image={activity.user_id.github.avatar_url} />
+      <Feed.Content>
+        <Feed.Summary>
+          {activity.user_id.github.name} changed status of {activity.project_id.name} to 'completed'.
+        </Feed.Summary>
+        <Divider/>
+      </Feed.Content>
+    </Feed.Event>
+  )
+
+  renderAllActivity = () => {
+    return this.state.activities.slice(0, 10).map(activity => {
+      switch (activity.event) {
+        case 'proposal':
+          return this.renderActivityCreateProject(activity)
+        break;
+        case 'in-progress':
+          return this.renderActivityInProgressProject(activity)
+        break;
+        case 'completed':
+          return this.renderActivityCompletedProject(activity)
+        break;
+        case 'member joined cohort':
+          return this.renderActivityJoinCohort(activity)
+        break;
+        case 'member joined project':
+          return this.renderActivityJoinProject(activity)
+        break;
+        default:
+          // Do nothing
+      }
+    });
+  }
+
   formatDate = date => moment(date).format('MM/DD/YYYY');
 
   render(props) {
@@ -120,8 +211,9 @@ class Explore extends Component {
       <div className='exploreBackground'>
         <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         <div>
-          <Grid columns={2}>
-            <Grid.Row> 
+          <Segment basic className='exploreNavBuffer'></Segment>
+          <Grid columns={4}>
+            <Grid.Row>
 
               <Grid.Column width={1}>
               </Grid.Column>
@@ -130,17 +222,9 @@ class Explore extends Component {
                 <Segment className='exploreactivityFeed'>
                   <Header as='h3'>Activity Feed</Header>
                   <Divider/>
-                        <Feed>
-                          <Feed.Event>
-                            <Feed.Label image='http://lorempixel.com/output/cats-q-c-100-100-3.jpg' />
-                            <Feed.Content>
-                              <Feed.Date content='1 day ago' />
-                              <Feed.Summary>
-                                Bryce Miller joined project devCircle.
-                              </Feed.Summary>
-                            </Feed.Content>
-                          </Feed.Event>
-                        </Feed>
+                  <Feed>
+                    {this.renderAllActivity()}
+                  </Feed>
                 </Segment>
               </Grid.Column>
 
@@ -185,4 +269,3 @@ class Explore extends Component {
 }
 
 export default Explore;
-
