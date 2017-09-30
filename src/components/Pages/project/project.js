@@ -54,8 +54,7 @@ class Project extends Component {
   componentDidMount() {
     this.fetchProjectData()
     .then(repoLink => repoLink ? this.fetchGithubData(repoLink) : repoLink )
-    .then(repoInfo => this.checkLoggedIn())
-
+    .then(repoInfo => this.checkLoggedIn());
 
     socket.on('refreshMsg', data => {
      console.log("Refresh Msg Requested:", data);
@@ -136,17 +135,17 @@ class Project extends Component {
         }
       }
       return (
-        <MemberBlock {...member}/>
+        <MemberBlock {...member} projectId={this.state._id} updateFunction={this.update} />
       )
     })
   }
 
   renderPendingMembers = () => {
-    const DecisionButtons = () =>
+    const DecisionButtons = (props) =>
     (<Card.Content extra>
       <div className='ui two buttons'>
-        <Button fluid className='projectClose' >Decline</Button>
-        <Button fluid className='projectCheck' >Approve</Button>
+        <Button fluid className='projectClose' onClick= {()=> this.declineJoin(props)}>Decline </Button>
+        <Button fluid className='projectCheck' onClick= {()=> this.approveJoin(props)}>Approve </Button>
       </div>
     </Card.Content>)
 
@@ -157,9 +156,36 @@ class Project extends Component {
         <Divider/>
           <Image className='projectImage' shape='circular' src={pending_member.github.avatar_url} size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
         </Card.Content>
-        {this.state.priviledge === 'owner' ? <DecisionButtons /> : ''}
+        {this.state.priviledge === 'owner' ? <DecisionButtons {...pending_member} /> : ''}
       </Card>
     ));
+  }
+
+  approveJoin = (props) =>{
+    console.log(props)
+    
+    let update = {update:{
+      $pull:{pending_members:props._id}, 
+      $push:{members:props._id}
+    }, projectId:this.state._id};
+   
+    axios.patch('/api/projects', update)
+      .then(
+        this.update()
+      )
+  }
+
+  declineJoin =(props) =>{
+    console.log(props)
+    
+    let update = {update:{
+      $pull:{pending_members:props._id}
+    }, projectId:this.state._id};
+
+    axios.patch('/api/projects', update)
+    .then(
+      this.update()
+    )
   }
 
   renderTechTags = () => {
@@ -240,12 +266,75 @@ class Project extends Component {
       return this.state.priviledge === 'owner' || this.state.priviledge === 'member' ? [pubChat, teamChat] : [pubChat];
   }
 
+  update = ()=>{
+    console.log("updated");
+    this.fetchProjectData();
+  }
+
+  // renderDevIcons = () => {
+  //   switch (this.state.primary_language) {
+  //     case 'javascript':
+  //       return (
+  //         <i class="devicon-javascript-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'python':
+  //       return (
+  //         <i class="devicon-python-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'c#':
+  //       return (
+  //         <i class="devicon-csharp-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'c++':
+  //       return (
+  //         <i class="devicon-cplusplus-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'php':
+  //       return (
+  //         <i class="devicon-php-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'go':
+  //       return (
+  //         <i class="devicon-go-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'swift':
+  //       return (
+  //         <i class="devicon-swift-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'java':
+  //       return (
+  //         <i class="devicon-java-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'ruby':
+  //       return (
+  //         <i class="devicon-ruby-plain colored"></i>
+  //       )
+  //     break;
+  //     case 'html+css':
+  //       return (
+  //         <i class="devicon-html5-plain colored"></i>
+  //       )
+  //     break;
+  //     default:
+  //       // Do nothing
+  //   }
+  // }
   render(props) {
+    console.log("this is the state before the render:", this.state);
     return (
       <div className='projectBackground'>
         <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
         <Segment textAlign='center' vertical basic className='projectBanner'>
           <Container textAlign='center' vertical>
+            {/* {this.renderDevIcons} */}
             <Header as='h1' className='projectTitle'>
             {this.state.name}
             </Header>

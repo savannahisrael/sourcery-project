@@ -21,6 +21,8 @@ module.exports = function (app, passport) {
             failureRedirect: '/'
         }),
         function (req, res) {
+
+            // console.log("inside auth callback")
             // Successful authentication, redirect dashboard.
             console.log("logged in");
 
@@ -48,12 +50,13 @@ module.exports = function (app, passport) {
                 cohortController.update(req);
                 res.redirect(`/${req.session.cohortCode}/${req.user.github.login}/dashboard`);
             } else {
+                // console.log("in else statement");
                 cohortController.verifyMember(req, res).then(result => {
-                    req.session.cohortCode = result.code;
-                    req.session.cohortId = result._id;
                     // console.log(result);
                     // console.log("req.session", req.session);
                     if (result) {
+                        req.session.cohortCode = result.code;
+                        req.session.cohortId = result._id;
                         res.redirect(`/${result.code}/${req.user.github.login}/dashboard`);
                     }else{
                         res.redirect('/cohortCodeLogin');
