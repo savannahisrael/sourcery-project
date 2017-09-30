@@ -225,6 +225,7 @@ module.exports = {
 
     //Method to update a Project 
     update: (req, res) => {
+        console.log("req: ", req.body);
         Project.update({
                 _id: req.body.projectId
             }, req.body.update)

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Item, Icon, Button, Divider } from 'semantic-ui-react';
 import './MemberBlock.css';
+import axios from 'axios';
 
 
 class MemberBlock extends Component {
@@ -15,6 +16,14 @@ class MemberBlock extends Component {
 
   handleEject = () => {
     console.log('clicked eject button');
+    console.log("this.props in member block", this.props);
+    let update = {update:{
+      $pull:{members:this.props._id}
+    }, projectId:this.props.projectId};
+    axios.patch('/api/projects', update)
+      .then(
+        this.props.updateFunction()
+    );
   }
 
   handleReject = () => {

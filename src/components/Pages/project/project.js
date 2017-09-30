@@ -134,7 +134,7 @@ class Project extends Component {
         }
       }
       return (
-        <MemberBlock {...member}/>
+        <MemberBlock {...member} projectId={this.state._id} updateFunction={this.update} />
       )
     })
   }
@@ -214,6 +214,11 @@ class Project extends Component {
       </Tab.Pane> }
 
       return this.state.priviledge === 'owner' || this.state.priviledge === 'member' ? [pubChat, teamChat] : [pubChat];
+  }
+
+  update = ()=>{
+    console.log("updated");
+    this.fetchProjectData();
   }
 
   render(props) {
