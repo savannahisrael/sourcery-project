@@ -34,7 +34,7 @@
 	},
 	{
 		"name": "devCircle",
-		"owner": "fbrahman",
+		"owner": "bcmiller713",
 		"members": ["fbrahman", "cindygchen", "aarongaither", "bcmiller713"],
 		"pending": ["hockey4life63"],
 		"cohort": "UCSD0417",
@@ -68,7 +68,7 @@
 	{
 		"name": "parkify",
 		"owner": "leelandmiller",
-		"members": ["cindygchen", "hockey4life63", "leenbean16", "margaretchoi"],
+		"members": ["leelandmiller", "cindygchen", "hockey4life63", "bcmiller713"],
 		"pending": ["jhuynh85", "aarongaither"],
 		"cohort": "UCSD0417",
 		"chat": [
@@ -87,7 +87,7 @@
 			{
 				"body": "So private!",
 				"date": "09/20/2017",
-				"author_id": "margaretchoi",
+				"author_id": "bcmiller713",
 				"chat_type": "private"
 			},
 			{
@@ -160,6 +160,111 @@
 				"body": "I know right?",
 				"date": "09/21/2017",
 				"author_id": "bcmiller713",
+				"chat_type": "private"
+			}
+		]
+	},
+	{
+		"name": "easyEats",
+		"owner": "bcmiller713",
+		"members": ["bcmiller713","hockey4life63", "leelandmiller"],
+		"pending": ["jhuynh85"],
+		"cohort": "UCSD0417",
+		"chat": [
+			{
+				"body": "Hello everyone!",
+				"date": "09/20/2017",
+				"author_id": "jhuynh85",
+				"chat_type": "public"
+			},
+			{
+				"body": "What's up?",
+				"date": "09/21/2017",
+				"author_id": "Gruebes",
+				"chat_type": "public"
+			},
+			{
+				"body": "So private!",
+				"date": "09/20/2017",
+				"author_id": "leelandmiller",
+				"chat_type": "private"
+			},
+			{
+				"body": "I know right?",
+				"date": "09/21/2017",
+				"author_id": "bcmiller713",
+				"chat_type": "private"
+			}
+		]
+	},
+	{
+		"name": "gregis",
+		"owner": "bcmiller713",
+		"members": ["bcmiller713","cindygchen", "leelandmiller"],
+		"pending": ["jhuynh85"],
+		"cohort": "UCSD0417",
+		"chat": [
+			{
+				"body": "Hello everyone!",
+				"date": "09/20/2017",
+				"author_id": "jhuynh85",
+				"chat_type": "public"
+			},
+			{
+				"body": "What's up?",
+				"date": "09/21/2017",
+				"author_id": "Gruebes",
+				"chat_type": "public"
+			},
+			{
+				"body": "So private!",
+				"date": "09/20/2017",
+				"author_id": "leelandmiller",
+				"chat_type": "private"
+			},
+			{
+				"body": "I know right?",
+				"date": "09/21/2017",
+				"author_id": "bcmiller713",
+				"chat_type": "private"
+			}
+		]
+	},
+	{
+		"name": "lindasList",
+		"owner": "aarongaither",
+		"members": ["aarongaither","leenbean16"],
+		"pending": ["leelandmiller"],
+		"cohort": "UCSD0417",
+		"chat": [
+			{
+				"body": "Let's chat!",
+				"date": "07/08/2017",
+				"author_id": "leelandmiller",
+				"chat_type": "public"
+			},
+			{
+				"body": "Really, no one?",
+				"date": "07/08/2017",
+				"author_id": "leelandmiller",
+				"chat_type": "public"
+			},
+			{
+				"body": "C'mon guys!?",
+				"date": "07/08/2017",
+				"author_id": "leelandmiller",
+				"chat_type": "public"
+			},
+			{
+				"body": "So private!",
+				"date": "09/20/2017",
+				"author_id": "leelandmiller",
+				"chat_type": "private"
+			},
+			{
+				"body": "I know right?",
+				"date": "09/21/2017",
+				"author_id": "aarongaither",
 				"chat_type": "private"
 			}
 		]
