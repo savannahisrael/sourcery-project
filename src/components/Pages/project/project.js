@@ -187,6 +187,8 @@ class Project extends Component {
     ));
   }
 
+  getParams = () => [this.props.match.params.cohort, this.props.match.params.username, this.props.match.params.project];
+
   renderButtonText = () => {
     let buttonText = '';
     const priv = this.state.priviledge;
@@ -200,6 +202,19 @@ class Project extends Component {
       buttonText = 'Request to Join!'
     }
     return buttonText;
+  }
+
+  handleButtonClick = () => {
+    const priv = this.state.priviledge;
+    if (priv === 'owner') {
+      console.log('Edit details clicked.')
+      const [cohort, username, project] = this.getParams();
+      window.location = `/${cohort}/${username}/edit/${project}`
+    } else if (priv === 'public') {
+      console.log('Request to join was clicked.')      
+    } else {
+      console.log('Button clicked...')
+    }
   }
 
   panes = () => {
@@ -296,7 +311,7 @@ class Project extends Component {
 
               <Grid.Column width={4}>
                 <Segment className='joinRequest'>
-                  <Button fluid className='projectJoin' link={this.state.deploy_link}>
+                  <Button fluid className='projectJoin' onClick={this.handleButtonClick}>
                     {this.renderButtonText()}
                   </Button>
                 </Segment>
