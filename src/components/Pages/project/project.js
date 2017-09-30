@@ -216,6 +216,7 @@ class Project extends Component {
       axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}})
       .then(res => {
         console.log('Request to join:', res);
+        this.state.priviledge = 'pending';
         this.fetchProjectData();
       })
       .catch(err => console.log('err on request to join:', err))
