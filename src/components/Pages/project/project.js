@@ -135,7 +135,8 @@ class Project extends Component {
         }
       }
       return (
-        <MemberBlock {...member} projectId={this.state._id} updateFunction={this.update} />
+        <MemberBlock {...member} priviledge={this.state.priviledge}
+        projectId={this.state._id} updateFunction={this.update} />
       )
     })
   }
