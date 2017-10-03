@@ -26,8 +26,8 @@ class MemberBlock extends Component {
     );
   }
 
-  handleReject = () => {
-    this.setState({eject: false});
+  handleXClick = () => {
+     this.setState((prevState, props) => ({eject: !prevState.eject}));
   }
 
   render() {
