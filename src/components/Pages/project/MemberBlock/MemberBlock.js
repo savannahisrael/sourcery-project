@@ -26,15 +26,17 @@ class MemberBlock extends Component {
     );
   }
 
-  handleReject = () => {
-    this.setState({eject: false});
+  handleXClick = () => {
+     this.setState((prevState, props) => ({eject: !prevState.eject}));
   }
 
   render() {
     return (
       <Item.Group>
+        {this.props.priviledge === 'owner' ? 
         <Icon link color='grey' className='projectRemove'
         fitted name='remove' size='large' onClick={this.handleXClick} />
+        : ''}
           <Item link href={`https://github.com/${this.props.github.login}`}>
           <Item.Image className='memberImage' shape='circular' size='mini' src={this.props.github.avatar_url}/>
           <Item.Content>
@@ -43,7 +45,7 @@ class MemberBlock extends Component {
             <Item.Meta>{`${this.props.contributions.additions} ++ / ${this.props.contributions.deletions} --`}</Item.Meta>
           </Item.Content>
         </Item>
-        {this.state.eject ?
+        {this.state.eject && this.props.priviledge === 'owner' ?
         <div>
           <Item.Content className='projectEject'>Are you sure you want to eject this team member?</Item.Content>
           <div className='ui two buttons'>
