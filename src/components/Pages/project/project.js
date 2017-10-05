@@ -230,10 +230,8 @@ class Project extends Component {
       window.location = `/${cohort}/${username}/edit/${project}`
     } else if (priv === 'public') {
       axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}, memberId:this.state.userID.user._id, joinerStatus:"joined"})
-      .then(res => {
-        this.setState({priviledge: 'pending'});
-        this.fetchProjectData();
-      })
+      .then(this.setState({priviledge: 'pending'}))
+      .then(this.fetchProjectData())
       .catch(err => console.log('err on request to join:', err))
     }
   }
