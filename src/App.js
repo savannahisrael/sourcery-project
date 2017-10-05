@@ -1,5 +1,4 @@
 import React from 'react';
-import io from 'socket.io-client';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import Landing from './components/Pages/landing';
 import Dashboard from './components/Pages/dashboard';
@@ -12,9 +11,6 @@ import Footer from './components/Common/footer';
 import './App.css';
 import axios from 'axios';
 // import '../semantic/dist/semantic.min.css';
-
-const socket = io();
-socket.on('connect', () => console.log('Socket connected.'));
 
 //function checking github auth
 const PrivateRoute = ({ component: Component, ...rest }) => (
