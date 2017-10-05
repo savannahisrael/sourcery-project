@@ -158,7 +158,7 @@ class Project extends Component {
       $pull:{pending_members:props._id}, 
       $push:{members:props._id}
     }, projectId:this.state._id, 
-    memberId:this.props._id, 
+    memberId:props._id, 
     joinerStatus:"approved"
   };
    
@@ -172,7 +172,7 @@ class Project extends Component {
     let update = {update:{
       $pull:{pending_members:props._id}
     }, projectId:this.state._id,
-    memberId:this.props._id,
+    memberId:props._id,
     joinerStatus:"declined"
   };
 
@@ -229,7 +229,7 @@ class Project extends Component {
       const [cohort, username, project] = this.getParams();
       window.location = `/${cohort}/${username}/edit/${project}`
     } else if (priv === 'public') {
-      axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}})
+      axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}, memberId:this.state.userID.user._id, joinerStatus:"joined"})
       .then(res => {
         this.setState({priviledge: 'pending'});
         this.fetchProjectData();
