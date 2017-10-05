@@ -168,7 +168,10 @@ class Project extends Component {
     let update = {update:{
       $pull:{pending_members:props._id}, 
       $push:{members:props._id}
-    }, projectId:this.state._id};
+    }, projectId:this.state._id, 
+    memberId:this.props._id, 
+    joinerStatus:"approved"
+  };
    
     axios.patch('/api/projects', update)
       .then(
@@ -181,7 +184,10 @@ class Project extends Component {
     
     let update = {update:{
       $pull:{pending_members:props._id}
-    }, projectId:this.state._id};
+    }, projectId:this.state._id,
+    memberId:this.props._id,
+    joinerStatus:"declined"
+  };
 
     axios.patch('/api/projects', update)
     .then(

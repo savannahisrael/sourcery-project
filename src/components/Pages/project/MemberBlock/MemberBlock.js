@@ -19,7 +19,10 @@ class MemberBlock extends Component {
     console.log("this.props in member block", this.props);
     let update = {update:{
       $pull:{members:this.props._id}
-    }, projectId:this.props.projectId};
+      },projectId:this.props.projectId, 
+        memberId:this.props._id, 
+        joinerStatus: "ejected"
+    };
     axios.patch('/api/projects', update)
       .then(
         this.props.updateFunction()

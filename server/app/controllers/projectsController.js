@@ -158,8 +158,8 @@ module.exports = {
         // req.params.cohort = '0417';
         // req.params.username = "fahad";
         // req.params.project = 'testProject4';
-        console.log("inside One Project ORM");
-        console.log("req.params: ",req.params);
+        // console.log("inside One Project ORM");
+        // console.log("req.params: ",req.params);
         let query1 = Cohort.findOne({
             code: req.params.cohort
         }, [{
@@ -172,12 +172,12 @@ module.exports = {
 
         Promise.all([query1, query2]).then(
             results => {
-                console.log("results: ", results);
+                // console.log("results: ", results);
                 let cohortId = results[0]._id;
                 let userId = results[1]._id;
 
                 if (cohortId && userId) {
-                    console.log("query variables inside if statement: ", cohortId, userId, req.params.project)
+                    // console.log("query variables inside if statement: ", cohortId, userId, req.params.project)
                     Project.find({
                             cohort_id: cohortId,
                             owner_id: userId,
@@ -189,7 +189,7 @@ module.exports = {
                         .populate('members')
                         .populate('chat.author_id')
                         .exec((err, data) => {
-                            console.log('Project data:', data)
+                            // console.log('Project data:', data)
                             res.json(data);
                         })
                 } else {
@@ -230,7 +230,8 @@ module.exports = {
                 _id: req.body.projectId
             }, req.body.update)
             .then(doc => {
-                switch (req.body.update.status) {
+                console.log("req.body.update.status: ", req.body.update.status);
+                switch (req.body.update.status||req.body.joinerStatus) {
                     case "in-progress":
                         req.body.activityData = {
                             event: "in-progress",
@@ -254,6 +255,15 @@ module.exports = {
                         }
 
                         activityController.create(req);
+                        return;
+                    case "approved":
+                        console.log("in the approval branch");
+                        return;
+                    case "declined":
+                        console.log("in declined branch");
+                        return;
+                    case "ejected":
+                        console.log("in the ejected branch");
                         return;
                 }
                 res.json(doc);
