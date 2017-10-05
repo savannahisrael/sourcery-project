@@ -8,64 +8,73 @@ import axios from 'axios';
 import moment from 'moment';
 import io from 'socket.io-client';
 
-const socket = io();
 const formatDate = date => moment(date).format('MM/DD/YYYY');
 
 
 class Project extends Component {
-
-  state = {
-    _id: '',
-    userID: {
+  constructor(props) {
+    super(props)
+    const socket = io();
+    this.state = {
+      socket,
       _id: '',
-      login: false,
-      user: {
-        github: {
-          login: '',
-          avatar_url: '',
-          name: ''
+      userID: {
+        _id: '',
+        login: false,
+        user: {
+          github: {
+            login: '',
+            avatar_url: '',
+            name: ''
+          }
         }
-      }
-    },
-    name: 'Loading',
-    summary: 'Loading data...',
-    description: 'Loading data...',
-    tech_tags: [],
-    start_date: '',
-    duration: 0,
-    members_wanted: 0,
-    google_drive_link: "",
-    trello_link: "",
-    repo_link: "",
-    deploy_link: "",
-    chat: [],
-    pending_members: [],
-    members: [],
-    owner_id: '',
-    cohort_id: '',
-    issues: [],
-    pulls: [],
-    contributors: [],
-    priviledge: 'public'
-  };
+      },
+      name: 'Loading',
+      summary: 'Loading data...',
+      description: 'Loading data...',
+      tech_tags: [],
+      start_date: '',
+      duration: 0,
+      members_wanted: 0,
+      google_drive_link: "",
+      trello_link: "",
+      repo_link: "",
+      deploy_link: "",
+      chat: [],
+      pending_members: [],
+      members: [],
+      owner_id: '',
+      cohort_id: '',
+      issues: [],
+      pulls: [],
+      contributors: [],
+      priviledge: 'public'
+    };
+  }
+
+  
 
   // On page load, get project data and send to this.state.project
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
     this.fetchProjectData()
     .then(repoLink => repoLink ? this.fetchGithubData(repoLink) : repoLink )
-    .then(repoInfo => this.checkLoggedIn());
+    .then(() => this.checkLoggedIn())
+    .then(() => {
+        this.state.socket.emit('join', this.state._id);
+        this.state.socket.on('refreshMsg', data => {
+        this.fetchProjectData();
+      })
+    });
+  }
 
-    socket.on('refreshMsg', data => {
-     console.log("Refresh Msg Requested:", data);
-     this.fetchProjectData();
-    })
-
+  componentWillUnmount() {
+    this.state.socket.emit('leave', this.state._id)
   }
 
   fetchProjectData = () => {
     return axios.get(`/api/projectData${this.props.location.pathname}`).then(res => {
-      console.log('Project data:',res.data);
+      // console.log('Project data:',res.data);
       this.setState({ ...res.data[0] });
       return res.data[0].repo_link
     }).catch(error => {
@@ -85,19 +94,7 @@ class Project extends Component {
   }
 
   checkLoggedIn = () => {
-    axios.get('/auth/checkLoggedIn').then(res => {
-      // ------- Manual Auth Override
-      // res.data = {
-      //   login: true,
-      //   _id: '59cd80c251fe492bb4096713',
-      //   user: {
-      //     github: {
-      //       login: 'aarongaither',
-      //       avatar_url: 'https://avatars1.githubusercontent.com/u/16161706?v=4&s=400',
-      //       name: 'Aaron Gaither'
-      //     }
-      //   }
-      // }
+    return axios.get('/auth/checkLoggedIn').then(res => {
       if (res.data.login) {
         const curUser = res.data.user.github.login;
         if (this.state.owner_id.github.login === curUser) {
@@ -109,14 +106,8 @@ class Project extends Component {
         }
       }
       this.setState({ userID: res.data });
-
-
-      // ------- Manual Auth Overrides
-      // this.setState({priviledge: 'owner'})
-      // this.setState({priviledge: 'member'})
-      // this.setState({priviledge: 'pending'})
-
-      console.log('User:',res.data, 'priviledge:', this.state.priviledge);
+      return res.data;
+      // console.log('User:',res.data, 'priviledge:', this.state.priviledge);
     }).catch(error => {
       console.log('Catching Error while authing user: ', error);
     });
@@ -126,13 +117,11 @@ class Project extends Component {
     return this.state.members.map(member => {
       member.contributions = this.state.contributors.find(c => c.name === member.github.login )
       if (!member.contributions) {
-        {
           member.contributions = {
               commits: 0,
               additions: 0,
               deletions: 0
           }
-        }
       }
       return (
         <MemberBlock {...member} priviledge={this.state.priviledge}
@@ -162,31 +151,30 @@ class Project extends Component {
     ));
   }
 
-  approveJoin = (props) =>{
-    console.log(props)
-    
-    let update = {update:{
-      $pull:{pending_members:props._id}, 
-      $push:{members:props._id}
-    }, projectId:this.state._id};
+  approveJoin = props => {
+    // console.log(props)
+    const update = {
+      update: {
+        $pull: { pending_members: props._id}, 
+        $push: { members:props._id}
+      }, projectId:this.state._id
+    };
    
     axios.patch('/api/projects', update)
-      .then(
-        this.update()
-      )
+    .then(this.update())
   }
 
-  declineJoin =(props) =>{
-    console.log(props)
-    
-    let update = {update:{
-      $pull:{pending_members:props._id}
-    }, projectId:this.state._id};
+  declineJoin = props => {
+    // console.log(props)
+    const update = {
+      update: {
+        $pull: { pending_members: props._id}
+      }, 
+      projectId:this.state._id
+    };
 
     axios.patch('/api/projects', update)
-    .then(
-      this.update()
-    )
+    .then(this.update())
   }
 
   renderTechTags = () => {
@@ -235,20 +223,15 @@ class Project extends Component {
   handleButtonClick = () => {
     const priv = this.state.priviledge;
     if (priv === 'owner') {
-      console.log('Edit details clicked.')
       const [cohort, username, project] = this.getParams();
       window.location = `/${cohort}/${username}/edit/${project}`
     } else if (priv === 'public') {
-      console.log('Request to join was clicked.')
       axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}})
       .then(res => {
-        console.log('Request to join:', res);
-        this.state.priviledge = 'pending';
+        this.setState({priviledge: 'pending'});
         this.fetchProjectData();
       })
       .catch(err => console.log('err on request to join:', err))
-    } else {
-      console.log('Button clicked...')
     }
   }
 
@@ -267,8 +250,8 @@ class Project extends Component {
       return this.state.priviledge === 'owner' || this.state.priviledge === 'member' ? [pubChat, teamChat] : [pubChat];
   }
 
-  update = ()=>{
-    console.log("updated");
+  update = () => {
+    // console.log("updated");
     this.fetchProjectData();
   }
 
@@ -329,7 +312,7 @@ class Project extends Component {
   //   }
   // }
   render(props) {
-    console.log("this is the state before the render:", this.state);
+    // console.log("this is the state before the render:", this.state);
     return (
       <div className='projectBackground'>
         <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
@@ -395,15 +378,16 @@ class Project extends Component {
                         </Grid.Column>
                       </Grid.Row>
                     </Grid>
-                    {
+                        {
                           this.state.deploy_link !== '' ?
                               <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
                           : ''
                         }
                   </Segment>
+                  {this.state._id !== '' ? 
                   <Segment basic className='projectChat'>
                     <Tab menu={{ secondary: true, pointing: true }} panes={this.panes()}/>
-                  </Segment>
+                  </Segment> : ''}
                 </Segment>
               </Grid.Column>
 
