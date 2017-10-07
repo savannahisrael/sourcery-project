@@ -211,7 +211,8 @@ module.exports = {
 
                 req.body.activityData = {
                     event: "proposal",
-                    project_id: doc._id
+                    project_id: doc._id, 
+                    user_id: req.user._id
                 };
 
                 activityController.create(req);
@@ -225,19 +226,21 @@ module.exports = {
 
     //Method to update a Project 
     update: (req, res) => {
-        console.log("req.body: ", req.body);
+        // console.log("req.body: ", req.body);
         Project.update({
                 _id: req.body.projectId
             }, req.body.update)
             .then(doc => {
-                console.log("req.body.update.status: ", req.body.update.status);
-                console.log("doc: ", doc);
+                // console.log("req.body.update.status: ", req.body.update.status);
+                // console.log("doc: ", doc);
+                // console.log("req.user", req.user);
                 switch (req.body.update.status||req.body.joinerStatus) {
                     //Activity feed update for project status change for a specific project
                     case "propsal":
                         req.body.activityData = {
                             event: "proposal",
-                            project_id: req.body.projectId
+                            project_id: req.body.projectId,
+                            user_id: req.user._id
                         }
 
                         activityController.create(req);
@@ -245,7 +248,8 @@ module.exports = {
                     case "in-progress":
                         req.body.activityData = {
                             event: "in-progress",
-                            project_id: req.body.projectId
+                            project_id: req.body.projectId,
+                            user_id: req.user._id
                         }
 
                         activityController.create(req);
@@ -253,7 +257,8 @@ module.exports = {
                     case "completed":
                         req.body.activityData = {
                             event: "completed",
-                            project_id: req.body.projectId
+                            project_id: req.body.projectId,
+                            user_id: req.user._id
                         }
 
                         activityController.create(req);
