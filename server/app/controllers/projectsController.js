@@ -158,8 +158,8 @@ module.exports = {
         // req.params.cohort = '0417';
         // req.params.username = "fahad";
         // req.params.project = 'testProject4';
-        console.log("inside One Project ORM");
-        console.log("req.params: ",req.params);
+        // console.log("inside One Project ORM");
+        // console.log("req.params: ",req.params);
         let query1 = Cohort.findOne({
             code: req.params.cohort
         }, [{
@@ -172,12 +172,12 @@ module.exports = {
 
         Promise.all([query1, query2]).then(
             results => {
-                console.log("results: ", results);
+                // console.log("results: ", results);
                 let cohortId = results[0]._id;
                 let userId = results[1]._id;
 
                 if (cohortId && userId) {
-                    console.log("query variables inside if statement: ", cohortId, userId, req.params.project)
+                    // console.log("query variables inside if statement: ", cohortId, userId, req.params.project)
                     Project.find({
                             cohort_id: cohortId,
                             owner_id: userId,
@@ -189,7 +189,7 @@ module.exports = {
                         .populate('members')
                         .populate('chat.author_id')
                         .exec((err, data) => {
-                            console.log('Project data:', data)
+                            // console.log('Project data:', data)
                             res.json(data);
                         })
                 } else {
@@ -211,7 +211,8 @@ module.exports = {
 
                 req.body.activityData = {
                     event: "proposal",
-                    project_id: doc._id
+                    project_id: doc._id, 
+                    user_id: req.user._id
                 };
 
                 activityController.create(req);
@@ -225,16 +226,30 @@ module.exports = {
 
     //Method to update a Project 
     update: (req, res) => {
-        console.log("req: ", req.body);
+        // console.log("req.body: ", req.body);
         Project.update({
                 _id: req.body.projectId
             }, req.body.update)
             .then(doc => {
-                switch (req.body.update.status) {
+                // console.log("req.body.update.status: ", req.body.update.status);
+                // console.log("doc: ", doc);
+                // console.log("req.user", req.user);
+                switch (req.body.update.status||req.body.joinerStatus) {
+                    //Activity feed update for project status change for a specific project
+                    case "propsal":
+                        req.body.activityData = {
+                            event: "proposal",
+                            project_id: req.body.projectId,
+                            user_id: req.user._id
+                        }
+
+                        activityController.create(req);
+                        return;
                     case "in-progress":
                         req.body.activityData = {
                             event: "in-progress",
-                            project_id: doc._id
+                            project_id: req.body.projectId,
+                            user_id: req.user._id
                         }
 
                         activityController.create(req);
@@ -242,15 +257,48 @@ module.exports = {
                     case "completed":
                         req.body.activityData = {
                             event: "completed",
-                            project_id: doc._id
+                            project_id: req.body.projectId,
+                            user_id: req.user._id
                         }
 
                         activityController.create(req);
                         return;
-                    case "member joined project":
+                    //Activity feed update for member status changes in relation to a particular project                        
+                    case "joined":
                         req.body.activityData = {
                             event: "member joined project",
-                            project_id: doc._id
+                            project_id: req.body.projectId, 
+                            user_id: req.body.memberId
+                        }
+
+                        activityController.create(req);
+                        return;
+                    case "approved":
+                        console.log("in the approval branch");
+                        req.body.activityData={
+                            event:"approved to join the project", 
+                            project_id:req.body.projectId,
+                            user_id:req.body.memberId
+                        }
+
+                        activityController.create(req);
+                        return;
+                    case "declined":
+                        console.log("in declined branch");
+                        req.body.activityData={
+                            event:"disapproved to join the project", 
+                            project_id:req.body.projectId,
+                            user_id:req.body.memberId
+                        }
+
+                        activityController.create(req);
+                        return;
+                    case "ejected":
+                        console.log("in the ejected branch");
+                        req.body.activityData={
+                            event:"was ejected from the project", 
+                            project_id:req.body.projectId,
+                            user_id:req.body.memberId
                         }
 
                         activityController.create(req);

@@ -206,7 +206,7 @@ class Explore extends Component {
   formatDate = date => moment(date).format('MM/DD/YYYY');
 
   render(props) {
-    console.log("before render state", this.state)
+    // console.log("before render state", this.state)
     return (
       <div className='exploreBackground'>
         <Navbar currentPage='explore' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>

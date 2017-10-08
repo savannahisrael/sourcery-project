@@ -221,18 +221,16 @@ class CreateProjectForm extends Component {
         axios.post('/api/projectNew', this.state.project)
         .then(res => {
           console.log(res.data);
-          window.location = `../${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.name}`;
+          window.location = `/${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.name}`;
         });
       } else {
+        console.log("in else statement for editing of project");
         axios.patch('/api/projects', {
           projectId: this.state.project._id,
           update: this.state.project
         })
-        .then(res => {
-          console.log('update:',res.data);
-          const [cohort, username, project] = this.getParams();
-          window.location = `/${cohort}/${username}/app/${project}`
-        });
+        .then(window.location = `/${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.name}`)
+        .catch(err => console.log(err));
       }
 
     }
@@ -241,6 +239,7 @@ class CreateProjectForm extends Component {
 
   render(props) {
     const { value } = this.state
+    console.log("this is state before the render:", this.state);
 
     return (
       <div className='createBackground'>

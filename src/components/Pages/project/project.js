@@ -151,27 +151,30 @@ class Project extends Component {
     ));
   }
 
-  approveJoin = props => {
-    // console.log(props)
-    const update = {
-      update: {
-        $pull: { pending_members: props._id}, 
-        $push: { members:props._id}
-      }, projectId:this.state._id
-    };
+  approveJoin = (props) =>{
+    console.log(props)
+    
+    let update = {update:{
+      $pull:{pending_members:props._id}, 
+      $push:{members:props._id}
+    }, projectId:this.state._id, 
+    memberId:props._id, 
+    joinerStatus:"approved"
+  };
    
     axios.patch('/api/projects', update)
     .then(this.update())
   }
 
-  declineJoin = props => {
-    // console.log(props)
-    const update = {
-      update: {
-        $pull: { pending_members: props._id}
-      }, 
-      projectId:this.state._id
-    };
+  declineJoin =(props) =>{
+    console.log(props)
+    
+    let update = {update:{
+      $pull:{pending_members:props._id}
+    }, projectId:this.state._id,
+    memberId:props._id,
+    joinerStatus:"declined"
+  };
 
     axios.patch('/api/projects', update)
     .then(this.update())
@@ -226,11 +229,9 @@ class Project extends Component {
       const [cohort, username, project] = this.getParams();
       window.location = `/${cohort}/${username}/edit/${project}`
     } else if (priv === 'public') {
-      axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}})
-      .then(res => {
-        this.setState({priviledge: 'pending'});
-        this.fetchProjectData();
-      })
+      axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}, memberId:this.state.userID.user._id, joinerStatus:"joined"})
+      .then(this.setState({priviledge: 'pending'}))
+      .then(this.fetchProjectData())
       .catch(err => console.log('err on request to join:', err))
     }
   }

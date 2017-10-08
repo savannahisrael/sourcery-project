@@ -5,7 +5,7 @@ module.exports = {
     //Method to return all Activities
     //**populate data from Users and Projects
     index: (req, res) => {
-        console.log("inside index of activity");
+        // console.log("inside index of activity");
         Activity.find({})
             .populate('user_id')
             .populate('project_id')
