@@ -21,42 +21,6 @@ class Project extends Component {
       dataLoaded: false,
       priviledge: 'public'
     };
-
-    // this.state = {
-    //   socket,
-    //   _id: '',
-    //   userID: {
-    //     _id: '',
-    //     login: false,
-    //     user: {
-    //       github: {
-    //         login: '',
-    //         avatar_url: '',
-    //         name: ''
-    //       }
-    //     }
-    //   },
-    //   name: 'Loading',
-    //   summary: 'Loading data...',
-    //   description: 'Loading data...',
-    //   tech_tags: [],
-    //   start_date: '',
-    //   duration: 0,
-    //   members_wanted: 0,
-    //   google_drive_link: "",
-    //   trello_link: "",
-    //   repo_link: "",
-    //   deploy_link: "",
-    //   chat: [],
-    //   pending_members: [],
-    //   members: [],
-    //   owner_id: '',
-    //   cohort_id: '',
-    //   issues: [],
-    //   pulls: [],
-    //   contributors: [],
-    //   priviledge: 'public'
-    // };
   }
 
   componentDidMount() {
