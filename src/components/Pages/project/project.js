@@ -15,57 +15,28 @@ class Project extends Component {
   constructor(props) {
     super(props)
     const socket = io();
+
     this.state = {
       socket,
-      _id: '',
-      userID: {
-        _id: '',
-        login: false,
-        user: {
-          github: {
-            login: '',
-            avatar_url: '',
-            name: ''
-          }
-        }
-      },
-      name: 'Loading',
-      summary: 'Loading data...',
-      description: 'Loading data...',
-      tech_tags: [],
-      start_date: '',
-      duration: 0,
-      members_wanted: 0,
-      google_drive_link: "",
-      trello_link: "",
-      repo_link: "",
-      deploy_link: "",
-      chat: [],
-      pending_members: [],
-      members: [],
-      owner_id: '',
-      cohort_id: '',
-      issues: [],
-      pulls: [],
-      contributors: [],
+      dataLoaded: false,
       priviledge: 'public'
     };
   }
 
-  
-
-  // On page load, get project data and send to this.state.project
-  // Also, get info on the user and save to this.state.userID
   componentDidMount() {
+    // console.log('State before fetch:', this.state);
     this.fetchProjectData()
     .then(repoLink => repoLink ? this.fetchGithubData(repoLink) : repoLink )
     .then(() => this.checkLoggedIn())
     .then(() => {
         this.state.socket.emit('join', this.state._id);
         this.state.socket.on('refreshMsg', data => {
-        this.fetchProjectData();
-      })
-    });
+          this.fetchProjectData();
+        })
+        this.setState({dataLoaded: true});
+        // console.log('State after fetch:',this.state);
+    })
+    .catch(error => console.log('Error on setup:', error));
   }
 
   componentWillUnmount() {
@@ -134,8 +105,8 @@ class Project extends Component {
     const DecisionButtons = (props) =>
     (<Card.Content extra>
       <div className='ui two buttons'>
-        <Button fluid className='projectClose' onClick= {()=> this.declineJoin(props)}>Decline </Button>
-        <Button fluid className='projectCheck' onClick= {()=> this.approveJoin(props)}>Approve </Button>
+        <Button fluid className='projectClose' onClick= {()=> this.manageJoin('approved', props)}>Decline </Button>
+        <Button fluid className='projectCheck' onClick= {()=> this.manageJoin('declined', props)}>Approve </Button>
       </div>
     </Card.Content>)
 
@@ -151,33 +122,17 @@ class Project extends Component {
     ));
   }
 
-  approveJoin = (props) =>{
-    console.log(props)
-    
-    let update = {update:{
-      $pull:{pending_members:props._id}, 
-      $push:{members:props._id}
-    }, projectId:this.state._id, 
-    memberId:props._id, 
-    joinerStatus:"approved"
-  };
-   
-    axios.patch('/api/projects', update)
-    .then(this.update())
-  }
-
-  declineJoin =(props) =>{
-    console.log(props)
-    
-    let update = {update:{
-      $pull:{pending_members:props._id}
-    }, projectId:this.state._id,
-    memberId:props._id,
-    joinerStatus:"declined"
-  };
-
-    axios.patch('/api/projects', update)
-    .then(this.update())
+  manageJoin = (status, props) => {
+    axios.patch('/api/projects', {
+      update: {
+        $pull: {pending_members:props._id}, 
+        $push: {members:props._id}
+      }, 
+      projectId: this.state._id, 
+      memberId: props._id, 
+      joinerStatus: status
+    })
+    .then(this.fetchProjectData())
   }
 
   renderTechTags = () => {
@@ -251,11 +206,6 @@ class Project extends Component {
       return this.state.priviledge === 'owner' || this.state.priviledge === 'member' ? [pubChat, teamChat] : [pubChat];
   }
 
-  update = () => {
-    // console.log("updated");
-    this.fetchProjectData();
-  }
-
   // renderDevIcons = () => {
   //   switch (this.state.primary_language) {
   //     case 'javascript':
@@ -316,104 +266,107 @@ class Project extends Component {
     // console.log("this is the state before the render:", this.state);
     return (
       <div className='projectBackground'>
-        <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
-        <Segment textAlign='center' vertical basic className='projectBanner'>
-          <Container textAlign='center' vertical>
-            {/* {this.renderDevIcons} */}
-            <Header as='h1' className='projectTitle'>
-            {this.state.name}
-            </Header>
-            <br/><br/><br/>
-            <p className='projectSummary'>{this.state.summary}</p>
-          </Container>
-        </Segment>
+        {this.state.dataLoaded ?
+        <div>
+          <Navbar currentPage='project' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
+          <Segment textAlign='center' vertical basic className='projectBanner'>
+            <Container textAlign='center' vertical>
+              {/* {this.renderDevIcons} */}
+              <Header as='h1' className='projectTitle'>
+              {this.state.name}
+              </Header>
+              <br/><br/><br/>
+              <p className='projectSummary'>{this.state.summary}</p>
+            </Container>
+          </Segment>
 
-        <Container>
-          <Grid columns={3} className='projectGrid'>
-            <Grid.Row>
+          <Container>
+            <Grid columns={3} className='projectGrid'>
+              <Grid.Row>
 
-              <Grid.Column width={4}>
-                <Segment className='pullRequest'>
-                  <Header as='h3'>Pull Requests</Header>
-                  {
-                    this.state.repo_link === '' ?
-                    'No Github Repository Connected.' :
-                    this.renderPRorIssue('pulls')
-                  }
-                </Segment>
-
-                <Segment className='pullRequest'>
-                  <Header as='h3'>Issues</Header>
-                  {
-                    this.state.repo_link === '' ?
-                    'No Github Repository Connected.' :
-                    this.renderPRorIssue('issues')
-                  }
-                </Segment>
-              </Grid.Column>
-
-              <Grid.Column width={8}>
-                <Segment>
-                  <Label className='projectProgress' attached='top'>{this.state.status}</Label>
-                  <Segment basic>
-                    <Header as='h3'>Project Details
-                      {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} className='projectIcons' name='github' size='large'/> : ''}
-                      {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} className='projectIcons' name='google' size='large' color='red'/> : ''}
-                      {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} className='projectIcons' name='trello' size='large' color='blue' /> : ''}
-                    </Header>
-                    <p>{this.state.description}</p>
-                    {this.renderTechTags()}<br/><br/>
-                    <Grid divided='vertically'>
-                      <Grid.Row columns={3}>
-                        <Grid.Column>
-                            <p className='projectStat'>Start Date</p>
-                            <Header>{formatDate(this.state.start_date)}</Header>
-                        </Grid.Column>
-                        <Grid.Column>
-                            <p className='projectStat'>Project Length</p>
-                            <Header>{this.state.duration} weeks </Header>
-                        </Grid.Column>
-                        <Grid.Column>
-                            <p className='projectStat'>Team Size</p>
-                            <Header>{this.state.members_wanted} members</Header>
-                        </Grid.Column>
-                      </Grid.Row>
-                    </Grid>
-                        {
-                          this.state.deploy_link !== '' ?
-                              <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
-                          : ''
-                        }
+                <Grid.Column width={4}>
+                  <Segment className='pullRequest'>
+                    <Header as='h3'>Pull Requests</Header>
+                    {
+                      this.state.repo_link === '' ?
+                      'No Github Repository Connected.' :
+                      this.renderPRorIssue('pulls')
+                    }
                   </Segment>
-                  {this.state._id !== '' ? 
-                  <Segment basic className='projectChat'>
-                    <Tab menu={{ secondary: true, pointing: true }} panes={this.panes()}/>
-                  </Segment> : ''}
-                </Segment>
-              </Grid.Column>
 
-              <Grid.Column width={4}>
-                <Segment className='joinRequest'>
-                  <Button fluid className='projectJoin' onClick={this.handleButtonClick}>
-                    {this.renderButtonText()}
-                  </Button>
-                </Segment>
+                  <Segment className='pullRequest'>
+                    <Header as='h3'>Issues</Header>
+                    {
+                      this.state.repo_link === '' ?
+                      'No Github Repository Connected.' :
+                      this.renderPRorIssue('issues')
+                    }
+                  </Segment>
+                </Grid.Column>
 
-                <Card.Group>
-                  {this.renderPendingMembers()}
-                </Card.Group>
+                <Grid.Column width={8}>
+                  <Segment>
+                    <Label className='projectProgress' attached='top'>{this.state.status}</Label>
+                    <Segment basic>
+                      <Header as='h3'>Project Details
+                        {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} className='projectIcons' name='github' size='large'/> : ''}
+                        {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} className='projectIcons' name='google' size='large' color='red'/> : ''}
+                        {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} className='projectIcons' name='trello' size='large' color='blue' /> : ''}
+                      </Header>
+                      <p>{this.state.description}</p>
+                      {this.renderTechTags()}<br/><br/>
+                      <Grid divided='vertically'>
+                        <Grid.Row columns={3}>
+                          <Grid.Column>
+                              <p className='projectStat'>Start Date</p>
+                              <Header>{formatDate(this.state.start_date)}</Header>
+                          </Grid.Column>
+                          <Grid.Column>
+                              <p className='projectStat'>Project Length</p>
+                              <Header>{this.state.duration} weeks </Header>
+                          </Grid.Column>
+                          <Grid.Column>
+                              <p className='projectStat'>Team Size</p>
+                              <Header>{this.state.members_wanted} members</Header>
+                          </Grid.Column>
+                        </Grid.Row>
+                      </Grid>
+                          {
+                            this.state.deploy_link !== '' ?
+                                <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
+                            : ''
+                          }
+                    </Segment>
+                    {this.state._id !== '' ? 
+                    <Segment basic className='projectChat'>
+                      <Tab menu={{ secondary: true, pointing: true }} panes={this.panes()}/>
+                    </Segment> : ''}
+                  </Segment>
+                </Grid.Column>
 
-                <Segment className='projectSegment'>
-                  <Header as='h3'>Team Members</Header>
-                  <Divider/>
-                  {this.renderTeamMembers()}
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Container>
+                <Grid.Column width={4}>
+                  <Segment className='joinRequest'>
+                    <Button fluid className='projectJoin' onClick={this.handleButtonClick}>
+                      {this.renderButtonText()}
+                    </Button>
+                  </Segment>
 
+                  <Card.Group>
+                    {this.renderPendingMembers()}
+                  </Card.Group>
 
+                  <Segment className='projectSegment'>
+                    <Header as='h3'>Team Members</Header>
+                    <Divider/>
+                    {this.renderTeamMembers()}
+                  </Segment>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Container>
+
+        </div>
+        : '' }
        </div>
     );
   }

@@ -7,93 +7,28 @@ import axios from 'axios';
 import moment from 'moment';
 
 class Dashboard extends Component {
-  constructor() {
-    super()
-    this.state = {
-      userID: {
-        login: false,
-        user: {
-          github: {
-            login: '',
-            avatar_url: '',
-            name: ''
-          }
-        }
-      },
-      activeProjects: [
-        {
-          tech_tags: [],
-          members_wanted: 0,
-          cohort_id: {
-            code: ''
-          },
-          owner_id: {
-            github: {
-              login: '',
-              avatar_url: ''
-            }
-          },
-          status: '',
-          members: [
-            {
-              github: {
-                login: ''
-              }
-            }
-          ]
-        }
-      ],
-      pastProjects: [
-        {
-          tech_tags: [],
-          members_wanted: 0,
-          cohort_id: {
-            code: ''
-          },
-          owner_id: {
-            github: {
-              login: '',
-              avatar_url: ''
-            }
-          },
-          status: '',
-          members: [
-            {
-              github: {
-                login: ''
-              }
-            }
-          ]
-        }
-      ]
-    };
+
+  state = {
+    dataLoaded: false
   }
 
   componentDidMount() {
+    // console.log('State before fetch:', this.state);
     this.checkLoggedIn()
-    .then(user => this.fetchProjects())
+    .then(() => this.fetchProjects())
+    .then(() => {
+      this.setState({dataLoaded: true});
+      // console.log('State after fetch:',this.state);
+    })
+    .catch(error => console.log('Error during setup:', error))
   }
 
   checkLoggedIn = () => {
     return axios.get('/auth/checkLoggedIn').then(res => {
       this.setState({ userID: res.data });
-
-      // ------- Manual Auth Override
-      // this.setState({
-      //   userID: {
-      //     login: true,
-      //     user: {
-      //       github: {
-      //         login: 'aarongaither',
-      //         avatar_url: 'https://avatars1.githubusercontent.com/u/16161706?v=4&s=400',
-      //         name: 'Aaron Gaither'
-      //       }
-      //     }
-      //   }
-      // })
       return res.data;
     }).catch(error => {
-      console.log('Catching Error while authing user: ', error);
+      console.log('Catching Error while authing user:', error);
     });
   }
 
@@ -109,7 +44,7 @@ class Dashboard extends Component {
       });
       return userProjects;
     }).catch(error => {
-      console.log('Catching Error: ', error);
+      console.log('Catching Error while fetching projects:', error);
     });
   }
 
@@ -189,22 +124,26 @@ class Dashboard extends Component {
   render(props) {
     return (
       <div>
-        <Navbar currentPage='dashboard' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
-        {/* <p>Cohort: {this.props.match.params.cohort}</p>
-        <p>Username: {this.props.match.params.username}</p> */}
-        <div className='dashboardBackground'>
-        <Segment textAlign='center' vertical className='dashboardBanner'>
-          <Container text>
-          <Header as='h1' className='dashboardTitle'>
-            Dashboard
-          </Header><br/><br/><br/>
-          </Container>
-        </Segment>
-        <br/><br/>
-        <Container>
-          <Tab className='tabMenu' menu={{ secondary: true, pointing: true }} panes={this.renderPanes()}/>
-        </Container>
+        {this.state.dataLoaded ?
+        <div>
+          <Navbar currentPage='dashboard' cohort={this.props.match.params.cohort} 
+          username={this.state.userID.user.github.login} 
+          avatar={this.state.userID.user.github.avatar_url}/>
+          <div className='dashboardBackground'>
+            <Segment textAlign='center' vertical className='dashboardBanner'>
+              <Container text>
+              <Header as='h1' className='dashboardTitle'>
+                Dashboard
+              </Header><br/><br/><br/>
+              </Container>
+            </Segment>
+            <br/><br/>
+            <Container>
+              <Tab className='tabMenu' menu={{ secondary: true, pointing: true }} panes={this.renderPanes()}/>
+            </Container>
+          </div>
         </div>
+        : '' }
       </div>
     );
   }
