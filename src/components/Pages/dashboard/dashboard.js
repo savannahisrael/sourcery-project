@@ -7,71 +7,9 @@ import axios from 'axios';
 import moment from 'moment';
 
 class Dashboard extends Component {
-  constructor() {
-    super()
 
-    this.state = {
-      dataLoaded: false
-    }
-
-  //   this.state = {
-  //     userID: {
-  //       login: false,
-  //       user: {
-  //         github: {
-  //           login: '',
-  //           avatar_url: '',
-  //           name: ''
-  //         }
-  //       }
-  //     },
-  //     activeProjects: [
-  //       {
-  //         tech_tags: [],
-  //         members_wanted: 0,
-  //         cohort_id: {
-  //           code: ''
-  //         },
-  //         owner_id: {
-  //           github: {
-  //             login: '',
-  //             avatar_url: ''
-  //           }
-  //         },
-  //         status: '',
-  //         members: [
-  //           {
-  //             github: {
-  //               login: ''
-  //             }
-  //           }
-  //         ]
-  //       }
-  //     ],
-  //     pastProjects: [
-  //       {
-  //         tech_tags: [],
-  //         members_wanted: 0,
-  //         cohort_id: {
-  //           code: ''
-  //         },
-  //         owner_id: {
-  //           github: {
-  //             login: '',
-  //             avatar_url: ''
-  //           }
-  //         },
-  //         status: '',
-  //         members: [
-  //           {
-  //             github: {
-  //               login: ''
-  //             }
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   };
+  state = {
+    dataLoaded: false
   }
 
   componentDidMount() {
