@@ -9,27 +9,18 @@ import moment from 'moment';
 class Dashboard extends Component {
 
   state = {
-    dataLoaded: false
+    dataLoaded: false,
+    userID: this.props.auth
   }
 
   componentDidMount() {
     // console.log('State before fetch:', this.state);
-    this.checkLoggedIn()
-    .then(() => this.fetchProjects())
+    this.fetchProjects()
     .then(() => {
       this.setState({dataLoaded: true});
       // console.log('State after fetch:',this.state);
     })
     .catch(error => console.log('Error during setup:', error))
-  }
-
-  checkLoggedIn = () => {
-    return axios.get('/auth/checkLoggedIn').then(res => {
-      this.setState({ userID: res.data });
-      return res.data;
-    }).catch(error => {
-      console.log('Catching Error while authing user:', error);
-    });
   }
 
   fetchProjects = () => {

@@ -5,44 +5,15 @@ import { Button, Container,Grid, Header, Form, Icon, Image, Segment, Item } from
 import Navbar from "../../Common/landingNavbar";
 import BackgroundImg from '../../../assets/images/background.png';
 import './landing.css';
-// import API from '../../../../server/app/routes.js';
 import axios from 'axios';
 
 export default class landingPage extends Component {
 
   state = {
-    userID: {},
     projects: [],
-    cohort: ""
+    cohort: "",
+    userID: this.props.auth
   };
-
-  // On page load, get all projects and send to this.state.projects
-  // Also, get info on the user and save to this.state.userID
-  componentDidMount() {
-    // axios.get('/auth/checkLoggedIn').then((res) => {
-    //   this.setState({
-    //     userID: res.data
-    //   });
-    //   console.log(res.data);
-    // }).catch((error) => {
-    //   console.log('Catching Error: ');
-    //   console.log(error);
-    // });
-    // axios.get('/api/projects').then((res) => {
-    //   this.setState({
-    //     projects: res.data
-    //   });
-    //   console.log(res.data);
-    // }).catch((error) => {
-    //   console.log('Catching Error: ');
-    //   console.log(error);
-    // });
-
-  }
-
-  // renderFeaturedProjects = () => {
-  //
-  // }
 
   handleLoginButton = () => {
     window.location = '/auth/github';

@@ -66,16 +66,6 @@ const statusOptions = [
 class CreateProjectForm extends Component {
   state = {
     mode: 'create',
-    userID: {
-      login: false,
-      user: {
-        github: {
-          login: '',
-          avatar_url: '',
-          name: ''
-        }
-      }
-    },
     project: {
       name: '',
       summary: '',
@@ -90,29 +80,31 @@ class CreateProjectForm extends Component {
       repo_link: '',
       deploy_link: '',
       status: 'proposal'
-    }
+    },
+    userID: this.props.auth,
+    redirect: false,
+    redirect_location: ''
   };
 
   // Also, get info on the user and save to this.state.userID
   componentDidMount() {
-    this.determineMode(...this.getParams()) ? 
-    this.fetchProjectData(...this.getParams())
-    .then(owner => this.checkLoggedIn())
-    .then(user => {
-      if (this.state.userID.user.github.login !== this.state.owner_id.github.login) {
-        const [cohort, username, project] = this.getParams();
-        window.location = `/${cohort}/${username}/app/${project}`
-      }
-    })
-    : this.checkLoggedIn();
-    
+    if (this.determineMode(...this.getParams())) {
+      this.fetchProjectData(...this.getParams())
+      .then(() => {
+        if (this.state.userID.user.github.login !== this.state.owner_id.github.login) {
+          const [cohort, username, project] = this.getParams();
+          this.setState({redirect_location: `/${cohort}/${username}/app/${project}` })
+          this.setState({redirect: true })
+        }
+      })
+    }    
   }
 
   getParams = () => [this.props.match.params.cohort, this.props.match.params.username, this.props.match.params.project];
 
   determineMode = (cohort, username, project) => {
     if (cohort && username && project) {
-      console.log('edit mode!')
+      // console.log('edit mode!')
       this.setState({mode: 'edit'})
       return true;
     } else {
@@ -122,7 +114,7 @@ class CreateProjectForm extends Component {
 
   fetchProjectData = (cohort, username, project) => {
     return axios.get(`/api/projectData/${cohort}/${username}/app/${project}`).then(res => {
-      console.log('Project data:',res.data);
+      // console.log('Project data:',res.data);
       const p = res.data[0];
       this.setState({ 
         project:{
@@ -147,17 +139,6 @@ class CreateProjectForm extends Component {
     }).catch(error => {
       console.log('Error while fetching data:', error);
       return error;
-    });
-  }
-
-  checkLoggedIn = () => {
-    return axios.get('/auth/checkLoggedIn').then(res => {
-      this.setState({ userID: res.data });
-      console.log("state:", this.state)
-      console.log(res.data);
-      return res.data;
-    }).catch((error) => {
-      console.log('Catching Error: ', error);
     });
   }
 
@@ -220,27 +201,28 @@ class CreateProjectForm extends Component {
       if (this.state.mode === 'create') {
         axios.post('/api/projectNew', this.state.project)
         .then(res => {
-          console.log(res.data);
-          window.location = `/${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.name}`;
-        });
+          // console.log(res.data);
+          this.setState({redirect_location: `/${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.name}`})
+          this.setState({redirect: true })
+        }).catch(err => console.log(err));
       } else {
         console.log("in else statement for editing of project");
         axios.patch('/api/projects', {
           projectId: this.state.project._id,
           update: this.state.project
         })
-        .then(window.location = `/${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.name}`)
-        .catch(err => console.log(err));
+        .then(res => {
+          this.setState({redirect_location: `/${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.name}`})
+          this.setState({redirect: true })
+        }).catch(err => console.log(err));
       }
-
     }
   }
 
 
   render(props) {
     const { value } = this.state
-    console.log("this is state before the render:", this.state);
-
+    // console.log("this is state before the render:", this.state);
     return (
       <div className='createBackground'>
         <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
