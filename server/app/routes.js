@@ -48,7 +48,9 @@ module.exports = function (app, passport) {
                     }
                 };
                 cohortController.update(req);
-                res.redirect(`/${req.session.cohortCode}/${req.user.github.login}/dashboard`);
+                // res.json(req.user)
+                // res.redirect(`/${req.session.cohortCode}/${req.user.github.login}/dashboard`);
+                res.redirect('/');
             } else {
                 // console.log("in else statement");
                 cohortController.verifyMember(req, res).then(result => {
@@ -57,9 +59,12 @@ module.exports = function (app, passport) {
                     if (result) {
                         req.session.cohortCode = result.code;
                         req.session.cohortId = result._id;
-                        res.redirect(`/${result.code}/${req.user.github.login}/dashboard`);
+                        // res.json(req.user)
+                        // res.redirect(`/${result.code}/${req.user.github.login}/dashboard`);
+                        res.redirect('/');
                     }else{
-                        res.redirect('/cohortCodeLogin');
+                        // res.redirect('/cohortCodeLogin');
+                        res.redirect('/');
                     }
                 });
             }
