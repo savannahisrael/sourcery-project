@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
+import React from 'react';
+import { Switch, Redirect, Route } from 'react-router-dom';
 import Landing from './components/Pages/landing';
 import Dashboard from './components/Pages/dashboard';
 import Explore from './components/Pages/explore';
@@ -10,7 +10,6 @@ import CohortLogin from './components/Pages/cohortLogin';
 import Footer from './components/Common/footer';
 import './App.css';
 import axios from 'axios';
-// import '../semantic/dist/semantic.min.css';
 
 // const authObj = {
 //   isAuthenticated: false,
@@ -30,73 +29,67 @@ import axios from 'axios';
 // }
 
 //function checking github auth
-// const PrivateRoute = ({ component: Component, ...rest }) => {
-//   console.log("inside private route");
-//   return (
-//   <Route {...rest} render={props => (
-//     (authObj.isAuthenticated === true) ? (
-//       <Component {...props}/>
-//     ) : (
-//       console.log("inside ternary: ",authObj.isAuthenticated)
-//     )
-//   )}/>
-// )}
+const PrivateRoute = ({auth, component: Component, ...rest }) => {
+  return (
+    <Route {...rest} render={props => (
+      auth.login ? (
+        <Component auth={auth} {...props}/>
+      ) : (
+        <Redirect to={{
+          pathname: '/',
+          state: { from: props.location }
+        }}/>
+      )
+    )}/>
+  )
+}
 
-class PrivateRoute extends Component{
-  state = {
-    loading: true,
-    isAuthenticated: false
+class App extends React.Component {
+
+  constructor(props) {
+    super(props)
+    // console.log('App constructor.')
+    this.state = {
+      userID: {
+        login: false
+      }
+    }
   }
 
-  componentDidMount(){
-    axios.get('/auth/checkLoggedIn').then(res =>{
-      this.setState({
-        loading: false, 
-        isAuthenticated: res.data.login
-      })
-    })
+  componentDidMount() {
+    this.checkLoggedIn();
+  }
+
+  checkLoggedIn = () => {
+    return axios.get('/auth/checkLoggedIn').then(res => {
+      this.setState({ userID: res.data });
+      return res.data;
+    }).catch(error => {
+      console.log('Catching Error while authing user:', error);
+    });
   }
 
   render(){
-    console.log("private route: ", this.state);
-    const{component:Component, rest} = this.props;
-    if(this.state.loading){
-      return <div> Loading</div>
-    } else {
-      return(
-        <Route {...rest} render={props => (
-          <div>
-            {!this.state.isAuthenticated && <Redirect to={{ pathname: '/', state: { from: this.props.location } }} />}
-            <Component {...this.props} />
+    return (
+        <div className='Main'>
+          <div className='Main-content'>
+            <Switch>
+              <Route exact path='/' 
+                  render={props => <Landing {...props} auth={this.state.userID}/>} />
+              <Route exact path='/cohortCodeLogin' component={CohortLogin} />
+              <PrivateRoute path='/:cohort/explore' auth={this.state.userID} component={Explore} />
+              <PrivateRoute path='/:cohort/create' auth={this.state.userID} component={Create} />
+              <PrivateRoute path='/:cohort/:username/profile' auth={this.state.userID} component={Profile} />
+              <PrivateRoute path='/:cohort/:username/dashboard' auth={this.state.userID} component={Dashboard} />
+              <PrivateRoute path='/:cohort/:username/edit/:project' auth={this.state.userID} component={Create} />
+              <PrivateRoute path='/:cohort/:username/app/:project' auth={this.state.userID} component={Project} />
+            </Switch>
           </div>
-        )}
-        />
-      )
-    }
-  }
-}
-
-const App = () =>{
-  console.log("In app before routes");
-  // authObj.authenticate();
-
-  return (
-    <Router>
-      <div className='Main'>
-        <div className='Main-content'>
-          <Route exact path='/' component={Landing} />
-          <Route exact path='/cohortCodeLogin' component={CohortLogin} />
-          <PrivateRoute path='/:cohort/explore' component={Explore} />
-          <PrivateRoute path='/:cohort/create' component={Create} />
-          <PrivateRoute path='/:cohort/:username/profile' component={Profile} />
-          <PrivateRoute path='/:cohort/:username/dashboard' component={Dashboard} />
-          <PrivateRoute path='/:cohort/:username/edit/:project' component={Create} />
-          <PrivateRoute path='/:cohort/:username/app/:project' component={Project} />
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </Router>
-  )
+    )
+  }
+
 }
 
 export default App;

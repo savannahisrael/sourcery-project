@@ -3,6 +3,7 @@ import { Tab, Label, Container, Image, Header, Segment, Grid, Divider, Button, I
 import Navbar from "../../Common/navbar";
 import Chat from "../../Common/chat";
 import MemberBlock from "./MemberBlock";
+import { Link } from 'react-router-dom';
 import './project.css';
 import axios from 'axios';
 import moment from 'moment';
@@ -19,22 +20,23 @@ class Project extends Component {
     this.state = {
       socket,
       dataLoaded: false,
-      priviledge: 'public'
+      priviledge: 'public',
+      userID: this.props.auth
     };
   }
 
   componentDidMount() {
-    // console.log('State before fetch:', this.state);
+    console.log('State before fetch:', this.state);
     this.fetchProjectData()
     .then(repoLink => repoLink ? this.fetchGithubData(repoLink) : repoLink )
-    .then(() => this.checkLoggedIn())
     .then(() => {
+        this.setPriveledge();
         this.state.socket.emit('join', this.state._id);
         this.state.socket.on('refreshMsg', data => {
           this.fetchProjectData();
         })
         this.setState({dataLoaded: true});
-        // console.log('State after fetch:',this.state);
+        console.log('State after fetch:',this.state);
     })
     .catch(error => console.log('Error on setup:', error));
   }
@@ -64,24 +66,15 @@ class Project extends Component {
     .catch(err => console.log('Error in github pull:', err))
   }
 
-  checkLoggedIn = () => {
-    return axios.get('/auth/checkLoggedIn').then(res => {
-      if (res.data.login) {
-        const curUser = res.data.user.github.login;
-        if (this.state.owner_id.github.login === curUser) {
-          this.setState({priviledge: 'owner'})
-        } else if (this.state.members.find(m => m.github.login === curUser)) {
-          this.setState({priviledge: 'member'})
-        } else if (this.state.pending_members.find(m => m.github.login === curUser)) {
-          this.setState({priviledge: 'pending'})
-        }
+  setPriveledge = () => {
+      const curUser = this.state.userID.user.github.login;
+      if (this.state.owner_id.github.login === curUser) {
+        this.setState({priviledge: 'owner'})
+      } else if (this.state.members.find(m => m.github.login === curUser)) {
+        this.setState({priviledge: 'member'})
+      } else if (this.state.pending_members.find(m => m.github.login === curUser)) {
+        this.setState({priviledge: 'pending'})
       }
-      this.setState({ userID: res.data });
-      return res.data;
-      // console.log('User:',res.data, 'priviledge:', this.state.priviledge);
-    }).catch(error => {
-      console.log('Catching Error while authing user: ', error);
-    });
   }
 
   renderTeamMembers = () => {
@@ -96,7 +89,7 @@ class Project extends Component {
       }
       return (
         <MemberBlock {...member} priviledge={this.state.priviledge}
-        projectId={this.state._id} updateFunction={this.update} />
+        projectId={this.state._id} updateFunction={this.manageJoin} />
       )
     })
   }
@@ -163,32 +156,26 @@ class Project extends Component {
 
   getParams = () => [this.props.match.params.cohort, this.props.match.params.username, this.props.match.params.project];
 
-  renderButtonText = () => {
-    let buttonText = '';
-    const priv = this.state.priviledge;
-    if (priv === 'owner') {
-      buttonText = 'Edit Project Details';
-    } else if (priv === 'member') {
-      buttonText = 'You are a member!';
-    } else if (priv === 'pending') {
-      buttonText = "Awaiting approval..."
-    } else {
-      buttonText = 'Request to Join!'
-    }
-    return buttonText;
-  }
-
-  handleButtonClick = () => {
+  renderButton = () => {
     const priv = this.state.priviledge;
     if (priv === 'owner') {
       const [cohort, username, project] = this.getParams();
-      window.location = `/${cohort}/${username}/edit/${project}`
-    } else if (priv === 'public') {
-      axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}, memberId:this.state.userID.user._id, joinerStatus:"joined"})
-      .then(this.setState({priviledge: 'pending'}))
-      .then(this.fetchProjectData())
-      .catch(err => console.log('err on request to join:', err))
+      return <Button fluid className='projectJoin' as={Link} to={`/${cohort}/${username}/edit/${project}`}
+        content='Edit Project Details' />
+    } else if (priv === 'member') {
+      return <Button fluid className='projectJoin' content='You are a member!' />
+    } else if (priv === 'pending') {
+      return <Button fluid className='projectJoin' content='Awaiting approval...' />
+    } else {
+      return <Button fluid className='projectJoin' onclick={this.handleButtonClick} content='Request to Join!' />
     }
+  }
+
+  handleButtonClick = () => {
+    axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}, memberId:this.state.userID.user._id, joinerStatus:"joined"})
+    .then(this.setState({priviledge: 'pending'}))
+    .then(this.fetchProjectData())
+    .catch(err => console.log('err on request to join:', err))
   }
 
   panes = () => {
@@ -263,7 +250,7 @@ class Project extends Component {
   //   }
   // }
   render(props) {
-    // console.log("this is the state before the render:", this.state);
+    console.log("this is the state before the render:", this.state);
     return (
       <div className='projectBackground'>
         {this.state.dataLoaded ?
@@ -346,9 +333,7 @@ class Project extends Component {
 
                 <Grid.Column width={4}>
                   <Segment className='joinRequest'>
-                    <Button fluid className='projectJoin' onClick={this.handleButtonClick}>
-                      {this.renderButtonText()}
-                    </Button>
+                    {this.renderButton()}
                   </Segment>
 
                   <Card.Group>
