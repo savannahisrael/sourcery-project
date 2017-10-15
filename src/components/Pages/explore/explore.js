@@ -28,13 +28,13 @@ class Explore extends Component {
   state = {
     dataLoaded: false,
     statusFilter: "Proposed",
-    techFilters: []
+    techFilters: [],
+    userID: this.props.auth
   }
 
   componentDidMount() {
     // console.log('State before fetch:', this.state);
      this.fetchProjectData()
-     .then(() => this.checkLoggedIn())
      .then(() => this.fetchActivityData())
      .then(() => {
         this.setState({dataLoaded: true})
@@ -51,16 +51,6 @@ class Explore extends Component {
     }).catch(error => {
       console.log('Error while fetching data:', error);
       return error;
-    });
-  }
-
-  checkLoggedIn = () => {
-    return axios.get('/auth/checkLoggedIn').then(res => {
-      // console.log('User data:',res.data);
-      this.setState({ userID: res.data });
-      return res.data;
-    }).catch((error) => {
-      console.log('Catching Error: ', error);
     });
   }
 

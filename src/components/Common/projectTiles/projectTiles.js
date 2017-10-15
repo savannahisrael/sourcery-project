@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Icon, Image, Button, Divider } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import './projectTiles.css';
 
 
@@ -7,7 +8,7 @@ const Tile = (props) => {
   if (props.cohort_id) {
     return (
       <div>
-        <Card centered raised className='tileCard' link href={`/${props.cohort_id.code}/${props.owner_id.github.login}/app/${props.name}`}>
+        <Card centered raised className='tileCard' as={Link} to={`/${props.cohort_id.code}/${props.owner_id.github.login}/app/${props.name}`}>
           <Card.Content className='tileHeader'>
             <Image src={props.owner_id.github.avatar_url} size='tiny' shape='circular' className='projecttileIcon'/>
             <Card.Header className='tileTitle'>
