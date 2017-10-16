@@ -11,23 +11,6 @@ import Footer from './components/Common/footer';
 import './App.css';
 import axios from 'axios';
 
-// const authObj = {
-//   isAuthenticated: false,
-//   authenticate(cb){
-//     axios.get('/auth/checkLoggedIn').then(res =>{
-//       console.log(res.data);
-//       authObj.isAuthenticated = res.data.login;
-//       console.log("after axios isAuthenticated:", authObj.isAuthenticated);
-//       cb();
-//       if (authObj.isAuthenticated === true){
-//         console.log("authObj if equals true");
-//       } else if (authObj.isAuthenticated === false){
-//         console.log("authObj if equal false"); 
-//       }
-//     })
-//   }
-// }
-
 //function checking github auth
 const PrivateRoute = ({auth, component: Component, ...rest }) => {
   return (
@@ -63,7 +46,7 @@ class App extends React.Component {
   checkLoggedIn = () => {
     return axios.get('/auth/checkLoggedIn').then(res => {
       this.setState({ userID: res.data });
-      console.log("res.data in checkLoggedIn: ",res.data);
+      //console.log("res.data in checkLoggedIn: ",res.data);
       return res.data;
     }).catch(error => {
       console.log('Catching Error while authing user:', error);
