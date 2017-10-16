@@ -22,6 +22,9 @@ class Project extends Component {
       dataLoaded: false,
       priviledge: 'public',
       repo: false,
+      issues: [],
+      pulls: [],
+      contributors: [],
       userID: this.props.auth
     };
   }
@@ -46,7 +49,7 @@ class Project extends Component {
           this.fetchProjectData();
         })
         this.setState({dataLoaded: true});
-        // console.log('State after fetch:',this.state);
+        console.log('State after fetch:',this.state);
     })
     .catch(error => console.log('Error on setup:', error));
   }
@@ -108,7 +111,7 @@ class Project extends Component {
 
       return (
         <MemberBlock {...member} priviledge={this.state.priviledge}
-        projectId={this.state._id} updateFunction={this.manageJoin} />
+        projectId={this.state._id} updateFunction={this.fetchProjectData} />
       )
     })
   }
@@ -117,8 +120,8 @@ class Project extends Component {
     const DecisionButtons = (props) =>
     (<Card.Content extra>
       <div className='ui two buttons'>
-        <Button fluid className='projectClose' onClick= {()=> this.manageJoin('approved', props)}>Decline </Button>
-        <Button fluid className='projectCheck' onClick= {()=> this.manageJoin('declined', props)}>Approve </Button>
+        <Button fluid className='projectClose' onClick= {()=> this.manageJoin('declined', props)}>Decline </Button>
+        <Button fluid className='projectCheck' onClick= {()=> this.manageJoin('approved', props)}>Approve </Button>
       </div>
     </Card.Content>)
 
@@ -135,15 +138,23 @@ class Project extends Component {
   }
 
   manageJoin = (status, props) => {
-    axios.patch('/api/projects', {
-      update: {
-        $pull: {pending_members:props._id}, 
-        $push: {members:props._id}
+    console.log('state in manageJoin:',this.state);
+    console.log('props in manageJoin:',props);
+    console.log('status in manageJoin:',status);
+    const update  = {
+      update:{
+          $pull:{pending_members:props._id}
       }, 
-      projectId: this.state._id, 
-      memberId: props._id, 
-      joinerStatus: status
-    })
+      projectId:this.state._id,
+      memberId:props._id,
+      joinerStatus:status
+    }
+
+    if (status === 'approved') {
+      update.update.$push = {members:props._id} 
+    }
+
+    axios.patch('/api/projects', update)
     .then(this.fetchProjectData())
   }
 
