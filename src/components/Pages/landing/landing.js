@@ -27,7 +27,7 @@ export default class landingPage extends Component {
   }
 
   handleCohortCodeButton = () => {
-    console.log("button clicked");
+    // console.log("button clicked");
     axios.get('/auth/cohortVerify', {
       params: {
         cohortCode: this.state.cohort
@@ -43,7 +43,7 @@ export default class landingPage extends Component {
     });
   }
 
-  handleCohortCodeChange = (event) => {
+  handleCohortCodeChange = event => {
     this.setState({
       cohort: event.target.value
     });
@@ -51,7 +51,7 @@ export default class landingPage extends Component {
 
   render() {
     if (this.props.auth.login) {
-      return (<Redirect to={`/0417/${this.props.auth.user.github.login}/dashboard`} />)
+      return (<Redirect to={`/${this.props.auth.cohortCode}/${this.props.auth.user.github.login}/dashboard`} />)
     } else {
       return (
         <div>
