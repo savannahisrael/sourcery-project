@@ -27,11 +27,11 @@ const Tile = (props) => {
             </Card.Description>
           </Card.Content>
           <Card.Content extra >
-            {props.members.slice(0, 4).map(member => 
+            {props.members.slice(0, 4).map(member =>
               <Image as='a' className='tileTeam' shape='circular'
               src={member.github.avatar_url} href={`https://github.com/${member.github.login}`} />
             )}
-              <Icon className='tileMore'name='ellipsis horizontal' size='large' />
+              {/* <Icon className='tileMore'name='ellipsis horizontal' size='large' /> */}
               <br/>
           </Card.Content>
           <Button animated='vertical' fluid attached='bottom' className='tileJoin'>
