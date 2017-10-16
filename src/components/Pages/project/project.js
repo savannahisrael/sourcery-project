@@ -21,14 +21,24 @@ class Project extends Component {
       socket,
       dataLoaded: false,
       priviledge: 'public',
+      repo: false,
       userID: this.props.auth
     };
   }
 
   componentDidMount() {
-    console.log('State before fetch:', this.state);
+    // console.log('State before fetch:', this.state);
     this.fetchProjectData()
-    .then(repoLink => repoLink ? this.fetchGithubData(repoLink) : repoLink )
+    .then(repoLink => {
+      if (repoLink) {
+        this.setState({repo: true})
+        this.fetchGithubData(repoLink)
+        return repoLink
+      } else {
+        this.setState({repo: false})
+        return repoLink
+      }
+    })
     .then(() => {
         this.setPriveledge();
         this.state.socket.emit('join', this.state._id);
@@ -36,7 +46,7 @@ class Project extends Component {
           this.fetchProjectData();
         })
         this.setState({dataLoaded: true});
-        console.log('State after fetch:',this.state);
+        // console.log('State after fetch:',this.state);
     })
     .catch(error => console.log('Error on setup:', error));
   }
@@ -79,14 +89,23 @@ class Project extends Component {
 
   renderTeamMembers = () => {
     return this.state.members.map(member => {
-      member.contributions = this.state.contributors.find(c => c.name === member.github.login )
-      if (!member.contributions) {
-          member.contributions = {
-              commits: 0,
-              additions: 0,
-              deletions: 0
-          }
+      if (this.state.repo) {
+        member.contributions = this.state.contributors.find(c => c.name === member.github.login )
+        if (!member.contributions) {
+            member.contributions = {
+                commits: 0,
+                additions: 0,
+                deletions: 0
+            }
+        }
+      } else {
+        member.contributions = {
+            commits: 0,
+            additions: 0,
+            deletions: 0
+        }
       }
+
       return (
         <MemberBlock {...member} priviledge={this.state.priviledge}
         projectId={this.state._id} updateFunction={this.manageJoin} />
@@ -137,21 +156,22 @@ class Project extends Component {
   }
 
   renderPRorIssue = type => {
-    const list = this.state[type];
-    return list.length === 0 ?
-    `No ${type} for this repository, yet.` :
-    list.map( item => (
-      <Item.Group>
-        <Divider/>
-        <Item>
-          <Image className='projectImage' shape='circular' size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} />
-          <Item.Content>
-            <Item.Header as='a' href={item.url}>{item.title}</Item.Header>
-            <Item.Meta>{item.state}</Item.Meta>
-          </Item.Content>
-        </Item>
-      </Item.Group>
-    ));
+    if (!this.state.repo) {
+      return `No ${type} for this repository, yet.` 
+    } else {
+      this.state[type].map( item => (
+        <Item.Group>
+          <Divider/>
+          <Item>
+            <Image className='projectImage' shape='circular' size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} />
+            <Item.Content>
+              <Item.Header as='a' href={item.url}>{item.title}</Item.Header>
+              <Item.Meta>{item.state}</Item.Meta>
+            </Item.Content>
+          </Item>
+        </Item.Group>
+      ));
+    }
   }
 
   getParams = () => [this.props.match.params.cohort, this.props.match.params.username, this.props.match.params.project];
@@ -250,7 +270,7 @@ class Project extends Component {
   //   }
   // }
   render(props) {
-    console.log("this is the state before the render:", this.state);
+    // console.log("this is the state before the render:", this.state);
     return (
       <div className='projectBackground'>
         {this.state.dataLoaded ?
@@ -275,7 +295,7 @@ class Project extends Component {
                   <Segment className='pullRequest'>
                     <Header as='h3'>Pull Requests</Header>
                     {
-                      this.state.repo_link === '' ?
+                      this.state.repo ?
                       'No Github Repository Connected.' :
                       this.renderPRorIssue('pulls')
                     }
@@ -284,7 +304,7 @@ class Project extends Component {
                   <Segment className='pullRequest'>
                     <Header as='h3'>Issues</Header>
                     {
-                      this.state.repo_link === '' ?
+                      this.state.repo ?
                       'No Github Repository Connected.' :
                       this.renderPRorIssue('issues')
                     }
