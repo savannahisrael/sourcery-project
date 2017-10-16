@@ -138,9 +138,6 @@ class Project extends Component {
   }
 
   manageJoin = (status, props) => {
-    console.log('state in manageJoin:',this.state);
-    console.log('props in manageJoin:',props);
-    console.log('status in manageJoin:',status);
     const update  = {
       update:{
           $pull:{pending_members:props._id}
@@ -198,7 +195,7 @@ class Project extends Component {
     } else if (priv === 'pending') {
       return <Button fluid className='projectJoin' content='Awaiting approval...' />
     } else {
-      return <Button fluid className='projectJoin' onclick={this.handleButtonClick} content='Request to Join!' />
+      return <Button fluid className='projectJoin' onClick={this.handleButtonClick} content='Request to Join!' />
     }
   }
 

@@ -10,10 +10,6 @@ class MemberBlock extends Component {
     eject: false
   }
 
-  // handleXClick = () => {
-  //   this.setState({eject: !this.state.eject});
-  // }
-
   handleEject = () => {
     // console.log('clicked eject button');
     // console.log("this.props in member block", this.props);
