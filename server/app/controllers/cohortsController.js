@@ -76,6 +76,7 @@ module.exports = {
     },
     //Method to verify if user exists in cohort member list
     verifyMember: (req, res)=>{
+        // console.log("req.user in verify member: ",req.user);
         return Cohort.findOne({
             members: req.user._id
         })
