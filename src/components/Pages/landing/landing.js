@@ -51,7 +51,7 @@ export default class landingPage extends Component {
 
   render() {
     if (this.props.auth.login) {
-      return (<Redirect to="/0417/explore"/>)
+      return (<Redirect to={`/0417/${this.props.auth.user.github.login}/dashboard`} />)
     } else {
       return (
         <div>
