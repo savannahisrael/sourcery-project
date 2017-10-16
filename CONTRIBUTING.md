@@ -18,7 +18,7 @@
 
 ### Branching
 
-Before you start working, you will need to create a separate branch specific to the issue / feature you're working on. You will push your work to this branch.
+Before you start working, you will need to create a separate branch specific to the issue / feature you're working on. You will push your work to this branch. All pull requests to devCircle should be made against the 'develop' branch. Any pull requests against the master branch will be auto closed without review.
 
 #### Naming Your Branch
 
@@ -36,7 +36,27 @@ $ git checkout -b [name_of_your_new_branch]
 
 ### API keys
 
-- API key stuff here
+There are a few API keys that you'll have to create files for in order for localhost setups to work.
+
+#### Github GraphQL
+
+Create a file named config.js, place it in server/app/githubAPI, and structure like so:
+```javascript
+module.exports = '' //your token here
+```
+
+#### Github authentication
+
+Create a file named auth.js, place it in server/config, and structure it like so:
+```javascript
+module.exports = {
+    'github':{
+        'clientID': '', //token here
+        'clientSecret': '', //secret key here
+        'callbackURL': 'http://localhost:4000/auth/github/callback' 
+    }
+};
+```
 
 ### Setup devCircle
 Once you have devCircle cloned, before you start the application, you first need to install all of the dependencies:
@@ -59,11 +79,26 @@ mongod
 npm run build
 
 # start the node server
-npm start
+node server
 ```
 
 Now navigate to your browser and open
 <http://localhost:4000>.
 
 ### Style guide
-- Style guide stuff here
+
+Here are a few loose rules to follow when contributing code:
+- Spaces over tabs.
+- Space Size should be 4 for all javascript files, except those that have JSX, in which case size should be 2.
+- Single quote over double quote, except where apostrophies must be escaped.
+- String interpolation over string concatenation.
+- Prefer fat arrow functions for anonymous functions, except where lexical 'this' would otherwise be a problem.
+- Const for assignments, except where reassignment is necessary, then use let.
+- Prefer single purpose functions.
+- Avoid side effects in functions.
+- Avoid implied returns in multi-line arrow functions, except for JSX.
+
+#### Naming
+- HTML: dash-case.
+- Javascript: camelCase.
+- Database: snake_case.
