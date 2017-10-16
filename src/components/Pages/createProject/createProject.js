@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Container, Segment, Header, Button} from 'semantic-ui-react';
 import Navbar from "../../Common/navbar";
+import { Redirect } from 'react-router-dom';
 import './createProject.css';
 import techSelection from '../../../utils/techTags.json';
 import axios from 'axios';
@@ -223,59 +224,63 @@ class CreateProjectForm extends Component {
   render(props) {
     const { value } = this.state
     // console.log("this is state before the render:", this.state);
-    return (
-      <div className='createBackground'>
-        <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
-        <Segment basic textAlign='center' vertical className='createBanner'>
-          <Container>
-            <Header className='createHeader'>
-              {this.state.mode === 'create' ? 
-              'Create a Project' :
-              `Edit ${this.state.project.name}`}
-            </Header>
-          </Container>
-        </Segment>
-        <Container className='createContainer' text>
-          <Segment>
-          <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
-            {this.state.mode === 'edit' ? 
-            <Form.Select name='status' label='Project Status' options={statusOptions} 
-              onChange={this.handleStatusChange} value={this.state.project.status}/> : ''}
-            <Form.Input name='name' label='Project Name' 
-              onChange={this.handleInputChange} required value={this.state.project.name}/>
-            <Form.Input name='start_date' label='Start Date'placeholder='MM/DD/YYYY' 
-              onChange={this.handleInputChange} type='date' required value={this.state.project.start_date}/>
-            <Form.Input name='duration' label='Project Length'placeholder='in weeks' 
-              onChange={this.handleInputChange} type='number' min='1' max='52' required value={this.state.project.duration}/>
-            <Form.TextArea name='summary' label='Project Summary' placeholder='Keep it short and sweet' 
-              onChange={this.handleInputChange} max='140' required value={this.state.project.summary}/>
-            <Form.Select name='primary_language' search label='Primary Language' options={languageOptions}
-              onChange={this.handleMainTechnologyChange} required value={this.state.project.primary_language}/>
-            <Form.Select name='tech_tags' multiple search label='Other Technologies' options={techSelection} 
-              onChange={this.handleOtherTechnologiesChange} value={this.state.project.tech_tags}/>
-            <Form.TextArea name='description' label='Project Details' placeholder='Describe your project in detail...' 
-              onChange={this.handleInputChange} value={this.state.project.description}/>
-            <Form.Select name='members_wanted' label='Team Size' options={memberOptions} 
-              onChange={this.handleMembersWantedChange} type='number' required value={this.state.project.members_wanted}/>
-            <Form.Input name='google_drive_link' type='url' label='Google Drive Link' 
-              onChange={this.handleGoogleLinkChange} value={this.state.project.google_drive_link}/>
-            <Form.Input name='trello_link' type='url' label='Trello Link' 
-              onChange={this.handleTrelloLinkChange} value={this.state.project.trello_link}/>
-            <Form.Input name='repo_link' type='url' label='Github Link' 
-              onChange={this.handleRepoLinkChange} value={this.state.project.repo_link}/>
-            <Form.Input name='deploy_link' type='url' label='Deployment Link'
-              onChange={this.handleDeployLinkChange} value={this.state.project.deploy_link}/>
-            <Button className='createButton'>
-            {this.state.mode === 'create' ? 
-            'Create Project' :
-            'Save Changes'}
-            </Button>
-          </Form>
-          <p className='warning'></p>
+    if (this.state.redirect) {
+      return (<Redirect to={this.state.redirect_location} />)
+    } else {
+      return (
+        <div className='createBackground'>
+          <Navbar currentPage='create' cohort={this.props.match.params.cohort} username={this.state.userID.user.github.login} avatar={this.state.userID.user.github.avatar_url}/>
+          <Segment basic textAlign='center' vertical className='createBanner'>
+            <Container>
+              <Header className='createHeader'>
+                {this.state.mode === 'create' ? 
+                'Create a Project' :
+                `Edit ${this.state.project.name}`}
+              </Header>
+            </Container>
           </Segment>
-        </Container>
-      </div>
-    )
+          <Container className='createContainer' text>
+            <Segment>
+            <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
+              {this.state.mode === 'edit' ? 
+              <Form.Select name='status' label='Project Status' options={statusOptions} 
+                onChange={this.handleStatusChange} value={this.state.project.status}/> : ''}
+              <Form.Input name='name' label='Project Name' 
+                onChange={this.handleInputChange} required value={this.state.project.name}/>
+              <Form.Input name='start_date' label='Start Date'placeholder='MM/DD/YYYY' 
+                onChange={this.handleInputChange} type='date' required value={this.state.project.start_date}/>
+              <Form.Input name='duration' label='Project Length'placeholder='in weeks' 
+                onChange={this.handleInputChange} type='number' min='1' max='52' required value={this.state.project.duration}/>
+              <Form.TextArea name='summary' label='Project Summary' placeholder='Keep it short and sweet' 
+                onChange={this.handleInputChange} max='140' required value={this.state.project.summary}/>
+              <Form.Select name='primary_language' search label='Primary Language' options={languageOptions}
+                onChange={this.handleMainTechnologyChange} required value={this.state.project.primary_language}/>
+              <Form.Select name='tech_tags' multiple search label='Other Technologies' options={techSelection} 
+                onChange={this.handleOtherTechnologiesChange} value={this.state.project.tech_tags}/>
+              <Form.TextArea name='description' label='Project Details' placeholder='Describe your project in detail...' 
+                onChange={this.handleInputChange} value={this.state.project.description}/>
+              <Form.Select name='members_wanted' label='Team Size' options={memberOptions} 
+                onChange={this.handleMembersWantedChange} type='number' required value={this.state.project.members_wanted}/>
+              <Form.Input name='google_drive_link' type='url' label='Google Drive Link' 
+                onChange={this.handleGoogleLinkChange} value={this.state.project.google_drive_link}/>
+              <Form.Input name='trello_link' type='url' label='Trello Link' 
+                onChange={this.handleTrelloLinkChange} value={this.state.project.trello_link}/>
+              <Form.Input name='repo_link' type='url' label='Github Link' 
+                onChange={this.handleRepoLinkChange} value={this.state.project.repo_link}/>
+              <Form.Input name='deploy_link' type='url' label='Deployment Link'
+                onChange={this.handleDeployLinkChange} value={this.state.project.deploy_link}/>
+              <Button className='createButton'>
+              {this.state.mode === 'create' ? 
+              'Create Project' :
+              'Save Changes'}
+              </Button>
+            </Form>
+            <p className='warning'></p>
+            </Segment>
+          </Container>
+        </div>
+      )
+    }
   }
 }
 
