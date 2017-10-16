@@ -46,6 +46,7 @@ class App extends React.Component {
   checkLoggedIn = () => {
     return axios.get('/auth/checkLoggedIn').then(res => {
       this.setState({ userID: res.data });
+      //console.log("res.data in checkLoggedIn: ",res.data);
       return res.data;
     }).catch(error => {
       console.log('Catching Error while authing user:', error);

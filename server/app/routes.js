@@ -48,8 +48,6 @@ module.exports = function (app, passport) {
                     }
                 };
                 cohortController.update(req);
-                // res.json(req.user)
-                // res.redirect(`/${req.session.cohortCode}/${req.user.github.login}/dashboard`);
                 res.redirect('/');
             } else {
                 // console.log("in else statement");
@@ -59,12 +57,9 @@ module.exports = function (app, passport) {
                     if (result) {
                         req.session.cohortCode = result.code;
                         req.session.cohortId = result._id;
-                        // res.json(req.user)
-                        // res.redirect(`/${result.code}/${req.user.github.login}/dashboard`);
                         res.redirect('/');
                     }else{
-                        // res.redirect('/cohortCodeLogin');
-                        res.redirect('/');
+                        res.redirect('/cohortCodeLogin');
                     }
                 });
             }
@@ -74,7 +69,9 @@ module.exports = function (app, passport) {
     app.get('/auth/checkLoggedIn', isLoggedIn, (req, res) => {
         let userLog = {
             login: true,
-            user: req.user
+            user: req.user,
+            cohortCode:req.session.cohortCode,
+            cohortId:req.session.cohortId
         }
         res.send(userLog);
     });
@@ -192,7 +189,8 @@ module.exports = function (app, passport) {
 
     //check to see if req.User is populated
     app.get('/test/reqUser', (req, res) => {
-        console.log(req.user);
+        console.log("req.user: ",req.user);
+        console.log("req.session: ", req.session);
         res.json(req.user);
     })
 
