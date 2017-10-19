@@ -3,12 +3,26 @@ const Activity = require('../models/Activity_Feed');
 module.exports = {
 
     //Method to return all Activities
-    //**populate data from Users and Projects
     index: (req, res) => {
         // console.log("inside index of activity");
         Activity.find({})
             .populate('user_id')
             .populate('project_id')
+            .then(doc => {
+                res.json(doc);
+            }).catch(err => {
+                res.json(err);
+            })
+    },
+
+    //Method to return last 10 Activities
+    feed: (req, res) => {
+        // console.log("inside index of activity");
+        Activity.find({})
+            .populate('user_id')
+            .populate('project_id')
+            .sort({_id:-1})
+            .limit(10)
             .then(doc => {
                 res.json(doc);
             }).catch(err => {

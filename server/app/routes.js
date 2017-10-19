@@ -129,6 +129,9 @@ module.exports = function (app, passport) {
     //All chat data for a specific PROJECT
     app.get('/api/projectChat', projectController.chat);
 
+    //Last 10 activities sorted by auto created ID
+    app.get('/api/activityfeed/latest', activityController.feed);
+
 
 
     //Routes to create instaces on for all models

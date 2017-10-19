@@ -55,7 +55,7 @@ class Explore extends Component {
   }
 
   fetchActivityData = () => {
-    return axios.get('/api/activityfeed').then(res => {
+    return axios.get('/api/activityfeed/latest').then(res => {
       // console.log('Activity Data:',res.data);
       this.setState({ activities: res.data });
       return res.data
