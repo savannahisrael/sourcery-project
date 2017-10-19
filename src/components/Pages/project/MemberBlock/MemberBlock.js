@@ -10,23 +10,21 @@ class MemberBlock extends Component {
     eject: false
   }
 
-  handleXClick = () => {
-    this.setState({eject: !this.state.eject});
-  }
-
   handleEject = () => {
-    console.log('clicked eject button');
-    console.log("this.props in member block", this.props);
-    let update = {update:{
-      $pull:{members:this.props._id}
-      },projectId:this.props.projectId, 
-        memberId:this.props._id, 
-        joinerStatus: "ejected"
+    // console.log('clicked eject button');
+    // console.log("this.props in member block", this.props);
+    let update = {
+      update: {
+        $pull: {
+          members:this.props._id
+        }
+      },
+      projectId: this.props.projectId, 
+      memberId: this.props._id, 
+      joinerStatus: "ejected"
     };
     axios.patch('/api/projects', update)
-      .then(
-        this.props.updateFunction()
-    );
+    .then(this.props.updateFunction());
   }
 
   handleXClick = () => {
@@ -53,7 +51,7 @@ class MemberBlock extends Component {
           <Item.Content className='projectEject'>Are you sure you want to eject this team member?</Item.Content>
           <div className='ui two buttons'>
             <Button fluid basic color='red' onClick={this.handleEject}>Yes, Eject</Button>
-            <Button fluid basic color='green' onClick={this.handleReject} >No</Button>
+            <Button fluid basic color='green' onClick={this.handleXClick} >No</Button>
           </div>
         </div>
         : ''
