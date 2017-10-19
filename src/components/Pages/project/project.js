@@ -49,7 +49,7 @@ class Project extends Component {
           this.fetchProjectData();
         })
         this.setState({dataLoaded: true});
-        console.log('State after fetch:',this.state);
+        //console.log('State after fetch:',this.state);
     })
     .catch(error => console.log('Error on setup:', error));
   }
