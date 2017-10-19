@@ -46,8 +46,18 @@ module.exports = function (app, passport) {
                     $addToSet: {
                         members: req.user._id
                     }
-                };
+                };               
                 cohortController.update(req);
+
+                req.body.activityData = {
+                    event: "member joined cohort",
+                    project_id: req.body.projectId,
+                    user_id: req.user._id,
+                    cohort_id:req.session.cohortId
+                }
+
+                activityController.create(req);
+                
                 res.redirect('/');
             } else {
                 // console.log("in else statement");
