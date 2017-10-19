@@ -132,6 +132,15 @@ class Explore extends Component {
       case 'member joined project':
         text = `${activity.user_id.github.name} joined ${activity.project_id.name}.`
         break;
+      case 'approved to join the project':
+        text = `${activity.user_id.github.name} was appoved to join ${activity.project_id.name}.`
+        break;
+      case 'disapproved to join the project':
+        text = `${activity.user_id.github.name} was not allowed to join ${activity.project_id.name}.`
+        break;
+      case 'was ejected from the project':
+        text = `${activity.user_id.github.name} was ejected from ${activity.project_id.name}.`
+        break;
       default:
         // Do nothing
     }
