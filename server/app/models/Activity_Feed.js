@@ -15,6 +15,10 @@ let ActivityFeedSchema = new Schema({
     project_id:{
         type:Schema.ObjectId,
         ref:'Project'
+    }, 
+    cohort_id:{
+        type:Schema.ObjectId, 
+        ref:'Cohort'
     }
 });
 module.exports=mongoose.model('Activity_feed', ActivityFeedSchema);

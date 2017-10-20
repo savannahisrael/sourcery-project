@@ -55,7 +55,7 @@ class Explore extends Component {
   }
 
   fetchActivityData = () => {
-    return axios.get('/api/activityfeed').then(res => {
+    return axios.get('/api/activityfeed/latest').then(res => {
       // console.log('Activity Data:',res.data);
       this.setState({ activities: res.data });
       return res.data
@@ -131,6 +131,15 @@ class Explore extends Component {
         break;
       case 'member joined project':
         text = `${activity.user_id.github.name} joined ${activity.project_id.name}.`
+        break;
+      case 'approved to join the project':
+        text = `${activity.user_id.github.name} was appoved to join ${activity.project_id.name}.`
+        break;
+      case 'disapproved to join the project':
+        text = `${activity.user_id.github.name} was not allowed to join ${activity.project_id.name}.`
+        break;
+      case 'was ejected from the project':
+        text = `${activity.user_id.github.name} was ejected from ${activity.project_id.name}.`
         break;
       default:
         // Do nothing

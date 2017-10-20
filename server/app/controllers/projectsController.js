@@ -212,7 +212,8 @@ module.exports = {
                 req.body.activityData = {
                     event: "proposal",
                     project_id: doc._id, 
-                    user_id: req.user._id
+                    user_id: req.user._id,
+                    cohort_id:req.session.cohortId
                 };
 
                 activityController.create(req);
@@ -240,7 +241,8 @@ module.exports = {
                         req.body.activityData = {
                             event: "proposal",
                             project_id: req.body.projectId,
-                            user_id: req.user._id
+                            user_id: req.user._id,
+                            cohort_id:req.session.cohortId
                         }
 
                         activityController.create(req);
@@ -249,7 +251,8 @@ module.exports = {
                         req.body.activityData = {
                             event: "in-progress",
                             project_id: req.body.projectId,
-                            user_id: req.user._id
+                            user_id: req.user._id,
+                            cohort_id:req.session.cohortId
                         }
 
                         activityController.create(req);
@@ -258,7 +261,8 @@ module.exports = {
                         req.body.activityData = {
                             event: "completed",
                             project_id: req.body.projectId,
-                            user_id: req.user._id
+                            user_id: req.user._id,
+                            cohort_id:req.session.cohortId
                         }
 
                         activityController.create(req);
@@ -268,7 +272,8 @@ module.exports = {
                         req.body.activityData = {
                             event: "member joined project",
                             project_id: req.body.projectId, 
-                            user_id: req.body.memberId
+                            user_id: req.body.memberId,
+                            cohort_id:req.session.cohortId
                         }
 
                         activityController.create(req);
@@ -278,7 +283,8 @@ module.exports = {
                         req.body.activityData={
                             event:"approved to join the project", 
                             project_id:req.body.projectId,
-                            user_id:req.body.memberId
+                            user_id:req.body.memberId,
+                            cohort_id:req.session.cohortId
                         }
 
                         activityController.create(req);
@@ -288,7 +294,8 @@ module.exports = {
                         req.body.activityData={
                             event:"disapproved to join the project", 
                             project_id:req.body.projectId,
-                            user_id:req.body.memberId
+                            user_id:req.body.memberId,
+                            cohort_id:req.session.cohortId
                         }
 
                         activityController.create(req);
@@ -298,7 +305,8 @@ module.exports = {
                         req.body.activityData={
                             event:"was ejected from the project", 
                             project_id:req.body.projectId,
-                            user_id:req.body.memberId
+                            user_id:req.body.memberId,
+                            cohort_id:req.session.cohortId
                         }
 
                         activityController.create(req);

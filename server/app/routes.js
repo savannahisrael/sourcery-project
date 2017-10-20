@@ -46,8 +46,18 @@ module.exports = function (app, passport) {
                     $addToSet: {
                         members: req.user._id
                     }
-                };
+                };               
                 cohortController.update(req);
+
+                req.body.activityData = {
+                    event: "member joined cohort",
+                    project_id: req.body.projectId,
+                    user_id: req.user._id,
+                    cohort_id:req.session.cohortId
+                }
+
+                activityController.create(req);
+                
                 res.redirect('/');
             } else {
                 // console.log("in else statement");
@@ -128,6 +138,9 @@ module.exports = function (app, passport) {
 
     //All chat data for a specific PROJECT
     app.get('/api/projectChat', projectController.chat);
+
+    //Last 10 activities sorted by auto created ID
+    app.get('/api/activityfeed/latest', activityController.feed);
 
 
 
