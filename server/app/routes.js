@@ -123,6 +123,10 @@ module.exports = function (app, passport) {
     //All ACTIVITY FEED data
     app.get('/api/activityfeed', activityController.index);
 
+    //All RESOURCE data
+    app.get('/api/resources', resourceController.index);
+
+
 
     //Routes to pull specific data for all models
     // =============================================================
@@ -144,6 +148,23 @@ module.exports = function (app, passport) {
 
 
 
+    //All PROJECTS for specific user in a specific cohort
+    app.get('/api/resourcesDashboard', resourceController.dashboard);
+
+    //All PROJECTS for specifc user in a specific cohort aggregated
+    app.get('/api/resourcesUserProfile', resourceController.profile);
+
+    //All data for a specific PROJECT
+    app.get('/api/resourceData/:cohort/:username/app/:resource', projectController.oneResource);
+
+    //All chat data for a specific PROJECT
+    app.get('/api/resourceChat', resourceController.chat);
+
+
+    
+
+
+
     //Routes to create instaces on for all models
     // =============================================================
 
@@ -160,6 +181,13 @@ module.exports = function (app, passport) {
 
     //ACTIVITY will be generated as a result of other transactions.
 
+       //Create a new instance of a PROJECT
+    //New project ACTIVITY will also be generated 
+    app.post('/api/resourceNew', resourceController.create);
+
+    //Create a new instance of a COHORT
+    app.post('/api/cohortNew', cohortController.create);
+
 
     //Routes to update properties for all models
     // =============================================================
@@ -175,6 +203,8 @@ module.exports = function (app, passport) {
 
     //Update ACTIVITY property
     app.patch('/api/activityfeed', activityController.update);
+
+    app.patch('/api/resources', resourceController.update);
 
 
     //Routes to deactivate instance on a model
@@ -195,6 +225,10 @@ module.exports = function (app, passport) {
     //Hide ACTIVITY
     //will update visible to false
     app.patch('/api/activityHide', activityController.hide);
+
+    //Disable Resource
+    //Will update status property to disabled
+    app.patch('/api/resourceDisable', resourceController.disable)
 
 
     //TEST ROUTES

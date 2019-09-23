@@ -1,0 +1,68 @@
+.tileCard {
+    width: 335px !important;
+  }
+  
+  .tileHeader {
+    /* background-color: #25569B !important; */
+    min-height: 130px !important;
+    max-height: 250px !important;
+    font-size: 16px !important;
+  }
+  
+  .tileTitle {
+    text-align: center !important;
+    font-size: 1.75em !important;
+  }
+  
+  .tileState {
+    text-align: center !important;
+  }
+  
+  .tileContent {
+    border: none !important;
+    min-height: 250px !important;
+    margin-top: -20px !important;
+  }
+  
+  .tileTags {
+    margin: 5px 5px !important;
+    background-color: #98A8BC !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+  }
+  
+  .tileSummary {
+    margin-top: 10px !important;
+    font-size: 18px !important;
+    font-weight: 300 !important;
+  }
+  
+  .tileCreator {
+    background-color: white !important;
+    font-weight: 300 !important;
+  }
+  
+  .tileTeam {
+    margin: 5px 8px;
+    width: 50px !important;
+    height: auto !important;
+  }
+  
+  .tileMore {
+    margin-top: 20px !important;
+  }
+  
+  .tileJoin {
+    background-color: #25569B !important;
+    color: white !important;
+    font-size: 18px !important;
+    font-weight: 300 !important;
+  }
+  
+  .projecttileIcon {
+    display: inline;
+    margin-left: 38%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  

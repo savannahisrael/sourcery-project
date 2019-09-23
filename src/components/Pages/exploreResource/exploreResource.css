@@ -1,0 +1,87 @@
+.exploreBackground {
+    background-color: #f4f7f9 !important;
+  }
+  
+  .exploreNavBuffer {
+    background-color: #f4f7f9 !important;
+    height: 1px;
+  }
+  
+  .exploreBanner {
+    min-height: 250px !important;
+    padding: 50px 0px !important;
+    /* background-color: #fff !important; */
+    background-color: #f4f7f9 !important;
+  }
+  
+  .exploreHeader {
+    /*font-size: 4em !important;*/
+    /*font-weight: 300 !important;*/
+    margin-top: 25px !important;
+    /*margin-bottom: -20px !important;*/
+    /*color: #001738 !important;*/
+    /*display: inline !important;*/
+  }
+  
+  .activityFeedImage {
+    height: 30px !important;
+    width: 30px !important;
+    margin-top: 5px !important;
+  }
+  
+  .searchHeader {
+    /*font-size: 0.5em !important;*/
+    /*font-weight: 300 !important;*/
+    margin-top: 50px !important;
+    /*color: #001738 !important;*/
+  }
+  
+  .exploreProjectsSpan {
+    font-size: 3em !important;
+    font-weight: 300 !important;
+    color: #001738 !important;
+  }
+  
+  .searchBySpan {
+    font-size: 1em !important;
+    font-weight: 300 !important;
+    color: #001738 !important;
+  }
+  
+  .exploreDropdown {
+    border: none !important;
+    border-radius: 0px !important;
+    background-color: #f4f7f9 !important;
+    margin-left: 20px !important;
+    width: 400px !important;
+    font-size: 3em !important;
+    color: #25569B !important;
+  }
+  
+  .searchDropdown {
+    border: none !important;
+    border-radius: 0px !important;
+    background-color: #f4f7f9 !important;
+    font-size: 1em !important;
+  }
+  
+  div.default.text {
+    color: #001738 !important;
+  }
+  
+  a.ui.label {
+    margin: 5px 5px !important;
+    border: none !important;
+    background-color: #98A8BC !important;
+    border-radius: 30px !important;
+  }
+  
+  .exploreactivityFeed {
+    border: none !important;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important;
+    border-radius: 1px !important;
+    margin-top: 75px !important;
+    min-height: 800px !important;
+    margin-bottom: 75px !important;
+  }
+  

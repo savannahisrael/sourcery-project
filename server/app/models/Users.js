@@ -12,6 +12,13 @@ let UserSchema = new Schema({
     isActive:{
         type:Boolean, 
         default:true
-    }
+    },
+    isAdministator: {
+        type:Boolean,
+        default:false
+    },
+    favorites: [{
+        type: Schema.ObjectId
+    }]
 })
 module.exports = mongoose.model('User', UserSchema);

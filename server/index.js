@@ -23,7 +23,8 @@ const mongoose = require('mongoose');
 const configDB = require('./config/database.js');
 // const users = require('./models/Users');
 mongoose.Promise = Promise;
-mongoose.connect(configDB.url)
+mongoose.connect(configDB.url, {  useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.set('useCreateIndex', true)
 
 //=============== PASSPORT CONFIGURATION ===============//
 require('./config/passport')(passport) //pass passport for configuration

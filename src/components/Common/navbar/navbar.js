@@ -72,6 +72,9 @@ export default class navBar extends Component {
               <Menu.Menu position='right' className='navFont'>
                 <Menu.Item name='CREATE A PROJECT' as={Link} to={`/${this.props.cohort}/create`} active={activeItem === 'create'} onClick={this.handleItemClick} className='navCreate'/>
                 <Menu.Item name='Explore' as={Link} to={`/${this.props.cohort}/explore`} active={activeItem === 'explore'} onClick={this.handleItemClick} className='navFont' />
+                <Menu.Item name='CREATE A RESOURCE' as={Link} to={`/${this.props.cohort}/create`} active={activeItem === 'create'} onClick={this.handleItemClick} className='navCreate'/>
+                <Menu.Item name='Explore' as={Link} to={`/${this.props.cohort}/explore`} active={activeItem === 'explore'} onClick={this.handleItemClick} className='navFont' />
+
                 <Menu.Item name='Dashboard' as={Link} to={`/${this.props.cohort}/${this.props.username}/dashboard`} active={activeItem === 'dashboard'} onClick={this.handleItemClick} className='navFont'/>
                 {/* <Menu.Item>
                   <Button color='teal' href='/create' >CREATE PROJECT</Button>
