@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import ReactRotatingText from 'react-rotating-text';
 import { Button, Container,Grid, Header, Form, Icon, Image, Segment, Item } from 'semantic-ui-react';
 import Navbar from "../../Common/landingNavbar";
-import BackgroundImg from '../../../assets/images/background.png';
+import BackgroundImg from '../../../assets/images/Laptop.png';
 import './landing.css';
 import axios from 'axios';
 
@@ -61,12 +61,12 @@ export default class landingPage extends Component {
             <Container textAlign='center'>
               <Grid className='landingGrid'>
                 <Grid.Column width={8}>
-                  <Header className='landingHeader'content='devCircle'/>
+                  <Header className='landingHeader'content='sourcery'/>
                   <Header className='landingSubheader'>
-                    Create your own team projects
+                    Casting spells.  Summoning resources.
                   </Header>
                   <Header>
-                    <ReactRotatingText className='landingRotating' items={['to learn new technologies', 'to facilitate collaboration', 'to streamline workflow', 'to simplify planning']} />
+                    <ReactRotatingText className='landingRotating' items={['to enchant your learning', 'to facilitate our collaboration', 'to spread their wisdom']} />
                   </Header>
                   <br/>
                   <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>

@@ -5,12 +5,13 @@ const GitHubStrategy = require('passport-github2').Strategy;
 //loading user model
 // =============================================================
 const users = require('../app/models/Users');
-const cohorts = require('../app/models/Cohorts');
+// const cohorts = require('../app/models/Cohorts');
+
 
 //loading activity controller
 // =============================================================
 const activityController = require('../app/controllers/activityFeedController');
-const cohortController = require('../app/controllers/cohortsController.js');
+// const cohortController = require('../app/controllers/cohortsController.js');
 
 //loading auth variables
 const configAuth = process.env.HEROKU ? {
@@ -20,7 +21,7 @@ const configAuth = process.env.HEROKU ? {
         callbackURL: 'https://devcircle.herokuapp.com/auth/github/callback'
     } 
 } 
-: require('./auth');
+: require("./auth");
 
 module.exports = function(passport) {
 

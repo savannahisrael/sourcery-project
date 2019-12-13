@@ -2,20 +2,18 @@ const User = require('./models/Users.js');
 const Project = require('./models/Projects.js');
 const Cohorts = require('./models/Cohorts.js');
 const Activities = require('./models/Activity_Feed.js');
-const Resources = require('./models/Resources')
 const insertProjects = require('./insertData/insertProjects.json');
 const insertUsers = require('./insertData/insertUsers.json');
 const insertCohorts = require('./insertData/insertCohorts.json');
 const insertActivity = require('./insertData/insertActivity.json');
-const insertResources = require('./insertData/insertResources.json');
-const joins = require('./insertData/joins.json')
+
+
 
 const _dropCollections = () => {
     Cohorts.collection.drop();
     User.collection.drop();
     Project.collection.drop();
     Activities.collection.drop();
-    Resources.collection.drop();
 }
 
 module.exports = function (app) {
@@ -36,35 +34,7 @@ module.exports = function (app) {
             console.log('Users created:',users.length)
             Object.assign(newData, {users})
 
-            return Resource.create(insertResources.map(resource => {
-                resourceJoin = joins.find(j => j.name === resource.name)
-                resource.cohort_id = newData.cohorts.find(c => c.name === resourceJoin.cohort)._id;
-                resource.owner_id = users.find(u => u.github.login === resourceJoin.owner)._id
-                resource.students = resourceJoin.students.map(e => users.find(u => u.github.login === e)._id)
-                resource.administrators = resourceJoin.administrators.map(e => users.find(u => u.github.login === e)._id)
-                resource.chat = resourceJoin.chat.map(e => {
-                    e.author_id = users.find(u => u.github.login === e.author_id)._id;
-                    return e
-                })
-                return project
-            }))
-        })
-        .then(resources => {
-            console.log('Resources created:',resources.length)
-            Object.assign(newData, {resources})
-
-            return Project.create(insertProjects.map(project => {
-                projectJoin = joins.find(j => j.name === project.name)
-                project.cohort_id = newData.cohorts.find(c => c.name === projectJoin.cohort)._id;
-                project.owner_id = users.find(u => u.github.login === projectJoin.owner)._id
-                project.members = projectJoin.members.map(e => users.find(u => u.github.login === e)._id)
-                project.pending_members = projectJoin.pending.map(e => users.find(u => u.github.login === e)._id)
-                project.chat = projectJoin.chat.map(e => {
-                    e.author_id = users.find(u => u.github.login === e.author_id)._id;
-                    return e
-                })
-                return project
-            }))
+            return Project.create(insertProjects)
         })
         .then(projects => {
             console.log('Projects created: ',projects.length)

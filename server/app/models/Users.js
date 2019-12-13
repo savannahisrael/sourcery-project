@@ -18,7 +18,8 @@ let UserSchema = new Schema({
         default:false
     },
     favorites: [{
-        type: Schema.ObjectId
+        type: Schema.ObjectId,
+        ref: 'Project'
     }]
 })
 module.exports = mongoose.model('User', UserSchema);

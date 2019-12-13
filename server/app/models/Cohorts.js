@@ -12,23 +12,18 @@ let CohortSchema = new Schema({
         type: Boolean,
         default: true
     },
-    students: [{
+    members: [{
         type: Schema.ObjectId,
         ref: 'User'
     }], 
     administrators:[{
-        adminId:{
             type:Schema.ObjectId,
             ref: 'User'
-        },
-        role:{
-            type: String
-        },
-        code: {
-            type: String,
-            unique: true,
-            require: true
-        }
+    }],
+    projects:[{
+        type:Schema.ObjectId, 
+        ref:'Project'
     }]
+
 });
 module.exports = mongoose.model('Cohort', CohortSchema);

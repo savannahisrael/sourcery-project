@@ -65,7 +65,7 @@ export default class navBar extends Component {
           >
             <Container >
               {/* <Image className='landingBanana' src={favIcon} /> */}
-              <Menu.Item name='DEVCIRCLE' href='/' onClick={this.handleItemClick} className='landingnavFont'/>
+              <Menu.Item name='sourcery' href='/' onClick={this.handleItemClick} className='landingnavFont'/>
               <Menu.Menu position='right'>
                 <Menu.Item>
                   <Button inverted color='white' onClick={this.props.handleLoginButton}>LOG IN</Button>

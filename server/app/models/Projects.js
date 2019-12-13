@@ -2,27 +2,27 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let ProjectSchema = new Schema({
-    name: {
+    fileType: {
         type: String,
         require: true
     },
-    summary: String,
+    name: String,
+    title: {
+        type: String,
+        require: true
+    },
     description: String,
-    primary_language:{
+    language:{
         type:String,
         require: true
     },
     tech_tags: [],
-    start_date: Date,
-    duration: Number,
-    members_wanted: {
-        type: Number,
-        require: true
-    },
-    google_drive_link: String,
-    trello_link: String,
-    repo_link: String,
-    deploy_link: String,
+    likes: Number,
+    dislikes: Number,
+    img: String,
+    s3_url: String,
+    other_url: String,
+    video_url: String,
     chat:[{
         body:String,
         date:{
@@ -36,28 +36,31 @@ let ProjectSchema = new Schema({
         //public vs. private chats
         chat_type: String
     }],
-    //4 statuses: proposal, in-progress, completed, deleted
-    status:{
+    // recommend, require, active, disabled // can be multiple
+    status:[{
         type:String,
-        default:'proposal'
-    },
+        default:'active'
+    }],
     owner_id: {
         type: Schema.ObjectId,
         ref: 'User',
-        require: true
     },
+    admin_id: [{
+        type: Schema.ObjectId,
+        ref: 'User',
+    }],
     cohort_id: {
         type: Schema.ObjectId,
         ref: 'Cohort',
-        require: true
     },
-    pending_members: [{
+    fav_users: [{
         type: Schema.ObjectId,
         ref: 'User'
     }],
-    members: [{
+    done_users: [{
         type: Schema.ObjectId,
         ref: 'User'
-    }]
+    }],
+
 });
 module.exports = mongoose.model('Project', ProjectSchema);

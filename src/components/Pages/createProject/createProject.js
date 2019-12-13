@@ -5,62 +5,86 @@ import { Redirect } from 'react-router-dom';
 import './createProject.css';
 import techSelection from '../../../utils/techTags.json';
 import axios from 'axios';
-import moment from 'moment';
 
-const memberOptions = [
-  { key: '1', text: '1', value: 1 },
-  { key: '2', text: '2', value: 2 },
-  { key: '3', text: '3', value: 3 },
-  { key: '4', text: '4', value: 4 },
-  { key: '5', text: '5', value: 5 },
-  { key: '6', text: '6', value: 6 }
-]
+
+
 
 const languageOptions = [
   {
     text: 'Javascript', value: 'javascript'
   },
   {
-    text: 'Python', value: 'python'
+    text: 'HTML', value: 'html'
   },
   {
-    text: 'Ruby', value: 'ruby'
+    text: 'CSS', value: 'css'
   },
   {
-    text: 'PHP', value: 'PHP'
+    text: 'Node.js', value: 'node'
   },
   {
-    text: 'C#', value: 'C#'
+    text: 'Express', value: 'express'
   },
   {
-    text: 'C++', value: 'C++'
+    text: 'HTML', value: 'html'
+  },
+  {
+    text: 'CSS', value: 'css'
+  },
+  {
+    text: 'AJAX/API', value: 'ajax' || 'api',
+  },
+  {
+    text: 'Other', value: 'other'
+  },
+  {
+    text: 'Review Session', value: 'reviewSession'
   },
   {
     text: 'Java', value: 'java'
   },
   {
-    text: 'Go', value: 'go'
+    text: 'React', value: 'react'
   },
   {
-    text: 'Swift', value: 'swift'
+    text: 'mySQL', value: 'mysql'
   },
   {
-    text: 'HTML/CSS', value: 'HTML/CSS'
+    text: 'MongoDB', value: 'mongodb'
+  }
+]
+
+const fileTypeOptions = [
+  {
+    text: 'pdf',
+    value: 'pdf'
+  },
+  {
+    text: 'article',
+    value: 'article'
+  },
+  {
+    text: 'video',
+    value: 'video'
   }
 ]
 
 const statusOptions = [
   {
-    text: 'Proposed',
-    value: 'proposal'
+    text: 'recommended',
+    value: 'recommended'
   },
   {
-    text: 'In Progress',
-    value: 'in-progress'
+    text: 'required',
+    value: 'required'
   },
   {
-    text: 'Completed',
-    value: 'completed'
+    text: 'active',
+    value: 'active'
+  },
+  {
+    text: 'disabled',
+    value: 'disabled'
   }
 ]
 
@@ -68,19 +92,19 @@ class CreateProjectForm extends Component {
   state = {
     mode: 'create',
     project: {
+      fileType: '',
       name: '',
-      summary: '',
+      title: '',
       description: '',
+      language: '',
       tech_tags: [],
-      start_date: '',
-      primary_language: '',
-      duration: 0,
-      members_wanted: 0,
-      google_drive_link: '',
-      trello_link: '',
-      repo_link: '',
-      deploy_link: '',
-      status: 'proposal'
+      likes: 0,
+      dislikes: 0,
+      img: '',
+      s3_url: '',
+      other_url: '',
+      video_url: '',
+      status: ['active']
     },
     userID: this.props.auth,
     redirect: false,
@@ -120,19 +144,20 @@ class CreateProjectForm extends Component {
       this.setState({ 
         project:{
           _id: p._id,
+          fileType: p.fileType,
           name: p.name,
-          summary: p.summary,
+          title: p.title,
           description: p.description,
+          language: p.language,
           tech_tags: p.tech_tags,
-          start_date: moment(p.start_date).format('YYYY-MM-DD'),
-          primary_language: p.primary_language,
-          duration: p.duration,
-          members_wanted: p.members_wanted,
-          google_drive_link: p.google_drive_link,
-          trello_link: p.trello_link,
-          repo_link: p.repo_link,
-          deploy_link: p.deploy_link,
-          status: p.status
+          likes: p.likes,
+          dislikes: p.dislikes,
+          img: p.img,
+          s3_url: p.s3_url,
+          other_url: p.other_url,
+          video_url: p.video_url,
+          admin_id: this.state.userID,
+          status: this.state.status
         }
       });
       this.setState({owner_id: p.owner_id})
@@ -147,7 +172,7 @@ class CreateProjectForm extends Component {
     this.setState({
       project: {
         ...this.state.project,
-        primary_language: value
+        language: value
       }
     });
   }
@@ -161,11 +186,20 @@ class CreateProjectForm extends Component {
     });
   }
 
-  handleMembersWantedChange = (e, {value}) => {
+  handleTitleChange = (e, {value}) => {
     this.setState({
       project: {
         ...this.state.project,
-        members_wanted: value 
+        title: value 
+      }
+    });
+  }
+
+  handleFileTypeChange = (e, {value}) => {
+    this.setState({ 
+      project: {
+        ...this.state.project,
+        fileType: value
       }
     });
   }
@@ -173,7 +207,7 @@ class CreateProjectForm extends Component {
   handleStatusChange = (e, {value}) => {
     this.setState({ 
       project: {
-        ...this.state.project,
+        ...this.state.status,
         status: value
       }
     });
@@ -190,7 +224,7 @@ class CreateProjectForm extends Component {
 
   handleSubmitButton = event => {
     event.preventDefault();
-    const regex = /^[a-zA-Z0-9-_]+$/;
+    const regex = /^[a-zA-Z0-9-_ ]+$/;
     const warning = document.querySelector('.warning');
     const asterisk = document.getElementsByClassName('asterisk');
     warning.style.display = 'none';
@@ -198,12 +232,11 @@ class CreateProjectForm extends Component {
       warning.innerHTML = '*Project title may only contain letters, numbers, dashes, and underscores';
       warning.style.display = 'block';
     }
-    else {
-      if (this.state.mode === 'create') {
+    else if (this.state.mode === 'create') {
         axios.post('/api/projectNew', this.state.project)
         .then(res => {
           // console.log(res.data);
-          this.setState({redirect_location: `/${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.name}`})
+          this.setState({redirect_location: `/${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.title}`})
           this.setState({redirect: true })
         }).catch(err => console.log(err));
       } else {
@@ -213,16 +246,14 @@ class CreateProjectForm extends Component {
           update: this.state.project
         })
         .then(res => {
-          this.setState({redirect_location: `/${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.name}`})
+          this.setState({redirect_location: `/${this.props.match.params.cohort}/${this.state.userID.user.github.login}/app/${this.state.project.title}`})
           this.setState({redirect: true })
         }).catch(err => console.log(err));
       }
     }
-  }
-
+  
 
   render(props) {
-    const { value } = this.state
     // console.log("this is state before the render:", this.state);
     if (this.state.redirect) {
       return (<Redirect to={this.state.redirect_location} />)
@@ -235,7 +266,7 @@ class CreateProjectForm extends Component {
               <Header className='createHeader'>
                 {this.state.mode === 'create' ? 
                 'Create a Project' :
-                `Edit ${this.state.project.name}`}
+                `Edit ${this.state.project.title}`}
               </Header>
             </Container>
           </Segment>
@@ -243,32 +274,28 @@ class CreateProjectForm extends Component {
             <Segment>
             <Form size='large' class='form' onSubmit={this.handleSubmitButton}>
               {this.state.mode === 'edit' ? 
-              <Form.Select name='status' label='Project Status' options={statusOptions} 
+              <Form.Select name='status' multiple label='Status' options={statusOptions} 
                 onChange={this.handleStatusChange} value={this.state.project.status}/> : ''}
-              <Form.Input name='name' label='Project Name' 
+              <Form.Select name='fileType' search label='Resource Type' options={fileTypeOptions}
+                onChange={this.handleFileTypeChange} required value={this.state.project.fileType}/>
+              <Form.Input name='title' label='Resource Title' 
+                onChange={this.handleInputChange} required value={this.state.project.title}/>
+               <Form.Input name='name' label='File Name (no spaces)' 
                 onChange={this.handleInputChange} required value={this.state.project.name}/>
-              <Form.Input name='start_date' label='Start Date'placeholder='MM/DD/YYYY' 
-                onChange={this.handleInputChange} type='date' required value={this.state.project.start_date}/>
-              <Form.Input name='duration' label='Project Length'placeholder='in weeks' 
-                onChange={this.handleInputChange} type='number' min='1' max='52' required value={this.state.project.duration}/>
-              <Form.TextArea name='summary' label='Project Summary' placeholder='Keep it short and sweet' 
-                onChange={this.handleInputChange} max='140' required value={this.state.project.summary}/>
-              <Form.Select name='primary_language' search label='Primary Language' options={languageOptions}
-                onChange={this.handleMainTechnologyChange} required value={this.state.project.primary_language}/>
+              <Form.Input name='img' label='Resource Image'placeholder='Resource Image Link/URL' 
+                onChange={this.handleInputChange} type='url' value={this.state.project.img}/>
+              <Form.TextArea name='description' label='Resource Description' placeholder='Describe the Resource and what it offers.' 
+                onChange={this.handleInputChange} max='250' required value={this.state.project.description}/>
+              <Form.Select name='language' search label='Primary Language' options={languageOptions}
+                onChange={this.handleMainTechnologyChange} required value={this.state.project.language}/>
               <Form.Select name='tech_tags' multiple search label='Other Technologies' options={techSelection} 
                 onChange={this.handleOtherTechnologiesChange} value={this.state.project.tech_tags}/>
-              <Form.TextArea name='description' label='Project Details' placeholder='Describe your project in detail...' 
-                onChange={this.handleInputChange} value={this.state.project.description}/>
-              <Form.Select name='members_wanted' label='Team Size' options={memberOptions} 
-                onChange={this.handleMembersWantedChange} type='number' required value={this.state.project.members_wanted}/>
-              <Form.Input name='google_drive_link' type='url' label='Google Drive Link' 
-                onChange={this.handleGoogleLinkChange} value={this.state.project.google_drive_link}/>
-              <Form.Input name='trello_link' type='url' label='Trello Link' 
-                onChange={this.handleTrelloLinkChange} value={this.state.project.trello_link}/>
-              <Form.Input name='repo_link' type='url' label='Github Link' 
-                onChange={this.handleRepoLinkChange} value={this.state.project.repo_link}/>
-              <Form.Input name='deploy_link' type='url' label='Deployment Link'
-                onChange={this.handleDeployLinkChange} value={this.state.project.deploy_link}/>
+              <Form.Input name='s3_url' type="url" label='PDF S3 URL' 
+                onChange={this.handleInputChange} value={this.state.project.s3_url}/>
+              <Form.Input name='other_url' type="url" label='Article URL' 
+                onChange={this.handleInputChange} value={this.state.project.other_url}/>
+              <Form.Input name='video_url' type="url" label='Video URL' 
+                onChange={this.handleInputChange} value={this.state.project.video_url}/>
               <Button className='createButton'>
               {this.state.mode === 'create' ? 
               'Create Project' :

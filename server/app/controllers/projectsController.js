@@ -11,8 +11,9 @@ module.exports = {
         Project.find({})
             .populate('owner_id')
             .populate('cohort_id')
-            .populate('pending_members')
-            .populate('members')
+            .populate('admin_id')
+            .populate('fav_users')
+            .populate('done_users')
             .exec((err, data) => {
                 if (err) {
                     res.json(err)
@@ -44,17 +45,18 @@ module.exports = {
                     Project.find({
                             cohort_id: cohortId,
                             $or: [{
-                                members: userId
+                                fav_users: userId
                             }, {
-                                pending_members: userId
+                                done_users: userId
                             }]
                         })
-                        .populate('owner_id')
+                        .populate('admin_id')
+                        .popultate('owner_id')
                         .populate('cohort_id')
-                        .populate('pending_members')
-                        .populate('members')
+                        .populate('fav_users')
+                        .populate('done_users')
                         .exec((err, data) => {
-                            console.log('Project data:', data)
+                            console.log('Resource data:', data)
                             res.json(data);
                         })
                 } else {
@@ -63,6 +65,8 @@ module.exports = {
             })
             .catch(err => console.log('Project data err:', err));
     },
+
+    //Change to method to aggregate number of favorite, saved, read resources the user has
     //Method to get aggregate number of created counts created and contributed for a specific cohort and user
     profile: (req, res) => {
         // req.params.cohort = '0417';
@@ -82,17 +86,19 @@ module.exports = {
             results => {
                 let cohortId = results[0]._id;
                 let userId = results[1]._id;
-
+//saved: user.Id
                 if (cohortId && userId) {
                     let query3 = Project.find({
                             cohort_id: cohortId,
-                            owner_id: userId
+                            fav_users: [userId],
+                            // owner_id: userId
                         })
                         .count()
-
+//completed : user.Id
                     let query4 = Project.find({
                             cohort_id: cohortId,
                             members: userId,
+                            done_users: [userId],
                             owner_id: {
                                 $ne: userId
                             }
@@ -115,6 +121,8 @@ module.exports = {
                 }
             })
     },
+
+    //Public Form (Comments) + Private For Instructors
 
     //Method to get chat information for a specific Project
     chat: (req, res) => {
@@ -139,8 +147,8 @@ module.exports = {
                 if (cohortId && userId) {
                     Project.find({
                             cohort_id: cohortId,
-                            owner_id: userId,
-                            name:req.params.project
+                            user_id: userId,
+                            title: req.params.title
                         },
                         "chat"
                     )
@@ -181,12 +189,13 @@ module.exports = {
                     Project.find({
                             cohort_id: cohortId,
                             owner_id: userId,
-                            name:req.params.project
+                            name: req.params.project
                         })
                         .populate('owner_id')
                         .populate('cohort_id', "name code isActive")
-                        .populate('pending_members')
-                        .populate('members')
+                        .populate('admin_id')
+                        .populate('fav_users')
+                        .populate('done_users')
                         .populate('chat.author_id')
                         .exec((err, data) => {
                             // console.log('Project data:', data)
@@ -205,12 +214,11 @@ module.exports = {
         // console.log("req.session", req.session);
         req.body.owner_id = req.user._id;
         req.body.cohort_id = req.session.cohortId;
-        req.body.members = [req.user._id];
         Project.create(req.body)
             .then(doc => {
 
                 req.body.activityData = {
-                    event: "proposal",
+                    event: "added",
                     project_id: doc._id, 
                     user_id: req.user._id,
                     cohort_id:req.session.cohortId
@@ -225,6 +233,12 @@ module.exports = {
             });
     },
 
+
+    //Need for Upvote/ Downvote
+    //Need for Saved, Completed
+
+    // Make seperate adminUpdate to set as recommended or required , visible, disabled (can be visible and recommended)
+    
     //Method to update a Project 
     update: (req, res) => {
         // console.log("req.body: ", req.body);
@@ -232,14 +246,14 @@ module.exports = {
                 _id: req.body.projectId
             }, req.body.update)
             .then(doc => {
-                // console.log("req.body.update.status: ", req.body.update.status);
+                console.log("req.body.update.status: ", req.body.update.status);
                 // console.log("doc: ", doc);
                 // console.log("req.user", req.user);
-                switch (req.body.update.status||req.body.joinerStatus) {
+                switch (req.body.update.status) {
                     //Activity feed update for project status change for a specific project
-                    case "propsal":
+                    case "recommended":
                         req.body.activityData = {
-                            event: "proposal",
+                            event: "recommended",
                             project_id: req.body.projectId,
                             user_id: req.user._id,
                             cohort_id:req.session.cohortId
@@ -247,9 +261,9 @@ module.exports = {
 
                         activityController.create(req);
                         return;
-                    case "in-progress":
+                        case "required":
                         req.body.activityData = {
-                            event: "in-progress",
+                            event: "required",
                             project_id: req.body.projectId,
                             user_id: req.user._id,
                             cohort_id:req.session.cohortId
@@ -257,66 +271,111 @@ module.exports = {
 
                         activityController.create(req);
                         return;
-                    case "completed":
-                        req.body.activityData = {
-                            event: "completed",
-                            project_id: req.body.projectId,
-                            user_id: req.user._id,
-                            cohort_id:req.session.cohortId
-                        }
+                        // case "liked":
+                        // req.body.activityData = {
+                        //     event: "liked",
+                        //     project_id: req.body.projectId,
+                        //     user_id: req.user._id,
+                        //     cohort_id:req.session.cohortId
+                        // }
 
-                        activityController.create(req);
-                        return;
-                    //Activity feed update for member status changes in relation to a particular project                        
-                    case "joined":
-                        req.body.activityData = {
-                            event: "member joined project",
-                            project_id: req.body.projectId, 
-                            user_id: req.body.memberId,
-                            cohort_id:req.session.cohortId
-                        }
+                        // activityController.create(req);
+                        // return;
+                        // case "favorited":
+                        // req.body.activityData = {
+                        //     event: "favorited",
+                        //     project_id: req.body.projectId,
+                        //     user_id: req.user._id,
+                        //     cohort_id:req.session.cohortId
+                        // }
 
-                        activityController.create(req);
-                        return;
-                    case "approved":
-                        console.log("in the approval branch");
-                        req.body.activityData={
-                            event:"approved to join the project", 
-                            project_id:req.body.projectId,
-                            user_id:req.body.memberId,
-                            cohort_id:req.session.cohortId
-                        }
+                        // activityController.create(req);
+                        // return;
 
-                        activityController.create(req);
-                        return;
-                    case "declined":
-                        console.log("in declined branch");
-                        req.body.activityData={
-                            event:"disapproved to join the project", 
-                            project_id:req.body.projectId,
-                            user_id:req.body.memberId,
-                            cohort_id:req.session.cohortId
-                        }
+                        
+                    // case "recommend":
+                    //     req.body.activityData = {
+                    //         event: "is recommmended",
+                    //         project_id: req.body.projectId,
+                    //         user_id: req.user._id,
+                    //         cohort_id:req.session.cohortId
+                    //     }
 
-                        activityController.create(req);
-                        return;
-                    case "ejected":
-                        console.log("in the ejected branch");
-                        req.body.activityData={
-                            event:"was ejected from the project", 
-                            project_id:req.body.projectId,
-                            user_id:req.body.memberId,
-                            cohort_id:req.session.cohortId
-                        }
+                    //     activityController.create(req);
+                    //     return;
+                    // case "require":
+                    //     req.body.activityData = {
+                    //         event: "is required",
+                    //         project_id: req.body.projectId,
+                    //         user_id: req.user._id,
+                    //         cohort_id:req.session.cohortId
+                    //     }
 
-                        activityController.create(req);
-                        return;
+                    //     activityController.create(req);
+                    //     return;
+                    // case "active":
+                    //     req.body.activityData = {
+                    //         event: "activated",
+                    //         project_id: req.body.projectId,
+                    //         user_id: req.user._id,
+                    //         cohort_id:req.session.cohortId
+                    //     }
+
+                    //     activityController.create(req);
+                    //     return;
+                    // //Activity feed update for member status changes in relation to a particular project                        
+                    // case "saved":
+                    //     req.body.activityData = {
+                    //         event: "user saved resource",
+                    //         project_id: req.body.projectId, 
+                    //         user_id: req.body.fav_user._id,
+                    //         cohort_id:req.session.cohortId
+                    //     }
+
+                    //     activityController.create(req);
+                    //     return;
+                    // case "marked":
+                    //     console.log("user completed resource");
+                    //     req.body.activityData={
+                    //         event:"user marked complete", 
+                    //         project_id:req.body.projectId,
+                    //         user_id:req.body.done_user._id,
+                    //         cohort_id:req.session.cohortId
+                    //     }
+
+                    //     activityController.create(req);
+                    //     return;
+                    // case "liked":
+                    //     console.log("user up voted");
+                    //     req.body.activityData={
+                    //         event:"upvoted the resource", 
+                    //         project_id:req.body.projectId,
+                    //         user_id:req.user._id,
+                    //         cohort_id:req.session.cohortId
+                    //     }
+
+                    //     activityController.create(req);
+                    //     return;
+                    // case "disliked":
+                    //     console.log("resource was disliked");
+                    //     req.body.activityData={
+                    //         event:"was down voted", 
+                    //         project_id:req.body.projectId,
+                    //         user_id:req.user._id,
+                    //         cohort_id:req.session.cohortId
+                    //     }
+
+                    //     activityController.create(req);
+
+                    
+                    //     return;
                 }
                 res.json(doc);
             }).catch(err => {
                 res.json(err);
             })
     },
+
 
     //Method to delete a Project
     close: (req, res) => {

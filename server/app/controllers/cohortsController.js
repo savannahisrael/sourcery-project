@@ -20,6 +20,7 @@ module.exports = {
         })
         .populate('members')
         .populate('projects')
+        .populate('administrators')
         .then(doc =>{
             res.json(doc);
         })

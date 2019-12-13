@@ -123,8 +123,7 @@ module.exports = function (app, passport) {
     //All ACTIVITY FEED data
     app.get('/api/activityfeed', activityController.index);
 
-    //All RESOURCE data
-    app.get('/api/resources', resourceController.index);
+   
 
 
 
@@ -137,6 +136,7 @@ module.exports = function (app, passport) {
     //All PROJECTS for specifc user in a specific cohort aggregated
     app.get('/api/projectsUserProfile', projectController.profile);
 
+    //Feeds the Detail Page
     //All data for a specific PROJECT
     app.get('/api/projectData/:cohort/:username/app/:project', projectController.oneProject);
 
@@ -148,17 +148,8 @@ module.exports = function (app, passport) {
 
 
 
-    //All PROJECTS for specific user in a specific cohort
-    app.get('/api/resourcesDashboard', resourceController.dashboard);
+  
 
-    //All PROJECTS for specifc user in a specific cohort aggregated
-    app.get('/api/resourcesUserProfile', resourceController.profile);
-
-    //All data for a specific PROJECT
-    app.get('/api/resourceData/:cohort/:username/app/:resource', projectController.oneResource);
-
-    //All chat data for a specific PROJECT
-    app.get('/api/resourceChat', resourceController.chat);
 
 
     
@@ -181,12 +172,10 @@ module.exports = function (app, passport) {
 
     //ACTIVITY will be generated as a result of other transactions.
 
-       //Create a new instance of a PROJECT
-    //New project ACTIVITY will also be generated 
-    app.post('/api/resourceNew', resourceController.create);
+
 
     //Create a new instance of a COHORT
-    app.post('/api/cohortNew', cohortController.create);
+    // app.post('/api/cohortNew', cohortController.create);
 
 
     //Routes to update properties for all models
@@ -204,7 +193,7 @@ module.exports = function (app, passport) {
     //Update ACTIVITY property
     app.patch('/api/activityfeed', activityController.update);
 
-    app.patch('/api/resources', resourceController.update);
+   
 
 
     //Routes to deactivate instance on a model
@@ -216,7 +205,7 @@ module.exports = function (app, passport) {
 
     //Close PROJECT
     //Will update status property to closed
-    app.patch('/api/projectClose', projectController.close);
+    app.patch('/api/projectDisable', projectController.close);
 
     //Deactivate COHORT
     //Will update isActive property to false
@@ -228,7 +217,7 @@ module.exports = function (app, passport) {
 
     //Disable Resource
     //Will update status property to disabled
-    app.patch('/api/resourceDisable', resourceController.disable)
+  
 
 
     //TEST ROUTES

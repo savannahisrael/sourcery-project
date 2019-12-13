@@ -1,64 +1,77 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Card, Icon, Image, Button, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import './projectTiles.css';
 
 
-const Tile = (props) => {
-  if (props.cohort_id) {
+
+
+class Tile extends Component {
+
+  state= {
+
+  }
+
+
+    render(props) {
     return (
+      
       <div>
-        <Card centered raised className='tileCard' as={Link} to={`/${props.cohort_id.code}/${props.owner_id.github.login}/app/${props.name}`}>
+        <Card centered raised className='tileCard' >
           <Card.Content className='tileHeader'>
-            <Image src={props.owner_id.github.avatar_url} size='tiny' shape='circular' className='projecttileIcon'/>
+            <a href={this.props.other_url || this.props.s3_url || this.props.video_url} target="_blank"><Image src={this.props.img || this.props.video_url} size='medium'  fluid/></a>
             <Card.Header className='tileTitle'>
-              {props.name}
+              {this.props.title}
+              {this.props.fileType}
             </Card.Header>
           </Card.Content>
           <Card.Content className='tileContent'>
+
             <Divider/>
             <Card.Description className='tileState'>
-              {props.formatDate(props.start_date)} | {props.duration} Weeks
+            <Button color='green' content='Likes' icon='thumbs up outline'  label={{ basic: true, color: 'green', pointing: 'left', content:this.props.likes }}
+    />| <Button
+    basic
+    color='red'
+    content="Dislikes"
+    icon="thumbs down outline"
+    label={{
+      basic: true,
+      color: 'red',
+      pointing: 'right',
+      content: this.props.dislikes
+    }}
+  />
             </Card.Description>
             <Divider/>
-              {props.renderTechTags(props.tech_tags)}
+              {this.props.renderTechTags(this.props.tech_tags)}
             <Card.Description className='tileSummary'>
-              {props.summary}
+              {this.props.description}
             </Card.Description>
           </Card.Content>
-          <Card.Content extra >
-            {props.members.slice(0, 4).map(member =>
-              <Image as='a' className='tileTeam' shape='circular'
-              src={member.github.avatar_url} href={`https://github.com/${member.github.login}`} />
-            )}
-              {/* <Icon className='tileMore'name='ellipsis horizontal' size='large' /> */}
-              <br/>
-          </Card.Content>
-          <Button animated='vertical' fluid attached='bottom' className='tileJoin'>
+    
+           
+          <Button animated='vertical' fluid attached='bottom' className='tileJoin' >
+            {/* <a href={`/api/projects/${this.props.cohort}/${this.props.username}/app/${this.props.title}`} target="_blank" > */}
             <Button.Content visible>
-              View Details
+            View Details
             </Button.Content>
             <Button.Content hidden>
-              {`${props.members_wanted - props.members.length + 1} spots left!`}
+              {`See More`}
             </Button.Content>
+            {/* </a> */}
           </Button>
         </Card>
         <br/><br/>
       </div>
     )
-  } else {
-    return (
-      <div>
-        <Card centered raised className='tileCard'>
-        <Card.Content className='tileHeader'>
-          <Card.Header className='tileTitle'>
-            Loading...
-          </Card.Header>
-        </Card.Content>
-        </Card>
-      </div>
-    )
-  }
+  // } else {
+  //   return (
+  //     <div>
+  //     </div>
+  //   )
+  // }
+}
 }
 
-export default Tile
+export default Tile;
