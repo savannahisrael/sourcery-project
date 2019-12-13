@@ -9,6 +9,7 @@ import axios from 'axios';
 import moment from 'moment';
 import io from 'socket.io-client';
 
+
 const formatDate = date => moment(date).format('MM/DD/YYYY');
 
 
@@ -21,29 +22,26 @@ class Project extends Component {
       socket,
       dataLoaded: false,
       priviledge: 'public',
-      repo: false,
-      issues: [],
-      pulls: [],
-      contributors: [],
       userID: this.props.auth
     };
   }
 
+  //on mount fetch specific project data then 
   componentDidMount() {
     // console.log('State before fetch:', this.state);
     this.fetchProjectData()
-    .then(repoLink => {
-      if (repoLink) {
-        this.setState({repo: true})
-        this.fetchGithubData(repoLink)
-        return repoLink
-      } else {
-        this.setState({repo: false})
-        return repoLink
-      }
-    })
+    // .then(repoLink => {
+    //   if (repoLink) {
+    //     this.setState({repo: true})
+    //     this.fetchGithubData(repoLink)
+    //     return repoLink
+    //   } else {
+    //     this.setState({repo: false})
+    //     return repoLink
+    //   }
+    // })
     .then(() => {
-        this.setPriveledge();
+        // this.setPriveledge();
         this.state.socket.emit('join', this.state._id);
         this.state.socket.on('refreshMsg', data => {
           this.fetchProjectData();
@@ -54,154 +52,157 @@ class Project extends Component {
     .catch(error => console.log('Error on setup:', error));
   }
 
+  //leave socket
   componentWillUnmount() {
     this.state.socket.emit('leave', this.state._id)
   }
 
+//fetch project data
   fetchProjectData = () => {
     return axios.get(`/api/projectData${this.props.location.pathname}`).then(res => {
       // console.log('Project data:',res.data);
       this.setState({ ...res.data[0] });
-      return res.data[0].repo_link
+      return res.data[0]
     }).catch(error => {
       console.log('Error while fetching data:', error);
       return error;
     });
   }
 
-  fetchGithubData = repo => {
-    return axios.get('/api/github', {params: { repo }})
-    .then(res => {
-      const {issues, pulls, contributors} = res.data;
-      this.setState({issues, pulls, contributors})
-      return res.data;
-    })
-    .catch(err => console.log('Error in github pull:', err))
-  }
+  // fetchGithubData = repo => {
+  //   return axios.get('/api/github', {params: { repo }})
+  //   .then(res => {
+  //     const {issues, pulls, contributors} = res.data;
+  //     this.setState({issues, pulls, contributors})
+  //     return res.data;
+  //   })
+  //   .catch(err => console.log('Error in github pull:', err))
+  // }
 
-  setPriveledge = () => {
-      const curUser = this.state.userID.user.github.login;
-      if (this.state.owner_id.github.login === curUser) {
-        this.setState({priviledge: 'owner'})
-      } else if (this.state.members.find(m => m.github.login === curUser)) {
-        this.setState({priviledge: 'member'})
-      } else if (this.state.pending_members.find(m => m.github.login === curUser)) {
-        this.setState({priviledge: 'pending'})
-      }
-  }
+  // setPriveledge = () => {
+  //     const curUser = this.state.userID.user.github.login;
+  //     if (this.state.owner_id.github.login === curUser) {
+  //       this.setState({priviledge: 'owner'})
+  //     } else if (this.state.members.find(m => m.github.login === curUser)) {
+  //       this.setState({priviledge: 'member'})
+  //     } else if (this.state.pending_members.find(m => m.github.login === curUser)) {
+  //       this.setState({priviledge: 'pending'})
+  //     }
+  // }
 
-  renderTeamMembers = () => {
-    return this.state.members.map(member => {
-      if (this.state.repo) {
-        member.contributions = this.state.contributors.find(c => c.name === member.github.login )
-        if (!member.contributions) {
-            member.contributions = {
-                commits: 0,
-                additions: 0,
-                deletions: 0
-            }
-        }
-      } else {
-        member.contributions = {
-            commits: 0,
-            additions: 0,
-            deletions: 0
-        }
-      }
+  // renderTeamMembers = () => {
+  //   return this.state.members.map(member => {
+  //     if (this.state.repo) {
+  //       member.contributions = this.state.contributors.find(c => c.name === member.github.login )
+  //       if (!member.contributions) {
+  //           member.contributions = {
+  //               commits: 0,
+  //               additions: 0,
+  //               deletions: 0
+  //           }
+  //       }
+  //     } else {
+  //       member.contributions = {
+  //           commits: 0,
+  //           additions: 0,
+  //           deletions: 0
+  //       }
+  //     }
 
-      return (
-        <MemberBlock {...member} priviledge={this.state.priviledge}
-        projectId={this.state._id} updateFunction={this.fetchProjectData} />
-      )
-    })
-  }
+  //     return (
+  //       <MemberBlock {...member} priviledge={this.state.priviledge}
+  //       projectId={this.state._id} updateFunction={this.fetchProjectData} />
+  //     )
+  //   })
+  // }
 
-  renderPendingMembers = () => {
-    const DecisionButtons = (props) =>
-    (<Card.Content extra>
-      <div className='ui two buttons'>
-        <Button fluid className='projectClose' onClick= {()=> this.manageJoin('declined', props)}>Decline </Button>
-        <Button fluid className='projectCheck' onClick= {()=> this.manageJoin('approved', props)}>Approve </Button>
-      </div>
-    </Card.Content>)
+  // renderPendingMembers = () => {
+  //   const DecisionButtons = (props) =>
+  //   (<Card.Content extra>
+  //     <div className='ui two buttons'>
+  //       <Button fluid className='projectClose' onClick= {()=> this.manageJoin('declined', props)}>Decline </Button>
+  //       <Button fluid className='projectCheck' onClick= {()=> this.manageJoin('approved', props)}>Approve </Button>
+  //     </div>
+  //   </Card.Content>)
 
-    return this.state.pending_members.map(pending_member => (
-      <Card className='projectRequest'>
-        <Card.Content>
-        <Header as='h3'>Pending Members</Header>
-        <Divider/>
-          <Image className='projectImage' shape='circular' src={pending_member.github.avatar_url} size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
-        </Card.Content>
-        {this.state.priviledge === 'owner' ? <DecisionButtons {...pending_member} /> : ''}
-      </Card>
-    ));
-  }
+  //   return this.state.pending_members.map(pending_member => (
+  //     <Card className='projectRequest'>
+  //       <Card.Content>
+  //       <Header as='h3'>Pending Members</Header>
+  //       <Divider/>
+  //         <Image className='projectImage' shape='circular' src={pending_member.github.avatar_url} size='mini' verticalAlign='middle' /> <span> <strong> {pending_member.github.name} </strong> wants to join.</span>
+  //       </Card.Content>
+  //       {this.state.priviledge === 'owner' ? <DecisionButtons {...pending_member} /> : ''}
+  //     </Card>
+  //   ));
+  // }
 
-  manageJoin = (status, props) => {
-    const update  = {
-      update:{
-          $pull:{pending_members:props._id}
-      }, 
-      projectId:this.state._id,
-      memberId:props._id,
-      joinerStatus:status
-    }
+  // manageJoin = (status, props) => {
+  //   const update  = {
+  //     update:{
+  //         $pull:{pending_members:props._id}
+  //     }, 
+  //     projectId:this.state._id,
+  //     memberId:props._id,
+  //     joinerStatus:status
+  //   }
 
-    if (status === 'approved') {
-      update.update.$push = {members:props._id} 
-    }
+  //   if (status === 'approved') {
+  //     update.update.$push = {members:props._id} 
+  //   }
 
-    axios.patch('/api/projects', update)
-    .then(this.fetchProjectData())
-  }
+  //   axios.patch('/api/projects', update)
+  //   .then(this.fetchProjectData())
+  // }
 
-  renderTechTags = () => {
-    return this.state.tech_tags.map(tech_tag => (
-      <Label className='tileTags'>
-        {tech_tag}
-      </Label>
-    ));
-  }
+  // renderTechTags = () => {
+  //   return this.props.tech_tags.map(tech_tag => (
+  //     <Label className='tileTags'>
+  //       {tech_tag}
+  //     </Label>
+  //   ));
+  // }
 
-  renderPRorIssue = type => {
-    if (!this.state.repo) {
-      return `No ${type} for this repository, yet.` 
-    } else {
-      this.state[type].map( item => (
-        <Item.Group>
-          <Divider/>
-          <Item>
-            <Image className='projectImage' shape='circular' size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} />
-            <Item.Content>
-              <Item.Header as='a' href={item.url}>{item.title}</Item.Header>
-              <Item.Meta>{item.state}</Item.Meta>
-            </Item.Content>
-          </Item>
-        </Item.Group>
-      ));
-    }
-  }
+  // renderPRorIssue = type => {
+  //   if (!this.state.repo) {
+  //     return `No ${type} for this repository, yet.` 
+  //   } else {
+  //     this.state[type].map( item => (
+  //       <Item.Group>
+  //         <Divider/>
+  //         <Item>
+  //           <Image className='projectImage' shape='circular' size='mini' as='a' href={item.author.url} src={item.author.avatarUrl} />
+  //           <Item.Content>
+  //             <Item.Header as='a' href={item.url}>{item.title}</Item.Header>
+  //             <Item.Meta>{item.state}</Item.Meta>
+  //           </Item.Content>
+  //         </Item>
+  //       </Item.Group>
+  //     ));
+  //   }
+  // }
 
   getParams = () => [this.props.match.params.cohort, this.props.match.params.username, this.props.match.params.project];
 
-  renderButton = () => {
-    const priv = this.state.priviledge;
-    if (priv === 'owner') {
-      const [cohort, username, project] = this.getParams();
-      return <Button fluid className='projectJoin' as={Link} to={`/${cohort}/${username}/edit/${project}`}
-        content='Edit Project Details' />
-    } else if (priv === 'member') {
-      return <Button fluid className='projectJoin' content='You are a member!' />
-    } else if (priv === 'pending') {
-      return <Button fluid className='projectJoin' content='Awaiting approval...' />
-    } else {
-      return <Button fluid className='projectJoin' onClick={this.handleButtonClick} content='Request to Join!' />
-    }
-  }
+  // renderButton = () => {
+  //   // const priv = this.state.priviledge;
+  //   // if (priv === 'owner') {
+  //     <>
+  //     const [cohort, username, project] = this.getParams();
+  //     return <Button fluid className='projectJoin' as={Link} to={`/${cohort}/${username}/edit/${project}`}
+  //       content='Edit Project Details' /></>}
+    // } else if (priv === 'member') {
+    //   return <Button fluid className='projectJoin' content='You are a member!' />
+    // } else if (priv === 'pending') {
+    //   return <Button fluid className='projectJoin' content='Awaiting approval...' />
+    // } else {
+    //   return <Button fluid className='projectJoin' onClick={this.handleButtonClick} content='Request to Join!' />
+    //   }}
+  // }
 
   handleButtonClick = () => {
-    axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}, memberId:this.state.userID.user._id, joinerStatus:"joined"})
-    .then(this.setState({priviledge: 'pending'}))
+    axios.patch('/api/projects', {projectId: this.state._id, update: {$push: {pending_members:this.state.userID.user._id}}})
+    // .then(this.setState({priviledge: 'pending'}))
     .then(this.fetchProjectData())
     .catch(err => console.log('err on request to join:', err))
   }
@@ -218,7 +219,7 @@ class Project extends Component {
         chats={this.state.chat.filter(chat => chat.chat_type === 'public')} />
       </Tab.Pane> }
 
-      return this.state.priviledge === 'owner' || this.state.priviledge === 'member' ? [pubChat, teamChat] : [pubChat];
+      return this.state.priviledge === 'public' ? [pubChat, teamChat] : [pubChat];
   }
 
   // renderDevIcons = () => {
@@ -288,10 +289,10 @@ class Project extends Component {
             <Container textAlign='center' vertical>
               {/* {this.renderDevIcons} */}
               <Header as='h1' className='projectTitle'>
-              {this.state.name}
+              {this.props.title}
               </Header>
               <br/><br/><br/>
-              <p className='projectSummary'>{this.state.summary}</p>
+              <p className='projectSummary'>{this.props.description}</p>
             </Container>
           </Segment>
 
@@ -300,57 +301,26 @@ class Project extends Component {
               <Grid.Row>
 
                 <Grid.Column width={4}>
-                  <Segment className='pullRequest'>
-                    <Header as='h3'>Pull Requests</Header>
-                    {
-                      this.state.repo ?
-                      'No Github Repository Connected.' :
-                      this.renderPRorIssue('pulls')
-                    }
-                  </Segment>
-
-                  <Segment className='pullRequest'>
-                    <Header as='h3'>Issues</Header>
-                    {
-                      this.state.repo ?
-                      'No Github Repository Connected.' :
-                      this.renderPRorIssue('issues')
-                    }
-                  </Segment>
+                  
                 </Grid.Column>
 
                 <Grid.Column width={8}>
                   <Segment>
-                    <Label className='projectProgress' attached='top'>{this.state.status}</Label>
+                    <Label className='projectProgress' attached='top'>{this.props.status}</Label>
                     <Segment basic>
                       <Header as='h3'>Project Details
-                        {this.state.repo_link !== '' ? <Icon link={this.state.repo_link} className='projectIcons' name='github' size='large'/> : ''}
-                        {this.state.google_drive_link !== '' ? <Icon link={this.state.google_drive_link} className='projectIcons' name='google' size='large' color='red'/> : ''}
-                        {this.state.trello_link !== '' ? <Icon link={this.state.trello_link} className='projectIcons' name='trello' size='large' color='blue' /> : ''}
+                        {this.props.s3_url !== '' ? <Button href={this.props.s3_link} className='projectIcons' name="s3_url" size='large'>Go To Resource</Button> : ''}
+                        {this.props.video_url !== '' ? <Button link={this.props.video_url} className='projectIcons' name='google' size='large' color='red'/> : ''}
+                        {this.props.other_url !== '' ? <Button link={this.props.other_url} className='projectIcons' name='trello' size='large' color='blue' /> : ''}
                       </Header>
                       <p>{this.state.description}</p>
-                      {this.renderTechTags()}<br/><br/>
+                      {/* {this.renderTechTags(this.props.tech_tags)}<br/><br/> */}
                       <Grid divided='vertically'>
                         <Grid.Row columns={3}>
-                          <Grid.Column>
-                              <p className='projectStat'>Start Date</p>
-                              <Header>{formatDate(this.state.start_date)}</Header>
-                          </Grid.Column>
-                          <Grid.Column>
-                              <p className='projectStat'>Project Length</p>
-                              <Header>{this.state.duration} weeks </Header>
-                          </Grid.Column>
-                          <Grid.Column>
-                              <p className='projectStat'>Team Size</p>
-                              <Header>{this.state.members_wanted} members</Header>
-                          </Grid.Column>
+                          
                         </Grid.Row>
                       </Grid>
-                          {
-                            this.state.deploy_link !== '' ?
-                                <Button fluid className='projectCheck' as='a' href={this.state.deploy_link} > View Live Demo </Button>
-                            : ''
-                          }
+                         
                     </Segment>
                     {this.state._id !== '' ? 
                     <Segment basic className='projectChat'>
@@ -361,17 +331,16 @@ class Project extends Component {
 
                 <Grid.Column width={4}>
                   <Segment className='joinRequest'>
-                    {this.renderButton()}
+                    
                   </Segment>
 
                   <Card.Group>
-                    {this.renderPendingMembers()}
+                    
                   </Card.Group>
 
                   <Segment className='projectSegment'>
-                    <Header as='h3'>Team Members</Header>
                     <Divider/>
-                    {this.renderTeamMembers()}
+                    
                   </Segment>
                 </Grid.Column>
               </Grid.Row>

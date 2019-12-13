@@ -23,15 +23,16 @@ class Dashboard extends Component {
     .catch(error => console.log('Error during setup:', error))
   }
 
+  //change to favorited-members
   fetchProjects = () => {
     return axios.get('/api/projects').then(res => {
       const userProjects = res.data.filter(p => {
         const curUser = this.state.userID.user.github.login;
-        return p.members.find(m => m.github.login === curUser || p.owner_id.github.login === curUser)
+        return p.fav_users && p.done_users.find(m => m.github.login === curUser || p.owner_id.github.login === curUser)
       })
       this.setState({
-        pastProjects: userProjects.filter(p => p.status === 'completed'),
-        activeProjects: userProjects.filter(p => p.status === 'proposal' || p.status === 'in-progress')
+        savedProjects: userProjects.filter(p => p.status == "required"),
+        doneProjects: userProjects.filter(p => p.status === "recommended")
       });
       return userProjects;
     }).catch(error => {
@@ -43,7 +44,7 @@ class Dashboard extends Component {
   renderTiles = (remainder, type) => {
     return this.state[type]
     .filter((project, index) => index % 3 === remainder)
-    .map(project => <Tile {...project} renderTechTags={this.renderTechTags} formatDate={this.formatDate} />);
+    .map(project => <Tile {...project} renderTechTags={this.renderTechTags}/>);
   }
 
   renderTechTags = tech_tags => tech_tags.slice(0, 6).map(tech_tag => (
@@ -56,19 +57,19 @@ class Dashboard extends Component {
 
   renderPanes = () => {
     return (
-      [{ menuItem: 'Active Projects', render: () =>
+      [{ menuItem: 'Saved Projects', render: () =>
           <Tab.Pane className='tabPane' attached={false}>
-            {this.state.activeProjects.length > 0 ?
+            {this.state.savedProjects.length > 0 ?
             <Grid stackable container columns={3}>
               <Grid.Row>
                 <Grid.Column>
-                  {this.renderTiles(0, 'activeProjects')}
+                  {this.renderTiles(0, 'savedProjects')}
                 </Grid.Column>
                 <Grid.Column>
-                  {this.renderTiles(1, 'activeProjects')}
+                  {this.renderTiles(1, 'savedProjects')}
                 </Grid.Column>
                 <Grid.Column>
-                  {this.renderTiles(2, 'activeProjects')}
+                  {this.renderTiles(2, 'savedProjects')}
                 </Grid.Column>
               </Grid.Row>
             </Grid> :
@@ -83,19 +84,19 @@ class Dashboard extends Component {
           </Tab.Pane>
 
       },
-      { menuItem: 'Past Projects', render: () =>
+      { menuItem: 'Used Projects', render: () =>
         <Tab.Pane className='tabPane' attached={false}>
-          {this.state.pastProjects.length > 0 ?
+          {this.state.doneProjects.length > 0 ?
           <Grid stackable container columns={3}>
             <Grid.Row>
               <Grid.Column>
-                {this.renderTiles(0, 'pastProjects')}
+                {this.renderTiles(0, 'doneProjects')}
               </Grid.Column>
               <Grid.Column>
-                {this.renderTiles(1, 'pastProjects')}
+                {this.renderTiles(1, 'doneProjects')}
               </Grid.Column>
               <Grid.Column>
-                {this.renderTiles(2, 'pastProjects')}
+                {this.renderTiles(2, 'doneProjects')}
               </Grid.Column>
             </Grid.Row>
           </Grid> :
@@ -124,7 +125,7 @@ class Dashboard extends Component {
             <Segment textAlign='center' vertical className='dashboardBanner'>
               <Container text>
               <Header as='h1' className='dashboardTitle'>
-                Dashboard
+                DASHBOARD
               </Header><br/><br/><br/>
               </Container>
             </Segment>

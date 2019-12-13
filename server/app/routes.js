@@ -123,6 +123,9 @@ module.exports = function (app, passport) {
     //All ACTIVITY FEED data
     app.get('/api/activityfeed', activityController.index);
 
+   
+
+
 
     //Routes to pull specific data for all models
     // =============================================================
@@ -133,6 +136,7 @@ module.exports = function (app, passport) {
     //All PROJECTS for specifc user in a specific cohort aggregated
     app.get('/api/projectsUserProfile', projectController.profile);
 
+    //Feeds the Detail Page
     //All data for a specific PROJECT
     app.get('/api/projectData/:cohort/:username/app/:project', projectController.oneProject);
 
@@ -141,6 +145,14 @@ module.exports = function (app, passport) {
 
     //Last 10 activities sorted by auto created ID
     app.get('/api/activityfeed/latest', activityController.feed);
+
+
+
+  
+
+
+
+    
 
 
 
@@ -161,6 +173,11 @@ module.exports = function (app, passport) {
     //ACTIVITY will be generated as a result of other transactions.
 
 
+
+    //Create a new instance of a COHORT
+    // app.post('/api/cohortNew', cohortController.create);
+
+
     //Routes to update properties for all models
     // =============================================================
 
@@ -176,6 +193,8 @@ module.exports = function (app, passport) {
     //Update ACTIVITY property
     app.patch('/api/activityfeed', activityController.update);
 
+   
+
 
     //Routes to deactivate instance on a model
     // =============================================================
@@ -186,7 +205,7 @@ module.exports = function (app, passport) {
 
     //Close PROJECT
     //Will update status property to closed
-    app.patch('/api/projectClose', projectController.close);
+    app.patch('/api/projectDisable', projectController.close);
 
     //Deactivate COHORT
     //Will update isActive property to false
@@ -195,6 +214,10 @@ module.exports = function (app, passport) {
     //Hide ACTIVITY
     //will update visible to false
     app.patch('/api/activityHide', activityController.hide);
+
+    //Disable Resource
+    //Will update status property to disabled
+  
 
 
     //TEST ROUTES

@@ -14,7 +14,7 @@ export default class navigationBar extends Component {
     return (
       <Sticky >
         <Menu pointing secondary size='large'>
-          <Menu.Item name='devCircle' active={activeItem === 'devCircle'} onClick={this.handleItemClick} />
+          <Menu.Item name='SOURCERY' active={activeItem === 'SOURCERY'} onClick={this.handleItemClick} />
           <Menu.Menu position='right'>
             <Menu.Item>
               <Button primary>LOGIN WITH GITHUB</Button>

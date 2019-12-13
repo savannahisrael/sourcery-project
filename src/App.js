@@ -65,7 +65,7 @@ class App extends React.Component {
               <PrivateRoute path='/:cohort/create' auth={this.state.userID} component={Create} />
               <PrivateRoute path='/:cohort/:username/profile' auth={this.state.userID} component={Profile} />
               <PrivateRoute path='/:cohort/:username/dashboard' auth={this.state.userID} component={Dashboard} />
-              <PrivateRoute path='/:cohort/:username/edit/:project' auth={this.state.userID} component={Create} />
+              <PrivateRoute path='/:cohort/:username/edit/:project' auth={this.state.userID} component={Project} />
               <PrivateRoute path='/:cohort/:username/app/:project' auth={this.state.userID} component={Project} />
             </Switch>
           </div>

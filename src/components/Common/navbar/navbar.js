@@ -65,21 +65,17 @@ export default class navBar extends Component {
             style={menuFixed ? fixedMenuStyle : menuStyle}
           >
             <Container>
-              {/* <Menu.Item>
-                <Image className='navbarIcon' src={favIcon} />
-              </Menu.Item> */}
-              <Menu.Item name='DEVCIRCLE' href='/' onClick={this.handleItemClick} className='navFont'/>
+            
+              <Menu.Item name='SOURCERY' href='/' onClick={this.handleItemClick} className='navFont'/>
               <Menu.Menu position='right' className='navFont'>
-                <Menu.Item name='CREATE A PROJECT' as={Link} to={`/${this.props.cohort}/create`} active={activeItem === 'create'} onClick={this.handleItemClick} className='navCreate'/>
-                <Menu.Item name='Explore' as={Link} to={`/${this.props.cohort}/explore`} active={activeItem === 'explore'} onClick={this.handleItemClick} className='navFont' />
+                <Menu.Item name='ADD A RESOURCE' as={Link} to={`/${this.props.cohort}/create`} active={activeItem === 'create'} onClick={this.handleItemClick} className='navCreate'/>
+                <Menu.Item name='Discover' as={Link} to={`/${this.props.cohort}/explore`} active={activeItem === 'explore'} onClick={this.handleItemClick} className='navFont' />
                 <Menu.Item name='Dashboard' as={Link} to={`/${this.props.cohort}/${this.props.username}/dashboard`} active={activeItem === 'dashboard'} onClick={this.handleItemClick} className='navFont'/>
-                {/* <Menu.Item>
-                  <Button color='teal' href='/create' >CREATE PROJECT</Button>
-                </Menu.Item> */}
                 <Image as='img' src={this.props.avatar} className='navbarAvatar' inline shape='circular'/>
                 <Dropdown simple className='navIcon'>
                   <Dropdown.Menu className='navItem'>
                     <Dropdown.Item className='navFont' onClick={this.handleLogout}>Log Out</Dropdown.Item>
+                    <Dropdown.Item className='navFont' onClick={this.handleLogout}>Admin</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </Menu.Menu>

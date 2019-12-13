@@ -1,24 +1,24 @@
 [
 	{
-		"event": "proposal"
+		"event": "added"
 	},
 	{
-		"event": "in-progress"
+		"event": "recommended"
 	},
 	{
-		"event": "completed"
+		"event": "added"
 	},
 	{
-		"event": "proposal"
+		"event": "required"
 	},
 	{
-		"event": "member joined project"
+		"event": "member joined cohort"
 	},
 	{
-		"event": "member joined project"
+		"event": "member joined cohort"
 	},
 	{
-		"event": "member joined project"
+		"event": "member joined cohort"
 	},
 	{
 		"event": "member joined cohort"

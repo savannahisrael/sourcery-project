@@ -6,7 +6,8 @@ const insertProjects = require('./insertData/insertProjects.json');
 const insertUsers = require('./insertData/insertUsers.json');
 const insertCohorts = require('./insertData/insertCohorts.json');
 const insertActivity = require('./insertData/insertActivity.json');
-const joins = require('./insertData/joins.json')
+
+
 
 const _dropCollections = () => {
     Cohorts.collection.drop();
@@ -33,18 +34,7 @@ module.exports = function (app) {
             console.log('Users created:',users.length)
             Object.assign(newData, {users})
 
-            return Project.create(insertProjects.map(project => {
-                projectJoin = joins.find(j => j.name === project.name)
-                project.cohort_id = newData.cohorts.find(c => c.name === projectJoin.cohort)._id;
-                project.owner_id = users.find(u => u.github.login === projectJoin.owner)._id
-                project.members = projectJoin.members.map(e => users.find(u => u.github.login === e)._id)
-                project.pending_members = projectJoin.pending.map(e => users.find(u => u.github.login === e)._id)
-                project.chat = projectJoin.chat.map(e => {
-                    e.author_id = users.find(u => u.github.login === e.author_id)._id;
-                    return e
-                })
-                return project
-            }))
+            return Project.create(insertProjects)
         })
         .then(projects => {
             console.log('Projects created: ',projects.length)

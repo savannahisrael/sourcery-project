@@ -72,8 +72,8 @@ class InputExampleAction extends Component {
           {this.props.chats.map(e => this.renderChatMessage(e))}
           <Form reply onSubmit={this.handleSubmit}>
             <Form reply>
-              <Form.TextArea maxLength="140" name="chatInput" value={this.state.chatInput} onChange={this.handleChange} style={{ minHeight: 50 }}/>
-              <Button fluid className='chatButton'>New Comment</Button>
+              <Form.TextArea maxLength="200" name="chatInput" value={this.state.chatInput} onChange={this.handleChange} style={{ minHeight: 50 }}/>
+              <Button fluid className='chatButton'>Share your thoughts!</Button>
             </Form>
           </Form>
         </Comment.Group>
