@@ -2,10 +2,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+require('dotenv').config();
 
 //=============== INITIALIZE EXPRESS APP & SETUP FOR DATA PARSING===============//
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -61,3 +62,5 @@ app.get('*', (req, res) => {
 //=============== STARTING THE SERVER ===============//
 const server = app.listen(port, () => console.log("App listening on PORT " + port));
 require("./sockets")(server)
+
+module.exports={mongoose}
