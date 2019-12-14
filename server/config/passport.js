@@ -18,7 +18,7 @@ const configAuth = process.env.HEROKU ? {
     github: {
         clientID: process.env.GITHUB_CLIENTID,
         clientSecret: process.env.GITHUB_CLIENTSECRET,
-        callbackURL: 'https://devcircle.herokuapp.com/auth/github/callback'
+        callbackURL: 'https://sourcery-project.herokuapp.com/auth/github/callback'
     } 
 } 
 : require("./auth");
