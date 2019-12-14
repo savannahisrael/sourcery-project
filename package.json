@@ -1,7 +1,10 @@
 {
-  "name": "devcircle",
+  "name": "sourcery",
   "version": "0.1.0",
   "private": true,
+  "main": "server/index.js",
+  "homepage": "https://sourcery-project.herokuapp.com/",
+  "author": "savannahisrael",
   "dependencies": {
     "@stardust-ui/docs-components": "^0.39.0",
     "@stardust-ui/react": "^0.39.0",
@@ -27,6 +30,9 @@
     "semantic-ui-react": "^0.72.0",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0"
+  },
+  "engines": {
+    "node": "^10.16.0"
   },
   "scripts": {
     "start": "react-scripts start",
