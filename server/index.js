@@ -45,7 +45,7 @@ app.use(passport.session());
 app.use(flash());
 
 //=============== SERVE STATIC ASSETS ===============//
-app.use(express.static(path.resolve(__dirname, 'build')));
+app.use(express.static(path.resolve(__dirname, "..", 'build')));
 
 //=============== ROUTES SETUP ===============//
 require('./app/routes.js')(app, passport) //load our routes and pass in our app and fully configured passport
