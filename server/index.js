@@ -6,7 +6,7 @@ require('dotenv').config();
 
 //=============== INITIALIZE EXPRESS APP & SETUP FOR DATA PARSING===============//
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,7 +23,7 @@ const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const configDB = require('./config/database.js');
 // const users = require('./models/Users');
-mongoose.Promise = Promise;
+mongoose.Promise = global.Promise;
 mongoose.connect(configDB.url, {  useUnifiedTopology: true, useNewUrlParser: true })
 mongoose.set('useCreateIndex', true)
 
@@ -60,8 +60,9 @@ if(process.env.NODE_ENV === 'production') {  app.use(express.static(path.join(__
 
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
 });
+}
 
 
 //=============== STARTING THE SERVER ===============//
