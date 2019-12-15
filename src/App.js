@@ -37,11 +37,16 @@ class App extends React.Component {
         login: false
       }
     }
+    this.connecToServer = this.connecToServer.bind(this);
   }
 
+
   componentDidMount() {
+    this.connecToServer();
     this.checkLoggedIn();
   }
+
+  connecToServer() {    fetch('/');  }
 
   checkLoggedIn = () => {
     return axios.get('/auth/checkLoggedIn').then(res => {
