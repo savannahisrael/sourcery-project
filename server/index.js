@@ -23,7 +23,7 @@ const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const configDB = require('./config/database.js');
 // const users = require('./models/Users');
-mongoose.Promise = global.Promise;
+mongoose.Promise = Promise;
 mongoose.connect(configDB.url, {  useUnifiedTopology: true, useNewUrlParser: true })
 mongoose.set('useCreateIndex', true)
 
@@ -45,7 +45,7 @@ app.use(passport.session());
 app.use(flash());
 
 //=============== SERVE STATIC ASSETS ===============//
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.resolve(__dirname, 'build')));
 
 //=============== ROUTES SETUP ===============//
 require('./app/routes.js')(app, passport) //load our routes and pass in our app and fully configured passport
@@ -55,14 +55,9 @@ require('./app/testRoutes.js')(app)
 //=============== API ROUTES ===============//
 app.get("/api/test", (req, res) => res.json({id:1, first:'hello', last:'world'}));
 // Always return the main index.html, so react-router render the route in the client
-
-if(process.env.NODE_ENV === 'production') {  app.use(express.static(path.join(__dirname, 'build')));  //  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  })}
-
-
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
-}
 
 
 //=============== STARTING THE SERVER ===============//
