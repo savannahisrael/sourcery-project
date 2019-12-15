@@ -43,7 +43,7 @@
     "serve": "serve -s build",
     "client": "react-scripts start",
     "build":"react-scripts build",
-    "heroku-postbuild": "npm install --only=dev && npm install && npm run build But "    
+    "heroku-postbuild": "npm install --only=dev && npm install && npm run build"    
   },
   "eslintConfig": {
     "extends": "react-app"
