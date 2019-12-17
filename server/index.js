@@ -6,7 +6,7 @@ require('dotenv').config();
 
 //=============== INITIALIZE EXPRESS APP & SETUP FOR DATA PARSING===============//
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -45,7 +45,9 @@ app.use(passport.session());
 app.use(flash());
 
 //=============== SERVE STATIC ASSETS ===============//
-app.use(express.static(path.resolve(__dirname, "..", 'build')));
+// app.use(express.static(path.resolve(__dirname, "..", 'build')));
+
+app.use(express.static(path.join(__dirname, 'build')));
 
 //=============== ROUTES SETUP ===============//
 require('./app/routes.js')(app, passport) //load our routes and pass in our app and fully configured passport
@@ -55,9 +57,14 @@ require('./app/testRoutes.js')(app)
 //=============== API ROUTES ===============//
 app.get("/api/test", (req, res) => res.json({id:1, first:'hello', last:'world'}));
 // Always return the main index.html, so react-router render the route in the client
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+// });
+
+-app.get('/', function (req, res) {
+  +app.get('/*', function (req, res) {
+     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+   });
 
 
 //=============== STARTING THE SERVER ===============//
