@@ -9,7 +9,7 @@ const Tile = (props) => {
     return (
       <div>
         <Card centered raised className='tileCard' as={Link} to={`/${props.cohort_id.code}/${props.owner_id.github.login}/app/${props.name}`}>
-          <Card.Content className='tileHeader'>
+          <Card.Content>
             <Image src={props.owner_id.github.avatar_url} size='tiny' shape='circular' className='projecttileIcon'/>
             <Card.Header className='tileTitle'>
               {props.name}

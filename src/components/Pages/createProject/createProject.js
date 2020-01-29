@@ -46,6 +46,9 @@ const languageOptions = [
   },
   {
     text: 'HTML/CSS', value: 'HTML/CSS'
+  },
+  {
+    text: 'React', value: 'react'
   }
 ]
 
@@ -262,13 +265,13 @@ class CreateProjectForm extends Component {
               <Form.Select name='members_wanted' label='Team Size' options={memberOptions} 
                 onChange={this.handleMembersWantedChange} type='number' required value={this.state.project.members_wanted}/>
               <Form.Input name='google_drive_link' type='url' label='Google Drive Link' 
-                onChange={this.handleGoogleLinkChange} value={this.state.project.google_drive_link}/>
+                onChange={this.handleInputChange} value={this.state.project.google_drive_link}/>
               <Form.Input name='trello_link' type='url' label='Trello Link' 
-                onChange={this.handleTrelloLinkChange} value={this.state.project.trello_link}/>
+                onChange={this.handleInputChange} value={this.state.project.trello_link}/>
               <Form.Input name='repo_link' type='url' label='Github Link' 
-                onChange={this.handleRepoLinkChange} value={this.state.project.repo_link}/>
+                onChange={this.handleInputChange} value={this.state.project.repo_link}/>
               <Form.Input name='deploy_link' type='url' label='Deployment Link'
-                onChange={this.handleDeployLinkChange} value={this.state.project.deploy_link}/>
+                onChange={this.handleInputChange} value={this.state.project.deploy_link}/>
               <Button className='createButton'>
               {this.state.mode === 'create' ? 
               'Create Project' :

@@ -1,77 +1,77 @@
 {
 		"name": "babesInBrunchland",
-		"owner": "savannahisrael",
-		"members": ["savannahisrael","Claudpod1","RachaelWhitefield"],
-		"pending": [""],
+		"owner": "$oid": "5e319c46e20c710017527f55",
+		"members": [{"$oid": "5e319c46e20c710017527f55"},{"$oid": "5e319df9e7179a2f01151cce"},{"$oid": "5e31a05ce7179a2f0115211e"}],
+		"pending": ["$oid": "5e319e60e7179a2f01151e27"],
 		"cohort": "DUWOMEN0919",
 		"chat": [
 			{
 				"body": "Let's chat!",
 				"date": "07/08/2019",
-				"author_id": "lnchapin",
+				"author_id": "$oid": "5e319e60e7179a2f01151e27",
 				"chat_type": "public"
 			},
 			{
 				"body": "Really, no one?",
 				"date": "07/08/2019",
-				"author_id": "lnchapin",
+				"author_id": "$oid": "5e319e95e7179a2f01151ee3",
 				"chat_type": "public"
 			},
 			{
-				"body": "C'mon guys!?",
+				"body": "Love This!",
 				"date": "07/08/2019",
-				"author_id": "caseyisonit",
+				"author_id": "$oid": "5e31a0a8e7179a2f0115214e",
 				"chat_type": "public"
 			},
 			{
 				"body": "So private!",
 				"date": "09/20/2019",
-				"author_id": "Claudpod1",
+				"author_id": "$oid": "5e319df9e7179a2f01151cce",
 				"chat_type": "private"
 			},
 			{
 				"body": "I know right?",
 				"date": "09/21/2019",
-				"author_id": "RachaelWhiteField",
+				"author_id": "$oid": "5e31a05ce7179a2f0115211e",
 				"chat_type": "private"
 			}
 		]
 	},
 	{
 		"name": "letsGetMetaphysical",
-		"owner": "RachaelWhitefield",
-		"members": ["RachaelWhitefield", "caseyisonit"],
-		"pending": ["TheGuardingDark"],
+		"owner": "$oid": "5e31a05ce7179a2f0115211e",
+		"members": [{"$oid": "5e31a05ce7179a2f0115211e"}, {"$oid": "5e31a100e7179a2f0115223f"}],
+		"pending": ["$oid": "5e31a0cae7179a2f011521c0"],
 		"cohort": "DUWOMEN0919",
 		"chat": [
 			{
 				"body": "Hey, give me access!",
 				"date": "07/08/2019",
-				"author_id": "TheGuardingDark",
+				"author_id": "$oid": "5e31a0cae7179a2f011521c0",
 				"chat_type": "public"
 			},
 			{
 				"body": "What do y'all think!?",
 				"date": "07/08/2019",
-				"author_id": "caseyisonit",
+				"author_id": "$oid": "5e31a100e7179a2f0115223f",
 				"chat_type": "public"
 			},
 			{
 				"body": "Great job, ladies!!!",
 				"date": "07/09/2019",
-				"author_id": "lnchapin",
+				"author_id": "$oid": "5e319e95e7179a2f01151ee3",
 				"chat_type": "public"
 			},
 			{
 				"body": "So private!",
 				"date": "08/20/2019",
-				"author_id": "caseyisonit",
+				"author_id": "$oid": "5e31a100e7179a2f0115223f",
 				"chat_type": "private"
 			},
 			{
 				"body": "I know right?",
 				"date": "08/21/2019",
-				"author_id": "RachaelWhiteField",
+				"author_id": "$oid": "5e31a05ce7179a2f0115211e",
 				"chat_type": "private"
 			}
 		]
@@ -79,6 +79,7 @@
 
     USERS
     ,
+	me: "$oid": "5e319c46e20c710017527f55"
 	{
 		"github":{
 			"login": "Claudpod1",
@@ -86,6 +87,7 @@
 			"avatar_url": "https://avatars2.githubusercontent.com/u/48806630?v=4&s=400",
 			"id": 48806630
 		}
+		"$oid": "5e319df9e7179a2f01151cce"
 	},
 	{
 		"github":{
@@ -94,6 +96,7 @@
 			"avatar_url": "https://avatars2.githubusercontent.com/u/48066581?v=4&s=400",
 			"id": 48066581
 		}
+		"$oid": "5e319e60e7179a2f01151e27"
 	},
 	{
 		"github": {
@@ -102,6 +105,7 @@
 			"avatar_url": "https://avatars1.githubusercontent.com/u/27717988?v=4&s=400",
 			"id": 27717988
 		}
+		 "$oid": "5e319e95e7179a2f01151ee3"
 	},
 	{
 		"github": {
@@ -110,39 +114,61 @@
 			"avatar_url": "https://avatars0.githubusercontent.com/u/29259659?v=4&s=400",
 			"id": 29259659
 		}
+		"$oid": "5e319faee7179a2f011520c3"
 	},
 	{
+		isActive": true,
 		"github": {
 			"login": "RachaelWhitefield",
 			"name": "Rachael Whitefield",
 			"avatar_url": "https://avatars2.githubusercontent.com/u/47681256?v=4&s=400",
 			"id": 47681256
-		}
+		},
+		 "__v": 0
+		 "$oid": "5e31a05ce7179a2f0115211e"
 	},
 	{
+		"isActive": true,
 		"github":{
 			"login": "ambermoreyra",
 			"name": "Amber Moreyra",
 			"avatar_url": "https://avatars1.githubusercontent.com/u/49133487?v=4&s=400",
 			"id": 49133487
 		}
+		"$oid": "5e31a0a8e7179a2f0115214e"
+		 "__v": 0
 	},
 	{
+		"isActive": true,
 		"github":{
 			"login": "caseyisonit",
 			"name": "Casey Eickhoff",
 			"avatar_url": "https://avatars0.githubusercontent.com/u/48574582?v=4&s=400",
 			"id": 48574582
-		}
+		},
+		 "__v": 0
+		   "$oid": "5e31a100e7179a2f0115223f"
 	},
 	{
+		"isActive": true,
 		"github":{
 			"login": "TheGuardingDark",
 			"name": "Liv",
 			"avatar_url": "https://avatars1.githubusercontent.com/u/48845546?v=4&s=400",
 			"id": 48845546
-	
+		},
+		 "__v": 0
+		 "$oid": "5e31a0cae7179a2f011521c0"
 	}
+
+	{"isActive": true,
+    "github": {
+			"login": "kelsimhoyle",
+			"name": "Kelsi Hoyle",
+			"avatar_url": "https://avatars0.githubusercontent.com/u/29259659?v=4&s=400",
+			"id": 29259659
+		},
+    "__v": 0}
 
     PROJECTS
 

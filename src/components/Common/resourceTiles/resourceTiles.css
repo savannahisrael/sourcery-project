@@ -16,6 +16,7 @@
 .tileTitle {
   text-align: center !important;
   font-size: 1.75em !important;
+  color: #24305E !important;
 }
 
 .tileState {
@@ -31,7 +32,7 @@
 
 .tileTags {
   margin: 5px 5px !important;
-  background-color: #98A8BC !important;
+  background-color: #F76C6C !important;
   border-radius: 20px !important;
   
 }
@@ -58,7 +59,7 @@
 }
 
 .tileJoin {
-  background-color: #25569B !important;
+  background-color: #374785 !important;
   color: white !important;
   font-size: 18px !important;
   font-weight: 300 !important;

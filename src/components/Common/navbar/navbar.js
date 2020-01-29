@@ -67,12 +67,12 @@ export default class navBar extends Component {
             <Container>
               <Menu.Item name='SOURCERY' href='/' onClick={this.handleItemClick} className='navFont'/>
               <Menu.Menu position='right' className='navFont'>
-                <Dropdown text='PROJECTS' className='navFont'>
+                <Dropdown text='PROJECTS' className='navCreate'>
                   <Dropdown.Menu >
                     <Dropdown.Item text='Add Project' as={Link} to={`/${this.props.cohort}/create`} active={activeItem === 'create'} onClick={this.handleItemClick} className='navCreate'/>
                     <Dropdown.Item text='Explore Projects' as={Link} to={`/${this.props.cohort}/explore`} active={activeItem === 'explore'} onClick={this.handleItemClick} className='navFont'/></Dropdown.Menu>
-                </Dropdown>
-                <Dropdown text='RESOURCES' className='navFont'>
+                </Dropdown>{'  '}
+                <Dropdown text='RESOURCES' className='navCreate'>
                   <Dropdown.Menu>
                     <Dropdown.Item text='Add Resource' as={Link} to={`/${this.props.cohort}/add`} active={activeItem === 'add'} onClick={this.handleItemClick} className='navCreate'/>
                     <Dropdown.Item  text='Discover Resources' as={Link} to={`/${this.props.cohort}/discover`} active={activeItem === 'discover'} onClick={this.handleItemClick} className='navFont' /></Dropdown.Menu>
