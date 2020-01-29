@@ -1,0 +1,182 @@
+{
+		"name": "babesInBrunchland",
+		"owner": "savannahisrael",
+		"members": ["savannahisrael","Claudpod1","RachaelWhitefield"],
+		"pending": [""],
+		"cohort": "DUWOMEN0919",
+		"chat": [
+			{
+				"body": "Let's chat!",
+				"date": "07/08/2019",
+				"author_id": "lnchapin",
+				"chat_type": "public"
+			},
+			{
+				"body": "Really, no one?",
+				"date": "07/08/2019",
+				"author_id": "lnchapin",
+				"chat_type": "public"
+			},
+			{
+				"body": "C'mon guys!?",
+				"date": "07/08/2019",
+				"author_id": "caseyisonit",
+				"chat_type": "public"
+			},
+			{
+				"body": "So private!",
+				"date": "09/20/2019",
+				"author_id": "Claudpod1",
+				"chat_type": "private"
+			},
+			{
+				"body": "I know right?",
+				"date": "09/21/2019",
+				"author_id": "RachaelWhiteField",
+				"chat_type": "private"
+			}
+		]
+	},
+	{
+		"name": "letsGetMetaphysical",
+		"owner": "RachaelWhitefield",
+		"members": ["RachaelWhitefield", "caseyisonit"],
+		"pending": ["TheGuardingDark"],
+		"cohort": "DUWOMEN0919",
+		"chat": [
+			{
+				"body": "Hey, give me access!",
+				"date": "07/08/2019",
+				"author_id": "TheGuardingDark",
+				"chat_type": "public"
+			},
+			{
+				"body": "What do y'all think!?",
+				"date": "07/08/2019",
+				"author_id": "caseyisonit",
+				"chat_type": "public"
+			},
+			{
+				"body": "Great job, ladies!!!",
+				"date": "07/09/2019",
+				"author_id": "lnchapin",
+				"chat_type": "public"
+			},
+			{
+				"body": "So private!",
+				"date": "08/20/2019",
+				"author_id": "caseyisonit",
+				"chat_type": "private"
+			},
+			{
+				"body": "I know right?",
+				"date": "08/21/2019",
+				"author_id": "RachaelWhiteField",
+				"chat_type": "private"
+			}
+		]
+	}
+
+    USERS
+    ,
+	{
+		"github":{
+			"login": "Claudpod1",
+			"name": "Claudia Pollinger",
+			"avatar_url": "https://avatars2.githubusercontent.com/u/48806630?v=4&s=400",
+			"id": 48806630
+		}
+	},
+	{
+		"github":{
+			"login": "FrancescaSadler",
+			"name": "Francesca Sadler",
+			"avatar_url": "https://avatars2.githubusercontent.com/u/48066581?v=4&s=400",
+			"id": 48066581
+		}
+	},
+	{
+		"github": {
+			"login": "lnchapin",
+			"name": "Lindsay Chapin",
+			"avatar_url": "https://avatars1.githubusercontent.com/u/27717988?v=4&s=400",
+			"id": 27717988
+		}
+	},
+	{
+		"github": {
+			"login": "kelsimhoyle",
+			"name": "Kelsi Hoyle",
+			"avatar_url": "https://avatars0.githubusercontent.com/u/29259659?v=4&s=400",
+			"id": 29259659
+		}
+	},
+	{
+		"github": {
+			"login": "RachaelWhitefield",
+			"name": "Rachael Whitefield",
+			"avatar_url": "https://avatars2.githubusercontent.com/u/47681256?v=4&s=400",
+			"id": 47681256
+		}
+	},
+	{
+		"github":{
+			"login": "ambermoreyra",
+			"name": "Amber Moreyra",
+			"avatar_url": "https://avatars1.githubusercontent.com/u/49133487?v=4&s=400",
+			"id": 49133487
+		}
+	},
+	{
+		"github":{
+			"login": "caseyisonit",
+			"name": "Casey Eickhoff",
+			"avatar_url": "https://avatars0.githubusercontent.com/u/48574582?v=4&s=400",
+			"id": 48574582
+		}
+	},
+	{
+		"github":{
+			"login": "TheGuardingDark",
+			"name": "Liv",
+			"avatar_url": "https://avatars1.githubusercontent.com/u/48845546?v=4&s=400",
+			"id": 48845546
+	
+	}
+
+    PROJECTS
+
+    {
+		"name": "babesInBrunchland",
+		"summary": "Search for local brunch spots within your budget -- then invite your babes!",
+		"description": "Babes In Brunchland is a web application that anyone, anywhere can use. Users can perform a search for a local brunch spots that fit within one of three budgets.  From there they can choose their top restauraunt and then create CUSTOM invitation to save and share!",
+		"tech_tags": ["html", "bootstrap", "css", "api", "ajax", "jquery"],
+		"start_date": "05/28/2019",
+		"duration": 2,
+		"members_wanted": 4,
+		"status": "completed",
+		"primary_language": "javascript",
+		"google_drive_link": "",
+		"trello_link": "",
+		"repo_link": "https://github.com/savannahisrael/BabesInBrunchland",
+		"deploy_link": "https://savannahisrael.com/BabesInBrunchland"
+	},
+	{
+		"name": "getStoned",
+		"summary": "Would you like to know about stones and their metaphysical properties? Look no futher!",
+		"description": "Log in to our app to learn about the properties of stones and save your favorites. Or, just look around to learn more!",
+		"tech_tags": ["node", "reactjs", "javascript", "heroku", "api", "csharp"],
+		"start_date": "08/12/2019",
+		"duration": 3,
+		"members_wanted": 5,
+		"status": "in-progress",
+		"primary_language": "react",
+		"google_drive_link": "",
+		"trello_link": "",
+		"repo_link": "https://github.com/RachaelWhitefield/lets-get-metaphysical",
+		"deploy_link": "http://glacial-journey-69057.herokuapp.com/"
+	}
+    
+
+    
+    

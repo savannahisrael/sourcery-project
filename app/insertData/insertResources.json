@@ -1,0 +1,57 @@
+[
+{
+    "fileType": "pdf",
+    "title": "Testing",
+    "description": "Using only client side javascript and Firebase realtime db, we will create an online version of the seminal card game, Dixit.",
+    "tech_tags": ["javascript", "firebase", "materialize"],
+    "likes": 0,
+    "dislikes": 3,
+    "img": "https://cosmos-images2.imgix.net/file/spina/photo/20226/190902_banannas_full.jpg?ixlib=rails-2.1.4&auto=format&ch=Width%2CDPR&fit=max&w=835",
+    "s3_url": "www.facebook.com",
+    "status": "active"
+},
+{
+    "fileType": "video",
+    "title": "Lesson 6.3 : Dynamic Elements",
+    "description": "Bootcamp tutorial code-along video of Ajax/Api Dynamic Buttons",
+    "tech_tags": ["jquery", "ajax", "api", "javascript", "html"],
+    "status":"active",
+    "video_url": "https://youtu.be/UVBmX4cZkHY",
+    "img": "<iframe width='560' height='315' src='https://www.youtube.com/embed/UVBmX4cZkHY' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
+    "likes": 6,
+    "dislikes": 1
+},
+{
+    "fileType": "article",
+    "title": "Conditional (ternary) Operators",
+    "description": "Textbook like definitions and coding examples and uses for ternary operators.",
+    "tech_tags": ["javascript", "react", "es6"],
+    "status": "active",
+    "other_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator",
+    "img": "http://placeimg.com/640/480/tech",
+    "likes": 6,
+    "dislikes": 1
+},
+{
+    "fileType": "pdf",
+    "title": "Steps To Upload to Github",
+    "description": "Step By Step Guide With Pictures - Beginner Level using command line",
+    "tech_tags": ["github", "terminal", "deployment", "bash", "git", "remote"],
+       "status": "recommended",
+    "s3_url": "https://resourceroundup.s3.us-east-2.amazonaws.com/resources/Git/Steps+To+Upload+to+Github.pdf",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJsTZII2gahjBM0KPN6vrwlMYo9C6-X-L6dJyW0A4Sq-iYRWdb&s",
+    "likes": 2,
+    "dislikes": 3
+},
+{
+    "fileType": "article",
+    "title": "JavaScript ES6+: var, let, or const?",
+    "description": "In depth breakdown of each term and their purpose plus use cases",
+    "tech_tags": ["javascript", "es6", "react"],
+      "status": "active",
+    "other_url": "https://medium.com/javascript-scene/javascript-es6-var-let-or-const-ba58b8dcde75",
+    "img": "https://miro.medium.com/max/1200/1*Jd_vgmlBJtbwF_fJAQpvSg.jpeg",
+    "likes": 3,
+    "dislikes": 3
+}
+]
