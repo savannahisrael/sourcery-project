@@ -77,8 +77,8 @@ class ResourceTile extends Component {
             <Divider />
             <Card.Description className='tileState'>
               <Button
-                onClick={this.props.handleLikes}
-                data-type="like"
+                onClick={event=this.props.handleLikes}
+                // data-type="like"
                 color='green'
                 icon='thumbs up outline'
                 label={{
@@ -87,7 +87,7 @@ class ResourceTile extends Component {
                 }} />
               <Button
                 onClick={this.props.handleDislikes}
-                data-type="dislike"
+                // data-type="dislike"
                 color='red'
                 icon="thumbs down outline"
                 label={{
