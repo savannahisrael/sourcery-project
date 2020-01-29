@@ -15,37 +15,37 @@ class ResourceTile extends Component {
     action: null,
   }
 
-  componentDidUpdate() {
-    this.updateLikesDislikes()
-  }
+  // componentDidUpdate() {
+  //   this.updateLikesDislikes()
+  // }
 
   handleLikes = () => {
-    this.setState({
-      likes: this.state.likes + 1,
-      dislikes: this.state.dislikes,
-      action: 'liked',
-    })
+    // this.setState({
+    //   likes: this.state.likes + 1,
+    //   dislikes: this.state.dislikes,
+    //   action: 'liked',
+    // })
   }
 
   handleDislikes = () => {
-    this.setState({
-      likes: this.state.likes,
-      dislikes: this.state.dislikes + 1,
-      action: 'disliked',
-    });
+    // this.setState({
+    //   likes: this.state.likes,
+    //   dislikes: this.state.dislikes + 1,
+    //   action: 'disliked',
+    // });
   }
 
-  updateLikesDislikes = e => {
-    const resourceId = this.props.resource._id;
-    if (this.state.action === "liked") {
-      let body = {likes: 1}
-      return axios.put("/api/resources/" + resourceId + "/likesdislikes", body)
-  }
-  else if (this.state.action === "disliked") {
-    let body = {dislikes: 1}
-      return axios.put("/api/resources/" + resourceId + "/likesdislikes", body)
-  }
-}
+//   updateLikesDislikes = e => {
+//     const resourceId = this.props.resource._id;
+//     if (this.state.action === "liked") {
+//       let body = {likes: 1}
+//       return axios.patch("/api/resources/" + resourceId + "/likesdislikes", body)
+//   }
+//   else if (this.state.action === "disliked") {
+//     let body = {dislikes: 1}
+//       return axios.patch("/api/resources/" + resourceId + "/likesdislikes", body)
+//   }
+// }
 
   addToUserFavorites = () => {
 
@@ -58,7 +58,6 @@ class ResourceTile extends Component {
 
 
   render(props) {
-    const { likes, dislikes, action } = this.state
 
     return (
 
@@ -77,24 +76,22 @@ class ResourceTile extends Component {
             <Divider />
             <Card.Description className='tileState'>
               <Button
-                onClick={event=this.props.handleLikes}
-                // data-type="like"
+                onClick={this.props.handleLikes}
                 color='green'
                 icon='thumbs up outline'
                 label={{
                   basic: true, color: 'green', pointing: 'left',
-                content: {likes}
+                content: this.props.likes
                 }} />
               <Button
                 onClick={this.props.handleDislikes}
-                // data-type="dislike"
                 color='red'
                 icon="thumbs down outline"
                 label={{
                   basic: true,
                   color: 'red',
                   pointing: 'right',
-                  content: {dislikes}
+                  content: this.props.dislikes
                 }}
               />
             </Card.Description>
