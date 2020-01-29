@@ -27,8 +27,9 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "start": "node server",
+    "build": "react-scripts build",
+    "heroku-postbuild": "npm install && npm run build"
   },
   "browserslist": [
     ">0.2%",

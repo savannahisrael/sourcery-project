@@ -13,14 +13,14 @@ const activityController = require('../app/controllers/activityFeedController');
 const cohortController = require('../app/controllers/cohortsController.js');
 
 //loading auth variables
-const configAuth = process.env.NODE_ENV ? {
+const configAuth = process.env.HEROKU ? {
     github: {
         clientID: process.env.GITHUB_CLIENTID,
         clientSecret: process.env.GITHUB_CLIENTSECRET,
-        callbackURL: 'https://devcircle.herokuapp.com/auth/github/callback'
+        callbackURL: 'https://sourcery-project.herokuapp.com/auth/github/callback'
     } 
 } 
-: require('./auth');
+: require("./auth");
 
 module.exports = function(passport) {
 

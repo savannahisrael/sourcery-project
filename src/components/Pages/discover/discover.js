@@ -234,7 +234,7 @@ class Explore extends Component {
                     <Container>
                       <Header className='exploreHeader'>
                         <span className='exploreProjectsSpan'>Discover Resources</span> {' '}
-                        <Dropdown inline options={resourceType} defaultValue={resourceType[3].text} className='exploreDropdown' onChange={this.handlefileTypeFilter}/>
+                        <Dropdown inline options={resourceType} defaultValue={resourceType[2].text} className='exploreDropdown' onChange={this.handlefileTypeFilter}/>
                       </Header>
                       <h1 className='searchHeader'>
                         <span className='searchBySpan'>Search by</span> {' '}
