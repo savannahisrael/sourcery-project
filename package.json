@@ -11,7 +11,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "moment": "^2.24.0",
-    "mongoose": "^4.13.20",
+    "mongoose": "^5.7.5",
     "passport": "^0.4.1",
     "passport-github2": "^0.1.11",
     "react": "^15.6.2",
