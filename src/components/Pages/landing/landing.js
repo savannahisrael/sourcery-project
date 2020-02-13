@@ -63,10 +63,10 @@ export default class landingPage extends Component {
                 <Grid.Column width={8}>
                   <Header className='landingHeader'content='SOURCERY'/>
                   <Header className='landingSubheader'>
-                    Casting spells.  Summoning resources. Crafting Magical Projects.
+                    Casting spells.  Summoning resources. Crafting projects.
                   </Header>
                   <Header>
-                    <ReactRotatingText className='landingRotating' items={['to enchant your learning', 'to facilitate our collaboration', 'to spread their wisdom']} />
+                    <ReactRotatingText className='landingRotating' items={['to enchant learning', 'to facilitate collaboration', 'to spread wisdom']} />
                   </Header>
                   <br/>
                   <Button className='signUpButton' primary size='huge' onClick={this.handleSignupButton}>
