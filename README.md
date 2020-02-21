@@ -5,8 +5,7 @@ Sourcery is a collaboration app built by coding boot campers, for coding boot ca
 ## Authentication and Authorization
 Sourcery relies on github OAuth for all user Authentication and Identification. Authorization is state bound based on user roles per project.
 
-## Technologies
-Below is a select list of technologies devCircle currently employs:
+## Technology Stack
 - React
 - Semantic UI
 - Node
@@ -18,7 +17,6 @@ Below is a select list of technologies devCircle currently employs:
 - Heroku
 
 ## APIs
-Currently 2 third-party APIs are being used:
 - Github GraphQL
 - Github Oauth 
 
