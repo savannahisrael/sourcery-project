@@ -63,7 +63,7 @@ export default class landingPage extends Component {
                 <Grid.Column width={8}>
                   <Header className='landingHeader'content='SOURCERY'/>
                   <Header className='landingSubheader'>
-                    Casting spells.  Summoning resources. Crafting projects.
+                    Casting spells. Summoning resources. Crafting projects.
                   </Header>
                   <Header>
                     <ReactRotatingText className='landingRotating' items={['to enchant learning', 'to facilitate collaboration', 'to spread wisdom']} />
@@ -73,9 +73,9 @@ export default class landingPage extends Component {
                     Register
                   </Button>
                   <Form className='signUpForm' onChange={this.handleCohortCodeChange} onSubmit={this.handleCohortCodeButton}>
-                    <Form.Input size='huge' action='Sign Up' placeholder='Enter code...'/>
+                    <Form.Input size='huge' action='Sign Up' placeholder='Enter code...use code 2020 for demo'/>
                   </Form>
-                  <p className='noAccess'>Please enter a valid access code.</p>
+                  <p className='noAccess'>Please enter a valid access code.  Use code 2020 for demo.</p>
                   <br/>
                 </Grid.Column>
                 <Grid.Column width={8}>
