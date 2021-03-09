@@ -21,11 +21,20 @@ const flash = require('connect-flash');
 
 //=============== DATABASE PACKAGES & CONFIG ===============//
 const mongoose = require('mongoose');
-const configDB = require('./config/database.js');
+const configDB = require('./config/keys.js');
 // const users = require('./models/Users');
 mongoose.Promise = Promise;
-mongoose.connect(configDB.url, {  useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(configDB.mongoURI, {  useUnifiedTopology: true, useNewUrlParser: true })
 mongoose.set('useCreateIndex', true)
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = require('./config/keys.js')
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect(err => {
+  const collection = client.db("sourceryDB").collection("users");
+  // perform actions on the collection object
+  client.close();
+});
 
 //=============== PASSPORT CONFIGURATION ===============//
 require('./config/passport')(passport) //pass passport for configuration
@@ -47,7 +56,14 @@ app.use(flash());
 //=============== SERVE STATIC ASSETS ===============//
 // app.use(express.static(path.resolve(__dirname, "..", 'build')));
 
-app.use(express.static(path.join(__dirname, 'build')));
+
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, '..', 'build')));
+// Handle React routing, return all requests to React app
+  app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+  });
+
 
 //=============== ROUTES SETUP ===============//
 require('./app/routes.js')(app, passport) //load our routes and pass in our app and fully configured passport
@@ -57,14 +73,11 @@ require('./app/testRoutes.js')(app)
 //=============== API ROUTES ===============//
 app.get("/api/test", (req, res) => res.json({id:1, first:'hello', last:'world'}));
 // Always return the main index.html, so react-router render the route in the client
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-// });
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+});
 
--app.get('/', function (req, res) {
-  +app.get('/*', function (req, res) {
-     res.sendFile(path.join(__dirname, 'build', 'index.html'));
-   });
+
 
 
 //=============== STARTING THE SERVER ===============//

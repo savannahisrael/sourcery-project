@@ -2,13 +2,11 @@
   "name": "sourcery",
   "version": "0.1.0",
   "private": true,
-  "main": "server/index.js",
-  "homepage": "https://sourcery-project.herokuapp.com",
   "author": "savannahisrael",
   "dependencies": {
-    "@stardust-ui/docs-components": "^0.39.0",
+    "@stardust-ui/docs-components": "^0.40.0",
     "@stardust-ui/react": "^0.39.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "concurrently": "^5.0.1",
     "connect-flash": "^0.1.1",
@@ -17,16 +15,18 @@
     "et-line": "^1.0.1",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "fbjs": "^3.0.0",
     "moment": "^2.24.0",
+    "mongodb": "^3.6.4",
     "mongoose": "^5.7.1",
     "passport": "^0.4.0",
     "passport-github2": "^0.1.10",
     "prettier": "^1.18.2",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-rotating-text": "^1.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "^3.1.2",
+    "react-scripts": "^4.0.3",
     "react-svg-loader": "^3.0.3",
     "semantic-ui-calendar": "0.0.8",
     "semantic-ui-react": "^0.72.0",
@@ -35,19 +35,16 @@
     "socket.io-client": "^2.3.0"
   },
   "engines": {
-    "node": "^10.16.0"
+    "node": "15.11.0"
   },
   "scripts": {
     "start": "node server/index.js",
     "server": "nodemon server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "serve": "serve -s build",
+    "serve": "serve -s build -l 4000",
     "client": "react-scripts start",
-    "build":"react-scripts build",
-    "heroku-postbuild": "npm install --only=dev && npm install && npm run build"    
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "build": "react-scripts build",
+    "heroku-postbuild": "npm install --only=dev && npm install && npm run build"
   },
   "browserslist": {
     "production": [
